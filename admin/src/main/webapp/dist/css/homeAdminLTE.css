@@ -21,15 +21,15 @@ body {
 body {
   font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
-  overflow-x: hidden;
-  overflow-y: auto;
+/*  overflow-x: hidden;
+  overflow-y: auto;*/
 }
 /* Layout */
 .wrapper {
   height: 100%;
-  position: relative;
+/*  position: relative;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: auto;*/
 }
 .wrapper:before,
 .wrapper:after {

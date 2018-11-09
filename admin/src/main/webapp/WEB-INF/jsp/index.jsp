@@ -20,10 +20,9 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- 系统用户列表start -->
-<div class="content-wrapper">
-    <iframe name="frame" src="http://www.ck.pub" style="width: 100%;height: 100%;min-height:866px;" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+<div id="content" class="content-wrapper">
+    <iframe id="frame"  name="frame" src="" style="width: 100%;height: 100%;" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" ></iframe>
 </div>
-
 <script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="/bootstrap/js/bootstrap.min.js"></script>
 <script src="/js/raphael-min.js"></script>
@@ -41,5 +40,44 @@
 <script src="/js/jquery-ui.min.js"></script>
 <script src="/layer/layer.js"></script>
 <script src="/layui/layui.js" charset="utf-8"></script>
+<script>
+    window.onload = function(){
+        var currenturl = window.location.href;
+        var newUrl = (currenturl.split("#"))[1];
+        if(!newUrl){
+            newUrl = "/admin/home";
+        }
+        $("#frame").css("min-height",$("#content").height());
+        $("#frame").attr("src",newUrl);
+    }
+
+    var addHist = function (e) {
+        var currenturl = window.location.href;
+        var newUrl = (currenturl.split("#"))[0];
+        history.pushState('','',newUrl+'#'+e);
+    }
+    // 计算页面的实际高度，iframe自适应会用到
+    function calcPageHeight(doc) {
+        var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight);
+        var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+        var height  = Math.max(cHeight, sHeight);
+        return height;
+    }
+    // 计算页面的实际宽度，iframe自适应会用到
+    function calcPageWidth(doc) {
+        var width = Math.max(doc.body.scrollWidth, doc.documentElement.scrollWidth);
+        return width;
+    }
+    var ifr = document.getElementById('frame')
+    ifr.onload = function() {
+        var iDoc = ifr.contentDocument || ifr.document;
+        var height = calcPageHeight(iDoc);
+        var width = calcPageWidth(iDoc);
+        ifr.style.height = height + 'px';
+        ifr.style.width = width + 'px';
+    }
+	
+</script>
+
 </body>
 </html>

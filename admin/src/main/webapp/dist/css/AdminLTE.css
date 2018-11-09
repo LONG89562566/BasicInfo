@@ -21,15 +21,15 @@ body {
 body {
   font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
-  overflow-x: hidden;
-  overflow-y: auto;
+/*  overflow-x: hidden;
+  overflow-y: auto;*/
 }
 /* Layout */
 .wrapper {
   height: 100%;
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
+/*  overflow-x: hidden;
+  overflow-y: auto;*/
 }
 .wrapper:before,
 .wrapper:after {
@@ -1005,7 +1005,7 @@ a:focus {
   margin: 0;
   padding: 0;
   list-style: none;
-  overflow-x: hidden;
+ /* overflow-x: hidden;*/
 }
 .navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a,
 .navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a,
@@ -2720,7 +2720,7 @@ table.text-center th {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   position: relative;
-  overflow-x: hidden;
+  /*overflow-x: hidden;*/
   padding: 0;
 }
 .direct-chat.chat-pane-open .direct-chat-contacts {

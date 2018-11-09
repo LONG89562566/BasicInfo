@@ -27,10 +27,10 @@
 	             <li <c:if test="${sessionScope.secondMenuId==second.menuId}">class="active"</c:if>>
 	                <c:choose>  
 					   <c:when test="${fn:indexOf(second.menuHref,'?')==-1}">   
-					        <a target="frame" href="${second.menuHref}?oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}">
+					        <a target="frame" onclick="addHist('${second.menuHref}?oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}')" href="${second.menuHref}?oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}">
 					   </c:when>  
 					   <c:otherwise> 
-					        <a target="frame" href="${second.menuHref}&oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}">
+					        <a target="frame" onclick="addHist('${second.menuHref}?oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}')" href="${second.menuHref}?oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}">
 					   </c:otherwise>  
 					</c:choose>  
 	               <i class="fa fa-arrow-right"></i>${second.menuName}</a>
@@ -49,10 +49,10 @@
 	                   <li <c:if test="${sessionScope.threeMenuId==three.menuId}">class="active"</c:if>>
 		                  <c:choose>  
 						  <c:when test="${fn:indexOf(three.menuHref,'?')==-1}">   
-						       <a target="frame" href="${three.menuHref}?oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}&threeMenuId=${three.menuId}">
+						       <a target="frame" onclick="addHist('${three.menuHref}?oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}&threeMenuId=${three.menuId}')" href="${three.menuHref}?oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}&threeMenuId=${three.menuId}">
 						  </c:when>  
 						  <c:otherwise> 
-						       <a target="frame" href="${three.menuHref}&oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}&threeMenuId=${three.menuId}">
+						       <a target="frame" onclick="addHist('${three.menuHref}?oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}&threeMenuId=${three.menuId}')" href="${three.menuHref}&oneMenuId=${menu.menuId}&secondMenuId=${second.menuId}&threeMenuId=${three.menuId}">
 						  </c:otherwise>  
 						  </c:choose>
 	                     <i class="fa fa-arrow-right"></i>${three.menuName}</a>

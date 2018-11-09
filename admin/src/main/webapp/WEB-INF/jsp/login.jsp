@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="/libs/font-awesome.min.css">
   <link rel="stylesheet" href="/libs/ionicons.min.css">
-  <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/dist/css/AdminLTE.css">
   <link rel="stylesheet" href="/plugins/iCheck/square/blue.css">
   <link rel="stylesheet" href="/layer/skin/default/layer.css">
   <style>

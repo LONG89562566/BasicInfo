@@ -11,7 +11,7 @@
      <div class="navbar-custom-menu">
        <ul class="nav navbar-nav">
 	       <li class="active">
-		        <a href="/admin/reported/list">报备消息
+		        <a target="frame" onclick="addHist('/admin/reported/list')" href="/admin/reported/list" >报备消息
 		            <span class="badge">${count}</span>
 		        </a>
 	    	</li>
