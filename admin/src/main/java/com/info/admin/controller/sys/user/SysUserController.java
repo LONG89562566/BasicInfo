@@ -156,7 +156,6 @@ public class SysUserController extends BaseController {
 			}
 			int result = sysUserService.insertAndUpdate(user);
 			//清除权限资源缓存
-			//TODO
 			if(result>0){
 				return new JsonResult(JsonResultCode.SUCCESS, "更新数据成功", "");
 			}
