@@ -123,6 +123,26 @@ public class SysUserController extends BaseController {
 		model.addAttribute("sysUser", user);
 		return "sys/user/userList";
 	}
+
+	/**
+	 * 查询系统用户列表
+	 */
+	@ResponseBody
+	@RequestMapping(value="/sysUser/pageQuery",method={RequestMethod.GET,RequestMethod.POST})
+	public JsonResult pageQuery(HttpServletRequest request, HttpServletResponse response,Model model,SysUser user)	{
+		logger.info("[SysUserController][pageQuery] 查询CkCommunity对象:");
+		try {
+			// 获取分页当前的页码
+			int pageNum = this.getPageNum(request);
+			// 获取分页的大小
+			int pageSize = this.getPageSize(request);
+			PageUtil paginator = sysUserService.getAllSysUser(user , pageNum, pageSize);
+			return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
+		} catch (Exception e) {
+			logger.error("[SysUserController][pageQuery] exception", e);
+			return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+		}
+	}
 	
 	/**
 	 * 跳转到新增页面

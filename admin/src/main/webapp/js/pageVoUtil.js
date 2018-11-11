@@ -69,7 +69,7 @@ var addPageHtml = function( index , currentPage, pageRecord){
 var onSelectPage = function(currentPage,pageSize){
     $('#pageNum').val(currentPage);
     $('#pageSize').val(pageSize);
-    $('#form_submit').submit();
+    loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
 };
 
 //刷新当前页面
@@ -82,8 +82,8 @@ var loadSelectPageDat = function (currentPage,pageSize) {
     $('#pageNum').val(currentPage);
     $('#pageSize').val(pageSize);
 
-    var json = serializeFormPost("form_submit");
-    var parm = serializeFormGet("form_submit");
+    var json = serializeFormPost(_queryConditionForrId);
+    var parm = serializeFormGet(_queryConditionForrId);
 
     $.post(pageQueryUrl+"?"+parm,json,function (data) {
         if(data.code=="200" || data.code=="201"){
@@ -102,11 +102,27 @@ var loadSelectPageDat = function (currentPage,pageSize) {
                         html += "<td>";
                         html += "<div class='site-demo-button' >";
                         $.each(tableBtn,function (index, btn) {
+                            // methodField,isShowMethod,showMethodVal
+                            var methodField = "";
+                            var showMethodVal = "";
+                            if(btn.methodField != "" && btn.methodField != undefined && btn.methodField.length > 0){
+                                methodField = n[btn.methodField];
+                                if(btn.isShowMethod != "" && btn.isShowMethod != undefined && btn.isShowMethod.length > 0 && btn.isShowMethod == 'true'){
+                                    isShowMethod = btn.isShowMethod;
+                                    if(btn.showMethodVal != "" && btn.showMethodVal != undefined && btn.showMethodVal.length > 0 && isShowMethod){
+                                        showMethodVal = btn.showMethodVal;
+                                        if(showMethodVal != methodField){
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+
                             if(btn.jurisdiction != "" && btn.jurisdiction != undefined && btn.jurisdiction.length > 0){
                                 html += "<shiro:hasPermission name='"+btn.jurisdiction+"'>";
                             }
 
-                            html += "<button id='updatePlantationsMassif' style='margin: 2px 2px 2px 2px;' onclick='"+btn.method+"("+ n[primarykey]+")' value='"+ n[primarykey]+"' class='layui-btn layui-btn-normal layui-btn-small'>";
+                            html += "<button id='updatePlantationsMassif' style='margin: 2px 2px 2px 2px;' onclick='"+btn.method+"("+ n[primarykey]+")' value='"+ n[primarykey]+"' class='layui-btn "+btn.btnClass+" layui-btn-small'>";
                             if(btn.icon != "" && btn.icon != undefined && btn.icon.length > 0){
                                 html += "<i class='"+btn.icon+"'></i>";
                             }
@@ -137,7 +153,7 @@ var loadSelectPageDat = function (currentPage,pageSize) {
                            }
                            html += ">";
                            if(f.method != "" && f.method != undefined && f.method.length > 0){
-                               html +=  eval(f.method+'("'+n[f.name]+'")')+"</td>";
+                               html +=  eval(f.method+'("'+n[f.name]+'","'+n[primarykey]+'")')+"</td>";
                            }else{
                                html +=  n[f.name]+"</td>";
                            }
@@ -187,14 +203,25 @@ var tableField = function(tableId){
  * @param name 显示名称 （修改）
  * @param jurisdiction 权限（material:update）
  * @param icon 图标（<i class='layui-icon'></i>）
+ * @param methodField 调用方法需要传入字段名称
+ * @param isShowMethod 调用方法是否更加 传入字段名称取得值进行显示
+ * @param showMethodVal 调用方法根据传入字段名称去的值进行匹配设置的值是否相等
+ * @param btnClass 添加button Class 样式名称
  * @returns {*}
  */
-var addBtn = function (addBtn, method, name , jurisdiction, icon) {
+var addBtn = function (addBtn, method, name , jurisdiction, icon, methodField, isShowMethod, showMethodVal,btnClass) {
+    if(btnClass == "" || btnClass == undefined || btnClass.length == 0){
+        btnClass = "layui-btn-normal";
+    }
     var btn = new Object();
     btn.method = method;
     btn.jurisdiction = jurisdiction;
     btn.name = name;
-    btn.icon =icon;
+    btn.icon = icon;
+    btn.methodField = methodField;
+    btn.isShowMethod = isShowMethod;
+    btn.showMethodVal = showMethodVal;
+    btn.btnClass = btnClass;
     addBtn.push(btn);
     return addBtn;
 };
