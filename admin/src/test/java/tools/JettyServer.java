@@ -9,7 +9,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 public class JettyServer {
 
 	public static void main(String[] args) throws Exception {
-		Server server = buildNormalServer(80, "/");
+		Server server = buildNormalServer(880, "/");
 		server.start();
 	}
 	/**
