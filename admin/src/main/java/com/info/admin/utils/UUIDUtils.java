@@ -56,6 +56,14 @@ public abstract class UUIDUtils {
 	};
 
 	/**
+	 * 生成24位UUID 组成格式为 yyyyMMddHHmmssSSS + 10位随机码
+	 * @return 27位UUID
+	 */
+	public static String getUUid(){
+		return DateUtil.getCurrentDateTimeStr( DateUtil.FMT_MILLITDATETIME_COMPACT)+ generateShortUuid();
+	}
+
+	/**
 	 * 生成10位UUID
 	 * @return 10位UUID
 	 */

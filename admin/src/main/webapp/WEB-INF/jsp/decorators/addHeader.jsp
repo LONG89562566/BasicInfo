@@ -61,4 +61,30 @@
         }
     }
 
+    function updateAndAdd(requestData) {
+        $.ajax({
+            type:"POST",
+            url: reqUpdateAndAddUrl,
+            data: requestData,
+            dataType:"json",
+            success:function(result){
+                var code = result.code;
+                var msg = result.message;
+                if(code=="200" || code=="201"){
+                    layer.msg(msg);
+                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    parent.layer.close(index);//关闭父页面的弹窗
+                    //刷新页面
+                    parent.location.reload();
+                }
+            },
+            error:function(){
+                layer.msg("更新数据异常", {icon: 1,time: 1200},function(){
+                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    parent.layer.close(index);//关闭父页面的弹窗
+                });
+            }
+        });
+    }
+
 </script>
