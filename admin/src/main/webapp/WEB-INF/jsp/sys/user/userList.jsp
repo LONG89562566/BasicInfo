@@ -142,7 +142,7 @@
 							</div>
 							<!-- 表格列表end -->
 							<div class="box-footer clearfix">
-								<ul class="pagination pagination-sm no-margin pull-left">
+								<ul id="paginator" class="pagination pagination-sm no-margin pull-left">
 									<pv:showPaging pageVo="${paginator}" />
 								</ul>
 							</div>
