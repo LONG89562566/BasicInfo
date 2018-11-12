@@ -5,12 +5,9 @@ import com.info.admin.constants.DBPropertie;
 import com.info.admin.entity.DBP;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.ServletContext;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -20,27 +17,17 @@ import java.util.*;
 public class PropertiesUtil {
 
     private static final String DeafultFile = "db-config.properties";
-
     /**
      * 获取文件路径(可改为参数传入)
      * @param fileName 文件名
      * @return
      */
-    public static String getPath(String fileName){
+    public static InputStream getStream(String fileName){
         if (fileName==null||fileName==""){
             fileName = DeafultFile;
         }
-        WebApplicationContext webApplicationContext = ContextLoader
-                .getCurrentWebApplicationContext();
-        ServletContext servletContext = webApplicationContext
-                .getServletContext();
-        //String profilepath = servletContext.getRealPath("/db/db-config.properties");
-        //获取项目路径
-        String profilepath =  System.getProperty("user.dir");
-        //获取文件路径
-        profilepath += "/admin/src/main/resources/";
-        profilepath += fileName;
-        return profilepath;
+        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
+        return inputStream;
     }
 
     /**
@@ -52,7 +39,7 @@ public class PropertiesUtil {
         PropertiesConfiguration config = null;
         try
         {
-            config  = new PropertiesConfiguration(getPath(fileName));
+            config  = new PropertiesConfiguration(fileName);
             config.setAutoSave(true);
         }
         catch(ConfigurationException cex)
@@ -172,8 +159,6 @@ public class PropertiesUtil {
         config.setProperty(DBPropertie.DB_URL, dbp.getUrl());
         config.setProperty(DBPropertie.DB_USER, dbp.getUser());
         config.setProperty(DBPropertie.DB_PWD, dbp.getPassword());
-        //重加载数据源
-        //TODO
     }
 
 }
