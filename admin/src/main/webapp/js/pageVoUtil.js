@@ -184,13 +184,13 @@ var tableField = function(tableId){
         $(this).children('th').each(function(j){  // 遍历 tr 的各个 th
             var filed =new Object();
             filed.describe = $(this).text();
-            filed.name = $(this).attr("field");
-            filed.type = $(this).attr("type");;
-            filed.format = $(this).attr("format");
-            filed.method = $(this).attr("method");
-            filed.getIdVal = $(this).attr("getIdVal");
-            filed.imgWidth = $(this).attr("imgWidth");
-            filed.imgHeight = $(this).attr("imgHeight");
+            filed.name = $(this).attr("field"); //字段名称
+            filed.type = $(this).attr("type");  //字段类型
+            filed.format = $(this).attr("format"); //日期时间格式
+            filed.method = $(this).attr("method");  //字段调用的方法
+            filed.getIdVal = $(this).attr("getIdVal");  //是否需要设置id在td上
+            filed.imgWidth = $(this).attr("imgWidth");  //图片的宽度
+            filed.imgHeight = $(this).attr("imgHeight"); //图片的高度
             filedObj.push(filed);
         });
     });
