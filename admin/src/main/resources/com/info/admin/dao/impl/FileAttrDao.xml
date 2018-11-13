@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 文件 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.FileAttrDao">
+
+	<!-- 新增 文件 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.FileAttr"
+			useGeneratedKeys="true" keyProperty="surveyId">
+		insert into file_attr
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" surveyId != null">
+				survey_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" name != null">
+				name,
+			</if>
+			<if test=" remark != null">
+				remark,
+			</if>
+			<if test=" url != null">
+				url,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="surveyId != null ">
+		        #{surveyId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="name != null ">
+		        #{name},
+		    </if>
+			<if test="remark != null ">
+		        #{remark},
+		    </if>
+			<if test="url != null ">
+		        #{url},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 文件 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.FileAttr">
+		update file_attr
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" name != null">
+					name = #{name},
+				</if>
+				<if test=" remark != null">
+					remark = #{remark},
+				</if>
+				<if test=" url != null">
+					url = #{url},
+				</if>
+
+            </trim>
+        </set>
+		where survey_id = #{surveyId}
+	</update>
+
+    <!-- 删除 文件 对象 -->
+    <delete id="delete">
+        delete from file_attr
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 文件 对象 -->
+    <resultMap type="com.info.admin.entity.FileAttr" id="fileAttrMap">
+		<result column="survey_id" property="surveyId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="name" property="name" />
+		<result column="remark" property="remark" />
+		<result column="url" property="url" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.surveyId != null">
+			    and survey_id =  #{entity.surveyId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.name != null">
+			    and name =  #{entity.name} 
+		    </if>
+		    <if test=" entity.remark != null">
+			    and remark =  #{entity.remark} 
+		    </if>
+		    <if test=" entity.url != null">
+			    and url =  #{entity.url} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 文件 对象列表 -->
+    <select id="query"  resultMap="fileAttrMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from file_attr
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 文件 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from file_attr
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 文件 对象列表  -->
+    <select id="pageQuery" resultMap="fileAttrMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from file_attr
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 文件 -->
+	<select id="getFileAttrById" parameterType="Long" resultMap="fileAttrMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from file_attr where survey_id= #{surveyId}
+	</select>
+</mapper>	

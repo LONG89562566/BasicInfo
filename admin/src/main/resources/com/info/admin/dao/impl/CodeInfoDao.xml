@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 二维码信息 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.CodeInfoDao">
+
+	<!-- 新增 二维码信息 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.CodeInfo"
+			useGeneratedKeys="true" keyProperty="codeId">
+		insert into code_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" codeId != null">
+				code_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" structureName != null">
+				structure_name,
+			</if>
+			<if test=" structureType != null">
+				structure_type,
+			</if>
+			<if test=" projectId != null">
+				project_id,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="codeId != null ">
+		        #{codeId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="structureName != null ">
+		        #{structureName},
+		    </if>
+			<if test="structureType != null ">
+		        #{structureType},
+		    </if>
+			<if test="projectId != null ">
+		        #{projectId},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 二维码信息 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.CodeInfo">
+		update code_info
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" structureName != null">
+					structure_name = #{structureName},
+				</if>
+				<if test=" structureType != null">
+					structure_type = #{structureType},
+				</if>
+				<if test=" projectId != null">
+					project_id = #{projectId},
+				</if>
+
+            </trim>
+        </set>
+		where code_id = #{codeId}
+	</update>
+
+    <!-- 删除 二维码信息 对象 -->
+    <delete id="delete">
+        delete from code_info
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 二维码信息 对象 -->
+    <resultMap type="com.info.admin.entity.CodeInfo" id="codeInfoMap">
+		<result column="code_id" property="codeId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="structure_name" property="structureName" />
+		<result column="structure_type" property="structureType" />
+		<result column="project_id" property="projectId" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.codeId != null">
+			    and code_id =  #{entity.codeId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.structureName != null">
+			    and structure_name =  #{entity.structureName} 
+		    </if>
+		    <if test=" entity.structureType != null">
+			    and structure_type =  #{entity.structureType} 
+		    </if>
+		    <if test=" entity.projectId != null">
+			    and project_id =  #{entity.projectId} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 二维码信息 对象列表 -->
+    <select id="query"  resultMap="codeInfoMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from code_info
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 二维码信息 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from code_info
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 二维码信息 对象列表  -->
+    <select id="pageQuery" resultMap="codeInfoMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from code_info
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 二维码信息 -->
+	<select id="getCodeInfoById" parameterType="Long" resultMap="codeInfoMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from code_info where code_id= #{codeId}
+	</select>
+</mapper>	

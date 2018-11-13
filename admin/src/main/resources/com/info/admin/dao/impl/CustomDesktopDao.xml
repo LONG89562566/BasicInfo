@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 自定义桌面 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.CustomDesktopDao">
+
+	<!-- 新增 自定义桌面 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.CustomDesktop"
+			useGeneratedKeys="true" keyProperty="desktopId">
+		insert into custom_desktop
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" desktopId != null">
+				desktop_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" userId != null">
+				user_id,
+			</if>
+			<if test=" menuId != null">
+				menu_id,
+			</if>
+			<if test=" customName != null">
+				custom_name,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="desktopId != null ">
+		        #{desktopId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="userId != null ">
+		        #{userId},
+		    </if>
+			<if test="menuId != null ">
+		        #{menuId},
+		    </if>
+			<if test="customName != null ">
+		        #{customName},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 自定义桌面 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.CustomDesktop">
+		update custom_desktop
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" userId != null">
+					user_id = #{userId},
+				</if>
+				<if test=" menuId != null">
+					menu_id = #{menuId},
+				</if>
+				<if test=" customName != null">
+					custom_name = #{customName},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+
+            </trim>
+        </set>
+		where desktop_id = #{desktopId}
+	</update>
+
+    <!-- 删除 自定义桌面 对象 -->
+    <delete id="delete">
+        delete from custom_desktop
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 自定义桌面 对象 -->
+    <resultMap type="com.info.admin.entity.CustomDesktop" id="customDesktopMap">
+		<result column="desktop_id" property="desktopId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="user_id" property="userId" />
+		<result column="menu_id" property="menuId" />
+		<result column="custom_name" property="customName" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.desktopId != null">
+			    and desktop_id =  #{entity.desktopId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.userId != null">
+			    and user_id =  #{entity.userId} 
+		    </if>
+		    <if test=" entity.menuId != null">
+			    and menu_id =  #{entity.menuId} 
+		    </if>
+		    <if test=" entity.customName != null">
+			    and custom_name =  #{entity.customName} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 自定义桌面 对象列表 -->
+    <select id="query"  resultMap="customDesktopMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from custom_desktop
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 自定义桌面 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from custom_desktop
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 自定义桌面 对象列表  -->
+    <select id="pageQuery" resultMap="customDesktopMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from custom_desktop
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 自定义桌面 -->
+	<select id="getCustomDesktopById" parameterType="Long" resultMap="customDesktopMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from custom_desktop where desktop_id= #{desktopId}
+	</select>
+</mapper>	

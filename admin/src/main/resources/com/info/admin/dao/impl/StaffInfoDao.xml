@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 员工信息 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.StaffInfoDao">
+
+	<!-- 新增 员工信息 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.StaffInfo"
+			useGeneratedKeys="true" keyProperty="staffId">
+		insert into staff_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" staffId != null">
+				staff_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" orgId != null">
+				org_id,
+			</if>
+			<if test=" name != null">
+				name,
+			</if>
+			<if test=" sex != null">
+				sex,
+			</if>
+			<if test=" native != null">
+				native,
+			</if>
+			<if test=" nation != null">
+				nation,
+			</if>
+			<if test=" idCard != null">
+				id_card,
+			</if>
+			<if test=" address != null">
+				address,
+			</if>
+			<if test=" phone != null">
+				phone,
+			</if>
+			<if test=" position != null">
+				position,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="staffId != null ">
+		        #{staffId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="orgId != null ">
+		        #{orgId},
+		    </if>
+			<if test="name != null ">
+		        #{name},
+		    </if>
+			<if test="sex != null ">
+		        #{sex},
+		    </if>
+			<if test="native != null ">
+		        #{native},
+		    </if>
+			<if test="nation != null ">
+		        #{nation},
+		    </if>
+			<if test="idCard != null ">
+		        #{idCard},
+		    </if>
+			<if test="address != null ">
+		        #{address},
+		    </if>
+			<if test="phone != null ">
+		        #{phone},
+		    </if>
+			<if test="position != null ">
+		        #{position},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 员工信息 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.StaffInfo">
+		update staff_info
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" orgId != null">
+					org_id = #{orgId},
+				</if>
+				<if test=" name != null">
+					name = #{name},
+				</if>
+				<if test=" sex != null">
+					sex = #{sex},
+				</if>
+				<if test=" native != null">
+					native = #{native},
+				</if>
+				<if test=" nation != null">
+					nation = #{nation},
+				</if>
+				<if test=" idCard != null">
+					id_card = #{idCard},
+				</if>
+				<if test=" address != null">
+					address = #{address},
+				</if>
+				<if test=" phone != null">
+					phone = #{phone},
+				</if>
+				<if test=" position != null">
+					position = #{position},
+				</if>
+
+            </trim>
+        </set>
+		where staff_id = #{staffId}
+	</update>
+
+    <!-- 删除 员工信息 对象 -->
+    <delete id="delete">
+        delete from staff_info
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 员工信息 对象 -->
+    <resultMap type="com.info.admin.entity.StaffInfo" id="staffInfoMap">
+		<result column="staff_id" property="staffId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="org_id" property="orgId" />
+		<result column="name" property="name" />
+		<result column="sex" property="sex" />
+		<result column="native" property="native" />
+		<result column="nation" property="nation" />
+		<result column="id_card" property="idCard" />
+		<result column="address" property="address" />
+		<result column="phone" property="phone" />
+		<result column="position" property="position" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.staffId != null">
+			    and staff_id =  #{entity.staffId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.orgId != null">
+			    and org_id =  #{entity.orgId} 
+		    </if>
+		    <if test=" entity.name != null">
+			    and name =  #{entity.name} 
+		    </if>
+		    <if test=" entity.sex != null">
+			    and sex =  #{entity.sex} 
+		    </if>
+		    <if test=" entity.native != null">
+			    and native =  #{entity.native} 
+		    </if>
+		    <if test=" entity.nation != null">
+			    and nation =  #{entity.nation} 
+		    </if>
+		    <if test=" entity.idCard != null">
+			    and id_card =  #{entity.idCard} 
+		    </if>
+		    <if test=" entity.address != null">
+			    and address =  #{entity.address} 
+		    </if>
+		    <if test=" entity.phone != null">
+			    and phone =  #{entity.phone} 
+		    </if>
+		    <if test=" entity.position != null">
+			    and position =  #{entity.position} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 员工信息 对象列表 -->
+    <select id="query"  resultMap="staffInfoMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from staff_info
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 员工信息 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from staff_info
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 员工信息 对象列表  -->
+    <select id="pageQuery" resultMap="staffInfoMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from staff_info
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 员工信息 -->
+	<select id="getStaffInfoById" parameterType="Long" resultMap="staffInfoMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from staff_info where staff_id= #{staffId}
+	</select>
+</mapper>	

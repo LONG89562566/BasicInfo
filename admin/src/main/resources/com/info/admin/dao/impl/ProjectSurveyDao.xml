@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 工程概况 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.ProjectSurveyDao">
+
+	<!-- 新增 工程概况 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.ProjectSurvey"
+			useGeneratedKeys="true" keyProperty="projectId">
+		insert into project_survey
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" projectId != null">
+				project_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" lcName != null">
+				lc_name,
+			</if>
+			<if test=" lcAddr != null">
+				lc_addr,
+			</if>
+			<if test=" lineMileage != null">
+				line_mileage,
+			</if>
+			<if test=" lcScale != null">
+				lc_scale,
+			</if>
+			<if test=" bearTask != null">
+				bear_task,
+			</if>
+			<if test=" supplyMileage != null">
+				supply_mileage,
+			</if>
+			<if test=" throughput != null">
+				throughput,
+			</if>
+			<if test=" constructionUnit != null">
+				construction_unit,
+			</if>
+			<if test=" bearUnit != null">
+				bear_unit,
+			</if>
+			<if test=" controlUnit != null">
+				control_unit,
+			</if>
+			<if test=" designUnit != null">
+				design_unit,
+			</if>
+			<if test=" overallGoal != null">
+				overall_goal,
+			</if>
+			<if test=" timeGoal != null">
+				time_goal,
+			</if>
+			<if test=" securityGoal != null">
+				security_goal,
+			</if>
+			<if test=" qualityGoal != null">
+				quality_goal,
+			</if>
+			<if test=" epoGoal != null">
+				epo_goal,
+			</if>
+			<if test=" ophGoal != null">
+				oph_goal,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="projectId != null ">
+		        #{projectId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="lcName != null ">
+		        #{lcName},
+		    </if>
+			<if test="lcAddr != null ">
+		        #{lcAddr},
+		    </if>
+			<if test="lineMileage != null ">
+		        #{lineMileage},
+		    </if>
+			<if test="lcScale != null ">
+		        #{lcScale},
+		    </if>
+			<if test="bearTask != null ">
+		        #{bearTask},
+		    </if>
+			<if test="supplyMileage != null ">
+		        #{supplyMileage},
+		    </if>
+			<if test="throughput != null ">
+		        #{throughput},
+		    </if>
+			<if test="constructionUnit != null ">
+		        #{constructionUnit},
+		    </if>
+			<if test="bearUnit != null ">
+		        #{bearUnit},
+		    </if>
+			<if test="controlUnit != null ">
+		        #{controlUnit},
+		    </if>
+			<if test="designUnit != null ">
+		        #{designUnit},
+		    </if>
+			<if test="overallGoal != null ">
+		        #{overallGoal},
+		    </if>
+			<if test="timeGoal != null ">
+		        #{timeGoal},
+		    </if>
+			<if test="securityGoal != null ">
+		        #{securityGoal},
+		    </if>
+			<if test="qualityGoal != null ">
+		        #{qualityGoal},
+		    </if>
+			<if test="epoGoal != null ">
+		        #{epoGoal},
+		    </if>
+			<if test="ophGoal != null ">
+		        #{ophGoal},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 工程概况 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.ProjectSurvey">
+		update project_survey
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" lcName != null">
+					lc_name = #{lcName},
+				</if>
+				<if test=" lcAddr != null">
+					lc_addr = #{lcAddr},
+				</if>
+				<if test=" lineMileage != null">
+					line_mileage = #{lineMileage},
+				</if>
+				<if test=" lcScale != null">
+					lc_scale = #{lcScale},
+				</if>
+				<if test=" bearTask != null">
+					bear_task = #{bearTask},
+				</if>
+				<if test=" supplyMileage != null">
+					supply_mileage = #{supplyMileage},
+				</if>
+				<if test=" throughput != null">
+					throughput = #{throughput},
+				</if>
+				<if test=" constructionUnit != null">
+					construction_unit = #{constructionUnit},
+				</if>
+				<if test=" bearUnit != null">
+					bear_unit = #{bearUnit},
+				</if>
+				<if test=" controlUnit != null">
+					control_unit = #{controlUnit},
+				</if>
+				<if test=" designUnit != null">
+					design_unit = #{designUnit},
+				</if>
+				<if test=" overallGoal != null">
+					overall_goal = #{overallGoal},
+				</if>
+				<if test=" timeGoal != null">
+					time_goal = #{timeGoal},
+				</if>
+				<if test=" securityGoal != null">
+					security_goal = #{securityGoal},
+				</if>
+				<if test=" qualityGoal != null">
+					quality_goal = #{qualityGoal},
+				</if>
+				<if test=" epoGoal != null">
+					epo_goal = #{epoGoal},
+				</if>
+				<if test=" ophGoal != null">
+					oph_goal = #{ophGoal},
+				</if>
+
+            </trim>
+        </set>
+		where project_id = #{projectId}
+	</update>
+
+    <!-- 删除 工程概况 对象 -->
+    <delete id="delete">
+        delete from project_survey
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 工程概况 对象 -->
+    <resultMap type="com.info.admin.entity.ProjectSurvey" id="projectSurveyMap">
+		<result column="project_id" property="projectId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="lc_name" property="lcName" />
+		<result column="lc_addr" property="lcAddr" />
+		<result column="line_mileage" property="lineMileage" />
+		<result column="lc_scale" property="lcScale" />
+		<result column="bear_task" property="bearTask" />
+		<result column="supply_mileage" property="supplyMileage" />
+		<result column="throughput" property="throughput" />
+		<result column="construction_unit" property="constructionUnit" />
+		<result column="bear_unit" property="bearUnit" />
+		<result column="control_unit" property="controlUnit" />
+		<result column="design_unit" property="designUnit" />
+		<result column="overall_goal" property="overallGoal" />
+		<result column="time_goal" property="timeGoal" />
+		<result column="security_goal" property="securityGoal" />
+		<result column="quality_goal" property="qualityGoal" />
+		<result column="epo_goal" property="epoGoal" />
+		<result column="oph_goal" property="ophGoal" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.projectId != null">
+			    and project_id =  #{entity.projectId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.lcName != null">
+			    and lc_name =  #{entity.lcName} 
+		    </if>
+		    <if test=" entity.lcAddr != null">
+			    and lc_addr =  #{entity.lcAddr} 
+		    </if>
+		    <if test=" entity.lineMileage != null">
+			    and line_mileage =  #{entity.lineMileage} 
+		    </if>
+		    <if test=" entity.lcScale != null">
+			    and lc_scale =  #{entity.lcScale} 
+		    </if>
+		    <if test=" entity.bearTask != null">
+			    and bear_task =  #{entity.bearTask} 
+		    </if>
+		    <if test=" entity.supplyMileage != null">
+			    and supply_mileage =  #{entity.supplyMileage} 
+		    </if>
+		    <if test=" entity.throughput != null">
+			    and throughput =  #{entity.throughput} 
+		    </if>
+		    <if test=" entity.constructionUnit != null">
+			    and construction_unit =  #{entity.constructionUnit} 
+		    </if>
+		    <if test=" entity.bearUnit != null">
+			    and bear_unit =  #{entity.bearUnit} 
+		    </if>
+		    <if test=" entity.controlUnit != null">
+			    and control_unit =  #{entity.controlUnit} 
+		    </if>
+		    <if test=" entity.designUnit != null">
+			    and design_unit =  #{entity.designUnit} 
+		    </if>
+		    <if test=" entity.overallGoal != null">
+			    and overall_goal =  #{entity.overallGoal} 
+		    </if>
+		    <if test=" entity.timeGoal != null">
+			    and time_goal =  #{entity.timeGoal} 
+		    </if>
+		    <if test=" entity.securityGoal != null">
+			    and security_goal =  #{entity.securityGoal} 
+		    </if>
+		    <if test=" entity.qualityGoal != null">
+			    and quality_goal =  #{entity.qualityGoal} 
+		    </if>
+		    <if test=" entity.epoGoal != null">
+			    and epo_goal =  #{entity.epoGoal} 
+		    </if>
+		    <if test=" entity.ophGoal != null">
+			    and oph_goal =  #{entity.ophGoal} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 工程概况 对象列表 -->
+    <select id="query"  resultMap="projectSurveyMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from project_survey
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 工程概况 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from project_survey
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 工程概况 对象列表  -->
+    <select id="pageQuery" resultMap="projectSurveyMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from project_survey
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 工程概况 -->
+	<select id="getProjectSurveyById" parameterType="Long" resultMap="projectSurveyMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from project_survey where project_id= #{projectId}
+	</select>
+</mapper>	
