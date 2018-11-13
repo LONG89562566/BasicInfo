@@ -79,7 +79,7 @@
 										</div>
 										<div class="box-footer">
 											<button onclick="refreshTheCurrentPage()" class="btn btn-info pull-left">查询</button>
-											<button type="reset" onclick="refreshTheCurrentPage()" class="btn btn-info ">重置</button>
+											<button type="reset" onclick="resetRefreshTheCurrentPage()" class="btn btn-info ">重置</button>
 										</div>
 									</div>
 								</form>
