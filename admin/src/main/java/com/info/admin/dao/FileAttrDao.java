@@ -7,7 +7,7 @@ import java.util.List;
 
  /**
  * @author ysh
- * @date 2018-11-13 09:49:00
+ * @date 2018-11-13 16:23:57
  * @describe 文件 Dao
  */
 public interface FileAttrDao {
@@ -15,7 +15,7 @@ public interface FileAttrDao {
 	 *添加FileAttr对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return int
 	 */
@@ -25,7 +25,7 @@ public interface FileAttrDao {
 	 *修改FileAttr对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return int
 	 */
@@ -35,7 +35,7 @@ public interface FileAttrDao {
 	 *查询FileAttr对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return List<FileAttr>
 	 */
@@ -45,7 +45,7 @@ public interface FileAttrDao {
 	 *删除FileAttr对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return int
 	 */
@@ -57,7 +57,7 @@ public interface FileAttrDao {
      * @param offset	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 09:49:00 
+     * @date  2018-11-13 16:23:57 
      * @updater or other
      * @return   List<FileAttr> 
      */
@@ -67,7 +67,7 @@ public interface FileAttrDao {
      * 查询FileAttr总记录数
      * @param entity  对象
      * @author  ysh
-     * @date  2018-11-13 09:49:00 
+     * @date  2018-11-13 16:23:57 
      * @updater or other
      * @return   int
      */
@@ -76,10 +76,10 @@ public interface FileAttrDao {
 	/**
 	 * 根据 id获取 文件 
 	 *@author   ysh
-	 *@param surveyId 主键id
-	 *@date  2018-11-13 09:49:00
+	 *@param fileId 主键id
+	 *@date  2018-11-13 16:23:57
 	 *@updater  or other
 	 *@return   FileAttr
 	 */
-	public FileAttr getFileAttrById(String surveyId);
+	public FileAttr getFileAttrById(String fileId);
 }

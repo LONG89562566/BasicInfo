@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * 自定义桌面 实体类
  * @author ysh  
- * @date 2018-11-13 09:49:00
+ * @date 2018-11-13 16:23:56
  */
 public class CustomDesktop implements Serializable {
 	private static final long serialVersionUID = 1L;

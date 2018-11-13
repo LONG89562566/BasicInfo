@@ -7,7 +7,7 @@ import java.util.List;
 
  /**
  * @author ysh
- * @date 2018-11-13 09:49:00
+ * @date 2018-11-13 16:23:57
  * @describe 自定义桌面 Dao
  */
 public interface CustomDesktopDao {
@@ -15,7 +15,7 @@ public interface CustomDesktopDao {
 	 *添加CustomDesktop对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return int
 	 */
@@ -25,7 +25,7 @@ public interface CustomDesktopDao {
 	 *修改CustomDesktop对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return int
 	 */
@@ -35,7 +35,7 @@ public interface CustomDesktopDao {
 	 *查询CustomDesktop对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return List<CustomDesktop>
 	 */
@@ -45,7 +45,7 @@ public interface CustomDesktopDao {
 	 *删除CustomDesktop对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return int
 	 */
@@ -57,7 +57,7 @@ public interface CustomDesktopDao {
      * @param offset	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 09:49:00 
+     * @date  2018-11-13 16:23:57 
      * @updater or other
      * @return   List<CustomDesktop> 
      */
@@ -67,7 +67,7 @@ public interface CustomDesktopDao {
      * 查询CustomDesktop总记录数
      * @param entity  对象
      * @author  ysh
-     * @date  2018-11-13 09:49:00 
+     * @date  2018-11-13 16:23:57 
      * @updater or other
      * @return   int
      */
@@ -77,7 +77,7 @@ public interface CustomDesktopDao {
 	 * 根据 id获取 自定义桌面 
 	 *@author   ysh
 	 *@param desktopId 主键id
-	 *@date  2018-11-13 09:49:00
+	 *@date  2018-11-13 16:23:57
 	 *@updater  or other
 	 *@return   CustomDesktop
 	 */

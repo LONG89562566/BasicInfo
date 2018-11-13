@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 材料 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.MaterialDao">
+
+	<!-- 新增 材料 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.Material"
+			useGeneratedKeys="true" keyProperty="materialId">
+		insert into material
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" materialId != null">
+				material_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" projectId != null">
+				project_id,
+			</if>
+			<if test=" materialname != null">
+				materialname,
+			</if>
+			<if test=" model != null">
+				model,
+			</if>
+			<if test=" unit != null">
+				unit,
+			</if>
+			<if test=" entryNum != null">
+				entry_num,
+			</if>
+			<if test=" manufacturer != null">
+				manufacturer,
+			</if>
+			<if test=" supplyer != null">
+				supplyer,
+			</if>
+			<if test=" certificateQuality != null">
+				certificate_quality,
+			</if>
+			<if test=" inspection != null">
+				inspection,
+			</if>
+			<if test=" usePart != null">
+				use_part,
+			</if>
+			<if test=" storage != null">
+				storage,
+			</if>
+			<if test=" residualNum != null">
+				residual_num,
+			</if>
+			<if test=" testReport != null">
+				test_report,
+			</if>
+			<if test=" testState != null">
+				test_state,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="materialId != null ">
+		        #{materialId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="projectId != null ">
+		        #{projectId},
+		    </if>
+			<if test="materialname != null ">
+		        #{materialname},
+		    </if>
+			<if test="model != null ">
+		        #{model},
+		    </if>
+			<if test="unit != null ">
+		        #{unit},
+		    </if>
+			<if test="entryNum != null ">
+		        #{entryNum},
+		    </if>
+			<if test="manufacturer != null ">
+		        #{manufacturer},
+		    </if>
+			<if test="supplyer != null ">
+		        #{supplyer},
+		    </if>
+			<if test="certificateQuality != null ">
+		        #{certificateQuality},
+		    </if>
+			<if test="inspection != null ">
+		        #{inspection},
+		    </if>
+			<if test="usePart != null ">
+		        #{usePart},
+		    </if>
+			<if test="storage != null ">
+		        #{storage},
+		    </if>
+			<if test="residualNum != null ">
+		        #{residualNum},
+		    </if>
+			<if test="testReport != null ">
+		        #{testReport},
+		    </if>
+			<if test="testState != null ">
+		        #{testState},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 材料 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.Material">
+		update material
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" projectId != null">
+					project_id = #{projectId},
+				</if>
+				<if test=" materialname != null">
+					materialname = #{materialname},
+				</if>
+				<if test=" model != null">
+					model = #{model},
+				</if>
+				<if test=" unit != null">
+					unit = #{unit},
+				</if>
+				<if test=" entryNum != null">
+					entry_num = #{entryNum},
+				</if>
+				<if test=" manufacturer != null">
+					manufacturer = #{manufacturer},
+				</if>
+				<if test=" supplyer != null">
+					supplyer = #{supplyer},
+				</if>
+				<if test=" certificateQuality != null">
+					certificate_quality = #{certificateQuality},
+				</if>
+				<if test=" inspection != null">
+					inspection = #{inspection},
+				</if>
+				<if test=" usePart != null">
+					use_part = #{usePart},
+				</if>
+				<if test=" storage != null">
+					storage = #{storage},
+				</if>
+				<if test=" residualNum != null">
+					residual_num = #{residualNum},
+				</if>
+				<if test=" testReport != null">
+					test_report = #{testReport},
+				</if>
+				<if test=" testState != null">
+					test_state = #{testState},
+				</if>
+
+            </trim>
+        </set>
+		where material_id = #{materialId}
+	</update>
+
+    <!-- 删除 材料 对象 -->
+    <delete id="delete">
+        delete from material
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 材料 对象 -->
+    <resultMap type="com.info.admin.entity.Material" id="materialMap">
+		<result column="material_id" property="materialId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="project_id" property="projectId" />
+		<result column="materialname" property="materialname" />
+		<result column="model" property="model" />
+		<result column="unit" property="unit" />
+		<result column="entry_num" property="entryNum" />
+		<result column="manufacturer" property="manufacturer" />
+		<result column="supplyer" property="supplyer" />
+		<result column="certificate_quality" property="certificateQuality" />
+		<result column="inspection" property="inspection" />
+		<result column="use_part" property="usePart" />
+		<result column="storage" property="storage" />
+		<result column="residual_num" property="residualNum" />
+		<result column="test_report" property="testReport" />
+		<result column="test_state" property="testState" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.materialId != null">
+			    and material_id =  #{entity.materialId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.projectId != null">
+			    and project_id =  #{entity.projectId} 
+		    </if>
+		    <if test=" entity.materialname != null">
+			    and materialname =  #{entity.materialname} 
+		    </if>
+		    <if test=" entity.model != null">
+			    and model =  #{entity.model} 
+		    </if>
+		    <if test=" entity.unit != null">
+			    and unit =  #{entity.unit} 
+		    </if>
+		    <if test=" entity.entryNum != null">
+			    and entry_num =  #{entity.entryNum} 
+		    </if>
+		    <if test=" entity.manufacturer != null">
+			    and manufacturer =  #{entity.manufacturer} 
+		    </if>
+		    <if test=" entity.supplyer != null">
+			    and supplyer =  #{entity.supplyer} 
+		    </if>
+		    <if test=" entity.certificateQuality != null">
+			    and certificate_quality =  #{entity.certificateQuality} 
+		    </if>
+		    <if test=" entity.inspection != null">
+			    and inspection =  #{entity.inspection} 
+		    </if>
+		    <if test=" entity.usePart != null">
+			    and use_part =  #{entity.usePart} 
+		    </if>
+		    <if test=" entity.storage != null">
+			    and storage =  #{entity.storage} 
+		    </if>
+		    <if test=" entity.residualNum != null">
+			    and residual_num =  #{entity.residualNum} 
+		    </if>
+		    <if test=" entity.testReport != null">
+			    and test_report =  #{entity.testReport} 
+		    </if>
+		    <if test=" entity.testState != null">
+			    and test_state =  #{entity.testState} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 材料 对象列表 -->
+    <select id="query"  resultMap="materialMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from material
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 材料 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from material
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 材料 对象列表  -->
+    <select id="pageQuery" resultMap="materialMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from material
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 材料 -->
+	<select id="getMaterialById" parameterType="Long" resultMap="materialMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from material where material_id= #{materialId}
+	</select>
+</mapper>	

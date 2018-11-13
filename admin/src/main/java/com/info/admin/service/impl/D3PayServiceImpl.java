@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-13 09:49:00
+ * @date 2018-11-13 16:23:57
  * @describe 三维交底 ServiceImpl
  */
 @Service
@@ -24,7 +24,7 @@ public class D3PayServiceImpl implements D3PayService {
      *添加D3Pay对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -38,7 +38,7 @@ public class D3PayServiceImpl implements D3PayService {
      *修改D3Pay对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -51,7 +51,7 @@ public class D3PayServiceImpl implements D3PayService {
      *查询D3Pay对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return List<D3Pay>
      */
@@ -64,7 +64,7 @@ public class D3PayServiceImpl implements D3PayService {
      *删除D3Pay对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -79,7 +79,7 @@ public class D3PayServiceImpl implements D3PayService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 09:49:00 
+     * @date  2018-11-13 16:23:57 
      * @updater or other
      * @return   PageUtil
      */
@@ -102,7 +102,7 @@ public class D3PayServiceImpl implements D3PayService {
 	 * 根据 id获取 三维交底
 	 *@author   ysh
 	 *@param payId 主键id
-	 *@date  2018-11-13 09:49:00
+	 *@date  2018-11-13 16:23:57
 	 *@updater  or other
 	 *@return   D3Pay
 	 */ 

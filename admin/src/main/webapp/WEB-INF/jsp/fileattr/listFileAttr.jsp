@@ -89,6 +89,9 @@
 			                    <th field="name"  >名称</th>
 			                    <th field="remark"  >备注</th>
 			                    <th field="url"  >地址</th>
+			                    <th field="docUnid"  >业务表主键</th>
+			                    <th field="flowId"  >流程节点主键</th>
+			                    <th field="type"  >类型</th>
 
 				                <th field="sys_opt">操作</th>
 				              </tr>
@@ -105,10 +108,13 @@
 					            <td>${r.name}</td>
 					            <td>${r.remark}</td>
 					            <td>${r.url}</td>
+					            <td>${r.docUnid}</td>
+					            <td>${r.flowId}</td>
+					            <td>${r.type}</td>
 
 						        <td>
 						         <div class="site-demo-button" >
-								   <button id="updateFileAttr" data-method="setAddOrEdit" value="${r.surveyId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+								   <button id="updateFileAttr" data-method="setAddOrEdit" value="${r.fileId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
 								 </div>
 						       </td>
 				             </tr>
@@ -141,7 +147,7 @@
 	    //数据展示id
 	    var showFieldData = "show-data";
 	    //主键
-	    var primarykey = "surveyId";
+	    var primarykey = "fileId";
 	    //分页显示标签id
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
@@ -201,7 +207,7 @@
 
 		
 		//新增、编辑打开
-		var setAddOrEdit = function(surveyId){
+		var setAddOrEdit = function(fileId){
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
@@ -209,13 +215,13 @@
 		         area: ['70%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/fileAttr/addOrEdit?surveyId='+surveyId,
+		         content: '<%=request.getContextPath()%>/admin/fileAttr/addOrEdit?fileId='+fileId,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);
 		        	 var body = layer.getChildFrame('body', index);
 		             var iframeWin = window[layero.find('iframe')[0]['name']]; 
-		             body.find('input[name="surveyId"]').val(surveyId);
+		             body.find('input[name="fileId"]').val(fileId);
 		             //弹窗表单的取消操作时关闭弹窗
 		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
 		            	 layer.closeAll();

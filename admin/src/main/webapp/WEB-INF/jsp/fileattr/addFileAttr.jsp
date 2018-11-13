@@ -9,7 +9,7 @@
 	</head>
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
- 			<input  type="hidden" id="surveyId" name="surveyId" value="${fileAttr.surveyId}"/>
+ 			<input  type="hidden" id="fileId" name="fileId" value="${fileAttr.fileId}"/>
      		<div class="layui-form-item" >
 			<div class='layui-form-item'>
      			<div class="layui-inline">
@@ -72,6 +72,31 @@
 					<textarea placeholder="请输入地址" style="width: 90%;" class="layui-textarea"  id="url" name = "url" lay-verify="content">${fileAttr.url}</textarea>
 					<span style="color: red" id="s-url"></span>
 				</div>
+			</div>
+			<div class='layui-form-item'>
+     			<div class="layui-inline">
+		        	<label class="layui-form-label">业务表主键</label>
+		        	<div class="layui-input-inline">
+		        		<input type="text" id="docUnid" name="docUnid" placeholder="请输入业务表主键"  value="${fileAttr.docUnid }" class="layui-input"/>
+		        		<span style="color: red" id="s-docUnid"></span>
+		     		</div>
+     			</div>
+     			<div class="layui-inline">
+		        	<label class="layui-form-label">流程节点主键</label>
+		        	<div class="layui-input-inline">
+		        		<input type="text" id="flowId" name="flowId" placeholder="请输入流程节点主键"  value="${fileAttr.flowId }" class="layui-input"/>
+		        		<span style="color: red" id="s-flowId"></span>
+		     		</div>
+     			</div>
+			</div>
+			<div class='layui-form-item'>
+     			<div class="layui-inline">
+		        	<label class="layui-form-label">类型</label>
+		        	<div class="layui-input-inline">
+		        		<input type="text" id="type" name="type" placeholder="请输入类型"  value="${fileAttr.type }" class="layui-input"/>
+		        		<span style="color: red" id="s-type"></span>
+		     		</div>
+     			</div>
 	   </div>
 
 	 		</div>
@@ -100,7 +125,7 @@
 		});
 	
 	function saveData() {
-	    var surveyId = $("#surveyId").val();
+	    var fileId = $("#fileId").val();
 	    var createTime = $("#createTime").val();
 	    var createUser = $("#createUser").val();
 	    var deleteFlag = $("#deleteFlag").val();
@@ -109,9 +134,12 @@
 	    var name = $("#name").val();
 	    var remark = $("#remark").val();
 	    var url = $("#url").val();
+	    var docUnid = $("#docUnid").val();
+	    var flowId = $("#flowId").val();
+	    var type = $("#type").val();
 
         var requestData={
-            "surveyId":surveyId,
+            "fileId":fileId,
             "createTimeStr":createTime,
             "createUser":createUser,
             "deleteFlag":deleteFlag,
@@ -119,7 +147,10 @@
             "seq":seq,
             "name":name,
             "remark":remark,
-            "url":url
+            "url":url,
+            "docUnid":docUnid,
+            "flowId":flowId,
+            "type":type
         };
         updateAndAdd(requestData);
     }

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-13 09:49:00 
+ * @date 2018-11-13 16:23:57 
  * @describe 员工信息 Service
  */
 public interface StaffInfoService {
@@ -15,7 +15,7 @@ public interface StaffInfoService {
      *添加StaffInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -25,7 +25,7 @@ public interface StaffInfoService {
      *修改StaffInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -35,7 +35,7 @@ public interface StaffInfoService {
      *查询StaffInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return List<StaffInfo>
      */
@@ -45,7 +45,7 @@ public interface StaffInfoService {
      *删除StaffInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -57,7 +57,7 @@ public interface StaffInfoService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 09:49:00 
+     * @date  2018-11-13 16:23:57 
      * @updater or other
      * @return   PageUtil
      */
@@ -67,7 +67,7 @@ public interface StaffInfoService {
 	 * 根据 id获取 员工信息
 	 * @author   ysh
 	 * @param staffId 主键id
-	 * @date  2018-11-13 09:49:00
+	 * @date  2018-11-13 16:23:57
 	 * @updater  or other
 	 * @return   StaffInfo
 	 */ 

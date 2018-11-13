@@ -5,11 +5,11 @@
 
 	<!-- 新增 文件 对象 -->
 	<insert id="insert" parameterType="com.info.admin.entity.FileAttr"
-			useGeneratedKeys="true" keyProperty="surveyId">
+			useGeneratedKeys="true" keyProperty="fileId">
 		insert into file_attr
         <trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test=" surveyId != null">
-				survey_id,
+			<if test=" fileId != null">
+				file_id,
 			</if>
 			<if test=" createTime != null">
 				create_time,
@@ -35,11 +35,20 @@
 			<if test=" url != null">
 				url,
 			</if>
+			<if test=" docUnid != null">
+				doc_unid,
+			</if>
+			<if test=" flowId != null">
+				flow_id,
+			</if>
+			<if test=" type != null">
+				type,
+			</if>
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="surveyId != null ">
-		        #{surveyId},
+			<if test="fileId != null ">
+		        #{fileId},
 		    </if>
 			<if test="createTime != null">
 				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
@@ -64,6 +73,15 @@
 		    </if>
 			<if test="url != null ">
 		        #{url},
+		    </if>
+			<if test="docUnid != null ">
+		        #{docUnid},
+		    </if>
+			<if test="flowId != null ">
+		        #{flowId},
+		    </if>
+			<if test="type != null ">
+		        #{type},
 		    </if>
 
         </trim>
@@ -98,10 +116,19 @@
 				<if test=" url != null">
 					url = #{url},
 				</if>
+				<if test=" docUnid != null">
+					doc_unid = #{docUnid},
+				</if>
+				<if test=" flowId != null">
+					flow_id = #{flowId},
+				</if>
+				<if test=" type != null">
+					type = #{type},
+				</if>
 
             </trim>
         </set>
-		where survey_id = #{surveyId}
+		where file_id = #{fileId}
 	</update>
 
     <!-- 删除 文件 对象 -->
@@ -112,7 +139,7 @@
     
     <!-- 返回 文件 对象 -->
     <resultMap type="com.info.admin.entity.FileAttr" id="fileAttrMap">
-		<result column="survey_id" property="surveyId" />
+		<result column="file_id" property="fileId" />
 		<result column="create_time" property="createTime" />
 		<result column="createTime" property="createTimeStr" />
 		<result column="create_user" property="createUser" />
@@ -123,14 +150,17 @@
 		<result column="name" property="name" />
 		<result column="remark" property="remark" />
 		<result column="url" property="url" />
+		<result column="doc_unid" property="docUnid" />
+		<result column="flow_id" property="flowId" />
+		<result column="type" property="type" />
 
     </resultMap>
 
     <!-- 分页条件 -->
     <sql id="filterCondition">
         <trim prefix="where " prefixOverrides="and " >
-		    <if test=" entity.surveyId != null">
-			    and survey_id =  #{entity.surveyId} 
+		    <if test=" entity.fileId != null">
+			    and file_id =  #{entity.fileId} 
 		    </if>
 		    <if test="entity.createTime!=null">
 		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
@@ -155,6 +185,15 @@
 		    </if>
 		    <if test=" entity.url != null">
 			    and url =  #{entity.url} 
+		    </if>
+		    <if test=" entity.docUnid != null">
+			    and doc_unid =  #{entity.docUnid} 
+		    </if>
+		    <if test=" entity.flowId != null">
+			    and flow_id =  #{entity.flowId} 
+		    </if>
+		    <if test=" entity.type != null">
+			    and type =  #{entity.type} 
 		    </if>
 
         </trim>
@@ -193,6 +232,6 @@
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-		 from file_attr where survey_id= #{surveyId}
+		 from file_attr where file_id= #{fileId}
 	</select>
 </mapper>	

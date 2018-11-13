@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author administrator  
- * @date 2018-11-13 09:49:00 
+ * @date 2018-11-13 16:23:57 
  * @describe 自定义桌面 Controller
  */
 @Controller
@@ -81,7 +81,7 @@ public class CustomDesktopController extends BaseController{
      * @param    request  请求
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 09:49:00 
+     * @date   2018-11-13 16:23:57 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -116,7 +116,7 @@ public class CustomDesktopController extends BaseController{
      * 查询CustomDesktop对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 09:49:00 
+     * @date   2018-11-13 16:23:57 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -136,7 +136,7 @@ public class CustomDesktopController extends BaseController{
      * 删除CustomDesktop对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 09:49:00 
+     * @date   2018-11-13 16:23:57 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -164,7 +164,7 @@ public class CustomDesktopController extends BaseController{
      * 分页查询CustomDesktop对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 09:49:00 
+     * @date   2018-11-13 16:23:57 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */

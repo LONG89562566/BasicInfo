@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * 三维交底 实体类
  * @author ysh  
- * @date 2018-11-13 09:49:00
+ * @date 2018-11-13 16:23:56
  */
 public class D3Pay implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,6 +28,14 @@ public class D3Pay implements Serializable {
 	 private Long seq;
 	 /*****项目编号*****/
 	 private String projectId;
+	 /*****工序*****/
+	 private String procedure;
+	 /*****关键工艺控制要点*****/
+	 private String processControl;
+	 /*****安全控制要点*****/
+	 private String safetyControl;
+	 /*****质量控制要点*****/
+	 private String qualityControl;
 
 
 	 public String getPayId() {
@@ -112,6 +120,38 @@ public class D3Pay implements Serializable {
 
 	 public void setProjectId(String projectId) {
 		 this.projectId = projectId;
+	 }
+
+	 public String getProcedure() {
+		 return procedure;
+	 }
+
+	 public void setProcedure(String procedure) {
+		 this.procedure = procedure;
+	 }
+
+	 public String getProcessControl() {
+		 return processControl;
+	 }
+
+	 public void setProcessControl(String processControl) {
+		 this.processControl = processControl;
+	 }
+
+	 public String getSafetyControl() {
+		 return safetyControl;
+	 }
+
+	 public void setSafetyControl(String safetyControl) {
+		 this.safetyControl = safetyControl;
+	 }
+
+	 public String getQualityControl() {
+		 return qualityControl;
+	 }
+
+	 public void setQualityControl(String qualityControl) {
+		 this.qualityControl = qualityControl;
 	 }
 
 	 

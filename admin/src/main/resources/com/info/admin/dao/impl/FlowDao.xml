@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 流程 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.FlowDao">
+
+	<!-- 新增 流程 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.Flow"
+			useGeneratedKeys="true" keyProperty="flowId">
+		insert into flow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" flowId != null">
+				flow_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" createUserCn != null">
+				create_user_cn,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" name != null">
+				name,
+			</if>
+			<if test=" lastNode != null">
+				last_node,
+			</if>
+			<if test=" nextNode != null">
+				next_node,
+			</if>
+			<if test=" docUnid != null">
+				doc_unid,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="flowId != null ">
+		        #{flowId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="createUserCn != null ">
+		        #{createUserCn},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="name != null ">
+		        #{name},
+		    </if>
+			<if test="lastNode != null ">
+		        #{lastNode},
+		    </if>
+			<if test="nextNode != null ">
+		        #{nextNode},
+		    </if>
+			<if test="docUnid != null ">
+		        #{docUnid},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 流程 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.Flow">
+		update flow
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" createUserCn != null">
+					create_user_cn = #{createUserCn},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" name != null">
+					name = #{name},
+				</if>
+				<if test=" lastNode != null">
+					last_node = #{lastNode},
+				</if>
+				<if test=" nextNode != null">
+					next_node = #{nextNode},
+				</if>
+				<if test=" docUnid != null">
+					doc_unid = #{docUnid},
+				</if>
+
+            </trim>
+        </set>
+		where flow_id = #{flowId}
+	</update>
+
+    <!-- 删除 流程 对象 -->
+    <delete id="delete">
+        delete from flow
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 流程 对象 -->
+    <resultMap type="com.info.admin.entity.Flow" id="flowMap">
+		<result column="flow_id" property="flowId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="create_user_cn" property="createUserCn" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="name" property="name" />
+		<result column="last_node" property="lastNode" />
+		<result column="next_node" property="nextNode" />
+		<result column="doc_unid" property="docUnid" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.flowId != null">
+			    and flow_id =  #{entity.flowId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.createUserCn != null">
+			    and create_user_cn =  #{entity.createUserCn} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.name != null">
+			    and name =  #{entity.name} 
+		    </if>
+		    <if test=" entity.lastNode != null">
+			    and last_node =  #{entity.lastNode} 
+		    </if>
+		    <if test=" entity.nextNode != null">
+			    and next_node =  #{entity.nextNode} 
+		    </if>
+		    <if test=" entity.docUnid != null">
+			    and doc_unid =  #{entity.docUnid} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 流程 对象列表 -->
+    <select id="query"  resultMap="flowMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from flow
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 流程 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from flow
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 流程 对象列表  -->
+    <select id="pageQuery" resultMap="flowMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from flow
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 流程 -->
+	<select id="getFlowById" parameterType="Long" resultMap="flowMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from flow where flow_id= #{flowId}
+	</select>
+</mapper>	

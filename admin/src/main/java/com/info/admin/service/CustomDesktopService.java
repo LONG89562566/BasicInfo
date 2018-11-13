@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-13 09:49:00 
+ * @date 2018-11-13 16:23:57 
  * @describe 自定义桌面 Service
  */
 public interface CustomDesktopService {
@@ -15,7 +15,7 @@ public interface CustomDesktopService {
      *添加CustomDesktop对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -25,7 +25,7 @@ public interface CustomDesktopService {
      *修改CustomDesktop对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -35,7 +35,7 @@ public interface CustomDesktopService {
      *查询CustomDesktop对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return List<CustomDesktop>
      */
@@ -45,7 +45,7 @@ public interface CustomDesktopService {
      *删除CustomDesktop对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -57,7 +57,7 @@ public interface CustomDesktopService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 09:49:00 
+     * @date  2018-11-13 16:23:57 
      * @updater or other
      * @return   PageUtil
      */
@@ -67,7 +67,7 @@ public interface CustomDesktopService {
 	 * 根据 id获取 自定义桌面
 	 * @author   ysh
 	 * @param desktopId 主键id
-	 * @date  2018-11-13 09:49:00
+	 * @date  2018-11-13 16:23:57
 	 * @updater  or other
 	 * @return   CustomDesktop
 	 */ 

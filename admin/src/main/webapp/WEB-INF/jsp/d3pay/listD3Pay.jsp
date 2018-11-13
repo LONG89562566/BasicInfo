@@ -87,6 +87,10 @@
 			                    <th field="updateTime"  type='date'>修改时间</th>
 			                    <th field="seq"  >排序号</th>
 			                    <th field="projectId"  >项目编号</th>
+			                    <th field="procedure"  >工序</th>
+			                    <th field="processControl"  >关键工艺控制要点</th>
+			                    <th field="safetyControl"  >安全控制要点</th>
+			                    <th field="qualityControl"  >质量控制要点</th>
 
 				                <th field="sys_opt">操作</th>
 				              </tr>
@@ -101,6 +105,10 @@
 				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					            <td>${r.seq}</td>
 					            <td>${r.projectId}</td>
+					            <td>${r.procedure}</td>
+					            <td>${r.processControl}</td>
+					            <td>${r.safetyControl}</td>
+					            <td>${r.qualityControl}</td>
 
 						        <td>
 						         <div class="site-demo-button" >

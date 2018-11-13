@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-13 09:49:00 
+ * @date 2018-11-13 16:23:57 
  * @describe 工程概况 Service
  */
 public interface ProjectSurveyService {
@@ -15,7 +15,7 @@ public interface ProjectSurveyService {
      *添加ProjectSurvey对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -25,7 +25,7 @@ public interface ProjectSurveyService {
      *修改ProjectSurvey对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -35,7 +35,7 @@ public interface ProjectSurveyService {
      *查询ProjectSurvey对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return List<ProjectSurvey>
      */
@@ -45,7 +45,7 @@ public interface ProjectSurveyService {
      *删除ProjectSurvey对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 09:49:00 
+     *@date  2018-11-13 16:23:57 
      *@updater or other
      *@return int
      */
@@ -57,7 +57,7 @@ public interface ProjectSurveyService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 09:49:00 
+     * @date  2018-11-13 16:23:57 
      * @updater or other
      * @return   PageUtil
      */
@@ -67,7 +67,7 @@ public interface ProjectSurveyService {
 	 * 根据 id获取 工程概况
 	 * @author   ysh
 	 * @param projectId 主键id
-	 * @date  2018-11-13 09:49:00
+	 * @date  2018-11-13 16:23:57
 	 * @updater  or other
 	 * @return   ProjectSurvey
 	 */ 

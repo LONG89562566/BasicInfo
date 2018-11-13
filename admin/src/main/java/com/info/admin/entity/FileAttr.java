@@ -6,12 +6,12 @@ import java.util.Date;
 /**
  * 文件 实体类
  * @author ysh  
- * @date 2018-11-13 09:49:00
+ * @date 2018-11-13 16:23:56
  */
 public class FileAttr implements Serializable {
 	private static final long serialVersionUID = 1L;
 	 /*****主键*****/
-	 private String surveyId;
+	 private String fileId;
 	 /*****创建时间*****/
 	 private Date createTime;
 	 /*****创建时间 日常的字符串*****/
@@ -32,14 +32,20 @@ public class FileAttr implements Serializable {
 	 private String remark;
 	 /*****地址*****/
 	 private String url;
+	 /*****业务表主键*****/
+	 private String docUnid;
+	 /*****流程节点主键*****/
+	 private String flowId;
+	 /*****类型*****/
+	 private Long type;
 
 
-	 public String getSurveyId() {
-		 return surveyId;
+	 public String getFileId() {
+		 return fileId;
 	 }
 
-	 public void setSurveyId(String surveyId) {
-		 this.surveyId = surveyId;
+	 public void setFileId(String fileId) {
+		 this.fileId = fileId;
 	 }
 
 	 public Date getCreateTime() {
@@ -132,6 +138,30 @@ public class FileAttr implements Serializable {
 
 	 public void setUrl(String url) {
 		 this.url = url;
+	 }
+
+	 public String getDocUnid() {
+		 return docUnid;
+	 }
+
+	 public void setDocUnid(String docUnid) {
+		 this.docUnid = docUnid;
+	 }
+
+	 public String getFlowId() {
+		 return flowId;
+	 }
+
+	 public void setFlowId(String flowId) {
+		 this.flowId = flowId;
+	 }
+
+	 public Long getType() {
+		 return type;
+	 }
+
+	 public void setType(Long type) {
+		 this.type = type;
 	 }
 
 	 

@@ -7,7 +7,7 @@ import java.util.List;
 
  /**
  * @author ysh
- * @date 2018-11-13 09:49:00
+ * @date 2018-11-13 16:23:57
  * @describe 组织机构信息 Dao
  */
 public interface OrgInfoDao {
@@ -15,7 +15,7 @@ public interface OrgInfoDao {
 	 *添加OrgInfo对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return int
 	 */
@@ -25,7 +25,7 @@ public interface OrgInfoDao {
 	 *修改OrgInfo对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return int
 	 */
@@ -35,7 +35,7 @@ public interface OrgInfoDao {
 	 *查询OrgInfo对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return List<OrgInfo>
 	 */
@@ -45,7 +45,7 @@ public interface OrgInfoDao {
 	 *删除OrgInfo对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 09:49:00 
+	 *@date  2018-11-13 16:23:57 
 	 *@updater or other
 	 *@return int
 	 */
@@ -57,7 +57,7 @@ public interface OrgInfoDao {
      * @param offset	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 09:49:00 
+     * @date  2018-11-13 16:23:57 
      * @updater or other
      * @return   List<OrgInfo> 
      */
@@ -67,7 +67,7 @@ public interface OrgInfoDao {
      * 查询OrgInfo总记录数
      * @param entity  对象
      * @author  ysh
-     * @date  2018-11-13 09:49:00 
+     * @date  2018-11-13 16:23:57 
      * @updater or other
      * @return   int
      */
@@ -77,7 +77,7 @@ public interface OrgInfoDao {
 	 * 根据 id获取 组织机构信息 
 	 *@author   ysh
 	 *@param orgId 主键id
-	 *@date  2018-11-13 09:49:00
+	 *@date  2018-11-13 16:23:57
 	 *@updater  or other
 	 *@return   OrgInfo
 	 */

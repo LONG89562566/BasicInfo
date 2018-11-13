@@ -29,6 +29,18 @@
 			<if test=" projectId != null">
 				project_id,
 			</if>
+			<if test=" procedure != null">
+				procedure,
+			</if>
+			<if test=" processControl != null">
+				process_control,
+			</if>
+			<if test=" safetyControl != null">
+				safety_control,
+			</if>
+			<if test=" qualityControl != null">
+				quality_control,
+			</if>
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -52,6 +64,18 @@
 		    </if>
 			<if test="projectId != null ">
 		        #{projectId},
+		    </if>
+			<if test="procedure != null ">
+		        #{procedure},
+		    </if>
+			<if test="processControl != null ">
+		        #{processControl},
+		    </if>
+			<if test="safetyControl != null ">
+		        #{safetyControl},
+		    </if>
+			<if test="qualityControl != null ">
+		        #{qualityControl},
 		    </if>
 
         </trim>
@@ -80,6 +104,18 @@
 				<if test=" projectId != null">
 					project_id = #{projectId},
 				</if>
+				<if test=" procedure != null">
+					procedure = #{procedure},
+				</if>
+				<if test=" processControl != null">
+					process_control = #{processControl},
+				</if>
+				<if test=" safetyControl != null">
+					safety_control = #{safetyControl},
+				</if>
+				<if test=" qualityControl != null">
+					quality_control = #{qualityControl},
+				</if>
 
             </trim>
         </set>
@@ -103,6 +139,10 @@
 		<result column="updateTime" property="updateTimeStr" />
 		<result column="seq" property="seq" />
 		<result column="project_id" property="projectId" />
+		<result column="procedure" property="procedure" />
+		<result column="process_control" property="processControl" />
+		<result column="safety_control" property="safetyControl" />
+		<result column="quality_control" property="qualityControl" />
 
     </resultMap>
 
@@ -129,6 +169,18 @@
 		    </if>
 		    <if test=" entity.projectId != null">
 			    and project_id =  #{entity.projectId} 
+		    </if>
+		    <if test=" entity.procedure != null">
+			    and procedure =  #{entity.procedure} 
+		    </if>
+		    <if test=" entity.processControl != null">
+			    and process_control =  #{entity.processControl} 
+		    </if>
+		    <if test=" entity.safetyControl != null">
+			    and safety_control =  #{entity.safetyControl} 
+		    </if>
+		    <if test=" entity.qualityControl != null">
+			    and quality_control =  #{entity.qualityControl} 
 		    </if>
 
         </trim>

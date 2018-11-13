@@ -58,6 +58,34 @@
 		        		<span style="color: red" id="s-projectId"></span>
 		     		</div>
      			</div>
+			</div>
+			<div class='layui-form-item'>
+		        <label class="layui-form-label">工序</label>
+				<div class="layui-input-block">
+					<textarea placeholder="请输入工序" style="width: 90%;" class="layui-textarea"  id="procedure" name = "procedure" lay-verify="content">${d3Pay.procedure}</textarea>
+					<span style="color: red" id="s-procedure"></span>
+				</div>
+			</div>
+			<div class='layui-form-item'>
+		        <label class="layui-form-label">关键工艺控制要点</label>
+				<div class="layui-input-block">
+					<textarea placeholder="请输入关键工艺控制要点" style="width: 90%;" class="layui-textarea"  id="processControl" name = "processControl" lay-verify="content">${d3Pay.processControl}</textarea>
+					<span style="color: red" id="s-processControl"></span>
+				</div>
+			</div>
+			<div class='layui-form-item'>
+		        <label class="layui-form-label">安全控制要点</label>
+				<div class="layui-input-block">
+					<textarea placeholder="请输入安全控制要点" style="width: 90%;" class="layui-textarea"  id="safetyControl" name = "safetyControl" lay-verify="content">${d3Pay.safetyControl}</textarea>
+					<span style="color: red" id="s-safetyControl"></span>
+				</div>
+			</div>
+			<div class='layui-form-item'>
+		        <label class="layui-form-label">质量控制要点</label>
+				<div class="layui-input-block">
+					<textarea placeholder="请输入质量控制要点" style="width: 90%;" class="layui-textarea"  id="qualityControl" name = "qualityControl" lay-verify="content">${d3Pay.qualityControl}</textarea>
+					<span style="color: red" id="s-qualityControl"></span>
+				</div>
 	   </div>
 
 	 		</div>
@@ -93,6 +121,10 @@
 	    var updateTime = $("#updateTime").val();
 	    var seq = $("#seq").val();
 	    var projectId = $("#projectId").val();
+	    var procedure = $("#procedure").val();
+	    var processControl = $("#processControl").val();
+	    var safetyControl = $("#safetyControl").val();
+	    var qualityControl = $("#qualityControl").val();
 
         var requestData={
             "payId":payId,
@@ -101,7 +133,11 @@
             "deleteFlag":deleteFlag,
             "updateTimeStr":updateTime,
             "seq":seq,
-            "projectId":projectId
+            "projectId":projectId,
+            "procedure":procedure,
+            "processControl":processControl,
+            "safetyControl":safetyControl,
+            "qualityControl":qualityControl
         };
         updateAndAdd(requestData);
     }

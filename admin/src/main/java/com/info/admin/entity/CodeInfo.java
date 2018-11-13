@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * 二维码信息 实体类
  * @author ysh  
- * @date 2018-11-13 09:49:00
+ * @date 2018-11-13 16:23:56
  */
 public class CodeInfo implements Serializable {
 	private static final long serialVersionUID = 1L;

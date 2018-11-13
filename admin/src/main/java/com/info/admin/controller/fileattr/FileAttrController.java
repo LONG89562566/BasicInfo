@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author administrator  
- * @date 2018-11-13 09:49:00 
+ * @date 2018-11-13 16:23:58 
  * @describe 文件 Controller
  */
 @Controller
@@ -61,17 +61,17 @@ public class FileAttrController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String surveyId,Model model){
+    public String addOrEdit(HttpServletRequest request,String fileId,Model model){
         try{
-            if(null != surveyId){
+            if(null != fileId){
                 //根据id查询系统用户
-                FileAttr fileAttr = service.getFileAttrById(surveyId);
+                FileAttr fileAttr = service.getFileAttrById(fileId);
                 model.addAttribute("fileAttr", fileAttr);
             }
-            model.addAttribute("surveyId", surveyId);
+            model.addAttribute("fileId", fileId);
             return "fileattr/addFileAttr";
         }catch(Exception e){
-            logger.error("[FileAttrController][addOrEdit]: surveyId="+surveyId, e);
+            logger.error("[FileAttrController][addOrEdit]: fileId="+fileId, e);
             return "500";
         }
     }
@@ -81,7 +81,7 @@ public class FileAttrController extends BaseController{
      * @param    request  请求
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 09:49:00 
+     * @date   2018-11-13 16:23:58 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -96,7 +96,7 @@ public class FileAttrController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getSurveyId()) {
+            if (null != entity.getFileId()) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);
@@ -116,7 +116,7 @@ public class FileAttrController extends BaseController{
      * 查询FileAttr对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 09:49:00 
+     * @date   2018-11-13 16:23:58 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -136,7 +136,7 @@ public class FileAttrController extends BaseController{
      * 删除FileAttr对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 09:49:00 
+     * @date   2018-11-13 16:23:58 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -164,7 +164,7 @@ public class FileAttrController extends BaseController{
      * 分页查询FileAttr对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 09:49:00 
+     * @date   2018-11-13 16:23:58 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
