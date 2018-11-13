@@ -76,14 +76,31 @@ var onSelectPage = function(currentPage,pageSize){
 var  refreshTheCurrentPage = function () {
     loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
 };
+//刷新当前页面
+var  resetRefreshTheCurrentPage = function () {
+    loadThisPageData($('#pageNum').val(),$('#pageSize').val(),{},"");
+};
 
 //局部刷新页面
 var loadSelectPageDat = function (currentPage,pageSize) {
     $('#pageNum').val(currentPage);
     $('#pageSize').val(pageSize);
 
+    if( _queryConditionForrId == undefined || _queryConditionForrId == "" ||  _queryConditionForrId.length == 0) {
+        _queryConditionForrId = "form_submit";
+    }
+
     var json = serializeFormPost(_queryConditionForrId);
     var parm = serializeFormGet(_queryConditionForrId);
+
+    loadThisPageData(currentPage,pageSize,json,parm);
+};
+
+//局部刷新页面
+var loadThisPageData = function (currentPage,pageSize,json,parm) {
+    $('#pageNum').val(currentPage);
+    $('#pageSize').val(pageSize);
+
 
     $.post(pageQueryUrl+"?"+parm,json,function (data) {
         if(data.code=="200" || data.code=="201"){
