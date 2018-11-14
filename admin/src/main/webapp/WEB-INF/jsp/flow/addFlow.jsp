@@ -84,6 +84,63 @@
 		     		</div>
      			</div>
      			<div class="layui-inline">
+		        	<label class="layui-form-label">参与部门编号</label>
+		        	<div class="layui-input-inline">
+		        		<input type="text" id="orgId" name="orgId" placeholder="请输入参与部门编号"  value="${flow.orgId }" class="layui-input"/>
+		        		<span style="color: red" id="s-orgId"></span>
+		     		</div>
+     			</div>
+			</div>
+			<div class='layui-form-item'>
+     			<div class="layui-inline">
+		        	<label class="layui-form-label">参与角色编号</label>
+		        	<div class="layui-input-inline">
+		        		<input type="text" id="roleId" name="roleId" placeholder="请输入参与角色编号"  value="${flow.roleId }" class="layui-input"/>
+		        		<span style="color: red" id="s-roleId"></span>
+		     		</div>
+     			</div>
+     			<div class="layui-inline">
+		        	<label class="layui-form-label">参与人编号</label>
+		        	<div class="layui-input-inline">
+		        		<input type="text" id="userId" name="userId" placeholder="请输入参与人编号"  value="${flow.userId }" class="layui-input"/>
+		        		<span style="color: red" id="s-userId"></span>
+		     		</div>
+     			</div>
+			</div>
+			<div class='layui-form-item'>
+     			<div class="layui-inline">
+		        	<label class="layui-form-label">意见</label>
+		        	<div class="layui-input-inline">
+		        		<input type="text" id="msg" name="msg" placeholder="请输入意见"  value="${flow.msg }" class="layui-input"/>
+		        		<span style="color: red" id="s-msg"></span>
+		     		</div>
+     			</div>
+     			<div class="layui-inline">
+		        	<label class="layui-form-label">是否完成</label>
+		        	<div class="layui-input-inline">
+		        		<input type="text" id="isDone" name="isDone" placeholder="请输入是否完成"  value="${flow.isDone }" class="layui-input"/>
+		        		<span style="color: red" id="s-isDone"></span>
+		     		</div>
+     			</div>
+			</div>
+			<div class='layui-form-item'>
+     			<div class="layui-inline">
+		        	<label class="layui-form-label">业务内容</label>
+		        	<div class="layui-input-inline">
+		        		<input type="text" id="showTitle" name="showTitle" placeholder="请输入业务内容"  value="${flow.showTitle }" class="layui-input"/>
+		        		<span style="color: red" id="s-showTitle"></span>
+		     		</div>
+     			</div>
+     			<div class="layui-inline">
+		        	<label class="layui-form-label">业务详情页面</label>
+		        	<div class="layui-input-inline">
+		        		<input type="text" id="docUrl" name="docUrl" placeholder="请输入业务详情页面"  value="${flow.docUrl }" class="layui-input"/>
+		        		<span style="color: red" id="s-docUrl"></span>
+		     		</div>
+     			</div>
+			</div>
+			<div class='layui-form-item'>
+     			<div class="layui-inline">
 		        	<label class="layui-form-label">业务表主键</label>
 		        	<div class="layui-input-inline">
 		        		<input type="text" id="docUnid" name="docUnid" placeholder="请输入业务表主键"  value="${flow.docUnid }" class="layui-input"/>
@@ -128,6 +185,13 @@
 	    var name = $("#name").val();
 	    var lastNode = $("#lastNode").val();
 	    var nextNode = $("#nextNode").val();
+	    var orgId = $("#orgId").val();
+	    var roleId = $("#roleId").val();
+	    var userId = $("#userId").val();
+	    var msg = $("#msg").val();
+	    var isDone = $("#isDone").val();
+	    var showTitle = $("#showTitle").val();
+	    var docUrl = $("#docUrl").val();
 	    var docUnid = $("#docUnid").val();
 
         var requestData={
@@ -141,6 +205,13 @@
             "name":name,
             "lastNode":lastNode,
             "nextNode":nextNode,
+            "orgId":orgId,
+            "roleId":roleId,
+            "userId":userId,
+            "msg":msg,
+            "isDone":isDone,
+            "showTitle":showTitle,
+            "docUrl":docUrl,
             "docUnid":docUnid
         };
         updateAndAdd(requestData);

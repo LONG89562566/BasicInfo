@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author administrator  
- * @date 2018-11-13 16:23:57 
+ * @date 2018-11-14 23:45:42 
  * @describe 流程 Controller
  */
 @Controller
@@ -43,6 +43,7 @@ public class FlowController extends BaseController{
     @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
     @RequiresPermissions("flow:query")
     public String getFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
+        logger.info("[FlowController][getFlowList] 查询流程列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -51,6 +52,27 @@ public class FlowController extends BaseController{
         model.addAttribute("paginator", paginator);
         model.addAttribute("flow", entity);
         return "flow/listFlow";
+    }
+
+     /**
+     *我的桌面查询流程列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/list/desktop", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequiresPermissions("flow:query")
+    public String getFlowListDesktop(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
+        logger.info("[FlowController][getFlowListDesktop] 我的桌面查询流程列表:");
+        // 获取分页当前的页码
+        int currentPageNum = this.getPageNum(request);
+        // 获取分页的大小
+        int currentPageSize = this.getPageSize(request);
+        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        model.addAttribute("paginator", paginator);
+        model.addAttribute("flow", entity);
+        return "flow/listFlowDesktop";
     }
 
     /**
@@ -81,7 +103,7 @@ public class FlowController extends BaseController{
      * @param    request  请求
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -116,7 +138,7 @@ public class FlowController extends BaseController{
      * 查询Flow对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -136,7 +158,7 @@ public class FlowController extends BaseController{
      * 删除Flow对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -164,7 +186,7 @@ public class FlowController extends BaseController{
      * 分页查询Flow对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */

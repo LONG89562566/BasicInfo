@@ -25,7 +25,14 @@ public class CustomDesktopVo implements Serializable {
 	 private Date updateTime;
 	 /*****排序号*****/ 
 	 private Long seq;
-
+	/*****宽度*****/
+	private String width;
+	/*****高度*****/
+	private String height;
+	/***** 菜单名称 *****/
+	private String menuName;
+	/***** 连接地址 *****/
+	private String menuHref;
 
 	 public String getDesktopId() {
 		 return desktopId;
@@ -90,6 +97,38 @@ public class CustomDesktopVo implements Serializable {
 	 public void setSeq(Long seq) {
 		 this.seq = seq;
 	 }
+
+	public String getWidth() {
+		return width;
+	}
+
+	public void setWidth(String width) {
+		this.width = width;
+	}
+
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
+	public String getMenuName() {
+		return menuName;
+	}
+
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
+	}
+
+	public String getMenuHref() {
+		return menuHref;
+	}
+
+	public void setMenuHref(String menuHref) {
+		this.menuHref = menuHref;
+	}
 
 	public CustomDesktopVo() {
 		super();

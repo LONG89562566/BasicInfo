@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 操作人员 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.OperatorInfoDao">
+
+	<!-- 新增 操作人员 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.OperatorInfo"
+			useGeneratedKeys="true" keyProperty="supplierId">
+		insert into operator_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" supplierId != null">
+				supplier_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" goodsId != null">
+				goods_id,
+			</if>
+			<if test=" operator != null">
+				operator,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="supplierId != null ">
+		        #{supplierId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="goodsId != null ">
+		        #{goodsId},
+		    </if>
+			<if test="operator != null ">
+		        #{operator},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 操作人员 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.OperatorInfo">
+		update operator_info
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" goodsId != null">
+					goods_id = #{goodsId},
+				</if>
+				<if test=" operator != null">
+					operator = #{operator},
+				</if>
+
+            </trim>
+        </set>
+		where supplier_id = #{supplierId}
+	</update>
+
+    <!-- 删除 操作人员 对象 -->
+    <delete id="delete">
+        delete from operator_info
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 操作人员 对象 -->
+    <resultMap type="com.info.admin.entity.OperatorInfo" id="operatorInfoMap">
+		<result column="supplier_id" property="supplierId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="goods_id" property="goodsId" />
+		<result column="operator" property="operator" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.supplierId != null">
+			    and supplier_id =  #{entity.supplierId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.goodsId != null">
+			    and goods_id =  #{entity.goodsId} 
+		    </if>
+		    <if test=" entity.operator != null">
+			    and operator =  #{entity.operator} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 操作人员 对象列表 -->
+    <select id="query"  resultMap="operatorInfoMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from operator_info
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 操作人员 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from operator_info
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 操作人员 对象列表  -->
+    <select id="pageQuery" resultMap="operatorInfoMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from operator_info
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 操作人员 -->
+	<select id="getOperatorInfoById" parameterType="Long" resultMap="operatorInfoMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from operator_info where supplier_id= #{supplierId}
+	</select>
+</mapper>	

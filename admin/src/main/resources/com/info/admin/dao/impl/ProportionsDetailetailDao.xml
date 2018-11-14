@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配合比详情 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.ProportionsDetailetailDao">
+
+	<!-- 新增 配合比详情 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.ProportionsDetailetail"
+			useGeneratedKeys="true" keyProperty="detailId">
+		insert into proportions_detailetail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" detailId != null">
+				detail_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" proportionsId != null">
+				proportions_id,
+			</if>
+			<if test=" materialId != null">
+				material_id,
+			</if>
+			<if test=" num != null">
+				num,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="detailId != null ">
+		        #{detailId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="proportionsId != null ">
+		        #{proportionsId},
+		    </if>
+			<if test="materialId != null ">
+		        #{materialId},
+		    </if>
+			<if test="num != null ">
+		        #{num},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 配合比详情 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.ProportionsDetailetail">
+		update proportions_detailetail
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" proportionsId != null">
+					proportions_id = #{proportionsId},
+				</if>
+				<if test=" materialId != null">
+					material_id = #{materialId},
+				</if>
+				<if test=" num != null">
+					num = #{num},
+				</if>
+
+            </trim>
+        </set>
+		where detail_id = #{detailId}
+	</update>
+
+    <!-- 删除 配合比详情 对象 -->
+    <delete id="delete">
+        delete from proportions_detailetail
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 配合比详情 对象 -->
+    <resultMap type="com.info.admin.entity.ProportionsDetailetail" id="proportionsDetailetailMap">
+		<result column="detail_id" property="detailId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="proportions_id" property="proportionsId" />
+		<result column="material_id" property="materialId" />
+		<result column="num" property="num" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.detailId != null">
+			    and detail_id =  #{entity.detailId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.proportionsId != null">
+			    and proportions_id =  #{entity.proportionsId} 
+		    </if>
+		    <if test=" entity.materialId != null">
+			    and material_id =  #{entity.materialId} 
+		    </if>
+		    <if test=" entity.num != null">
+			    and num =  #{entity.num} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 配合比详情 对象列表 -->
+    <select id="query"  resultMap="proportionsDetailetailMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from proportions_detailetail
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 配合比详情 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from proportions_detailetail
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 配合比详情 对象列表  -->
+    <select id="pageQuery" resultMap="proportionsDetailetailMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from proportions_detailetail
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 配合比详情 -->
+	<select id="getProportionsDetailetailById" parameterType="Long" resultMap="proportionsDetailetailMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from proportions_detailetail where detail_id= #{detailId}
+	</select>
+</mapper>	

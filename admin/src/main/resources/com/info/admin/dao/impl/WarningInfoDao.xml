@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 预警设置 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.WarningInfoDao">
+
+	<!-- 新增 预警设置 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.WarningInfo"
+			useGeneratedKeys="true" keyProperty="warningId">
+		insert into warning_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" warningId != null">
+				warning_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" title != null">
+				title,
+			</if>
+			<if test=" content != null">
+				content,
+			</if>
+			<if test=" releaseUser != null">
+				release_user,
+			</if>
+			<if test=" receiveUser != null">
+				receive_user,
+			</if>
+			<if test=" options != null">
+				options,
+			</if>
+			<if test=" true_val != null">
+				true_val,
+			</if>
+			<if test=" condition != null">
+				condition,
+			</if>
+			<if test=" warn_val != null">
+				warn_val,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="warningId != null ">
+		        #{warningId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="title != null ">
+		        #{title},
+		    </if>
+			<if test="content != null ">
+		        #{content},
+		    </if>
+			<if test="releaseUser != null ">
+		        #{releaseUser},
+		    </if>
+			<if test="receiveUser != null ">
+		        #{receiveUser},
+		    </if>
+			<if test="options != null ">
+		        #{options},
+		    </if>
+			<if test="true_val != null ">
+		        #{true_val},
+		    </if>
+			<if test="condition != null ">
+		        #{condition},
+		    </if>
+			<if test="warn_val != null ">
+		        #{warn_val},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 预警设置 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.WarningInfo">
+		update warning_info
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" title != null">
+					title = #{title},
+				</if>
+				<if test=" content != null">
+					content = #{content},
+				</if>
+				<if test=" releaseUser != null">
+					release_user = #{releaseUser},
+				</if>
+				<if test=" receiveUser != null">
+					receive_user = #{receiveUser},
+				</if>
+				<if test=" options != null">
+					options = #{options},
+				</if>
+				<if test=" true_val != null">
+					true_val = #{true_val},
+				</if>
+				<if test=" condition != null">
+					condition = #{condition},
+				</if>
+				<if test=" warn_val != null">
+					warn_val = #{warn_val},
+				</if>
+
+            </trim>
+        </set>
+		where warning_id = #{warningId}
+	</update>
+
+    <!-- 删除 预警设置 对象 -->
+    <delete id="delete">
+        delete from warning_info
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 预警设置 对象 -->
+    <resultMap type="com.info.admin.entity.WarningInfo" id="warningInfoMap">
+		<result column="warning_id" property="warningId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="release_user" property="releaseUser" />
+		<result column="receive_user" property="receiveUser" />
+		<result column="options" property="options" />
+		<result column="true_val" property="true_val" />
+		<result column="condition" property="condition" />
+		<result column="warn_val" property="warn_val" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.warningId != null">
+			    and warning_id =  #{entity.warningId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.title != null">
+			    and title =  #{entity.title} 
+		    </if>
+		    <if test=" entity.content != null">
+			    and content =  #{entity.content} 
+		    </if>
+		    <if test=" entity.releaseUser != null">
+			    and release_user =  #{entity.releaseUser} 
+		    </if>
+		    <if test=" entity.receiveUser != null">
+			    and receive_user =  #{entity.receiveUser} 
+		    </if>
+		    <if test=" entity.options != null">
+			    and options =  #{entity.options} 
+		    </if>
+		    <if test=" entity.true_val != null">
+			    and true_val =  #{entity.true_val} 
+		    </if>
+		    <if test=" entity.condition != null">
+			    and condition =  #{entity.condition} 
+		    </if>
+		    <if test=" entity.warn_val != null">
+			    and warn_val =  #{entity.warn_val} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 预警设置 对象列表 -->
+    <select id="query"  resultMap="warningInfoMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from warning_info
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 预警设置 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from warning_info
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 预警设置 对象列表  -->
+    <select id="pageQuery" resultMap="warningInfoMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from warning_info
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 预警设置 -->
+	<select id="getWarningInfoById" parameterType="Long" resultMap="warningInfoMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from warning_info where warning_id= #{warningId}
+	</select>
+</mapper>	

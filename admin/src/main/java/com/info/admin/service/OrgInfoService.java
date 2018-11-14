@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-13 16:23:57 
+ * @date 2018-11-14 23:45:42 
  * @describe 组织机构信息 Service
  */
 public interface OrgInfoService {
@@ -15,7 +15,7 @@ public interface OrgInfoService {
      *添加OrgInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -25,7 +25,7 @@ public interface OrgInfoService {
      *修改OrgInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -35,7 +35,7 @@ public interface OrgInfoService {
      *查询OrgInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return List<OrgInfo>
      */
@@ -45,7 +45,7 @@ public interface OrgInfoService {
      *删除OrgInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -57,7 +57,7 @@ public interface OrgInfoService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:42 
      * @updater or other
      * @return   PageUtil
      */
@@ -67,7 +67,7 @@ public interface OrgInfoService {
 	 * 根据 id获取 组织机构信息
 	 * @author   ysh
 	 * @param orgId 主键id
-	 * @date  2018-11-13 16:23:57
+	 * @date  2018-11-14 23:45:42
 	 * @updater  or other
 	 * @return   OrgInfo
 	 */ 

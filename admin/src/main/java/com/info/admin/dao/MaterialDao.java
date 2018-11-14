@@ -7,7 +7,7 @@ import java.util.List;
 
  /**
  * @author ysh
- * @date 2018-11-13 16:23:57
+ * @date 2018-11-14 23:45:41
  * @describe 材料 Dao
  */
 public interface MaterialDao {
@@ -15,7 +15,7 @@ public interface MaterialDao {
 	 *添加Material对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -25,7 +25,7 @@ public interface MaterialDao {
 	 *修改Material对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -35,7 +35,7 @@ public interface MaterialDao {
 	 *查询Material对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return List<Material>
 	 */
@@ -45,7 +45,7 @@ public interface MaterialDao {
 	 *删除Material对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -57,7 +57,7 @@ public interface MaterialDao {
      * @param offset	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:41 
      * @updater or other
      * @return   List<Material> 
      */
@@ -67,7 +67,7 @@ public interface MaterialDao {
      * 查询Material总记录数
      * @param entity  对象
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:41 
      * @updater or other
      * @return   int
      */
@@ -77,7 +77,7 @@ public interface MaterialDao {
 	 * 根据 id获取 材料 
 	 *@author   ysh
 	 *@param materialId 主键id
-	 *@date  2018-11-13 16:23:57
+	 *@date  2018-11-14 23:45:41
 	 *@updater  or other
 	 *@return   Material
 	 */

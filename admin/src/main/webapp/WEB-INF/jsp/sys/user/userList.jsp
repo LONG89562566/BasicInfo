@@ -87,29 +87,29 @@
 							</div>
 							<!-- 表格列表start -->
 							<div class="box">
-								<div class="box-body">
+								<div class="box-body" style="overflow:auto">
 									<div class="site-demo-button" >
 										<button data-method="setTop" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>
 									</div>
 									<table id="example1" class="table table-bordered table-striped" style="overflow: scroll;">
 										<thead>
 										<tr>
-											<th field="sys_xh">序号</th>
-											<th field="userName">用户名</th>
-											<th field="name">姓名</th>
-											<th field="phone">手机号码</th>
-											<th field="email">邮箱</th>
-											<th field="status" method="methodStatus">状态</th>
-											<th field="remarks">备注信息</th>
-											<th field="createTime">创建时间</th>
-											<th field="lastUpdateTime">更新时间</th>
-											<th field="sys_opt">操作</th>
+											<th field="sys_xh" style="width: 40px;">序号</th>
+											<th field="userName"  style="width: 120px;">用户名</th>
+											<th field="name"  style="width: 120px;">姓名</th>
+											<th field="phone"  style="width: 140px;">手机号码</th>
+											<th field="email"  style="width: 140px;">邮箱</th>
+											<th field="status" method="methodStatus"  style="width: 40px;">状态</th>
+											<th field="remarks"  style="width: 320px;">备注信息</th>
+											<th field="createTime"  style="width: 140px;">创建时间</th>
+											<th field="lastUpdateTime"  style="width: 140px;">更新时间</th>
+											<th field="sys_opt"  style="width: 220px;">操作</th>
 										</tr>
 										</thead>
 										<tbody id="showPicture">
-										<c:forEach items="${paginator.object}" var="r">
+										<c:forEach items="${paginator.object}" var="r" varStatus="st">
 											<tr>
-												<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
+												<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )}</td>
 												<td>${r.userName}</td>
 												<td>${r.name}</td>
 												<td>${r.phone}</td>

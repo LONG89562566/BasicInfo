@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-13 16:23:57 
+ * @date 2018-11-14 23:45:42 
  * @describe 供应商 Service
  */
 public interface SupplierService {
@@ -15,7 +15,7 @@ public interface SupplierService {
      *添加Supplier对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -25,7 +25,7 @@ public interface SupplierService {
      *修改Supplier对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -35,7 +35,7 @@ public interface SupplierService {
      *查询Supplier对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return List<Supplier>
      */
@@ -45,7 +45,7 @@ public interface SupplierService {
      *删除Supplier对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -57,7 +57,7 @@ public interface SupplierService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:42 
      * @updater or other
      * @return   PageUtil
      */
@@ -67,7 +67,7 @@ public interface SupplierService {
 	 * 根据 id获取 供应商
 	 * @author   ysh
 	 * @param supplierId 主键id
-	 * @date  2018-11-13 16:23:57
+	 * @date  2018-11-14 23:45:42
 	 * @updater  or other
 	 * @return   Supplier
 	 */ 

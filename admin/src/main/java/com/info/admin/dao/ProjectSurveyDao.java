@@ -7,7 +7,7 @@ import java.util.List;
 
  /**
  * @author ysh
- * @date 2018-11-13 16:23:57
+ * @date 2018-11-14 23:45:41
  * @describe 工程概况 Dao
  */
 public interface ProjectSurveyDao {
@@ -15,7 +15,7 @@ public interface ProjectSurveyDao {
 	 *添加ProjectSurvey对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -25,7 +25,7 @@ public interface ProjectSurveyDao {
 	 *修改ProjectSurvey对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -35,7 +35,7 @@ public interface ProjectSurveyDao {
 	 *查询ProjectSurvey对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return List<ProjectSurvey>
 	 */
@@ -45,7 +45,7 @@ public interface ProjectSurveyDao {
 	 *删除ProjectSurvey对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -57,7 +57,7 @@ public interface ProjectSurveyDao {
      * @param offset	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:41 
      * @updater or other
      * @return   List<ProjectSurvey> 
      */
@@ -67,7 +67,7 @@ public interface ProjectSurveyDao {
      * 查询ProjectSurvey总记录数
      * @param entity  对象
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:41 
      * @updater or other
      * @return   int
      */
@@ -77,7 +77,7 @@ public interface ProjectSurveyDao {
 	 * 根据 id获取 工程概况 
 	 *@author   ysh
 	 *@param projectId 主键id
-	 *@date  2018-11-13 16:23:57
+	 *@date  2018-11-14 23:45:41
 	 *@updater  or other
 	 *@return   ProjectSurvey
 	 */

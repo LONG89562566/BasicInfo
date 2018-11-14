@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 操作人员 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.RepairInfoDao">
+
+	<!-- 新增 操作人员 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.RepairInfo"
+			useGeneratedKeys="true" keyProperty="repairId">
+		insert into repair_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" repairId != null">
+				repair_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" repairUser != null">
+				repair_user,
+			</if>
+			<if test=" repairTime != null">
+				repair_time,
+			</if>
+			<if test=" amount != null">
+				amount,
+			</if>
+			<if test=" remark != null">
+				remark,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="repairId != null ">
+		        #{repairId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="repairUser != null ">
+		        #{repairUser},
+		    </if>
+			<if test="repairTime != null">
+				date_format(#{repairTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="amount != null ">
+		        #{amount},
+		    </if>
+			<if test="remark != null ">
+		        #{remark},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 操作人员 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.RepairInfo">
+		update repair_info
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" repairUser != null">
+					repair_user = #{repairUser},
+				</if>
+				<if test=" repairTime != null">
+					repair_time = date_format(#{repairTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" amount != null">
+					amount = #{amount},
+				</if>
+				<if test=" remark != null">
+					remark = #{remark},
+				</if>
+
+            </trim>
+        </set>
+		where repair_id = #{repairId}
+	</update>
+
+    <!-- 删除 操作人员 对象 -->
+    <delete id="delete">
+        delete from repair_info
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 操作人员 对象 -->
+    <resultMap type="com.info.admin.entity.RepairInfo" id="repairInfoMap">
+		<result column="repair_id" property="repairId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="repair_user" property="repairUser" />
+		<result column="repair_time" property="repairTime" />
+		<result column="repairTime" property="repairTimeStr" />
+		<result column="amount" property="amount" />
+		<result column="remark" property="remark" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.repairId != null">
+			    and repair_id =  #{entity.repairId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.repairUser != null">
+			    and repair_user =  #{entity.repairUser} 
+		    </if>
+		    <if test="entity.repairTime!=null">
+		        and repair_time = STR_TO_DATE(#{entity.repairTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.amount != null">
+			    and amount =  #{entity.amount} 
+		    </if>
+		    <if test=" entity.remark != null">
+			    and remark =  #{entity.remark} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 操作人员 对象列表 -->
+    <select id="query"  resultMap="repairInfoMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(repair_time,'%Y-%m-%d %H:%i:%s') as repairTime 
+          from repair_info
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 操作人员 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from repair_info
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 操作人员 对象列表  -->
+    <select id="pageQuery" resultMap="repairInfoMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(repair_time,'%Y-%m-%d %H:%i:%s') as repairTime 
+         from repair_info
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 操作人员 -->
+	<select id="getRepairInfoById" parameterType="Long" resultMap="repairInfoMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(repair_time,'%Y-%m-%d %H:%i:%s') as repairTime 
+		 from repair_info where repair_id= #{repairId}
+	</select>
+</mapper>	

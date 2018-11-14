@@ -29,6 +29,12 @@
 			<if test=" updateTime != null">
 				update_time,
 			</if>
+			<if test=" width != null">
+				width,
+			</if>
+			<if test=" height != null">
+				height,
+			</if>
 			<if test=" seq != null">
 				seq,
 			</if>
@@ -55,7 +61,13 @@
 		    </if>
 			<if test="updateTime != null">
 				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
+			</if>
+			<if test=" width != null">
+				#{width},
+			</if>
+			<if test=" height != null">
+				#{height},
+			</if>
 			<if test="seq != null ">
 		        #{seq},
 		    </if>
@@ -86,6 +98,12 @@
 				<if test=" updateTime != null">
 					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
 				</if>
+				<if test=" width != null">
+					width = #{width},
+				</if>
+				<if test=" height != null">
+					height = #{height},
+				</if>
 				<if test=" seq != null">
 					seq = #{seq},
 				</if>
@@ -112,8 +130,27 @@
 		<result column="custom_name" property="customName" />
 		<result column="update_time" property="updateTime" />
 		<result column="updateTime" property="updateTimeStr" />
+		<result column="width" property="width" />
+		<result column="height" property="height" />
 		<result column="seq" property="seq" />
+    </resultMap>
 
+	<!-- 返回 自定义桌面 对象 -->
+    <resultMap type="com.info.admin.vo.CustomDesktopVo" id="customDesktopMapVo">
+		<result column="desktop_id" property="desktopId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="user_id" property="userId" />
+		<result column="menu_id" property="menuId" />
+		<result column="custom_name" property="customName" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="width" property="width" />
+		<result column="height" property="height" />
+		<result column="seq" property="seq" />
+		<result column="menu_name" property="menuName" />
+		<result column="menu_href" property="menuHref" />
     </resultMap>
 
     <!-- 分页条件 -->
@@ -143,7 +180,12 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-
+			<if test=" entity.width != null">
+			    and width =  #{entity.width}
+		    </if>
+			<if test=" entity.height != null">
+			    and height =  #{entity.height}
+		    </if>
         </trim>
     </sql>
     
@@ -172,6 +214,20 @@
          from custom_desktop
         <include refid="filterCondition"></include>
         LIMIT #{offset},#{pageSize}
+    </select>
+
+	<!-- 分页查询 自定义桌面 对象列表  -->
+    <select id="myDesktop" resultMap="customDesktopMapVo">
+		SELECT cd.*,sm.menu_name,sm.menu_href from sys_user su
+		left join sys_user_role sur on su.id = sur.user_id
+		left join sys_role_menu srm on sur.role_id = srm.role_id
+		left join sys_menu sm on srm.menu_id = sm.menu_id
+		left join custom_destop cd on sm.menu_id = cd.menu_id and cd.user_id = #{userId}
+		where srm.id is not null and sm.menu_href is not null and sm.menu_href &lt;&gt;  ''
+		and cd.desktop_id is not null
+		and su.id = #{userId}
+		GROUP BY sm.menu_id
+		ORDER BY seq
     </select>
     
     <!-- 根据id 查询 自定义桌面 -->

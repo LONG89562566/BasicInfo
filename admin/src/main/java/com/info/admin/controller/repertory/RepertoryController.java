@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author administrator  
- * @date 2018-11-13 16:23:57 
+ * @date 2018-11-14 23:45:42 
  * @describe 仓库 Controller
  */
 @Controller
@@ -43,6 +43,7 @@ public class RepertoryController extends BaseController{
     @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
     @RequiresPermissions("repertory:query")
     public String getRepertoryList(HttpServletRequest request, @ModelAttribute Repertory entity, Model model) {
+        logger.info("[RepertoryController][getRepertoryList] 查询仓库列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -51,6 +52,27 @@ public class RepertoryController extends BaseController{
         model.addAttribute("paginator", paginator);
         model.addAttribute("repertory", entity);
         return "repertory/listRepertory";
+    }
+
+     /**
+     *我的桌面查询仓库列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/list/desktop", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequiresPermissions("repertory:query")
+    public String getRepertoryListDesktop(HttpServletRequest request, @ModelAttribute Repertory entity, Model model) {
+        logger.info("[RepertoryController][getRepertoryListDesktop] 我的桌面查询仓库列表:");
+        // 获取分页当前的页码
+        int currentPageNum = this.getPageNum(request);
+        // 获取分页的大小
+        int currentPageSize = this.getPageSize(request);
+        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        model.addAttribute("paginator", paginator);
+        model.addAttribute("repertory", entity);
+        return "repertory/listRepertoryDesktop";
     }
 
     /**
@@ -81,7 +103,7 @@ public class RepertoryController extends BaseController{
      * @param    request  请求
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -116,7 +138,7 @@ public class RepertoryController extends BaseController{
      * 查询Repertory对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -136,7 +158,7 @@ public class RepertoryController extends BaseController{
      * 删除Repertory对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -164,7 +186,7 @@ public class RepertoryController extends BaseController{
      * 分页查询Repertory对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */

@@ -1,6 +1,7 @@
 package com.info.admin.dao;
 
 import com.info.admin.entity.CustomDesktop;
+import com.info.admin.vo.CustomDesktopVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -62,6 +63,16 @@ public interface CustomDesktopDao {
      * @return   List<CustomDesktop> 
      */
     List<CustomDesktop> pageQuery(@Param("entity") CustomDesktop entity, @Param("offset") int offset, @Param("pageSize") int pageSize);
+
+    /**
+     * 获取用户桌面菜单
+     * @param userId  用户id
+     * @author  ysh
+     * @date  2018-11-13 16:23:57
+     * @updater or other
+     * @return   List<CustomDesktop>
+     */
+    List<CustomDesktopVo> myDesktop(@Param("userId") Long userId);
 
     /**
      * 查询CustomDesktop总记录数

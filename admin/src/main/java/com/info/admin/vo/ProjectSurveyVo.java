@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * 工程概况实体类
- * @author administrator  2018-11-13 16:23:58
+ * @author administrator  2018-11-14 23:45:42
  */
 public class ProjectSurveyVo implements Serializable {
 	private static final long serialVersionUID = 1L;

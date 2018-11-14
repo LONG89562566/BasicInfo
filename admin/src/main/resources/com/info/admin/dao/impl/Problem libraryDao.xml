@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 问题库 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.Problem libraryDao">
+
+	<!-- 新增 问题库 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.ProblemLibrary"
+			useGeneratedKeys="true" keyProperty="supplierId">
+		insert into problem_library
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" supplierId != null">
+				supplier_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" title != null">
+				title,
+			</if>
+			<if test=" type != null">
+				type,
+			</if>
+			<if test=" inspectContent != null">
+				inspect_content,
+			</if>
+			<if test=" inspectUser != null">
+				inspect_user,
+			</if>
+			<if test=" rectifyUser != null">
+				rectify_user,
+			</if>
+			<if test=" rectifyTime != null">
+				rectify_time,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="supplierId != null ">
+		        #{supplierId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="title != null ">
+		        #{title},
+		    </if>
+			<if test="type != null ">
+		        #{type},
+		    </if>
+			<if test="inspectContent != null ">
+		        #{inspectContent},
+		    </if>
+			<if test="inspectUser != null ">
+		        #{inspectUser},
+		    </if>
+			<if test="rectifyUser != null ">
+		        #{rectifyUser},
+		    </if>
+			<if test="rectifyTime != null">
+				date_format(#{rectifyTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+
+        </trim>
+	</insert>
+
+	<!-- 更新 问题库 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.ProblemLibrary">
+		update problem_library
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" title != null">
+					title = #{title},
+				</if>
+				<if test=" type != null">
+					type = #{type},
+				</if>
+				<if test=" inspectContent != null">
+					inspect_content = #{inspectContent},
+				</if>
+				<if test=" inspectUser != null">
+					inspect_user = #{inspectUser},
+				</if>
+				<if test=" rectifyUser != null">
+					rectify_user = #{rectifyUser},
+				</if>
+				<if test=" rectifyTime != null">
+					rectify_time = date_format(#{rectifyTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+
+            </trim>
+        </set>
+		where supplier_id = #{supplierId}
+	</update>
+
+    <!-- 删除 问题库 对象 -->
+    <delete id="delete">
+        delete from problem_library
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 问题库 对象 -->
+    <resultMap type="com.info.admin.entity.ProblemLibrary" id="problemLibraryMap">
+		<result column="supplier_id" property="supplierId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="title" property="title" />
+		<result column="type" property="type" />
+		<result column="inspect_content" property="inspectContent" />
+		<result column="inspect_user" property="inspectUser" />
+		<result column="rectify_user" property="rectifyUser" />
+		<result column="rectify_time" property="rectifyTime" />
+		<result column="rectifyTime" property="rectifyTimeStr" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.supplierId != null">
+			    and supplier_id =  #{entity.supplierId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.title != null">
+			    and title =  #{entity.title} 
+		    </if>
+		    <if test=" entity.type != null">
+			    and type =  #{entity.type} 
+		    </if>
+		    <if test=" entity.inspectContent != null">
+			    and inspect_content =  #{entity.inspectContent} 
+		    </if>
+		    <if test=" entity.inspectUser != null">
+			    and inspect_user =  #{entity.inspectUser} 
+		    </if>
+		    <if test=" entity.rectifyUser != null">
+			    and rectify_user =  #{entity.rectifyUser} 
+		    </if>
+		    <if test="entity.rectifyTime!=null">
+		        and rectify_time = STR_TO_DATE(#{entity.rectifyTime},"%Y-%m-%d %T")
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 问题库 对象列表 -->
+    <select id="query"  resultMap="problemLibraryMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(rectify_time,'%Y-%m-%d %H:%i:%s') as rectifyTime 
+          from problem_library
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 问题库 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from problem_library
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 问题库 对象列表  -->
+    <select id="pageQuery" resultMap="problemLibraryMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(rectify_time,'%Y-%m-%d %H:%i:%s') as rectifyTime 
+         from problem_library
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 问题库 -->
+	<select id="getProblemLibraryById" parameterType="Long" resultMap="problemLibraryMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(rectify_time,'%Y-%m-%d %H:%i:%s') as rectifyTime 
+		 from problem_library where supplier_id= #{supplierId}
+	</select>
+</mapper>	

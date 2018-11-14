@@ -30,6 +30,11 @@ public class CustomDesktop implements Serializable {
 	 private String updateTimeStr;
 	 /*****排序号*****/
 	 private Long seq;
+	 /*****宽度*****/
+	 private String width;
+	 /*****高度*****/
+	 private String height;
+
 
 
 	 public String getDesktopId() {
@@ -124,7 +129,22 @@ public class CustomDesktop implements Serializable {
 		 this.seq = seq;
 	 }
 
-	 
+	public String getWidth() {
+		return width;
+	}
+
+	public void setWidth(String width) {
+		this.width = width;
+	}
+
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
 	public CustomDesktop() {
 		super();
 	}

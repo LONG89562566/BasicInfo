@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * 流程实体类
- * @author administrator  2018-11-13 16:23:58
+ * @author administrator  2018-11-14 23:45:42
  */
 public class FlowVo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -29,6 +29,20 @@ public class FlowVo implements Serializable {
 	 private String lastNode;
 	 /*****下一节点*****/ 
 	 private String nextNode;
+	 /*****参与部门编号*****/ 
+	 private String orgId;
+	 /*****参与角色编号*****/ 
+	 private String roleId;
+	 /*****参与人编号*****/ 
+	 private String userId;
+	 /*****意见*****/ 
+	 private String msg;
+	 /*****是否完成*****/ 
+	 private Long isDone;
+	 /*****业务内容*****/ 
+	 private String showTitle;
+	 /*****业务详情页面*****/ 
+	 private String docUrl;
 	 /*****业务表主键*****/ 
 	 private String docUnid;
 
@@ -111,6 +125,62 @@ public class FlowVo implements Serializable {
 
 	 public void setNextNode(String nextNode) {
 		 this.nextNode = nextNode;
+	 }
+
+	 public String getOrgId() {
+		 return orgId;
+	 }
+
+	 public void setOrgId(String orgId) {
+		 this.orgId = orgId;
+	 }
+
+	 public String getRoleId() {
+		 return roleId;
+	 }
+
+	 public void setRoleId(String roleId) {
+		 this.roleId = roleId;
+	 }
+
+	 public String getUserId() {
+		 return userId;
+	 }
+
+	 public void setUserId(String userId) {
+		 this.userId = userId;
+	 }
+
+	 public String getMsg() {
+		 return msg;
+	 }
+
+	 public void setMsg(String msg) {
+		 this.msg = msg;
+	 }
+
+	 public Long getIsDone() {
+		 return isDone;
+	 }
+
+	 public void setIsDone(Long isDone) {
+		 this.isDone = isDone;
+	 }
+
+	 public String getShowTitle() {
+		 return showTitle;
+	 }
+
+	 public void setShowTitle(String showTitle) {
+		 this.showTitle = showTitle;
+	 }
+
+	 public String getDocUrl() {
+		 return docUrl;
+	 }
+
+	 public void setDocUrl(String docUrl) {
+		 this.docUrl = docUrl;
 	 }
 
 	 public String getDocUnid() {

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author administrator  
- * @date 2018-11-13 16:23:57 
+ * @date 2018-11-14 23:45:42 
  * @describe 员工信息 Controller
  */
 @Controller
@@ -43,6 +43,7 @@ public class StaffInfoController extends BaseController{
     @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
     @RequiresPermissions("staffInfo:query")
     public String getStaffInfoList(HttpServletRequest request, @ModelAttribute StaffInfo entity, Model model) {
+        logger.info("[StaffInfoController][getStaffInfoList] 查询员工信息列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -51,6 +52,27 @@ public class StaffInfoController extends BaseController{
         model.addAttribute("paginator", paginator);
         model.addAttribute("staffInfo", entity);
         return "staffinfo/listStaffInfo";
+    }
+
+     /**
+     *我的桌面查询员工信息列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/list/desktop", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequiresPermissions("staffInfo:query")
+    public String getStaffInfoListDesktop(HttpServletRequest request, @ModelAttribute StaffInfo entity, Model model) {
+        logger.info("[StaffInfoController][getStaffInfoListDesktop] 我的桌面查询员工信息列表:");
+        // 获取分页当前的页码
+        int currentPageNum = this.getPageNum(request);
+        // 获取分页的大小
+        int currentPageSize = this.getPageSize(request);
+        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        model.addAttribute("paginator", paginator);
+        model.addAttribute("staffInfo", entity);
+        return "staffinfo/listStaffInfoDesktop";
     }
 
     /**
@@ -81,7 +103,7 @@ public class StaffInfoController extends BaseController{
      * @param    request  请求
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -116,7 +138,7 @@ public class StaffInfoController extends BaseController{
      * 查询StaffInfo对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -136,7 +158,7 @@ public class StaffInfoController extends BaseController{
      * 删除StaffInfo对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -164,7 +186,7 @@ public class StaffInfoController extends BaseController{
      * 分页查询StaffInfo对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */

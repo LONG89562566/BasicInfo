@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * 三维交底 实体类
  * @author ysh  
- * @date 2018-11-13 16:23:56
+ * @date 2018-11-14 23:45:41
  */
 public class D3Pay implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -4,6 +4,7 @@ import com.info.admin.dao.CustomDesktopDao;
 import com.info.admin.entity.CustomDesktop;
 import com.info.admin.service.CustomDesktopService;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.vo.CustomDesktopVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,16 +87,26 @@ public class CustomDesktopServiceImpl implements CustomDesktopService {
     @Override
     public PageUtil pageQuery(CustomDesktop entity, int pageNum, int pageSize){
         int size = dao.getPageCount(entity);
-
         int offset = pageNum > 1 ? (pageNum - 1) * pageSize : 0;
-
         List<CustomDesktop> result = dao.pageQuery(entity, offset, pageSize);
-
         PageUtil paginator = new PageUtil(pageSize, size, pageNum);
-
         paginator.setObject(result);
-
         return paginator;
+    }
+
+    /**
+     * 分页查询CustomDesktop对象
+     * @param entity 对象
+     * @param pageNum	页数
+     * @param pageSize	大小
+     * @author  ysh
+     * @date  2018-11-13 16:23:57
+     * @updater or other
+     * @return   PageUtil
+     */
+    @Override
+    public List<CustomDesktopVo> myDesktop(Long userId){
+        return dao.myDesktop(userId);
     }
     
     /**

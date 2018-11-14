@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-13 16:23:57
+ * @date 2018-11-14 23:45:42
  * @describe 供应商 ServiceImpl
  */
 @Service
@@ -24,7 +24,7 @@ public class SupplierServiceImpl implements SupplierService {
      *添加Supplier对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -38,7 +38,7 @@ public class SupplierServiceImpl implements SupplierService {
      *修改Supplier对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -51,7 +51,7 @@ public class SupplierServiceImpl implements SupplierService {
      *查询Supplier对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return List<Supplier>
      */
@@ -64,7 +64,7 @@ public class SupplierServiceImpl implements SupplierService {
      *删除Supplier对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -79,7 +79,7 @@ public class SupplierServiceImpl implements SupplierService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:42 
      * @updater or other
      * @return   PageUtil
      */
@@ -102,7 +102,7 @@ public class SupplierServiceImpl implements SupplierService {
 	 * 根据 id获取 供应商
 	 *@author   ysh
 	 *@param supplierId 主键id
-	 *@date  2018-11-13 16:23:57
+	 *@date  2018-11-14 23:45:42
 	 *@updater  or other
 	 *@return   Supplier
 	 */ 

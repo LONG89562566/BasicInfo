@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * 组织机构信息实体类
- * @author administrator  2018-11-13 16:23:58
+ * @author administrator  2018-11-14 23:45:42
  */
 public class OrgInfoVo implements Serializable {
 	private static final long serialVersionUID = 1L;

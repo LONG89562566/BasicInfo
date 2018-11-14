@@ -2,6 +2,7 @@ package com.info.admin.service;
 
 import com.info.admin.entity.CustomDesktop;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.vo.CustomDesktopVo;
 
 import java.util.List;
 
@@ -62,6 +63,18 @@ public interface CustomDesktopService {
      * @return   PageUtil
      */
     PageUtil pageQuery(CustomDesktop entity, int pageNum, int pageSize);
+
+    /**
+     * 分页查询CustomDesktop对象
+     * @param entity 对象
+     * @param pageNum	页数
+     * @param pageSize	大小
+     * @author  ysh
+     * @date  2018-11-13 16:23:57
+     * @updater or other
+     * @return   PageUtil
+     */
+    List<CustomDesktopVo> myDesktop(Long userId);
     
     /**
 	 * 根据 id获取 自定义桌面

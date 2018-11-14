@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * 员工信息实体类
- * @author administrator  2018-11-13 16:23:58
+ * @author administrator  2018-11-14 23:45:42
  */
 public class StaffInfoVo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +28,7 @@ public class StaffInfoVo implements Serializable {
 	 /*****性别*****/ 
 	 private String sex;
 	 /*****籍贯*****/ 
-	 private String native;
+	 private String natives;
 	 /*****民族*****/ 
 	 private String nation;
 	 /*****身份证号*****/ 
@@ -113,12 +113,12 @@ public class StaffInfoVo implements Serializable {
 		 this.sex = sex;
 	 }
 
-	 public String getNative() {
-		 return native;
+	 public String getNatives() {
+		 return natives;
 	 }
 
-	 public void setNative(String native) {
-		 this.native = native;
+	 public void setNatives(String natives) {
+		 this.natives = natives;
 	 }
 
 	 public String getNation() {

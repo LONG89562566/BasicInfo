@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-13 16:23:57 
+ * @date 2018-11-14 23:45:42 
  * @describe 仓库 Service
  */
 public interface RepertoryService {
@@ -15,7 +15,7 @@ public interface RepertoryService {
      *添加Repertory对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -25,7 +25,7 @@ public interface RepertoryService {
      *修改Repertory对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -35,7 +35,7 @@ public interface RepertoryService {
      *查询Repertory对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return List<Repertory>
      */
@@ -45,7 +45,7 @@ public interface RepertoryService {
      *删除Repertory对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -57,7 +57,7 @@ public interface RepertoryService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:42 
      * @updater or other
      * @return   PageUtil
      */
@@ -67,7 +67,7 @@ public interface RepertoryService {
 	 * 根据 id获取 仓库
 	 * @author   ysh
 	 * @param supplierId 主键id
-	 * @date  2018-11-13 16:23:57
+	 * @date  2018-11-14 23:45:42
 	 * @updater  or other
 	 * @return   Repertory
 	 */ 

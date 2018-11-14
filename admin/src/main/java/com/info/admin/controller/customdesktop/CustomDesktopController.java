@@ -54,6 +54,39 @@ public class CustomDesktopController extends BaseController{
     }
 
     /**
+     *查询自定义桌面列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/myDesktop", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequiresPermissions("customDesktop:myDesktop")
+    public String myDesktop(HttpServletRequest request, Model model) {
+        model.addAttribute("customDesktopLs", service.myDesktop(getLoginUserId(request)));
+        return "customdesktop/myDesktop";
+    }
+
+    /**
+     *查询自定义桌面列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @ResponseBody
+    @RequestMapping(value = "/myDesktopLs", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult myDesktopLs(HttpServletRequest request, Model model) {
+        logger.info("[CustomDesktopController][myDesktopLs] 查询CustomDesktopVo数组对象:");
+        try {
+            return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.myDesktop(getLoginUserId(request)));
+        } catch (Exception e) {
+            logger.error("[CustomDesktopController][myDesktopLs] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
      *跳转到新增页面
      *@author
      *@date  2018-07-12 10:50:32
@@ -112,6 +145,7 @@ public class CustomDesktopController extends BaseController{
         }
     }
 
+
     /**
      * 查询CustomDesktop对象
      * @param    entity  对象
@@ -122,7 +156,7 @@ public class CustomDesktopController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "query", method = { RequestMethod.GET, RequestMethod.POST })
-    public JsonResult query(CustomDesktop entity) {
+    public JsonResult query(HttpServletRequest request,CustomDesktop entity) {
         logger.info("[CustomDesktopController][query] 查询CustomDesktop对象:");
         try {
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.query(entity));

@@ -7,7 +7,7 @@ import java.util.List;
 
  /**
  * @author ysh
- * @date 2018-11-13 16:23:57
+ * @date 2018-11-14 23:45:41
  * @describe 流程 Dao
  */
 public interface FlowDao {
@@ -15,7 +15,7 @@ public interface FlowDao {
 	 *添加Flow对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -25,7 +25,7 @@ public interface FlowDao {
 	 *修改Flow对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -35,7 +35,7 @@ public interface FlowDao {
 	 *查询Flow对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return List<Flow>
 	 */
@@ -45,7 +45,7 @@ public interface FlowDao {
 	 *删除Flow对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -57,7 +57,7 @@ public interface FlowDao {
      * @param offset	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:41 
      * @updater or other
      * @return   List<Flow> 
      */
@@ -67,7 +67,7 @@ public interface FlowDao {
      * 查询Flow总记录数
      * @param entity  对象
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:41 
      * @updater or other
      * @return   int
      */
@@ -77,7 +77,7 @@ public interface FlowDao {
 	 * 根据 id获取 流程 
 	 *@author   ysh
 	 *@param flowId 主键id
-	 *@date  2018-11-13 16:23:57
+	 *@date  2018-11-14 23:45:41
 	 *@updater  or other
 	 *@return   Flow
 	 */

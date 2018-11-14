@@ -38,6 +38,27 @@
 			<if test=" nextNode != null">
 				next_node,
 			</if>
+			<if test=" orgId != null">
+				org_id,
+			</if>
+			<if test=" roleId != null">
+				role_id,
+			</if>
+			<if test=" userId != null">
+				user_id,
+			</if>
+			<if test=" msg != null">
+				msg,
+			</if>
+			<if test=" isDone != null">
+				is_done,
+			</if>
+			<if test=" showTitle != null">
+				show_title,
+			</if>
+			<if test=" docUrl != null">
+				doc_url,
+			</if>
 			<if test=" docUnid != null">
 				doc_unid,
 			</if>
@@ -73,6 +94,27 @@
 		    </if>
 			<if test="nextNode != null ">
 		        #{nextNode},
+		    </if>
+			<if test="orgId != null ">
+		        #{orgId},
+		    </if>
+			<if test="roleId != null ">
+		        #{roleId},
+		    </if>
+			<if test="userId != null ">
+		        #{userId},
+		    </if>
+			<if test="msg != null ">
+		        #{msg},
+		    </if>
+			<if test="isDone != null ">
+		        #{isDone},
+		    </if>
+			<if test="showTitle != null ">
+		        #{showTitle},
+		    </if>
+			<if test="docUrl != null ">
+		        #{docUrl},
 		    </if>
 			<if test="docUnid != null ">
 		        #{docUnid},
@@ -113,6 +155,27 @@
 				<if test=" nextNode != null">
 					next_node = #{nextNode},
 				</if>
+				<if test=" orgId != null">
+					org_id = #{orgId},
+				</if>
+				<if test=" roleId != null">
+					role_id = #{roleId},
+				</if>
+				<if test=" userId != null">
+					user_id = #{userId},
+				</if>
+				<if test=" msg != null">
+					msg = #{msg},
+				</if>
+				<if test=" isDone != null">
+					is_done = #{isDone},
+				</if>
+				<if test=" showTitle != null">
+					show_title = #{showTitle},
+				</if>
+				<if test=" docUrl != null">
+					doc_url = #{docUrl},
+				</if>
 				<if test=" docUnid != null">
 					doc_unid = #{docUnid},
 				</if>
@@ -142,6 +205,13 @@
 		<result column="name" property="name" />
 		<result column="last_node" property="lastNode" />
 		<result column="next_node" property="nextNode" />
+		<result column="org_id" property="orgId" />
+		<result column="role_id" property="roleId" />
+		<result column="user_id" property="userId" />
+		<result column="msg" property="msg" />
+		<result column="is_done" property="isDone" />
+		<result column="show_title" property="showTitle" />
+		<result column="doc_url" property="docUrl" />
 		<result column="doc_unid" property="docUnid" />
 
     </resultMap>
@@ -178,6 +248,27 @@
 		    </if>
 		    <if test=" entity.nextNode != null">
 			    and next_node =  #{entity.nextNode} 
+		    </if>
+		    <if test=" entity.orgId != null">
+			    and org_id =  #{entity.orgId} 
+		    </if>
+		    <if test=" entity.roleId != null">
+			    and role_id =  #{entity.roleId} 
+		    </if>
+		    <if test=" entity.userId != null">
+			    and user_id =  #{entity.userId} 
+		    </if>
+		    <if test=" entity.msg != null">
+			    and msg =  #{entity.msg} 
+		    </if>
+		    <if test=" entity.isDone != null">
+			    and is_done =  #{entity.isDone} 
+		    </if>
+		    <if test=" entity.showTitle != null">
+			    and show_title =  #{entity.showTitle} 
+		    </if>
+		    <if test=" entity.docUrl != null">
+			    and doc_url =  #{entity.docUrl} 
 		    </if>
 		    <if test=" entity.docUnid != null">
 			    and doc_unid =  #{entity.docUnid} 

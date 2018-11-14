@@ -1,12 +1,13 @@
 package com.info.admin.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * 仓库 实体类
  * @author ysh  
- * @date 2018-11-13 16:23:56
+ * @date 2018-11-14 23:45:41
  */
 public class Repertory implements Serializable {
 	private static final long serialVersionUID = 1L;

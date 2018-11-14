@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 混泥土信息 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.ConcreteInfoDao">
+
+	<!-- 新增 混泥土信息 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.ConcreteInfo"
+			useGeneratedKeys="true" keyProperty="concreteId">
+		insert into concrete_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" concreteId != null">
+				concrete_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" projectId != null">
+				project_id,
+			</if>
+			<if test=" name != null">
+				name,
+			</if>
+			<if test=" level != null">
+				level,
+			</if>
+			<if test=" proportionId != null">
+				proportion_id,
+			</if>
+			<if test=" square != null">
+				square,
+			</if>
+			<if test=" totalUse != null">
+				total_use,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="concreteId != null ">
+		        #{concreteId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="projectId != null ">
+		        #{projectId},
+		    </if>
+			<if test="name != null ">
+		        #{name},
+		    </if>
+			<if test="level != null ">
+		        #{level},
+		    </if>
+			<if test="proportionId != null ">
+		        #{proportionId},
+		    </if>
+			<if test="square != null ">
+		        #{square},
+		    </if>
+			<if test="totalUse != null ">
+		        #{totalUse},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 混泥土信息 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.ConcreteInfo">
+		update concrete_info
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" projectId != null">
+					project_id = #{projectId},
+				</if>
+				<if test=" name != null">
+					name = #{name},
+				</if>
+				<if test=" level != null">
+					level = #{level},
+				</if>
+				<if test=" proportionId != null">
+					proportion_id = #{proportionId},
+				</if>
+				<if test=" square != null">
+					square = #{square},
+				</if>
+				<if test=" totalUse != null">
+					total_use = #{totalUse},
+				</if>
+
+            </trim>
+        </set>
+		where concrete_id = #{concreteId}
+	</update>
+
+    <!-- 删除 混泥土信息 对象 -->
+    <delete id="delete">
+        delete from concrete_info
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 混泥土信息 对象 -->
+    <resultMap type="com.info.admin.entity.ConcreteInfo" id="concreteInfoMap">
+		<result column="concrete_id" property="concreteId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="project_id" property="projectId" />
+		<result column="name" property="name" />
+		<result column="level" property="level" />
+		<result column="proportion_id" property="proportionId" />
+		<result column="square" property="square" />
+		<result column="total_use" property="totalUse" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.concreteId != null">
+			    and concrete_id =  #{entity.concreteId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.projectId != null">
+			    and project_id =  #{entity.projectId} 
+		    </if>
+		    <if test=" entity.name != null">
+			    and name =  #{entity.name} 
+		    </if>
+		    <if test=" entity.level != null">
+			    and level =  #{entity.level} 
+		    </if>
+		    <if test=" entity.proportionId != null">
+			    and proportion_id =  #{entity.proportionId} 
+		    </if>
+		    <if test=" entity.square != null">
+			    and square =  #{entity.square} 
+		    </if>
+		    <if test=" entity.totalUse != null">
+			    and total_use =  #{entity.totalUse} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 混泥土信息 对象列表 -->
+    <select id="query"  resultMap="concreteInfoMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+          from concrete_info
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 混泥土信息 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from concrete_info
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 混泥土信息 对象列表  -->
+    <select id="pageQuery" resultMap="concreteInfoMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+         from concrete_info
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 混泥土信息 -->
+	<select id="getConcreteInfoById" parameterType="Long" resultMap="concreteInfoMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		 from concrete_info where concrete_id= #{concreteId}
+	</select>
+</mapper>	

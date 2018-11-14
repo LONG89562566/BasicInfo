@@ -127,6 +127,22 @@ public class SysUserController extends BaseController {
 	/**
 	 * 查询系统用户列表
 	 */
+	@RequestMapping(value="/sysUser/list/desktop",method={RequestMethod.GET,RequestMethod.POST})
+	@RequiresPermissions("sysUser:query")
+	public String userListDesktop(HttpServletRequest request, HttpServletResponse response,Model model,SysUser user)
+	{
+		logger.info("[SysUserController][userListDesktop] 查询系统用户列表:");
+		int pageNum=this.getPageNum(request);
+		int pageSize=this.getPageSize(request);
+		PageUtil paginator= sysUserService.getAllSysUser(user, pageNum, pageSize);
+		model.addAttribute("paginator", paginator);
+		model.addAttribute("sysUser", user);
+		return "sys/user/userListDesktop";
+	}
+
+	/**
+	 * 查询系统用户列表
+	 */
 	@ResponseBody
 	@RequestMapping(value="/sysUser/pageQuery",method={RequestMethod.GET,RequestMethod.POST})
 	public JsonResult pageQuery(HttpServletRequest request, HttpServletResponse response,Model model,SysUser user)	{

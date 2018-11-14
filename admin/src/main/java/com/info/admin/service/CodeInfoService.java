@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-13 16:23:57 
+ * @date 2018-11-14 23:45:42 
  * @describe 二维码信息 Service
  */
 public interface CodeInfoService {
@@ -15,7 +15,7 @@ public interface CodeInfoService {
      *添加CodeInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -25,7 +25,7 @@ public interface CodeInfoService {
      *修改CodeInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -35,7 +35,7 @@ public interface CodeInfoService {
      *查询CodeInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return List<CodeInfo>
      */
@@ -45,7 +45,7 @@ public interface CodeInfoService {
      *删除CodeInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -57,7 +57,7 @@ public interface CodeInfoService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:42 
      * @updater or other
      * @return   PageUtil
      */
@@ -67,7 +67,7 @@ public interface CodeInfoService {
 	 * 根据 id获取 二维码信息
 	 * @author   ysh
 	 * @param codeId 主键id
-	 * @date  2018-11-13 16:23:57
+	 * @date  2018-11-14 23:45:42
 	 * @updater  or other
 	 * @return   CodeInfo
 	 */ 

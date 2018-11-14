@@ -1,11 +1,12 @@
 package com.info.admin.vo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * 材料实体类
- * @author administrator  2018-11-13 16:23:58
+ * @author administrator  2018-11-14 23:45:42
  */
 public class MaterialVo implements Serializable {
 	private static final long serialVersionUID = 1L;

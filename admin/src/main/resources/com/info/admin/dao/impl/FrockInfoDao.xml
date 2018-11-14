@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 设备信息 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.FrockInfoDao">
+
+	<!-- 新增 设备信息 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.FrockInfo"
+			useGeneratedKeys="true" keyProperty="supplierId">
+		insert into frock_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" supplierId != null">
+				supplier_id,
+			</if>
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" createUser != null">
+				create_user,
+			</if>
+			<if test=" deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test=" updateTime != null">
+				update_time,
+			</if>
+			<if test=" seq != null">
+				seq,
+			</if>
+			<if test=" projectId != null">
+				project_id,
+			</if>
+			<if test=" type != null">
+				type,
+			</if>
+			<if test=" mId != null">
+				m_id,
+			</if>
+			<if test=" name != null">
+				name,
+			</if>
+			<if test=" model != null">
+				model,
+			</if>
+			<if test=" manufacturer != null">
+				manufacturer,
+			</if>
+			<if test=" state != null">
+				state,
+			</if>
+			<if test=" usePlace != null">
+				use_place,
+			</if>
+			<if test=" liabler != null">
+				liabler,
+			</if>
+			<if test=" purchaseTime != null">
+				purchase_time,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="supplierId != null ">
+		        #{supplierId},
+		    </if>
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="createUser != null ">
+		        #{createUser},
+		    </if>
+			<if test="deleteFlag != null ">
+		        #{deleteFlag},
+		    </if>
+			<if test="updateTime != null">
+				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="seq != null ">
+		        #{seq},
+		    </if>
+			<if test="projectId != null ">
+		        #{projectId},
+		    </if>
+			<if test="type != null ">
+		        #{type},
+		    </if>
+			<if test="mId != null ">
+		        #{mId},
+		    </if>
+			<if test="name != null ">
+		        #{name},
+		    </if>
+			<if test="model != null ">
+		        #{model},
+		    </if>
+			<if test="manufacturer != null ">
+		        #{manufacturer},
+		    </if>
+			<if test="state != null ">
+		        #{state},
+		    </if>
+			<if test="usePlace != null ">
+		        #{usePlace},
+		    </if>
+			<if test="liabler != null ">
+		        #{liabler},
+		    </if>
+			<if test="purchaseTime != null">
+				date_format(#{purchaseTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+
+        </trim>
+	</insert>
+
+	<!-- 更新 设备信息 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.FrockInfo">
+		update frock_info
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" createUser != null">
+					create_user = #{createUser},
+				</if>
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" seq != null">
+					seq = #{seq},
+				</if>
+				<if test=" projectId != null">
+					project_id = #{projectId},
+				</if>
+				<if test=" type != null">
+					type = #{type},
+				</if>
+				<if test=" mId != null">
+					m_id = #{mId},
+				</if>
+				<if test=" name != null">
+					name = #{name},
+				</if>
+				<if test=" model != null">
+					model = #{model},
+				</if>
+				<if test=" manufacturer != null">
+					manufacturer = #{manufacturer},
+				</if>
+				<if test=" state != null">
+					state = #{state},
+				</if>
+				<if test=" usePlace != null">
+					use_place = #{usePlace},
+				</if>
+				<if test=" liabler != null">
+					liabler = #{liabler},
+				</if>
+				<if test=" purchaseTime != null">
+					purchase_time = date_format(#{purchaseTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+
+            </trim>
+        </set>
+		where supplier_id = #{supplierId}
+	</update>
+
+    <!-- 删除 设备信息 对象 -->
+    <delete id="delete">
+        delete from frock_info
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 设备信息 对象 -->
+    <resultMap type="com.info.admin.entity.FrockInfo" id="frockInfoMap">
+		<result column="supplier_id" property="supplierId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="project_id" property="projectId" />
+		<result column="type" property="type" />
+		<result column="m_id" property="mId" />
+		<result column="name" property="name" />
+		<result column="model" property="model" />
+		<result column="manufacturer" property="manufacturer" />
+		<result column="state" property="state" />
+		<result column="use_place" property="usePlace" />
+		<result column="liabler" property="liabler" />
+		<result column="purchase_time" property="purchaseTime" />
+		<result column="purchaseTime" property="purchaseTimeStr" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.supplierId != null">
+			    and supplier_id =  #{entity.supplierId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser} 
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag} 
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq} 
+		    </if>
+		    <if test=" entity.projectId != null">
+			    and project_id =  #{entity.projectId} 
+		    </if>
+		    <if test=" entity.type != null">
+			    and type =  #{entity.type} 
+		    </if>
+		    <if test=" entity.mId != null">
+			    and m_id =  #{entity.mId} 
+		    </if>
+		    <if test=" entity.name != null">
+			    and name =  #{entity.name} 
+		    </if>
+		    <if test=" entity.model != null">
+			    and model =  #{entity.model} 
+		    </if>
+		    <if test=" entity.manufacturer != null">
+			    and manufacturer =  #{entity.manufacturer} 
+		    </if>
+		    <if test=" entity.state != null">
+			    and state =  #{entity.state} 
+		    </if>
+		    <if test=" entity.usePlace != null">
+			    and use_place =  #{entity.usePlace} 
+		    </if>
+		    <if test=" entity.liabler != null">
+			    and liabler =  #{entity.liabler} 
+		    </if>
+		    <if test="entity.purchaseTime!=null">
+		        and purchase_time = STR_TO_DATE(#{entity.purchaseTime},"%Y-%m-%d %T")
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 设备信息 对象列表 -->
+    <select id="query"  resultMap="frockInfoMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(purchase_time,'%Y-%m-%d %H:%i:%s') as purchaseTime 
+          from frock_info
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 设备信息 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from frock_info
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 设备信息 对象列表  -->
+    <select id="pageQuery" resultMap="frockInfoMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(purchase_time,'%Y-%m-%d %H:%i:%s') as purchaseTime 
+         from frock_info
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 设备信息 -->
+	<select id="getFrockInfoById" parameterType="Long" resultMap="frockInfoMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(purchase_time,'%Y-%m-%d %H:%i:%s') as purchaseTime 
+		 from frock_info where supplier_id= #{supplierId}
+	</select>
+</mapper>	

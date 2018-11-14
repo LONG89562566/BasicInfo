@@ -7,7 +7,7 @@ import java.util.List;
 
  /**
  * @author ysh
- * @date 2018-11-13 16:23:57
+ * @date 2018-11-14 23:45:41
  * @describe 三维交底 Dao
  */
 public interface D3PayDao {
@@ -15,7 +15,7 @@ public interface D3PayDao {
 	 *添加D3Pay对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -25,7 +25,7 @@ public interface D3PayDao {
 	 *修改D3Pay对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -35,7 +35,7 @@ public interface D3PayDao {
 	 *查询D3Pay对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return List<D3Pay>
 	 */
@@ -45,7 +45,7 @@ public interface D3PayDao {
 	 *删除D3Pay对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-13 16:23:57 
+	 *@date  2018-11-14 23:45:41 
 	 *@updater or other
 	 *@return int
 	 */
@@ -57,7 +57,7 @@ public interface D3PayDao {
      * @param offset	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:41 
      * @updater or other
      * @return   List<D3Pay> 
      */
@@ -67,7 +67,7 @@ public interface D3PayDao {
      * 查询D3Pay总记录数
      * @param entity  对象
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:41 
      * @updater or other
      * @return   int
      */
@@ -77,7 +77,7 @@ public interface D3PayDao {
 	 * 根据 id获取 三维交底 
 	 *@author   ysh
 	 *@param payId 主键id
-	 *@date  2018-11-13 16:23:57
+	 *@date  2018-11-14 23:45:41
 	 *@updater  or other
 	 *@return   D3Pay
 	 */

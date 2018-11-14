@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author administrator  
- * @date 2018-11-13 16:23:57 
+ * @date 2018-11-14 23:45:42 
  * @describe 供应商 Controller
  */
 @Controller
@@ -43,6 +43,7 @@ public class SupplierController extends BaseController{
     @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
     @RequiresPermissions("supplier:query")
     public String getSupplierList(HttpServletRequest request, @ModelAttribute Supplier entity, Model model) {
+        logger.info("[SupplierController][getSupplierList] 查询供应商列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -51,6 +52,27 @@ public class SupplierController extends BaseController{
         model.addAttribute("paginator", paginator);
         model.addAttribute("supplier", entity);
         return "supplier/listSupplier";
+    }
+
+     /**
+     *我的桌面查询供应商列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/list/desktop", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequiresPermissions("supplier:query")
+    public String getSupplierListDesktop(HttpServletRequest request, @ModelAttribute Supplier entity, Model model) {
+        logger.info("[SupplierController][getSupplierListDesktop] 我的桌面查询供应商列表:");
+        // 获取分页当前的页码
+        int currentPageNum = this.getPageNum(request);
+        // 获取分页的大小
+        int currentPageSize = this.getPageSize(request);
+        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        model.addAttribute("paginator", paginator);
+        model.addAttribute("supplier", entity);
+        return "supplier/listSupplierDesktop";
     }
 
     /**
@@ -81,7 +103,7 @@ public class SupplierController extends BaseController{
      * @param    request  请求
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -116,7 +138,7 @@ public class SupplierController extends BaseController{
      * 查询Supplier对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -136,7 +158,7 @@ public class SupplierController extends BaseController{
      * 删除Supplier对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */
@@ -164,7 +186,7 @@ public class SupplierController extends BaseController{
      * 分页查询Supplier对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-13 16:23:57 
+     * @date   2018-11-14 23:45:42 
      * @updater  or other
      * @return   com.netcai.admin.result.JsonResult
      */

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-13 16:23:57 
+ * @date 2018-11-14 23:45:42 
  * @describe 流程 Service
  */
 public interface FlowService {
@@ -15,7 +15,7 @@ public interface FlowService {
      *添加Flow对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -25,7 +25,7 @@ public interface FlowService {
      *修改Flow对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -35,7 +35,7 @@ public interface FlowService {
      *查询Flow对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return List<Flow>
      */
@@ -45,7 +45,7 @@ public interface FlowService {
      *删除Flow对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-13 16:23:57 
+     *@date  2018-11-14 23:45:42 
      *@updater or other
      *@return int
      */
@@ -57,7 +57,7 @@ public interface FlowService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-13 16:23:57 
+     * @date  2018-11-14 23:45:42 
      * @updater or other
      * @return   PageUtil
      */
@@ -67,7 +67,7 @@ public interface FlowService {
 	 * 根据 id获取 流程
 	 * @author   ysh
 	 * @param flowId 主键id
-	 * @date  2018-11-13 16:23:57
+	 * @date  2018-11-14 23:45:42
 	 * @updater  or other
 	 * @return   Flow
 	 */ 
