@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-14 23:45:42
+ * @date 2018-11-15 22:58:50
  * @describe 员工信息 ServiceImpl
  */
 @Service
@@ -24,7 +24,7 @@ public class StaffInfoServiceImpl implements StaffInfoService {
      *添加StaffInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
@@ -38,12 +38,14 @@ public class StaffInfoServiceImpl implements StaffInfoService {
      *修改StaffInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
     @Override
     public int update(StaffInfo entity){
+        entity.setUpdateTime(new java.util.Date());
+
         return dao.update(entity);
     }
 
@@ -51,7 +53,7 @@ public class StaffInfoServiceImpl implements StaffInfoService {
      *查询StaffInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return List<StaffInfo>
      */
@@ -64,13 +66,15 @@ public class StaffInfoServiceImpl implements StaffInfoService {
      *删除StaffInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
     @Override
     public int delete(StaffInfo entity){
-        return dao.delete(entity);
+      entity.setDeleteFlag(1L);
+         return dao.update(entity);
+
     }
 
     /**
@@ -79,7 +83,7 @@ public class StaffInfoServiceImpl implements StaffInfoService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-14 23:45:42 
+     * @date  2018-11-15 22:58:50 
      * @updater or other
      * @return   PageUtil
      */
@@ -102,7 +106,7 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 	 * 根据 id获取 员工信息
 	 *@author   ysh
 	 *@param staffId 主键id
-	 *@date  2018-11-14 23:45:42
+	 *@date  2018-11-15 22:58:50
 	 *@updater  or other
 	 *@return   StaffInfo
 	 */ 

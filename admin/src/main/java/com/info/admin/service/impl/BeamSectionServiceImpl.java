@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-14 23:45:42
+ * @date 2018-11-15 22:58:49
  * @describe 梁段信息 ServiceImpl
  */
 @Service
@@ -24,7 +24,7 @@ public class BeamSectionServiceImpl implements BeamSectionService {
      *添加BeamSection对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return int
      */
@@ -38,12 +38,14 @@ public class BeamSectionServiceImpl implements BeamSectionService {
      *修改BeamSection对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return int
      */
     @Override
     public int update(BeamSection entity){
+        entity.setUpdateTime(new java.util.Date());
+
         return dao.update(entity);
     }
 
@@ -51,7 +53,7 @@ public class BeamSectionServiceImpl implements BeamSectionService {
      *查询BeamSection对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return List<BeamSection>
      */
@@ -64,13 +66,15 @@ public class BeamSectionServiceImpl implements BeamSectionService {
      *删除BeamSection对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return int
      */
     @Override
     public int delete(BeamSection entity){
-        return dao.delete(entity);
+      entity.setDeleteFlag(1L);
+         return dao.update(entity);
+
     }
 
     /**
@@ -79,7 +83,7 @@ public class BeamSectionServiceImpl implements BeamSectionService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-14 23:45:42 
+     * @date  2018-11-15 22:58:49 
      * @updater or other
      * @return   PageUtil
      */
@@ -102,7 +106,7 @@ public class BeamSectionServiceImpl implements BeamSectionService {
 	 * 根据 id获取 梁段信息
 	 *@author   ysh
 	 *@param sectionId 主键id
-	 *@date  2018-11-14 23:45:42
+	 *@date  2018-11-15 22:58:49
 	 *@updater  or other
 	 *@return   BeamSection
 	 */ 

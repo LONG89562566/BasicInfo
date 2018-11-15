@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-14 23:45:42
+ * @date 2018-11-15 22:58:50
  * @describe 供应商 ServiceImpl
  */
 @Service
@@ -24,7 +24,7 @@ public class SupplierServiceImpl implements SupplierService {
      *添加Supplier对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
@@ -38,12 +38,14 @@ public class SupplierServiceImpl implements SupplierService {
      *修改Supplier对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
     @Override
     public int update(Supplier entity){
+        entity.setUpdateTime(new java.util.Date());
+
         return dao.update(entity);
     }
 
@@ -51,7 +53,7 @@ public class SupplierServiceImpl implements SupplierService {
      *查询Supplier对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return List<Supplier>
      */
@@ -64,13 +66,15 @@ public class SupplierServiceImpl implements SupplierService {
      *删除Supplier对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
     @Override
     public int delete(Supplier entity){
-        return dao.delete(entity);
+      entity.setDeleteFlag(1L);
+         return dao.update(entity);
+
     }
 
     /**
@@ -79,7 +83,7 @@ public class SupplierServiceImpl implements SupplierService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-14 23:45:42 
+     * @date  2018-11-15 22:58:50 
      * @updater or other
      * @return   PageUtil
      */
@@ -102,7 +106,7 @@ public class SupplierServiceImpl implements SupplierService {
 	 * 根据 id获取 供应商
 	 *@author   ysh
 	 *@param supplierId 主键id
-	 *@date  2018-11-14 23:45:42
+	 *@date  2018-11-15 22:58:50
 	 *@updater  or other
 	 *@return   Supplier
 	 */ 

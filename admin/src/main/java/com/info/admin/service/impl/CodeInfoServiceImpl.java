@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-14 23:45:42
+ * @date 2018-11-15 22:58:50
  * @describe 二维码信息 ServiceImpl
  */
 @Service
@@ -24,7 +24,7 @@ public class CodeInfoServiceImpl implements CodeInfoService {
      *添加CodeInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
@@ -38,12 +38,14 @@ public class CodeInfoServiceImpl implements CodeInfoService {
      *修改CodeInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
     @Override
     public int update(CodeInfo entity){
+        entity.setUpdateTime(new java.util.Date());
+
         return dao.update(entity);
     }
 
@@ -51,7 +53,7 @@ public class CodeInfoServiceImpl implements CodeInfoService {
      *查询CodeInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return List<CodeInfo>
      */
@@ -64,13 +66,15 @@ public class CodeInfoServiceImpl implements CodeInfoService {
      *删除CodeInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
     @Override
     public int delete(CodeInfo entity){
-        return dao.delete(entity);
+      entity.setDeleteFlag(1L);
+         return dao.update(entity);
+
     }
 
     /**
@@ -79,7 +83,7 @@ public class CodeInfoServiceImpl implements CodeInfoService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-14 23:45:42 
+     * @date  2018-11-15 22:58:50 
      * @updater or other
      * @return   PageUtil
      */
@@ -102,7 +106,7 @@ public class CodeInfoServiceImpl implements CodeInfoService {
 	 * 根据 id获取 二维码信息
 	 *@author   ysh
 	 *@param codeId 主键id
-	 *@date  2018-11-14 23:45:42
+	 *@date  2018-11-15 22:58:50
 	 *@updater  or other
 	 *@return   CodeInfo
 	 */ 

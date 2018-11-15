@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-14 23:45:42
+ * @date 2018-11-15 22:58:50
  * @describe 工程概况 ServiceImpl
  */
 @Service
@@ -24,7 +24,7 @@ public class ProjectSurveyServiceImpl implements ProjectSurveyService {
      *添加ProjectSurvey对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
@@ -38,12 +38,14 @@ public class ProjectSurveyServiceImpl implements ProjectSurveyService {
      *修改ProjectSurvey对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
     @Override
     public int update(ProjectSurvey entity){
+        entity.setUpdateTime(new java.util.Date());
+
         return dao.update(entity);
     }
 
@@ -51,7 +53,7 @@ public class ProjectSurveyServiceImpl implements ProjectSurveyService {
      *查询ProjectSurvey对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return List<ProjectSurvey>
      */
@@ -64,13 +66,15 @@ public class ProjectSurveyServiceImpl implements ProjectSurveyService {
      *删除ProjectSurvey对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
     @Override
     public int delete(ProjectSurvey entity){
-        return dao.delete(entity);
+      entity.setDeleteFlag(1L);
+         return dao.update(entity);
+
     }
 
     /**
@@ -79,7 +83,7 @@ public class ProjectSurveyServiceImpl implements ProjectSurveyService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-14 23:45:42 
+     * @date  2018-11-15 22:58:50 
      * @updater or other
      * @return   PageUtil
      */
@@ -102,7 +106,7 @@ public class ProjectSurveyServiceImpl implements ProjectSurveyService {
 	 * 根据 id获取 工程概况
 	 *@author   ysh
 	 *@param projectId 主键id
-	 *@date  2018-11-14 23:45:42
+	 *@date  2018-11-15 22:58:50
 	 *@updater  or other
 	 *@return   ProjectSurvey
 	 */ 

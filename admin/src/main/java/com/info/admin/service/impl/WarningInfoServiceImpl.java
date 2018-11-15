@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-14 23:45:42
+ * @date 2018-11-15 22:58:49
  * @describe 预警设置 ServiceImpl
  */
 @Service
@@ -24,7 +24,7 @@ public class WarningInfoServiceImpl implements WarningInfoService {
      *添加WarningInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return int
      */
@@ -38,12 +38,14 @@ public class WarningInfoServiceImpl implements WarningInfoService {
      *修改WarningInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return int
      */
     @Override
     public int update(WarningInfo entity){
+        entity.setUpdateTime(new java.util.Date());
+
         return dao.update(entity);
     }
 
@@ -51,7 +53,7 @@ public class WarningInfoServiceImpl implements WarningInfoService {
      *查询WarningInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return List<WarningInfo>
      */
@@ -64,13 +66,15 @@ public class WarningInfoServiceImpl implements WarningInfoService {
      *删除WarningInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return int
      */
     @Override
     public int delete(WarningInfo entity){
-        return dao.delete(entity);
+      entity.setDeleteFlag(1L);
+         return dao.update(entity);
+
     }
 
     /**
@@ -79,7 +83,7 @@ public class WarningInfoServiceImpl implements WarningInfoService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-14 23:45:42 
+     * @date  2018-11-15 22:58:49 
      * @updater or other
      * @return   PageUtil
      */
@@ -102,7 +106,7 @@ public class WarningInfoServiceImpl implements WarningInfoService {
 	 * 根据 id获取 预警设置
 	 *@author   ysh
 	 *@param warningId 主键id
-	 *@date  2018-11-14 23:45:42
+	 *@date  2018-11-15 22:58:49
 	 *@updater  or other
 	 *@return   WarningInfo
 	 */ 

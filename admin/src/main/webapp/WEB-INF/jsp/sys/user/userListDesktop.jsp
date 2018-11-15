@@ -51,7 +51,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">系统用户列表 :${sessionScope.login_session_admin.userName}</h3>
+								<%--<h3 class="box-title">系统用户列表 :${sessionScope.login_session_admin.userName}</h3>--%>
 							</div>
 							<div class="box box-info">
 								<!-- form start -->
@@ -60,21 +60,27 @@
 									<input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">
 									<div class="box-body">
 										<div class="form-group">
-											<label for="userName" class="col-sm-2 control-label">用户名：</label>
-											<div class="col-xs-2">
-												<input type="text" class="form-control" id="userName" name="userName" value="${sysUser.userName}" placeholder="请输入用户名">
+											<div class="layui-inline">
+												<label for="userName" class="col-sm-2 control-label" style="float: left;">用户名：</label>
+												<div class="col-xs-2" style="float: left;">
+													<input type="text" class="form-control" id="userName" name="userName" value="${sysUser.userName}" placeholder="请输入用户名">
+												</div>
 											</div>
-											<label for="phone" class="col-sm-2 control-label">手机号：</label>
-											<div class="col-xs-2">
-												<input type="text" class="form-control" id="phone" name="phone" value="${sysUser.phone}" placeholder="请输入手机号">
+											<div class="layui-inline">
+												<label for="phone" class="col-sm-2 control-label" style="float: left;">手机号：</label>
+												<div class="col-xs-2" style="float: left;">
+													<input type="text" class="form-control" id="phone" name="phone" value="${sysUser.phone}" placeholder="请输入手机号">
+												</div>
 											</div>
-											<label for="status" class="col-sm-2 control-label">状态</label>
-											<div class="col-xs-2">
-												<select id="status" name="status" class="form-control" style="width:150px;">
-													<option value="" selected>全部</option>
-													<option value="1" <c:if test="${sysUser.status == 1}">selected</c:if>>启用</option>
-													<option value="-1" <c:if test="${sysUser.status == -1}">selected</c:if>>禁用</option>
-												</select>
+											<div class="layui-inline">
+												<label for="status" class="col-sm-2 control-label" style="float: left;">状态</label>
+												<div class="col-xs-2" style="float: left;">
+													<select id="status" name="status" class="form-control" style="width:150px;">
+														<option value="" selected>全部</option>
+														<option value="1" <c:if test="${sysUser.status == 1}">selected</c:if>>启用</option>
+														<option value="-1" <c:if test="${sysUser.status == -1}">selected</c:if>>禁用</option>
+													</select>
+												</div>
 											</div>
 										</div>
 										<div class="box-footer">

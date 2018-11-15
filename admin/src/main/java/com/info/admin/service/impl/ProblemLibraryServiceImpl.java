@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-14 23:45:42
+ * @date 2018-11-15 22:58:50
  * @describe 问题库 ServiceImpl
  */
 @Service
@@ -24,7 +24,7 @@ public class ProblemLibraryServiceImpl implements ProblemLibraryService {
      *添加ProblemLibrary对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
@@ -38,12 +38,14 @@ public class ProblemLibraryServiceImpl implements ProblemLibraryService {
      *修改ProblemLibrary对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
     @Override
     public int update(ProblemLibrary entity){
+        entity.setUpdateTime(new java.util.Date());
+
         return dao.update(entity);
     }
 
@@ -51,9 +53,9 @@ public class ProblemLibraryServiceImpl implements ProblemLibraryService {
      *查询ProblemLibrary对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
-     *@return List<Problem library>
+     *@return List<ProblemLibrary>
      */
     @Override
     public List<ProblemLibrary> query(ProblemLibrary entity){
@@ -64,13 +66,15 @@ public class ProblemLibraryServiceImpl implements ProblemLibraryService {
      *删除ProblemLibrary对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:50 
      *@updater or other
      *@return int
      */
     @Override
     public int delete(ProblemLibrary entity){
-        return dao.delete(entity);
+      entity.setDeleteFlag(1L);
+         return dao.update(entity);
+
     }
 
     /**
@@ -79,7 +83,7 @@ public class ProblemLibraryServiceImpl implements ProblemLibraryService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-14 23:45:42 
+     * @date  2018-11-15 22:58:50 
      * @updater or other
      * @return   PageUtil
      */
@@ -102,7 +106,7 @@ public class ProblemLibraryServiceImpl implements ProblemLibraryService {
 	 * 根据 id获取 问题库
 	 *@author   ysh
 	 *@param supplierId 主键id
-	 *@date  2018-11-14 23:45:42
+	 *@date  2018-11-15 22:58:50
 	 *@updater  or other
 	 *@return   ProblemLibrary
 	 */ 

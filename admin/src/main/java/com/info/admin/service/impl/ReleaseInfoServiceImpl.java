@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-14 23:45:42
+ * @date 2018-11-15 22:58:49
  * @describe 信息发布 ServiceImpl
  */
 @Service
@@ -24,7 +24,7 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
      *添加ReleaseInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return int
      */
@@ -38,12 +38,14 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
      *修改ReleaseInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return int
      */
     @Override
     public int update(ReleaseInfo entity){
+        entity.setUpdateTime(new java.util.Date());
+
         return dao.update(entity);
     }
 
@@ -51,7 +53,7 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
      *查询ReleaseInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return List<ReleaseInfo>
      */
@@ -64,13 +66,15 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
      *删除ReleaseInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-14 23:45:42 
+     *@date  2018-11-15 22:58:49 
      *@updater or other
      *@return int
      */
     @Override
     public int delete(ReleaseInfo entity){
-        return dao.delete(entity);
+      entity.setDeleteFlag(1L);
+         return dao.update(entity);
+
     }
 
     /**
@@ -79,7 +83,7 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-14 23:45:42 
+     * @date  2018-11-15 22:58:49 
      * @updater or other
      * @return   PageUtil
      */
@@ -102,7 +106,7 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 	 * 根据 id获取 信息发布
 	 *@author   ysh
 	 *@param releaseId 主键id
-	 *@date  2018-11-14 23:45:42
+	 *@date  2018-11-15 22:58:49
 	 *@updater  or other
 	 *@return   ReleaseInfo
 	 */ 
