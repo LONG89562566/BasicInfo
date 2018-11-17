@@ -23,6 +23,16 @@ public interface CustomDesktopDao {
 	int insert(CustomDesktop entity);
 
 	/**
+	 *批量添加CustomDesktop对象
+	 *@param  entity 对象
+	 *@author  ysh
+	 *@date  2018-11-13 16:23:57
+	 *@updater or other
+	 *@return int
+	 */
+	int insertBatchDesktop(@Param("desktopList") List<CustomDesktop> entity);
+
+	/**
 	 *修改CustomDesktop对象
 	 *@param  entity 对象
 	 *@author  ysh

@@ -52,6 +52,24 @@ public class RoleController extends BaseController {
 		model.addAttribute("paginator", paginator);
 		return "sys/role/roleList";
 	}
+
+	/**
+	 * 角色列表
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/role/list/desktop", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequiresPermissions("role:query")
+	public String roleListDesktop(HttpServletRequest request, HttpServletResponse response,Model model) {
+		// 获取分页当前的页码
+		int currentPageNum = this.getPageNum(request);
+		// 获取分页的大小
+		int currentPageSize = this.getPageSize(request);
+		PageUtil paginator = roleService.getPageResult( currentPageNum, currentPageSize);
+		model.addAttribute("paginator", paginator);
+		return "sys/role/roleListDesktop";
+	}
 	
 	/*
 	 *添加、修改角色

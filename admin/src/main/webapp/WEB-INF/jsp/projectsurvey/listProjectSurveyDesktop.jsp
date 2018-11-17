@@ -52,7 +52,7 @@
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
-		              <h3 class="box-title">工程概况列表 :${sessionScope.login_session_admin.userName}</h3>
+		              <%--<h3 class="box-title">工程概况列表 :${sessionScope.login_session_admin.userName}</h3>--%>
 		            </div>
 			        <div class="box box-info">
 			           <!-- form start -->
@@ -234,7 +234,7 @@
 		     layer.open({
 		         type: 2, 
 		         title: '新增/修改 工程概况',
-		         area: ['70%', '86%'],
+		         area: ['99%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
 		         content: '<%=request.getContextPath()%>/admin/projectSurvey/addOrEdit?projectId='+projectId,

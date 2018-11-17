@@ -132,5 +132,14 @@ public class BaseController {
 		ActiveSysUser user = (ActiveSysUser) request.getSession().getAttribute(SysConstant.SESSION_SYS);
 		return user.getId();
 	}
+
+	/**
+	 * 取得当前登录的账号ID
+	 * @param request
+	 * @return
+	 */
+	public ActiveSysUser getLoginUser(HttpServletRequest request) {
+		return (ActiveSysUser) request.getSession().getAttribute(SysConstant.SESSION_SYS);
+	}
 	
 }

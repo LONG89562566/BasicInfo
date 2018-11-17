@@ -35,6 +35,7 @@
 			.col-sm-2 {
 				width: 10%;
 			}
+			.fl{float: left;}
 		</style>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -61,20 +62,20 @@
 									<div class="box-body">
 										<div class="form-group">
 											<div class="layui-inline">
-												<label for="userName" class="col-sm-2 control-label" style="float: left;">用户名：</label>
-												<div class="col-xs-2" style="float: left;">
+												<label for="userName" class="col-sm-4 control-label fl" >用户名：</label>
+												<div class="col-xs-6 fl" >
 													<input type="text" class="form-control" id="userName" name="userName" value="${sysUser.userName}" placeholder="请输入用户名">
 												</div>
 											</div>
 											<div class="layui-inline">
-												<label for="phone" class="col-sm-2 control-label" style="float: left;">手机号：</label>
-												<div class="col-xs-2" style="float: left;">
+												<label for="phone" class="col-sm-4 control-label" style="float: left;">手机号：</label>
+												<div class="col-xs-6" style="float: left;">
 													<input type="text" class="form-control" id="phone" name="phone" value="${sysUser.phone}" placeholder="请输入手机号">
 												</div>
 											</div>
 											<div class="layui-inline">
-												<label for="status" class="col-sm-2 control-label" style="float: left;">状态</label>
-												<div class="col-xs-2" style="float: left;">
+												<label for="status" class="col-sm-4 control-label" style="float: left;">状态</label>
+												<div class="col-xs-6" style="float: left;">
 													<select id="status" name="status" class="form-control" style="width:150px;">
 														<option value="" selected>全部</option>
 														<option value="1" <c:if test="${sysUser.status == 1}">selected</c:if>>启用</option>
@@ -223,7 +224,7 @@
 			layer.open({
 				type: 2,
 				title: '新增/修改系统用户信息',
-				area: ['60%', '60%'],
+				area: ['99%', '60%'],
 				shade: 0.5,
 				anim: 3,//0-6的动画形式，-1不开启
 				content: '/admin/sysUser/addSysUser?id='+id,

@@ -8,11 +8,9 @@
 			useGeneratedKeys="true" keyProperty="desktopId">
 		insert into custom_desktop
         <trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
 			<if test=" desktopId != null">
 				desktop_id,
-			</if>
-			<if test=" createTime != null">
-				create_time,
 			</if>
 			<if test=" createUser != null">
 				create_user,
@@ -41,12 +39,10 @@
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(),
 			<if test="desktopId != null ">
 		        #{desktopId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -80,9 +76,6 @@
 		update custom_desktop
         <set>
             <trim suffixOverrides=",">
-				<if test=" createTime != null">
-					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-				</if>
 				<if test=" createUser != null">
 					create_user = #{createUser},
 				</if>
@@ -112,6 +105,14 @@
         </set>
 		where desktop_id = #{desktopId}
 	</update>
+
+	<!--  批量添加  -->
+	<insert id="insertBatchDesktop" parameterType="java.util.List">
+		insert into custom_desktop (desktop_id,create_time,create_user,user_id,menu_id,custom_name,width,height,seq) values
+		<foreach collection="desktopList" item="item" separator=",">
+			(#{item.desktopId},now(),#{item.createUser},#{item.userId},#{item.menuId},#{item.customName},#{item.width},#{item.height},#{item.seq})
+		</foreach>
+	</insert>
 
     <!-- 删除 自定义桌面 对象 -->
     <delete id="delete">
@@ -222,9 +223,9 @@
 		left join sys_user_role sur on su.id = sur.user_id
 		left join sys_role_menu srm on sur.role_id = srm.role_id
 		left join sys_menu sm on srm.menu_id = sm.menu_id
-		left join custom_destop cd on sm.menu_id = cd.menu_id and cd.user_id = #{userId}
+		left join custom_desktop cd on sm.menu_id = cd.menu_id and cd.user_id = #{userId}
 		where srm.id is not null and sm.menu_href is not null and sm.menu_href &lt;&gt;  ''
-		and cd.desktop_id is not null
+		and cd.desktop_id is not null and sm.type in (2,1) and sm.menu_status=1
 		and su.id = #{userId}
 		GROUP BY sm.menu_id
 		ORDER BY seq
@@ -238,4 +239,6 @@
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
 		 from custom_desktop where desktop_id= #{desktopId}
 	</select>
+
+
 </mapper>	

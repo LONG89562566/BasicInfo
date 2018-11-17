@@ -79,9 +79,23 @@ public class SysMenuServiceImpl implements SysMenuService {
         return all;
 	}
 
+	/*
+	 * 分类树(json格式)
+	 */
+	@Override
+	public JSONArray menuTree(List<SysMenu> menuList){
+		JSONArray all = new JSONArray();
+        for (SysMenu menu : menuList) {
+            JSONObject main = JSONObject.fromObject(menu);
+			all.add(main);
+        }
+        return all;
+	}
+
 	/**
 	 * 根据角色取得菜单
 	 */
+	@Override
 	public List<SysMenu> getAllMenuByRoleId(int roleId){
 		return menuDao.getAllMenuByRoleId(roleId);
 	}
@@ -89,6 +103,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 	/**
 	 * 添加角色菜单
 	 */
+	@Override
 	public int insertRoleMenu(int roleId,List<String> menuIdList){
 		menuDao.deleteRoleMenu(roleId);
 		return menuDao.insertRoleMenu(roleId, menuIdList);
@@ -97,6 +112,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 	/**
 	 * 查询用户的菜单
 	 */
+	@Override
 	public List<SysMenu> getMyMenu(List<SysMenu> menuList,int parentId){
 		List<SysMenu> smList = new ArrayList<SysMenu>();
         for (SysMenu menu : menuList) {
@@ -116,6 +132,14 @@ public class SysMenuServiceImpl implements SysMenuService {
 	@Override
 	public List<SysMenu> getAllMenuByUserId(Long userId, int type) {
 		return menuDao.getAllMenuByUserId(userId, type);
+	}
+
+	/**
+	 * 根据用户取得可设置桌面的菜单
+	 */
+	@Override
+	public List<SysMenu> getAllMenuDesktopByUserId( Long userId) {
+		return menuDao.getAllMenuDesktopByUserId(userId);
 	}
 	
 	/**

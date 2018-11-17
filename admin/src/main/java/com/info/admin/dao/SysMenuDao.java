@@ -58,6 +58,11 @@ public interface SysMenuDao {
 	 * 根据用户和菜单类型查询菜单
 	 */
 	public List<SysMenu> getAllMenuByUserId(@Param("userId") Long userId,@Param("type") int type);
+
+	/**
+	 * 根据用户和菜单类型查询菜单
+	 */
+	public List<SysMenu> getAllMenuDesktopByUserId(@Param("userId") Long userId);
 	
 	/**
 	 * 根据菜单id删除角色菜单

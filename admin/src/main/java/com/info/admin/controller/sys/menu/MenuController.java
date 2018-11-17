@@ -56,6 +56,18 @@ public class MenuController extends BaseController {
 	public String menuList(HttpServletRequest request, HttpServletResponse response,Model model) {
 		return "sys/menu/menuList";
 	}
+
+	/**
+	 * 菜单列表
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/menu/list/desktop", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequiresPermissions("menu:query")
+	public String menuListDesktop(HttpServletRequest request, HttpServletResponse response,Model model) {
+		return "sys/menu/menuListDesktop";
+	}
 	
 	/**
 	 * 菜单树

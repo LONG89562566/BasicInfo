@@ -45,14 +45,6 @@
                      </div>
                  </c:if>
              </c:forEach>
-             <%--<div class="row">
-               <iframe src="/admin/sysUser/list" style="width: 50%;min-height: 320px;" class="fl"></iframe>
-               <iframe src="/admin/role/list" style="width: 50%;min-height: 320px;"class="fr"></iframe>
-             </div>
-             <div class="row">
-               <iframe src="/admin/sysUser/list" style="width: 50%;min-height: 320px;" class="fl"></iframe>
-               <iframe src="/admin/role/list" style="width: 50%;min-height: 320px;" class="fr"></iframe>
-             </div>--%>
          </section>
      </div>
 
