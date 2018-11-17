@@ -179,15 +179,6 @@ function saveOrUpdate(){
 	var heights = getVals("height");
 	var seqs = getVals("seq");
 	var data = { menuIds : menuIds,  menuNames : menuNames, widths : widths, heights : heights, seqs : seqs};
-	// var url = '/admin/customDesktop/saveDesktopMenu';
-    // $.post(url , data , function (data) {
-    //     if(data.code==200){
-    //         $.messager.alert('提示','更新成功!');
-    //         window.location.reload();
-    //     }else{
-    //         $.messager.alert('错误','更新失败!','error');
-    //     }
-    // });
 	$.ajax({
 	  type: 'post',
 	  url: '/admin/customDesktop/saveDesktopMenu',

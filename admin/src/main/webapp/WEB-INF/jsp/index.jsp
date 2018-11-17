@@ -45,7 +45,8 @@
         var currenturl = window.location.href;
         var newUrl = (currenturl.split("#"))[1];
         if(!newUrl){
-            newUrl = "/admin/home";
+            // newUrl = "/admin/home";
+            newUrl = "/admin/customDesktop/myDesktop";
         }
         $("#frame").css("min-height",$("#content").height());
         $("#frame").attr("src",newUrl);
