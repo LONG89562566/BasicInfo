@@ -189,12 +189,23 @@
 
 	<!-- 根据用户取得菜单 -->
 	<select id="getAllMenuByUserId" resultMap="menuResult">
-		select sm.* from
-		sys_menu sm
+		select sm.* from sys_menu sm
 		inner join sys_role_menu srm on srm.menu_id=sm.menu_id
 		inner join sys_user_role sur on sur.role_id=srm.role_id
 		inner join sys_user su on su.id=sur.user_id
 		where su.id=#{userId} and sm.type in (2,#{type}) and sm.menu_status=1 group
 		by sm.menu_id
+	</select>
+
+	<!-- 根据用户取得可设置桌面的菜单 -->
+	<select id="getAllMenuDesktopByUserId" resultMap="menuResult">
+		select sm.* from sys_menu sm
+		inner join sys_role_menu srm on srm.menu_id=sm.menu_id
+		inner join sys_user_role sur on sur.role_id=srm.role_id
+		inner join sys_user su on su.id=sur.user_id
+		where  sm.menu_href is not null and sm.menu_href &lt;&gt;  ''
+		and su.id=#{userId} and sm.type in (2,1)
+		and sm.menu_status=1
+		group by sm.menu_id
 	</select>
 </mapper>

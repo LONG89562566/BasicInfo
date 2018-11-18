@@ -14,6 +14,8 @@ import com.info.admin.service.SysRoleService;
 import com.info.admin.service.SysUserService;
 import com.info.admin.shiro.UserRealm;
 import com.info.admin.utils.PageUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -156,6 +158,22 @@ public class SysUserController extends BaseController {
 			return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
 		} catch (Exception e) {
 			logger.error("[SysUserController][pageQuery] exception", e);
+			return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+		}
+	}
+
+	/**
+	 * 查询系统用户列表
+	 */
+	@ResponseBody
+	@RequestMapping(value="/sysUser/getUserTree",method={RequestMethod.GET,RequestMethod.POST})
+	public Object getUserTree(HttpServletRequest request, HttpServletResponse response,Model model,SysUser user)	{
+		logger.info("[SysUserController][getUserTree] 查询CkCommunity对象:");
+		try {
+			List<SysUser>  sysUserList = sysUserService.getAllSysUserList(user);
+			return sysUserService.getUserTree(sysUserList);
+		} catch (Exception e) {
+			logger.error("[SysUserController][getUserTree] exception", e);
 			return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
 		}
 	}

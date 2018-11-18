@@ -20,6 +20,7 @@
     <script type="text/javascript" src="/js/pageVoUtil.js"></script>
     <script type="text/javascript" src="/js/fromVal.js"></script>
     <script type="text/javascript" src="/js/tab-menu.js"></script>
+    <script type="text/javascript" src="/js/date-format.js"></script>
 
     <!--[if lt IE 9]>
     <script type="text/javascript" src="/js/html5shiv.min.js"></script>

@@ -12,6 +12,8 @@ import com.info.admin.service.SysUserService;
 import com.info.admin.utils.PageUtil;
 import com.info.admin.utils.RandomUtil;
 import com.info.admin.utils.ShiroMD5Utils;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,6 +77,32 @@ public class SysUserServiceImpl implements SysUserService {
 		pageUtil.setObject(userList);
 
 		return pageUtil;
+	}
+
+	/**
+	 * 查询数据
+	 */
+	@Override
+	public List<SysUser> getAllSysUserList(SysUser user) {
+		return sysUserDao.getAllSysUserList(user);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	@Override
+	public JSONArray getUserTree(List<SysUser> sysUsers){
+		JSONArray all = new JSONArray();
+		for(SysUser sysUser : sysUsers){
+			JSONObject main = new JSONObject();
+			main.put("id",sysUser.getId());
+			main.put("name",sysUser.getName());
+			main.put("text",sysUser.getName());
+			main.put("select","true");
+			all.add(main);
+		}
+		return all;
 	}
 
 	/**

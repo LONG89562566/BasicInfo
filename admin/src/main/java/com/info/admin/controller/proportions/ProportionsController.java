@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.ProportionsService;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.utils.UUIDUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,6 +89,10 @@ public class ProportionsController extends BaseController{
             if(null != proportionsId){
                 //根据id查询系统用户
                 Proportions proportions = service.getProportionsById(proportionsId);
+                if(proportions == null ){
+                    proportions = new Proportions();
+                    proportions.setProportionsId(UUIDUtils.getUUid());
+                }
                 model.addAttribute("proportions", proportions);
             }
             model.addAttribute("proportionsId", proportionsId);

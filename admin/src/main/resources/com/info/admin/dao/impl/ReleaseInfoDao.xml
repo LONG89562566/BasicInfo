@@ -8,11 +8,9 @@
 			useGeneratedKeys="true" keyProperty="releaseId">
 		insert into release_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
 			<if test=" releaseId != null">
 				release_id,
-			</if>
-			<if test=" createTime != null">
-				create_time,
 			</if>
 			<if test=" createUser != null">
 				create_user,
@@ -38,15 +36,24 @@
 			<if test=" receiveUser != null">
 				receive_user,
 			</if>
-
+            <if test=" receiveUserCn != null">
+				receive_user_cn,
+			</if>
+			<if test=" releaseTime != null">
+				release_time,
+			</if>
+			<if test=" releaseNo != null">
+				release_no,
+			</if>
+			<if test=" releaseType != null">
+				release_type,
+			</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(),
 			<if test="releaseId != null ">
 		        #{releaseId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -71,7 +78,18 @@
 			<if test="receiveUser != null ">
 		        #{receiveUser},
 		    </if>
-
+            <if test="receiveUserCn != null ">
+		        #{receiveUserCn},
+		    </if>
+			<if test="releaseTime != null ">
+				date_format(#{releaseTime},'%Y-%m-%d %H:%i:%s'),
+		    </if>
+			<if test="releaseNo != null ">
+		        #{releaseNo},
+		    </if>
+			<if test="releaseType != null ">
+		        #{releaseType},
+		    </if>
         </trim>
 	</insert>
 
@@ -80,9 +98,6 @@
 		update release_info
         <set>
             <trim suffixOverrides=",">
-				<if test=" createTime != null">
-					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-				</if>
 				<if test=" createUser != null">
 					create_user = #{createUser},
 				</if>
@@ -106,6 +121,18 @@
 				</if>
 				<if test=" receiveUser != null">
 					receive_user = #{receiveUser},
+				</if>
+                <if test=" receiveUserCn != null">
+					receive_user_cn = #{receiveUserCn},
+				</if>
+				<if test=" releaseTime != null">
+					release_time = date_format(#{releaseTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" releaseNo != null">
+					release_no = #{releaseNo},
+				</if>
+				<if test=" releaseType != null">
+					release_type = #{releaseType},
 				</if>
 
             </trim>
@@ -133,6 +160,11 @@
 		<result column="content" property="content" />
 		<result column="release_user" property="releaseUser" />
 		<result column="receive_user" property="receiveUser" />
+		<result column="receive_user_cn" property="receiveUserCn" />
+		<result column="release_time" property="releaseTime" />
+		<result column="releaseTime" property="releaseTimeStr" />
+		<result column="release_no" property="releaseNo" />
+		<result column="release_type" property="releaseType" />
 
     </resultMap>
 
@@ -169,6 +201,18 @@
 		    <if test=" entity.receiveUser != null">
 			    and receive_user =  #{entity.receiveUser} 
 		    </if>
+			<if test=" entity.receiveUserCn != null">
+				and receive_user_cn like concat('%',#{entity.receiveUserCn},'%')
+		    </if>
+			<if test=" entity.releaseTime != null">
+			    and release_time =  STR_TO_DATE(#{entity.releaseTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.releaseNo != null">
+			    and release_no =  #{entity.releaseNo}
+		    </if>
+			<if test=" entity.releaseType != null">
+				and release_type =  #{entity.releaseType}
+			</if>
 
         </trim>
     </sql>
@@ -179,6 +223,7 @@
           *
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(release_time,'%Y-%m-%d %H:%i:%s') as releaseTime
           from release_info
         <include refid="filterCondition"></include>
     </select>
@@ -195,17 +240,19 @@
          * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(release_time,'%Y-%m-%d %H:%i:%s') as releaseTime
          from release_info
         <include refid="filterCondition"></include>
         LIMIT #{offset},#{pageSize}
     </select>
     
     <!-- 根据id 查询 信息发布 -->
-	<select id="getReleaseInfoById" parameterType="Long" resultMap="releaseInfoMap" >
+	<select id="getReleaseInfoById" parameterType="String" resultMap="releaseInfoMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(release_time,'%Y-%m-%d %H:%i:%s') as releaseTime
 		 from release_info where release_id= #{releaseId}
 	</select>
 </mapper>	

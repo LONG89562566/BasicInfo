@@ -34,6 +34,16 @@ public class ReleaseInfo implements Serializable {
 	 private String releaseUser;
 	 /*****接收人编号*****/
 	 private String receiveUser;
+	 /*****接收人名称*****/
+	 private String receiveUserCn;
+	/*****发布时间*****/
+	private Date releaseTime;
+	/*****发布时间 日常的字符串*****/
+	private String releaseTimeStr;
+	/*****事件编号*****/
+	private String releaseNo;
+	/*****发布类型（0:所有；1:指定人）*****/
+	private String releaseType;
 
 
 	 public String getReleaseId() {
@@ -144,7 +154,53 @@ public class ReleaseInfo implements Serializable {
 		 this.receiveUser = receiveUser;
 	 }
 
-	 
+
+	public Date getReleaseTime() {
+		if(org.apache.commons.lang.StringUtils.isNotBlank(releaseTimeStr) && releaseTime == null){
+			releaseTime = com.info.admin.utils.DateUtil.stringToDate(releaseTimeStr);
+		}
+		return releaseTime;
+	}
+
+	public void setReleaseTime(Date releaseTime) {
+		this.releaseTime = releaseTime;
+	}
+
+	public String getReleaseTimeStr() {
+		return releaseTimeStr;
+	}
+
+	public void setReleaseTimeStr(String releaseTimeStr) {
+		if(org.apache.commons.lang.StringUtils.isNotBlank(releaseTimeStr) && releaseTime == null){
+			this.createTime = com.info.admin.utils.DateUtil.stringToDate(releaseTimeStr);
+		}
+		this.releaseTimeStr = releaseTimeStr;
+	}
+
+	public String getReleaseNo() {
+		return releaseNo;
+	}
+
+	public void setReleaseNo(String releaseNo) {
+		this.releaseNo = releaseNo;
+	}
+
+	public String getReleaseType() {
+		return releaseType;
+	}
+
+	public void setReleaseType(String releaseType) {
+		this.releaseType = releaseType;
+	}
+
+	public String getReceiveUserCn() {
+		return receiveUserCn;
+	}
+
+	public void setReceiveUserCn(String receiveUserCn) {
+		this.receiveUserCn = receiveUserCn;
+	}
+
 	public ReleaseInfo() {
 		super();
 	}

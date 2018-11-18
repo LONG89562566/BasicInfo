@@ -230,7 +230,7 @@
     </select>
     
     <!-- 根据id 查询 问题库 -->
-	<select id="getProblemLibraryById" parameterType="Long" resultMap="problemLibraryMap" >
+	<select id="getProblemLibraryById" parameterType="String" resultMap="problemLibraryMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
