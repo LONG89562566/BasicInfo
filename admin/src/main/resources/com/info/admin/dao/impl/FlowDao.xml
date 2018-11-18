@@ -369,17 +369,17 @@
 
     <!-- 查询 在办流程 总记录数  参与过且包含当前用户或其角色、机构且当前待办不属于当前人的用户、角色或其部门-->
     <select id="getZbPageCount" resultType="int">
-        select count(1) from flow where delete_flag=0 and (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=1 group by doc_unid
+        select count(DISTINCT(doc_unid)) from flow where delete_flag=0 and (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=1
     </select>
 
     <!-- 分页查询 在办流程 对象列表   参与过且包含当前用户或其角色、机构且当前待办不属于当前人的用户、角色或其部门-->
     <select id="pageZbQuery" resultMap="flowMap">
         select
         *
-        ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
+        ,date_format(MAX(create_time),'%Y-%m-%d %H:%i:%s') as createTime
         ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
         from flow
-        where delete_flag=0 and (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=1 group by doc_unid
+        where delete_flag=0 and doc_unid in (select distinct (doc_unid) from flow where (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=1) group by doc_unid
         LIMIT #{offset},#{pageSize}
     </select>
 

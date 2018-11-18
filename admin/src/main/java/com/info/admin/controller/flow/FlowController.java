@@ -42,7 +42,7 @@ public class FlowController extends BaseController{
      *@return   String
      */
     @RequestMapping(value = "/dbList", method = { RequestMethod.GET, RequestMethod.POST })
-    public String getDBFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
+    public String getDbFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
         logger.info("[FlowController][getDBFlowList] 查询待办流程列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
@@ -51,7 +51,7 @@ public class FlowController extends BaseController{
         //TODO
         //用户所属部门、角色还未处理
         entity.setUserId(String.valueOf(this.getLoginUserId(request)));
-        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        PageUtil paginator = service.pageDbQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("flow", entity);
         return "flow/dbListFlow";
@@ -65,7 +65,7 @@ public class FlowController extends BaseController{
      *@return   String
      */
     @RequestMapping(value = "/zbList", method = { RequestMethod.GET, RequestMethod.POST })
-    public String getZBFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
+    public String getZbFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
         logger.info("[FlowController][getZBFlowList] 查询在办流程列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
@@ -74,7 +74,7 @@ public class FlowController extends BaseController{
         //TODO
         //用户所属部门、角色还未处理
         entity.setUserId(String.valueOf(this.getLoginUserId(request)));
-        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        PageUtil paginator = service.pageZbQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("flow", entity);
         return "flow/zbListFlow";
@@ -88,7 +88,7 @@ public class FlowController extends BaseController{
      *@return   String
      */
     @RequestMapping(value = "/bjList", method = { RequestMethod.GET, RequestMethod.POST })
-    public String getBJFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
+    public String getBjFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
         logger.info("[FlowController][getBJFlowList] 查询办结流程列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
@@ -97,7 +97,7 @@ public class FlowController extends BaseController{
         //TODO
         //用户所属部门、角色还未处理
         entity.setUserId(String.valueOf(this.getLoginUserId(request)));
-        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        PageUtil paginator = service.pageBjQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("flow", entity);
         return "flow/bjListFlow";
