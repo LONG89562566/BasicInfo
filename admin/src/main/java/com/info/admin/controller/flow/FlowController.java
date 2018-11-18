@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.FlowService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,24 +35,72 @@ public class FlowController extends BaseController{
     private FlowService service;
     
      /**
-     *查询流程列表
+     *待办流程列表
      *@author   ysh
      *@date  2018-07-12 10:50:32
      *@updater  or other
      *@return   String
      */
-    @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
-    @RequiresPermissions("flow:query")
-    public String getFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
-        logger.info("[FlowController][getFlowList] 查询流程列表:");
+    @RequestMapping(value = "/dbList", method = { RequestMethod.GET, RequestMethod.POST })
+    public String getDBFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
+        logger.info("[FlowController][getDBFlowList] 查询待办流程列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        //TODO
+        //用户所属部门、角色还未处理
+        entity.setUserId(String.valueOf(this.getLoginUserId(request)));
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("flow", entity);
-        return "flow/listFlow";
+        return "flow/dbListFlow";
+    }
+
+    /**
+     *在办流程列表
+     *@author   ljuenan
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/zbList", method = { RequestMethod.GET, RequestMethod.POST })
+    public String getZBFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
+        logger.info("[FlowController][getZBFlowList] 查询在办流程列表:");
+        // 获取分页当前的页码
+        int currentPageNum = this.getPageNum(request);
+        // 获取分页的大小
+        int currentPageSize = this.getPageSize(request);
+        //TODO
+        //用户所属部门、角色还未处理
+        entity.setUserId(String.valueOf(this.getLoginUserId(request)));
+        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        model.addAttribute("paginator", paginator);
+        model.addAttribute("flow", entity);
+        return "flow/zbListFlow";
+    }
+
+    /**
+     *办结流程列表
+     *@author   ljuenan
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/bjList", method = { RequestMethod.GET, RequestMethod.POST })
+    public String getBJFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
+        logger.info("[FlowController][getBJFlowList] 查询办结流程列表:");
+        // 获取分页当前的页码
+        int currentPageNum = this.getPageNum(request);
+        // 获取分页的大小
+        int currentPageSize = this.getPageSize(request);
+        //TODO
+        //用户所属部门、角色还未处理
+        entity.setUserId(String.valueOf(this.getLoginUserId(request)));
+        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        model.addAttribute("paginator", paginator);
+        model.addAttribute("flow", entity);
+        return "flow/bjListFlow";
     }
 
      /**
@@ -85,7 +134,7 @@ public class FlowController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String flowId,Model model){
         try{
-            if(null != flowId){
+            if(StringUtils.isNotEmpty(flowId)){
                 //根据id查询系统用户
                 Flow flow = service.getFlowById(flowId);
                 model.addAttribute("flow", flow);
@@ -206,5 +255,89 @@ public class FlowController extends BaseController{
             logger.error("[FlowController][pageQuery] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
-    }	
+    }
+
+    /**
+     * 分页查询待办Flow对象
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "pageDbQuery", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult pageDbQuery(HttpServletRequest request,Flow entity) {
+        logger.info("[FlowController][pageDbQuery] 查询Flow对象:");
+        try {
+            // 获取分页当前的页码
+            int pageNum = this.getPageNum(request);
+            // 获取分页的大小
+            int pageSize = this.getPageSize(request);
+            //TODO
+            //用户所属部门、角色还未处理
+            entity.setUserId(String.valueOf(this.getLoginUserId(request)));
+            PageUtil paginator = service.pageDbQuery(entity , pageNum, pageSize);
+            return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
+        } catch (Exception e) {
+            logger.error("[FlowController][pageDbQuery] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
+     * 分页查询在办Flow对象
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "pageZbQuery", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult pageZbQuery(HttpServletRequest request,Flow entity) {
+        logger.info("[FlowController][pageZbQuery] 查询Flow对象:");
+        try {
+            // 获取分页当前的页码
+            int pageNum = this.getPageNum(request);
+            // 获取分页的大小
+            int pageSize = this.getPageSize(request);
+            //TODO
+            //用户所属部门、角色还未处理
+            entity.setUserId(String.valueOf(this.getLoginUserId(request)));
+            PageUtil paginator = service.pageZbQuery(entity , pageNum, pageSize);
+            return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
+        } catch (Exception e) {
+            logger.error("[FlowController][pageZbQuery] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
+     * 分页查询办结Flow对象
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "pageBjQuery", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult pageBjQuery(HttpServletRequest request,Flow entity) {
+        logger.info("[FlowController][pageBjQuery] 查询Flow对象:");
+        try {
+            // 获取分页当前的页码
+            int pageNum = this.getPageNum(request);
+            // 获取分页的大小
+            int pageSize = this.getPageSize(request);
+            //TODO
+            //用户所属部门、角色还未处理
+            entity.setUserId(String.valueOf(this.getLoginUserId(request)));
+            PageUtil paginator = service.pageBjQuery(entity , pageNum, pageSize);
+            return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
+        } catch (Exception e) {
+            logger.error("[FlowController][pageBjQuery] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
 }	

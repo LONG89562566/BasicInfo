@@ -8,7 +8,7 @@ import java.util.Date;
  * @author ysh  
  * @date 2018-11-14 23:45:41
  */
-public class Flow implements Serializable {
+public class 	Flow implements Serializable {
 	private static final long serialVersionUID = 1L;
 	 /*****主键*****/
 	 private String flowId;
@@ -50,7 +50,14 @@ public class Flow implements Serializable {
 	 private String docUrl;
 	 /*****业务表主键*****/
 	 private String docUnid;
-
+	 /*****经办人编号*****/
+	 private String operator;
+	 /*****经办人名称*****/
+	 private String operatorCn;
+	 /*****是否提交*****/
+	 private Long isSubmit;
+     /*****是否结束*****/
+     private Long isEnd;
 
 	 public String getFlowId() {
 		 return flowId;
@@ -224,8 +231,39 @@ public class Flow implements Serializable {
 		 this.docUnid = docUnid;
 	 }
 
-	 
-	public Flow() {
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	public String getOperatorCn() {
+		return operatorCn;
+	}
+
+	public void setOperatorCn(String operatorCn) {
+		this.operatorCn = operatorCn;
+	}
+
+	public Long getIsSubmit() {
+		return isSubmit;
+	}
+
+	public void setIsSubmit(Long isSubmit) {
+		this.isSubmit = isSubmit;
+	}
+
+    public Long getIsEnd() {
+        return isEnd;
+    }
+
+    public void setIsEnd(Long isEnd) {
+        this.isEnd = isEnd;
+    }
+
+    public Flow() {
 		super();
 	}
 }
