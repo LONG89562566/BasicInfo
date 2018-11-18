@@ -35,8 +35,8 @@
 			<if test=" sex != null">
 				sex,
 			</if>
-			<if test=" native != null">
-				native,
+			<if test=" natives != null">
+				natives,
 			</if>
 			<if test=" nation != null">
 				nation,
@@ -83,8 +83,8 @@
 			<if test="sex != null ">
 		        #{sex},
 		    </if>
-			<if test="native != null ">
-		        #{native},
+			<if test="natives != null ">
+		        #{natives},
 		    </if>
 			<if test="nation != null ">
 		        #{nation},
@@ -134,8 +134,8 @@
 				<if test=" sex != null">
 					sex = #{sex},
 				</if>
-				<if test=" native != null">
-					native = #{native},
+				<if test=" natives != null">
+					natives = #{natives},
 				</if>
 				<if test=" nation != null">
 					nation = #{nation},
@@ -177,7 +177,7 @@
 		<result column="org_id" property="orgId" />
 		<result column="name" property="name" />
 		<result column="sex" property="sex" />
-		<result column="native" property="native" />
+		<result column="natives" property="natives" />
 		<result column="nation" property="nation" />
 		<result column="id_card" property="idCard" />
 		<result column="address" property="address" />
@@ -216,8 +216,8 @@
 		    <if test=" entity.sex != null">
 			    and sex =  #{entity.sex} 
 		    </if>
-		    <if test=" entity.native != null">
-			    and native =  #{entity.native} 
+		    <if test=" entity.natives != null">
+			    and natives =  #{entity.natives}
 		    </if>
 		    <if test=" entity.nation != null">
 			    and nation =  #{entity.nation} 

@@ -41,18 +41,16 @@
 
      <div class="navbar-custom-menu">
          <div style="margin: 10px 10px 10px 10px;">
-             <shiro:hasPermission name="customDesktop:query">
-                 <div style="float: left;margin-right: 10px;">
-                    <a target="frame" onclick="addHist('/admin/customDesktop/setDesktop')"  href="/admin/customDesktop/setDesktop">
-                        <div style="width: 28px;height: 28px;float: left;" title="桌面设置"><img  style="width: 28px;height: 28px;float: left;" width="100%" src="/dist/img/ioc-set.png" class="user-image" alt="User Image"/></div>
-                        <span  style="color: #ffffff;float: right;font-size: 14px;margin-top: 8px;margin-left: 6px;">桌面设置</span>
-                    </a>
-                 </div>
-             </shiro:hasPermission>
+             <div style="float: left;margin-right: 10px;">
+                <a target="frame" onclick="addHist('/admin/customDesktop/setDesktop')"  href="/admin/customDesktop/setDesktop">
+                    <div style="width: 20px;height: 20px;float: left;" title="桌面设置"><img  width="100%" src="/dist/img/ioc-set.png" class="user-image" alt="User Image"/></div>
+                    <span  style="color: #ffffff;float: right;font-size: 14px;margin-top: 2px;margin-left: 6px;">桌面设置</span>
+                </a>
+             </div>
              <div style="float: left;margin-right: 10px;">
                  <a href="/admin/logout">
-                     <div style="width: 28px;height: 28px;float: left;text-align:center;border-radius:3px 4px 5px 6px;" class="head-img"><img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/></div>
-                     <span  style="color: #ffffff;float: right;font-size: 14px;margin-top: 8px;margin-left: 6px;">退出</span>
+                     <div style="width: 20px;height: 20px;float: left;" class="head-img"><img width="100%" src="/dist/img/ioc-check-out.png" class="user-image" alt="User Image"/></div>
+                     <span  style="color: #ffffff;float: right;font-size: 14px;margin-top: 2px;margin-left: 6px;">退出</span>
                  </a>
              </div>
          </div>

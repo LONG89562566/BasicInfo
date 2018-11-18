@@ -45,7 +45,7 @@
                         <thead>
                             <tr >
                                 <th  width="30%" >菜单名称</th>
-                                <th  width="15%"  >宽度</th>
+                                <th  width="15%"  style='display: none;'>宽度</th>
                                 <th  width="15%"  >高度</th>
                                 <th  width="15%"  >排序</th>
                                 <th  width="25%"  >操作</th>
@@ -56,8 +56,8 @@
                                  <tr style="" id="tr-${menu.menuId}">
                                      <td><input type='hidden' name='menuId' id='menuId-${menu.menuId}' value='${menu.menuId}'>
                                          <input type='hidden' name='name' id='name-${menu.menuId}' value='${menu.menuName}"'>&nbsp;&nbsp;<span>${menu.menuName}</span></td>
-                                     <td> <input type='text'  value='${menu.width}'  name='width' class='form-control'  id='width-${menu.menuId}' placeholder='请输入出库数量' /></td>
-                                     <td> <input type='text'  value='${menu.height}'  name='height' class='form-control'  id='height-${menu.menuId}' placeholder='请输入出库数量' /></td>
+                                     <td style='display: none;'> <input type='text'  value='${menu.width}'  name='width' class='form-control'  id='width-${menu.menuId}' placeholder='请输入宽度' /></td>
+                                     <td> <input type='text'  value='${menu.height}'  name='height' class='form-control'  id='height-${menu.menuId}' placeholder='请输入高度' /></td>
                                      <td><input type='number' name='seq' class='form-control' id='seq-${menu.menuId}' placeholder='请输入排序号'  value='${menu.seq}' onkeyup="value=value.replace(/[^\\d]/g,'')"/></td>
                                      <td><div class='site-demo-button' >
                                      <button value='${menu.menuId}' class='layui-btn layui-btn-normal' onclick='removeMaterial(this)'>&nbsp;&nbsp;移除</span></button></div></td>
@@ -138,8 +138,8 @@ var addMaterial  = function(id,name,width,height,seq){
     }
     var html = "<td><input type='hidden' name='menuId' id='menuId-"+id+"' value='"+id+"'>"
         +"<input type='hidden' name='name' id='name-"+id+"' value='"+name+"'>&nbsp;&nbsp;<span>"+name+"</span></td>"
-        +"<td> <input type='text'  value='"+width+"'  name='width' class='form-control'  id='width-"+id+"' placeholder='请输入出库数量' /></td>"
-        +"<td> <input type='text'  value='"+height+"'  name='height' class='form-control'  id='height-"+id+"' placeholder='请输入出库数量'/></td>"
+        +"<td style='display: none;'> <input type='text'  value='"+width+"'  name='width' class='form-control'  id='width-"+id+"' placeholder='请输入宽度' /></td>"
+        +"<td > <input type='text'  value='"+height+"'  name='height' class='form-control'  id='height-"+id+"' placeholder='请输入高度量'/></td>"
         +"<td><input type='number' name='seq' class='form-control' id='seq-"+id+"' placeholder='请输入排序号'  value='"+seq+"' onkeyup=\"value=value.replace(/[^\\d]/g,'')\"/></td>"
         +"<td><div class=\"site-demo-button\" >\n" +
         "<button value='"+id+"' class='layui-btn layui-btn-normal' onclick='removeMaterial(this)'>&nbsp;&nbsp;移除</span></button></div></td>";
@@ -174,6 +174,10 @@ function getSelected() {
 //保存、修改数据
 function saveOrUpdate(){
 	var menuIds = getVals("menuId");
+	if(menuIds == null || menuIds.length == 0){
+        $.messager.alert('提示','桌面至少保持一个!','error');
+	    return;
+    }
 	var menuNames = getVals("name");
 	var widths = getVals("width");
 	var heights = getVals("height");

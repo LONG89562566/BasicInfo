@@ -69,7 +69,6 @@ public class CustomDesktopController extends BaseController{
      *@return   String
      */
     @RequestMapping(value = "/myDesktop", method = { RequestMethod.GET, RequestMethod.POST })
-    @RequiresPermissions("customDesktop:myDesktop")
     public String myDesktop(HttpServletRequest request, Model model) {
         List<CustomDesktopVo> cdvLs = service.myDesktop(getLoginUserId(request));
         model.addAttribute("customDesktopLs", cdvLs);
@@ -87,7 +86,6 @@ public class CustomDesktopController extends BaseController{
      *@return   String
      */
     @RequestMapping(value = "/setDesktop", method = { RequestMethod.GET, RequestMethod.POST })
-    @RequiresPermissions("customDesktop:setDesktop")
     public String setCustomDesktop(HttpServletRequest request, Model model) {
         model.addAttribute("customDesktopLs", service.myDesktop(getLoginUserId(request)));
         return "customdesktop/setCustomDesktop";

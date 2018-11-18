@@ -51,7 +51,7 @@ public class ProblemLibraryController extends BaseController{
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("problemLibrary", entity);
-        return "problemLibrary/listProblemLibrary";
+        return "problemlibrary/listProblemLibrary";
     }
 
      /**
@@ -72,7 +72,7 @@ public class ProblemLibraryController extends BaseController{
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("problemLibrary", entity);
-        return "problemLibrary/listProblemLibraryDesktop";
+        return "problemlibrary/listProblemLibraryDesktop";
     }
 
     /**
@@ -91,7 +91,7 @@ public class ProblemLibraryController extends BaseController{
                 model.addAttribute("problemLibrary", problemLibrary);
             }
             model.addAttribute("supplierId", supplierId);
-            return "problemLibrary/addProblemLibrary";
+            return "problemlibrary/addProblemLibrary";
         }catch(Exception e){
             logger.error("[ProblemLibraryController][addOrEdit]: supplierId="+supplierId, e);
             return "500";
@@ -99,7 +99,7 @@ public class ProblemLibraryController extends BaseController{
     }
 
     /**
-     * 新增或者修改Problem library对象
+     * 新增或者修改ProblemLibrary对象
      * @param    request  请求
      * @param    entity  对象
      * @author   ysh
@@ -135,7 +135,7 @@ public class ProblemLibraryController extends BaseController{
     }
 
     /**
-     * 查询Problem library对象
+     * 查询ProblemLibrary对象
      * @param    entity  对象
      * @author   ysh
      * @date   2018-11-14 23:45:42 
@@ -145,7 +145,7 @@ public class ProblemLibraryController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "query", method = { RequestMethod.GET, RequestMethod.POST })
     public JsonResult query(ProblemLibrary entity) {
-        logger.info("[ProblemLibraryController][query] 查询Problem library对象:");
+        logger.info("[ProblemLibraryController][query] 查询ProblemLibrary对象:");
         try {
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.query(entity));
         } catch (Exception e) {
@@ -155,7 +155,7 @@ public class ProblemLibraryController extends BaseController{
     }
 
     /**
-     * 删除Problem library对象
+     * 删除ProblemLibrary对象
      * @param    entity  对象
      * @author   ysh
      * @date   2018-11-14 23:45:42 
@@ -183,7 +183,7 @@ public class ProblemLibraryController extends BaseController{
     }
 
     /**
-     * 分页查询Problem library对象
+     * 分页查询ProblemLibrary对象
      * @param    entity  对象
      * @author   ysh
      * @date   2018-11-14 23:45:42 
@@ -193,7 +193,7 @@ public class ProblemLibraryController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "pageQuery", method = { RequestMethod.GET, RequestMethod.POST })
     public JsonResult pageQuery(HttpServletRequest request,ProblemLibrary entity) {
-        logger.info("[ProblemLibraryController][pageQuery] 查询Problem library对象:");
+        logger.info("[ProblemLibraryController][pageQuery] 查询ProblemLibrary对象:");
         try {
             // 获取分页当前的页码
             int pageNum = this.getPageNum(request);

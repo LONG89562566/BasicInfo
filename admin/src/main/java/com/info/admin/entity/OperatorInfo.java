@@ -28,7 +28,7 @@ public class OperatorInfo implements Serializable {
 	 private Long seq;
 	 /*****设备/工装编号*****/
 	 private String goodsId;
-	 /*****人员编号*****/
+		 /*****人员编号*****/
 	 private String operator;
 
 

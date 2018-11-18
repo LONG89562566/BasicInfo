@@ -36,15 +36,11 @@
            <h1>我的桌面</h1>
          </section>
          <section class="content">
+             <div style="width: 100%;">
              <c:forEach items="${customDesktopLs}" var="r" varStatus="st">
-                 <c:if test="${(st.index + 1 )/2 == 0}">
-                    <div class="row">
-                 </c:if>
-                     <iframe src="${r.menuHref}/desktop" style="width: 50%;min-height: 320px;height: ${r.height}" class="fl"></iframe>
-                 <c:if test="${(st.index + 1 )%2 == 1 and st.index != 0}">
-                     </div>
-                 </c:if>
+                  <iframe src="${r.menuHref}/desktop" style="width: 50%;min-height: 320px;height: ${r.height}" class="fl"></iframe>
              </c:forEach>
+             </div>
          </section>
      </div>
 
