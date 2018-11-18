@@ -4,9 +4,12 @@ import com.info.admin.dao.FileAttrDao;
 import com.info.admin.entity.FileAttr;
 import com.info.admin.service.FileAttrService;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.utils.UUIDUtils;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +35,35 @@ public class FileAttrServiceImpl implements FileAttrService {
     public int insert(FileAttr entity){
         entity.setFileId(com.info.admin.utils.UUIDUtils.getUUid());
         return dao.insert(entity);
+    }
+
+    /**
+     *批量添加FileAttr对象
+     *@param  entity 对象
+     *@author  ysh
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return int
+     */
+    @Override
+    public int insertBatchFileAttr(FileAttr entity,List<String> pathList){
+        if(pathList == null || pathList.size() == 0  ){
+            return 0;
+        }
+
+        List<FileAttr> fileAttrs = new ArrayList<>();
+        for(String path : pathList){
+            FileAttr fileAttr = new FileAttr();
+
+            fileAttr.setFileId(UUIDUtils.getUUid());
+            fileAttr.setDocUnid(entity.getDocUnid());
+            fileAttr.setCreateUser(entity.getCreateUser());
+            fileAttr.setSeq(entity.getSeq());
+            fileAttr.setDeleteFlag(0L);
+            fileAttr.setUrl(path);
+            fileAttrs.add(fileAttr);
+        }
+        return dao.insertBatchFileAttr(fileAttrs);
     }
 
     /**

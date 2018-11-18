@@ -51,11 +51,15 @@ public class UploadController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/uploadImgs", method = {RequestMethod.GET, RequestMethod.POST})
-    public JsonResult uploadImgs(HttpServletRequest request, HttpServletResponse response, MultipartFile[] imgFiles,@ModelAttribute FileAttr fileAttr) {
+    public JsonResult uploadImgs(HttpServletRequest request, HttpServletResponse response,
+                                 @RequestParam("imgFiles") MultipartFile[] imgFiles, @ModelAttribute FileAttr fileAttr) {
         try {
             if (imgFiles != null) {
                 List<String> pathList = MultipartFileUtils.getImgPath(request, response, imgFiles);
                 if (CollectionUtils.isNotEmpty(pathList)) {
+                    //保存文件到文件表
+                    fileAttr.setCreateUser(getLoginUserId(request));
+                    fileAttrService.insertBatchFileAttr(fileAttr, pathList);
                     // 返回图片的路径
                     return new JsonResult(JsonResultCode.SUCCESS, "上传成功", pathList);
                 } else {
@@ -101,7 +105,7 @@ public class UploadController extends BaseController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public void fileUpload(HttpServletRequest request, HttpServletResponse response,
-                           @RequestParam("imgFile") MultipartFile[] files,@ModelAttribute FileAttr fileAttr) {
+                           @RequestParam("imgFile") MultipartFile[] files, @ModelAttribute FileAttr fileAttr) {
         try {
             response.setCharacterEncoding("utf-8");
             PrintWriter out = response.getWriter();
@@ -210,6 +214,8 @@ public class UploadController extends BaseController {
                 out.close();
 
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
 

@@ -131,6 +131,14 @@
 		where file_id = #{fileId}
 	</update>
 
+	<!--  批量添加  -->
+	<insert id="insertBatchFileAttr" parameterType="java.util.List">
+		insert into file_attr (file_id,create_time,create_user,delete_flag,seq,name,remark,url,doc_unid, flow_id,type) values
+		<foreach collection="batchList" item="item" separator=",">
+			(#{item.fileId},now(),#{item.createUser},#{item.deleteFlag},#{item.seq},#{item.name},#{item.remark},#{item.url},#{item.docUnid},#{item.flowId},#{item.type})
+		</foreach>
+	</insert>
+
     <!-- 删除 文件 对象 -->
     <delete id="delete">
         delete from file_attr

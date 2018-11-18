@@ -22,6 +22,16 @@ public interface FileAttrDao {
 	int insert(FileAttr entity);
 
 	/**
+	 *添加FileAttr对象
+	 *@param  entity 对象
+	 *@author  ysh
+	 *@date  2018-11-14 23:45:41
+	 *@updater or other
+	 *@return int
+	 */
+	int insertBatchFileAttr(@Param("batchList")List<FileAttr> fileAttrLs);
+
+	/**
 	 *修改FileAttr对象
 	 *@param  entity 对象
 	 *@author  ysh

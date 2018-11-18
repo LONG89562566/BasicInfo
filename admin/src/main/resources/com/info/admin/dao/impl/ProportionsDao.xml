@@ -175,7 +175,7 @@
     </select>
     
     <!-- 根据id 查询 配合比 -->
-	<select id="getProportionsById" parameterType="Long" resultMap="proportionsMap" >
+	<select id="getProportionsById" parameterType="String" resultMap="proportionsMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

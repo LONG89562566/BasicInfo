@@ -217,7 +217,7 @@
 			layer.open({
 				type: 2,
 				title: '新增/修改系统用户信息',
-				area: ['60%', '60%'],
+				area: ['60%', '50%'],
 				shade: 0.5,
 				anim: 3,//0-6的动画形式，-1不开启
 				content: '/admin/sysUser/addSysUser?id='+id,
