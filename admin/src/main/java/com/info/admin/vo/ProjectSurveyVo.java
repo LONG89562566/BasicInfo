@@ -24,7 +24,7 @@ public class ProjectSurveyVo implements Serializable {
 	 /*****梁场名称*****/ 
 	 private String lcName;
 	 /*****梁场地址*****/ 
-	 private Long lcAddr;
+	 private String lcAddr;
 	 /*****线路里程*****/ 
 	 private String lineMileage;
 	 /*****梁场规模*****/ 
@@ -113,11 +113,11 @@ public class ProjectSurveyVo implements Serializable {
 		 this.lcName = lcName;
 	 }
 
-	 public Long getLcAddr() {
+	 public String getLcAddr() {
 		 return lcAddr;
 	 }
 
-	 public void setLcAddr(Long lcAddr) {
+	 public void setLcAddr(String lcAddr) {
 		 this.lcAddr = lcAddr;
 	 }
 

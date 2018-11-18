@@ -6,6 +6,8 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.MaterialService;
 import com.info.admin.utils.PageUtil;
+import freemarker.template.utility.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,7 +85,7 @@ public class MaterialController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String materialId,Model model){
+    public String addOrEdit(HttpServletRequest request,String materialId,String projectId,Model model){
         try{
             if(null != materialId){
                 //根据id查询系统用户
@@ -91,6 +93,7 @@ public class MaterialController extends BaseController{
                 model.addAttribute("material", material);
             }
             model.addAttribute("materialId", materialId);
+            model.addAttribute("projectId", projectId);
             return "material/addMaterial";
         }catch(Exception e){
             logger.error("[MaterialController][addOrEdit]: materialId="+materialId, e);
@@ -118,13 +121,13 @@ public class MaterialController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getMaterialId()) {
+            if ( StringUtils.isNotEmpty(entity.getMaterialId())) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);
             }
             if (result > 0) {
-                return new JsonResult(JsonResultCode.SUCCESS, "操作成功", "");
+                 return new JsonResult(JsonResultCode.SUCCESS, "操作成功", "");
             } else {
                 return new JsonResult(JsonResultCode.FAILURE, "操作失败", "");
             }

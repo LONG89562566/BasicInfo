@@ -30,7 +30,7 @@ public class Material implements Serializable {
 	 /*****项目编号*****/
 	 private String projectId;
 	 /*****材料名称*****/
-	 private String materialname;
+	 private String materialName;
 	 /*****规格型号*****/
 	 private String model;
 	 /*****计量单位*****/
@@ -38,7 +38,7 @@ public class Material implements Serializable {
 	 /*****进场数量*****/
 	 private BigDecimal entryNum;
 	 /*****生产厂家*****/
-	 private String manufacturer;
+	 private String manufactrer;
 	 /*****供货单位*****/
 	 private String supplyer;
 	 /*****质量证明书*****/
@@ -141,13 +141,6 @@ public class Material implements Serializable {
 		 this.projectId = projectId;
 	 }
 
-	 public String getMaterialname() {
-		 return materialname;
-	 }
-
-	 public void setMaterialname(String materialname) {
-		 this.materialname = materialname;
-	 }
 
 	 public String getModel() {
 		 return model;
@@ -173,13 +166,6 @@ public class Material implements Serializable {
 		 this.entryNum = entryNum;
 	 }
 
-	 public String getManufacturer() {
-		 return manufacturer;
-	 }
-
-	 public void setManufacturer(String manufacturer) {
-		 this.manufacturer = manufacturer;
-	 }
 
 	 public String getSupplyer() {
 		 return supplyer;
@@ -248,5 +234,21 @@ public class Material implements Serializable {
 	 
 	public Material() {
 		super();
+	}
+
+	public String getMaterialName() {
+		return materialName;
+	}
+
+	public void setMaterialName(String materialName) {
+		this.materialName = materialName;
+	}
+
+	public String getManufactrer() {
+		return manufactrer;
+	}
+
+	public void setManufactrer(String manufactrer) {
+		this.manufactrer = manufactrer;
 	}
 }

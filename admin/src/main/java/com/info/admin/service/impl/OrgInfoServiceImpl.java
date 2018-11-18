@@ -2,8 +2,12 @@ package com.info.admin.service.impl;
 
 import com.info.admin.dao.OrgInfoDao;
 import com.info.admin.entity.OrgInfo;
+import com.info.admin.entity.OrgInfoTree;
 import com.info.admin.service.OrgInfoService;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.vo.OrgInfoVo;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -114,6 +118,33 @@ public class OrgInfoServiceImpl implements OrgInfoService {
 	 public OrgInfo getOrgInfoById(String orgId) {
 		 return dao.getOrgInfoById(orgId);
 	 }
+
+    /**
+     * 查询组织机构信息List
+     * @author
+     * @param
+     * @date  2018-11-14 23:45:42
+     * @updater  or other
+     * @return   OrgInfo
+     */
+    @Override
+    public List<OrgInfoTree>  getOrgInfo(OrgInfoTree orgInfoTree){
+        return dao.getOrgInfo(orgInfoTree);
+    };
+
+    /**
+     * 组织结构名称树
+     */
+    @Override
+    public JSONArray orgInfoTree(List<OrgInfoTree> orgInfoList, int parentId) {
+        JSONArray all = new JSONArray();
+        for (OrgInfoTree orgInfoTree : orgInfoList) {
+            JSONObject main = JSONObject.fromObject(orgInfoTree);
+                all.add(main);
+            }
+        return all;
+    }
+
 }
 
 	

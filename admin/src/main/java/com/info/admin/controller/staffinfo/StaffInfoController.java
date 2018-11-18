@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.StaffInfoService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,7 +84,7 @@ public class StaffInfoController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String staffId,Model model){
+    public String addOrEdit(HttpServletRequest request,String staffId,String orgId,Model model){
         try{
             if(null != staffId){
                 //根据id查询系统用户
@@ -91,6 +92,7 @@ public class StaffInfoController extends BaseController{
                 model.addAttribute("staffInfo", staffInfo);
             }
             model.addAttribute("staffId", staffId);
+            model.addAttribute("orgId", orgId);
             return "staffinfo/addStaffInfo";
         }catch(Exception e){
             logger.error("[StaffInfoController][addOrEdit]: staffId="+staffId, e);
@@ -118,7 +120,7 @@ public class StaffInfoController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getStaffId()) {
+            if (StringUtils.isNotEmpty(entity.getStaffId())) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);

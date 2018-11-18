@@ -39,6 +39,9 @@
 		</style>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
+	<script src="/js/jquery.form.js"></script>
+	<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 	  <!-- 材料列表start -->
 	  <div class="content-wrapper">
 	    <!-- Content Header (Page header) --> 
@@ -48,6 +51,17 @@
 	    <!-- Main content -->
 	    <shiro:hasPermission name="material:query">
 		    <section class="content">
+				<div class="row">
+					<div style="float: left;width: 18%;height: 500px;background-color: white;">
+						<table id="projectSurveyTree" title="所有梁场" style="width:100%;height:500px">
+							<thead>
+							<tr>
+								<th data-options="field:'lcName'" width="220px">梁场名称</th>
+							</tr>
+							</thead>
+						</table>
+					</div>
+					<div class="box" style="float: right;width: 81%;height: auto; background-color: white;">
 		      <div class="row">
 		        <div class="col-xs-12">
 		          <div class="box">
@@ -59,6 +73,7 @@
 			           <form  id="form_submit" class="form-horizontal" action="/admin/material/list" method="post">
 			           	  <input type="hidden" name="pageNum" id="pageNum" value="${paginator.currentPage}">
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
+	                      <input type="hidden" name="projectId" id="projectId" value="">
 			              <div class="box-body">
 			                 <div class="form-group">
 
@@ -80,18 +95,14 @@
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
-			                    <th field="seq"  >排序号</th>
+				                <th field="sys_xh">序号</th>
 			                    <th field="projectId"  >项目编号</th>
-			                    <th field="materialname"  >材料名称</th>
+								  <th field="seq"  >排序号</th>
+			                    <th field="materialName"  >材料名称</th>
 			                    <th field="model"  >规格型号</th>
 			                    <th field="unit"  >计量单位</th>
 			                    <th field="entryNum"  >进场数量</th>
-			                    <th field="manufacturer"  >生产厂家</th>
+			                    <th field="manufactrer"  >生产厂家</th>
 			                    <th field="supplyer"  >供货单位</th>
 			                    <th field="certificateQuality"  >质量证明书</th>
 			                    <th field="inspection"  >报验委托单</th>
@@ -100,41 +111,11 @@
 			                    <th field="residualNum"  >剩余数量</th>
 			                    <th field="testReport"  >试验报告单</th>
 			                    <th field="testState"  >检验状态</th>
-
+							    <th field="createTime"  type='date'>创建时间</th>
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
-			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
-				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.seq}</td>
-					            <td>${r.projectId}</td>
-					            <td>${r.materialname}</td>
-					            <td>${r.model}</td>
-					            <td>${r.unit}</td>
-					            <td>${r.entryNum}</td>
-					            <td>${r.manufacturer}</td>
-					            <td>${r.supplyer}</td>
-					            <td>${r.certificateQuality}</td>
-					            <td>${r.inspection}</td>
-					            <td>${r.usePart}</td>
-					            <td>${r.storage}</td>
-					            <td>${r.residualNum}</td>
-					            <td>${r.testReport}</td>
-					            <td>${r.testState}</td>
-
-						        <td>
-						         <div class="site-demo-button" >
-								   <button id="updateMaterial" data-method="setAddOrEdit" value="${r.materialId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
-								 </div>
-						       </td>
-				             </tr>
-						   </c:forEach>
 		                  </tbody>
 			             </table>
 			           </div>
@@ -148,6 +129,8 @@
 		          </div>
 		        </div>
 		      </div>
+			</div>
+			</div>
 		    </section>
 	    </shiro:hasPermission>
 	  </div>
@@ -169,12 +152,53 @@
 	    //列表操作按钮
 	    var tableBtn = new Array();
 	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+	    tableBtn = addBtn(tableBtn,"deletes","删除","","","","","","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
 
 
 	<script type="text/javascript">
+
+        //加载菜单
+        $('#projectSurveyTree').treegrid({
+            url:'<%=request.getContextPath()%>/admin/projectSurvey/projectSurveyTree',
+            method:'get',          //请求方式
+            idField:'projectId',           //定义标识树节点的键名字段
+            treeField:'lcName',       //定义树节点的字段
+            fit:true,               //网格自动撑满
+            fitColumns:true,
+            onLoadSuccess:function(node, data){
+                $(this).treegrid('collapseAll');
+            },
+            onClickRow:function(row){
+                console.log("----------------------------------------------");
+                console.log("row.projectId : "+row.projectId);
+                console.log("row.lcName : "+row.lcName);
+                console.log("----------------------------------------------");
+                $('#pageNum').val(1);
+                $("#projectId").val(row.projectId);
+                $("#lcName").val(row.lcName);
+                $("#lcName").html(row.lcName);
+                //点击时初始化数据
+                initPaginator(row.projectId);
+
+
+
+            }
+        });
+        //初始化列表
+        var initPaginator = function (projectId) {
+            var selectRow = $('#projectSurveyTree').datagrid('getSelected');
+            if (selectRow) {
+                projectId = selectRow.projectId;
+            } else {
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
+            loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
+        }
+
 
 		var methodStatus = function (val , obj) {
 			var retVal = "";
@@ -198,22 +222,11 @@
 					var id = data.val();
 					setAddOrEdit(id);
 				},
-				//启用和禁用数据弹窗
-				offset: function(othis){
-					var type = othis.data('type');
-					var status=othis.text();
-					if(status.indexOf("禁用")!=-1){
-						//禁用的url
-						requestUrl="<%=request.getContextPath()%>/admin/material/disabled";
-						text = "确定要禁用此条数据吗？";
-					}else{
-						//启用的url
-						requestUrl="<%=request.getContextPath()%>/admin/material/enabled";
-						text = "确定要启用此条数据吗？";
-					}
-					var id = othis.val();
-					userOffSet(type,requestUrl, id,text);
-				}
+                deletes: function(data){
+					//获取userId
+					var id = data.val();
+                    deletes(id);
+				},
 			};
 			$('.site-demo-button .layui-btn').on('click', function(){
 				var othis = $(this), method = othis.data('method');
@@ -224,6 +237,14 @@
 		
 		//新增、编辑打开
 		var setAddOrEdit = function(materialId){
+            var selectRow = $('#projectSurveyTree').datagrid('getSelected');
+            if (selectRow) {
+                var projectId = selectRow.projectId;
+            } else {
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
+            if (selectRow || projectId != "" || projectId != null ) {
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
@@ -231,7 +252,7 @@
 		         area: ['70%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/material/addOrEdit?materialId='+materialId,
+		         content: '<%=request.getContextPath()%>/admin/material/addOrEdit?materialId='+materialId+"&projectId="+projectId,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);
@@ -244,59 +265,55 @@
 		             });
 		         }
 		     });
-		};
-		
-		//禁用
-		var enabled = function (id) {
-			//禁用的url
-			requestUrl="<%=request.getContextPath()%>/admin/material/disabled";
-			text = "确定要禁用此条数据吗？";
-			userOffSet(1,requestUrl, id,text);
-		};
-		//启用
-		var openset = function (id) {
-			//启用的url
-			requestUrl="<%=request.getContextPath()%>/admin/material/enabled";
-			text = "确定要启用此条数据吗？";
-			userOffSet(0,requestUrl, id,text);
+            } else {
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
 		};
 
-		var userOffSet = function (type ,requestUrl,id,text) {
-			layer.open({
-				type: 1,
-				offset: type,
-				id: 'LAY_demo'+type, //防止重复弹出
-				content: '<div style="padding: 20px 100px;">'+ text +'</div>',
-				btn: ['确定', '取消'],
-				btnAlign: 'c', //按钮居中
-				shade: 0.5 ,//不显示遮罩
-				yes: function(){
-					layer.closeAll();
-					$.ajax({
-						type: "POST",
-						url: requestUrl,
-						data: {"id":id},
-						dataType: "json",
-						cache:false,
-						success: function(data){
-							var code = data.code;
-							var msg = data.message;
-							if(code == "200"){
-								layer.msg(msg, {icon: 1,time: 2000});//2秒关闭
-								//刷新页面
-								refreshTheCurrentPage();
-							}
-						},
-						error:function(){
-							layer.msg("操作失败", {icon: 1,time: 2000});//1.5秒关闭
-						}
-					});
-				},
-				btn2: function(){
-					layer.closeAll();
-				}
-			});
-		}
+		//删除
+        var deletes = function (id) {
+            //启用的url
+            requestUrl="<%=request.getContextPath()%>/admin/material/delete";
+            text = "确定要删除此条数据吗？";
+            userDeletes(0,requestUrl, id,text);
+        };
+        var userDeletes = function (type ,requestUrl,id,text) {
+            layer.open({
+                type: 1,
+                offset: type,
+                id: 'LAY_demo'+type, //防止重复弹出
+                content: '<div style="padding: 20px 100px;">'+ text +'</div>',
+                btn: ['确定', '取消'],
+                btnAlign: 'c', //按钮居中
+                shade: 0.5 ,//不显示遮罩
+                yes: function(){
+                    layer.closeAll();
+                    $.ajax({
+                        type: "POST",
+                        url: requestUrl,
+                        data: {"materialId":id},
+                        dataType: "json",
+                        cache:false,
+                        success: function(data){
+                            var code = data.code;
+                            var msg = data.message;
+                            if(code == "200"){
+                                layer.msg(msg, {icon: 1,time: 2000});//2秒关闭
+                                //刷新页面
+                                refreshTheCurrentPage();
+                            }
+                        },
+                        error:function(){
+                            layer.msg("操作失败", {icon: 1,time: 2000});//1.5秒关闭
+                        }
+                    });
+                },
+                btn2: function(){
+                    layer.closeAll();
+                }
+            });
+        }
 	</script>
 </body>
 </html>

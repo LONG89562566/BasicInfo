@@ -1,9 +1,12 @@
 package com.info.admin.controller.projectsurvey;
 
 import com.info.admin.controller.base.BaseController;
+import com.info.admin.entity.OrgInfo;
 import com.info.admin.entity.ProjectSurvey;
+import com.info.admin.entity.ProjectSurveyTree;
 import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
+import com.info.admin.service.OrgInfoService;
 import com.info.admin.service.ProjectSurveyService;
 import com.info.admin.utils.PageUtil;
 import org.apache.commons.lang.StringUtils;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author administrator  
@@ -32,7 +36,9 @@ public class ProjectSurveyController extends BaseController{
     private static final Logger logger = LoggerFactory.getLogger(ProjectSurveyController.class);
 
     @Autowired
-    private ProjectSurveyService service;
+    private ProjectSurveyService service ;
+    @Autowired
+    private OrgInfoService orgInfoService;
     
      /**
      *查询工程概况列表
@@ -86,7 +92,7 @@ public class ProjectSurveyController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String projectId,Model model){
         try{
-            if(null != projectId && StringUtils.isNotBlank(projectId)){
+            if(null != projectId){
                 //根据id查询系统用户
                 ProjectSurvey projectSurvey = service.getProjectSurveyById(projectId);
                 model.addAttribute("projectSurvey", projectSurvey);
@@ -95,6 +101,28 @@ public class ProjectSurveyController extends BaseController{
             return "projectsurvey/addProjectSurvey";
         }catch(Exception e){
             logger.error("[ProjectSurveyController][addOrEdit]: projectId="+projectId, e);
+            return "500";
+        }
+    }
+    /**
+     *跳转到新增页面
+     *@author
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value="/ProjectSurveyDetail",method={RequestMethod.GET,RequestMethod.POST})
+    public String ProjectSurveyDetail(HttpServletRequest request,String projectId,Model model){
+        try{
+            if(null != projectId){
+                //根据id查询系统用户
+                ProjectSurvey projectSurvey = service.getProjectSurveyById(projectId);
+                model.addAttribute("projectSurvey", projectSurvey);
+            }
+            model.addAttribute("projectId", projectId);
+            return "projectsurvey/projectSurveyDetail";
+        }catch(Exception e){
+            logger.error("[ProjectSurveyController][ProjectSurveyDetail]: projectId="+projectId, e);
             return "500";
         }
     }
@@ -110,7 +138,7 @@ public class ProjectSurveyController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "insertAndUpdate", method = { RequestMethod.GET, RequestMethod.POST })
-    public JsonResult insertAndUpdate(HttpServletRequest request,ProjectSurvey entity) {
+    public JsonResult insertAndUpdate(HttpServletRequest request, ProjectSurvey entity ) {
         logger.info("[ProjectSurveyController][insertAndUpdate] 新增或者修改ProjectSurvey对象:");
         try {
             int result;
@@ -119,7 +147,7 @@ public class ProjectSurveyController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getProjectId()) {
+            if (StringUtils.isNotEmpty(entity.getProjectId())) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);
@@ -207,5 +235,19 @@ public class ProjectSurveyController extends BaseController{
             logger.error("[ProjectSurveyController][pageQuery] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
-    }	
+    }
+
+    /**
+     *组织结构 树
+     *@return   java.lang.String
+     *@author
+     *@createTime   2018/11/17
+     *@updater  or other
+     */
+    @ResponseBody
+    @RequestMapping(value = "/projectSurveyTree", method = { RequestMethod.GET, RequestMethod.POST })
+    public Object projectSurveyTree( ProjectSurveyTree projectSurveyTree ) {
+        List<ProjectSurveyTree> projectSurveyTreeList = service.getProjectSurveyTree(projectSurveyTree);
+        return service.projectSurveyTree(projectSurveyTreeList, 0);
+    }
 }	

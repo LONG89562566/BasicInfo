@@ -10,39 +10,8 @@
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="supplierId" name="supplierId" value="${supplier.supplierId}"/>
+ 			<input  type="hidden" id="projectId" name="projectId" value="${projectId}"/>
      		<div class="layui-form-item" >
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">创建时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="createTime" id="createTime" value="${supplier.createTimeStr}" class="form-control input-small" placeholder="请选择创建时间"/>
-		            	<span style="color: red" id="s-createTime"></span>
-		        	</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">创建人编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="createUser" name="createUser" placeholder="请输入创建人编号"  value="${supplier.createUser }" class="layui-input"/>
-		        		<span style="color: red" id="s-createUser"></span>
-		     		</div>
-     			</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">删除标记</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="deleteFlag" name="deleteFlag" placeholder="请输入删除标记"  value="${supplier.deleteFlag }" class="layui-input"/>
-		        		<span style="color: red" id="s-deleteFlag"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">修改时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="updateTime" id="updateTime" value="${supplier.updateTimeStr}" class="form-control input-small" placeholder="请选择修改时间"/>
-		            	<span style="color: red" id="s-updateTime"></span>
-		        	</div>
-     			</div>
-			</div>
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
@@ -151,10 +120,6 @@
 	
 	function saveData() {
 	    var supplierId = $("#supplierId").val();
-	    var createTime = $("#createTime").val();
-	    var createUser = $("#createUser").val();
-	    var deleteFlag = $("#deleteFlag").val();
-	    var updateTime = $("#updateTime").val();
 	    var seq = $("#seq").val();
 	    var projectId = $("#projectId").val();
 	    var supperName = $("#supperName").val();
@@ -168,10 +133,6 @@
 
         var requestData={
             "supplierId":supplierId,
-            "createTimeStr":createTime,
-            "createUser":createUser,
-            "deleteFlag":deleteFlag,
-            "updateTimeStr":updateTime,
             "seq":seq,
             "projectId":projectId,
             "supperName":supperName,

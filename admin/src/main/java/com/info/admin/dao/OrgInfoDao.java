@@ -1,6 +1,8 @@
 package com.info.admin.dao;
 
 import com.info.admin.entity.OrgInfo;
+import com.info.admin.entity.OrgInfoTree;
+import com.info.admin.vo.OrgInfoVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -82,4 +84,14 @@ public interface OrgInfoDao {
 	 *@return   OrgInfo
 	 */
 	public OrgInfo getOrgInfoById(String orgId);
+
+	 /**
+	  * 查询组织机构信息List
+	  * @author
+	  * @param
+	  * @date  2018-11-14 23:45:42
+	  * @updater  or other
+	  * @return   OrgInfo
+	  */
+	 public List<OrgInfoTree> getOrgInfo(@Param("entity")OrgInfoTree entity);
 }

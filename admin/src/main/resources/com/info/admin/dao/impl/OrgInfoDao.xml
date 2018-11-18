@@ -8,11 +8,9 @@
 			useGeneratedKeys="true" keyProperty="orgId">
 		insert into org_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
 			<if test=" orgId != null">
 				org_id,
-			</if>
-			<if test=" createTime != null">
-				create_time,
 			</if>
 			<if test=" createUser != null">
 				create_user,
@@ -50,12 +48,10 @@
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(),
 			<if test="orgId != null ">
 		        #{orgId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -165,6 +161,42 @@
 		<result column="project_id" property="projectId" />
 
     </resultMap>
+	<!-- 返回 组织机构信息 Vo对象 -->
+    <resultMap type="com.info.admin.vo.OrgInfoVo" id="orgInfoVoMap">
+		<result column="org_id" property="orgId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="updateTime" property="updateTimeStr" />
+		<result column="seq" property="seq" />
+		<result column="level" property="level" />
+		<result column="is_end" property="isEnd" />
+		<result column="parent_id" property="parentId" />
+		<result column="org_name" property="orgName" />
+		<result column="ot_name" property="otName" />
+		<result column="org_code" property="orgCode" />
+		<result column="project_id" property="projectId" />
+		<result column="lc_name" property="lcName" />
+		<result column="lc_addr" property="lcAddr" />
+		<result column="line_mileage" property="lineMileage" />
+		<result column="lc_scale" property="lcScale" />
+		<result column="bear_task" property="bearTask" />
+		<result column="supply_mileage" property="supplyMileage" />
+		<result column="throughput" property="throughput" />
+		<result column="construction_unit" property="constructionUnit" />
+		<result column="bear_unit" property="bearUnit" />
+		<result column="control_unit" property="controlUnit" />
+		<result column="design_unit" property="designUnit" />
+		<result column="overall_goal" property="overallGoal" />
+		<result column="time_goal" property="timeGoal" />
+		<result column="security_goal" property="securityGoal" />
+		<result column="quality_goal" property="qualityGoal" />
+		<result column="epo_goal" property="epoGoal" />
+		<result column="oph_goal" property="ophGoal" />
+
+    </resultMap>
 
     <!-- 分页条件 -->
     <sql id="filterCondition">
@@ -177,9 +209,6 @@
 		    </if>
 		    <if test=" entity.createUser != null">
 			    and create_user =  #{entity.createUser} 
-		    </if>
-		    <if test=" entity.deleteFlag != null">
-			    and delete_flag =  #{entity.deleteFlag} 
 		    </if>
 		    <if test="entity.updateTime!=null">
 		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
@@ -208,7 +237,7 @@
 		    <if test=" entity.projectId != null">
 			    and project_id =  #{entity.projectId} 
 		    </if>
-
+			and delete_flag = 0
         </trim>
     </sql>
     
@@ -240,11 +269,159 @@
     </select>
     
     <!-- 根据id 查询 组织机构信息 -->
-	<select id="getOrgInfoById" parameterType="Long" resultMap="orgInfoMap" >
+	<select id="getOrgInfoById" parameterType="String" resultMap="orgInfoMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
 		 from org_info where org_id= #{orgId}
 	</select>
+	<!-- 返回 组织机构信息 对象 -->
+	<resultMap type="com.info.admin.entity.OrgInfoTree" id="orgInfoTreeMap">
+		<result column="org_id" property="orgId" />
+		<result column="create_time" property="createTime" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="level" property="level" />
+		<result column="parent_id" property="parentId" />
+		<result column="org_name" property="orgName" />
+		<result column="ot_name" property="otName" />
+		<result column="org_code" property="orgCode" />
+		<result column="project_id" property="projectId" />
+	</resultMap>
+	<!-- 分页条件 -->
+	<sql id="filterConditionTree">
+		<trim prefix="where " prefixOverrides="and " >
+			<if test=" entity.orgId != null">
+				and org_id =  #{entity.orgId}
+			</if>
+			<if test=" entity.level != null">
+				and level =  #{entity.level}
+			</if>
+			<if test=" entity.parentId != null">
+				and parent_id =  #{entity.parentId}
+			</if>
+			<if test=" entity.orgName != null">
+				and org_name =  #{entity.orgName}
+			</if>
+			<if test=" entity.otName != null">
+				and ot_name =  #{entity.otName}
+			</if>
+			<if test=" entity.orgCode != null">
+				and org_code =  #{entity.orgCode}
+			</if>
+			<if test=" entity.projectId != null">
+				and project_id =  #{entity.projectId}
+			</if>
+			and delete_flag = 0
+		</trim>
+	</sql>
+	<!-- 根据 组织机构信息树 -->
+	<select id="getOrgInfo"  resultMap="orgInfoTreeMap" >
+		select
+		org_info.org_id,
+		org_info.create_time,
+		org_info.delete_flag,
+		org_info.level,
+		org_info.parent_id,
+		org_info.org_name,
+		org_info.ot_name,
+		org_info.org_code,
+		org_info.project_id
+		from org_info
+		<include refid="filterConditionTree"></include>
+	</select>
+	<!-- Vo分页条件 -->
+	<sql id="filterConditionVo">
+		<trim prefix="where " prefixOverrides="and " >
+			<if test=" orgInfoVo.orgId != null">
+				and org_id =  #{orgInfoVo.orgId}
+			</if>
+			<if test="orgInfoVo.createTime!=null">
+				and create_time = STR_TO_DATE(#{orgInfoVo.createTime},"%Y-%m-%d %T")
+			</if>
+			<if test=" orgInfoVo.createUser != null">
+				and create_user =  #{orgInfoVo.createUser}
+			</if>
+			<if test="orgInfoVo.updateTime!=null">
+				and update_time = STR_TO_DATE(#{orgInfoVo.updateTime},"%Y-%m-%d %T")
+			</if>
+			<if test=" orgInfoVo.seq != null">
+				and seq =  #{orgInfoVo.seq}
+			</if>
+			<if test=" orgInfoVo.level != null">
+				and level =  #{orgInfoVo.level}
+			</if>
+			<if test=" orgInfoVo.isEnd != null">
+				and is_end =  #{orgInfoVo.isEnd}
+			</if>
+			<if test=" orgInfoVo.parentId != null">
+				and parent_id =  #{orgInfoVo.parentId}
+			</if>
+			<if test=" orgInfoVo.orgName != null">
+				and org_name =  #{orgInfoVo.orgName}
+			</if>
+			<if test=" orgInfoVo.otName != null">
+				and ot_name =  #{orgInfoVo.otName}
+			</if>
+			<if test=" orgInfoVo.orgCode != null">
+				and org_code =  #{orgInfoVo.orgCode}
+			</if>
+			<if test=" orgInfoVo.projectId != null">
+				and project_id =  #{orgInfoVo.projectId}
+			</if>
+			<if test=" orgInfoVo.lcName != null">
+				and lc_name =  #{orgInfoVo.lcName}
+			</if>
+			<if test=" orgInfoVo.lcAddr != null">
+				and lc_addr =  #{orgInfoVo.lcAddr}
+			</if>
+			<if test=" orgInfoVo.lineMileage != null">
+				and line_mileage =  #{orgInfoVo.lineMileage}
+			</if>
+			<if test=" orgInfoVo.lcScale != null">
+				and lc_scale =  #{orgInfoVo.lcScale}
+			</if>
+			<if test=" orgInfoVo.bearTask != null">
+				and bear_task =  #{orgInfoVo.bearTask}
+			</if>
+			<if test=" orgInfoVo.supplyMileage != null">
+				and supply_mileage =  #{orgInfoVo.supplyMileage}
+			</if>
+			<if test=" orgInfoVo.throughput != null">
+				and throughput =  #{orgInfoVo.throughput}
+			</if>
+			<if test=" orgInfoVo.constructionUnit != null">
+				and construction_unit =  #{orgInfoVo.constructionUnit}
+			</if>
+			<if test=" orgInfoVo.bearUnit != null">
+				and bear_unit =  #{orgInfoVo.bearUnit}
+			</if>
+			<if test=" orgInfoVo.controlUnit != null">
+				and control_unit =  #{orgInfoVo.controlUnit}
+			</if>
+			<if test=" orgInfoVo.designUnit != null">
+				and design_unit =  #{orgInfoVo.designUnit}
+			</if>
+			<if test=" orgInfoVo.overallGoal != null">
+				and overall_goal =  #{orgInfoVo.overallGoal}
+			</if>
+			<if test=" orgInfoVo.timeGoal != null">
+				and time_goal =  #{orgInfoVo.timeGoal}
+			</if>
+			<if test=" orgInfoVo.securityGoal != null">
+				and security_goal =  #{orgInfoVo.securityGoal}
+			</if>
+			<if test=" orgInfoVo.qualityGoal != null">
+				and quality_goal =  #{orgInfoVo.qualityGoal}
+			</if>
+			<if test=" orgInfoVo.epoGoal != null">
+				and epo_goal =  #{orgInfoVo.epoGoal}
+			</if>
+			<if test=" orgInfoVo.ophGoal != null">
+				and oph_goal =  #{orgInfoVo.ophGoal}
+			</if>
+			and org_info.delete_flag = 0
+		</trim>
+	</sql>
+
 </mapper>	

@@ -52,7 +52,7 @@
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
-		              <%--<h3 class="box-title">工程概况列表 :${sessionScope.login_session_admin.userName}</h3>--%>
+		              <h3 class="box-title">工程概况列表 :${sessionScope.login_session_admin.userName}</h3>
 		            </div>
 			        <div class="box box-info">
 			           <!-- form start -->
@@ -65,7 +65,7 @@
 			                 </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
-			                 	<button type="reset" onclick='resetRefreshTheCurrentPage()' id="reset" class="btn btn-info ">重置</button>
+			                 	<button type="reset" onclick='refreshTheCurrentPage()' id="reset" class="btn btn-info ">重置</button>
 			               	 </div>
 			             </div>
 			           </form>
@@ -74,65 +74,33 @@
 					<!-- 表格列表start -->
 		            <div class="box">
 			           <div class="box-body">
-			             <div class="site-demo-button" >
-						   <button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>
-						 </div>
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
-			                    <th field="seq"  >排序号</th>
+				                <th field="sys_xh">序号</th>
 			                    <th field="lcName"  >梁场名称</th>
-			                    <th field="lcAddr"  >梁场地址</th>
-			                    <th field="lineMileage"  >线路里程</th>
-			                    <th field="lcScale"  >梁场规模</th>
-			                    <th field="bearTask"  >承担任务</th>
-			                    <th field="supplyMileage"  >供应里程</th>
-			                    <th field="throughput"  >生产能力</th>
-			                    <th field="constructionUnit"  >建设单位</th>
-			                    <th field="bearUnit"  >承建单位</th>
-			                    <th field="controlUnit"  >监理单位</th>
-			                    <th field="designUnit"  >设计单位</th>
-			                    <th field="overallGoal"  >总体目标</th>
-			                    <th field="timeGoal"  >工期目标</th>
-			                    <th field="securityGoal"  >安全目标</th>
-			                    <th field="qualityGoal"  >质量目标</th>
-			                    <th field="epoGoal"  >环境保护目标</th>
-			                    <th field="ophGoal"  >职业健康目标</th>
+								  <th field="overallGoal"  >总体目标</th>
+								  <th field="timeGoal"  >工期目标</th>
+								  <th field="securityGoal"  >安全目标</th>
+								  <th field="qualityGoal"  >质量目标</th>
+								  <th field="epoGoal"  >环境保护目标</th>
+								  <th field="ophGoal"  >职业健康目标</th>
 
-				                <th field="sys_opt">操作</th>
+
+								  <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.seq}</td>
+								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
 					            <td>${r.lcName}</td>
-					            <td>${r.lcAddr}</td>
-					            <td>${r.lineMileage}</td>
-					            <td>${r.lcScale}</td>
-					            <td>${r.bearTask}</td>
-					            <td>${r.supplyMileage}</td>
-					            <td>${r.throughput}</td>
-					            <td>${r.constructionUnit}</td>
-					            <td>${r.bearUnit}</td>
-					            <td>${r.controlUnit}</td>
-					            <td>${r.designUnit}</td>
-					            <td>${r.overallGoal}</td>
-					            <td>${r.timeGoal}</td>
-					            <td>${r.securityGoal}</td>
-					            <td>${r.qualityGoal}</td>
-					            <td>${r.epoGoal}</td>
-					            <td>${r.ophGoal}</td>
+								 <td>${r.overallGoal}</td>
+								 <td>${r.timeGoal}</td>
+								 <td>${r.securityGoal}</td>
+								 <td>${r.qualityGoal}</td>
+								 <td>${r.epoGoal}</td>
+								 <td>${r.ophGoal}</td>
 
 						        <td>
 						         <div class="site-demo-button" >
@@ -174,7 +142,7 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+	    tableBtn = addBtn(tableBtn,"setAddOrEdit","设定或修改目标","","","","","","layui-btn-normal");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
@@ -234,10 +202,10 @@
 		     layer.open({
 		         type: 2, 
 		         title: '新增/修改 工程概况',
-		         area: ['99%', '86%'],
+		         area: ['70%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/projectSurvey/addOrEdit?projectId='+projectId,
+		         content: '<%=request.getContextPath()%>/admin/projectSurveyGoal/addOrEdit?projectId='+projectId,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);
