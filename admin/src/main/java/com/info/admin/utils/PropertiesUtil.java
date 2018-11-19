@@ -56,7 +56,10 @@ public class PropertiesUtil {
      */
 	public static boolean setDB(DBP dbp,String fileName) throws Exception  {
 	    boolean isOk;
-        String code = UUIDUtils.generateShortUuid();
+        String code = dbp.getCode();
+        if (StringUtils.isEmpty(dbp.getCode())){
+            code = UUIDUtils.generateShortUuid();
+        }
         PropertiesConfiguration config = getConf(fileName);
         config.setProperty(DBPropertie.DB_CODE+code,code);
         config.setProperty(DBPropertie.DB_ADDR+code,dbp.getIp());
