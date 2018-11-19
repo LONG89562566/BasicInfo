@@ -76,21 +76,16 @@
 		            <div class="box">
 			           <div class="box-body">
 			             <div class="site-demo-button" >
-						   <button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>
+						   <%--<button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>--%>
 						 </div>
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
 				                  <th field="sys_xh" style="width: 3%;">序号</th>
 							      <th field="releaseTime"  type='date' width="10%">发布时间</th>
-							      <th field="releaseType"  width="6%" method = "getReleaseType">发布类型</th>
 			                      <th field="title"  width="16%">标题</th>
 			                      <th field="content"  width="16%">内容</th>
 			                      <th field="releaseUserCn" width="7%">发布人</th>
-			                      <th field="receiveUserCn" width="8%">接收人</th>
-								  <th field="createTime" type='date' width="10%">创建时间</th>
-								  <th field="updateTime"  type='date' width="10%">修改时间</th>
-								  <th field="seq"  width="4%">排序号</th>
 				                  <th field="sys_opt" width="10%">操作</th>
 				              </tr>
 			               </thead>
@@ -99,19 +94,12 @@
 				   			 <tr>
 								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
 								 <td><fmt:formatDate value="${r.releaseTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-								 <td><c:if test="${r.releaseType == 1}"> 指定人</c:if><c:if test="${r.releaseType == 0}"> 全部</c:if></td>
 					             <td>${r.title}</td>
 					             <td>${r.content}</td>
 					             <td>${r.releaseUserCn}</td>
-					             <td>${r.receiveUserCn}</td>
-								 <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-								 <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-								 <td>${r.seq}</td>
 						         <td>
 									 <div class="site-demo-button" >
-										 <button id="updateReleaseInfo" data-method="setAddOrEdit" value="${r.releaseId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
-
-									     <button id="delReleaseInfo" data-method="delIfon" value="${r.releaseId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
+										 <button id="updateReleaseInfo" data-method="setAddOrEdit" value="${r.releaseId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;查看</span></button>
 									 </div>
 						         </td>
 				             </tr>
@@ -136,7 +124,7 @@
 	<script type="text/javascript">
 
 		//查询数据Url
-		var pageQueryUrl = "<%=request.getContextPath()%>/admin/releaseInfo/pageQuery";
+		var pageQueryUrl = "<%=request.getContextPath()%>/admin/releaseInfo/pageQueryUserAll";
 		//查询条件表单Id
 	    var _queryConditionForrId = "form_submit";
 		//显示数据表格id
@@ -149,10 +137,8 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
-	    tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-warm");
-		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
-		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
+	    tableBtn = addBtn(tableBtn,"setAddOrEdit","查看","","","","","","layui-btn-normal");
+
 	</script>
 
 
@@ -223,11 +209,11 @@
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
-		         title: '新增/修改 信息发布',
+		         title: '查看 信息发布',
 		         area: ['70%', '70%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/releaseInfo/addOrEdit?releaseId='+releaseId,
+		         content: '<%=request.getContextPath()%>/admin/releaseInfo/addOrEditUserAll?releaseId='+releaseId,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);

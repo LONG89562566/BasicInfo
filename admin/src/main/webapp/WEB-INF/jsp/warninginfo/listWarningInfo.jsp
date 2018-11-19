@@ -80,47 +80,44 @@
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
-			                    <th field="seq"  >排序号</th>
-			                    <th field="title"  >标题</th>
-			                    <th field="content"  >内容</th>
-			                    <th field="releaseUser"  >发布人编号</th>
-			                    <th field="receiveUser"  >接收人编号</th>
-			                    <th field="options"  >对象属性</th>
-			                    <th field="true_val"  >值</th>
-			                    <th field="condition"  >（大/小/等/不大/不小/不等于）</th>
-			                    <th field="warn_val"  >预警值</th>
+								  <th field="sys_xh">序号</th>
 
+								  <th field="title"  >标题</th>
+								  <th field="content"  >内容</th>
+								  <th field="releaseUser"  >发布人编号</th>
+								  <th field="receiveUser"  >接收人编号</th>
+								  <th field="options"  >对象属性</th>
+								  <th field="true_val"  >值</th>
+								  <th field="checkCondition"  >（大/小/等/不大/不小/不等于）</th>
+								  <th field="warn_val"  >预警值</th>
+								  <th field="createTime"  type='date'>创建时间</th>
+								  <th field="updateTime"  type='date'>修改时间</th>
+								  <th field="seq"  >排序号</th>
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.seq}</td>
-					            <td>${r.title}</td>
-					            <td>${r.content}</td>
-					            <td>${r.releaseUser}</td>
-					            <td>${r.receiveUser}</td>
-					            <td>${r.options}</td>
-					            <td>${r.true_val}</td>
-					            <td>${r.condition}</td>
-					            <td>${r.warn_val}</td>
+								 <td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
 
-						        <td>
-						         <div class="site-demo-button" >
-								   <button id="updateWarningInfo" data-method="setAddOrEdit" value="${r.warningId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
-								 </div>
-						       </td>
+								 <td>${r.title}</td>
+								 <td>${r.content}</td>
+								 <td>${r.releaseUser}</td>
+								 <td>${r.receiveUser}</td>
+								 <td>${r.options}</td>
+								 <td>${r.true_val}</td>
+								 <td>${r.checkCondition}</td>
+								 <td>${r.warn_val}</td>
+								 <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								 <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								 <td>${r.seq}</td>
+								 <td>
+									 <div class="site-demo-button" >
+										 <button id="updateWarningInfo" data-method="setAddOrEdit" value="${r.warningId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+										 <button id="delReleaseInfo" data-method="delIfon" value="${r.warningId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
+									 </div>
+								 </td>
 				             </tr>
 						   </c:forEach>
 		                  </tbody>
@@ -157,6 +154,7 @@
 	    //列表操作按钮
 	    var tableBtn = new Array();
 	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+        tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-warm");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
@@ -186,6 +184,11 @@
 					var id = data.val();
 					setAddOrEdit(id);
 				},
+                delIfon: function(data){
+                    //获取@primarykey
+                    var id = data.val();
+                    delData(id);
+                },
 				//启用和禁用数据弹窗
 				offset: function(othis){
 					var type = othis.data('type');
@@ -248,6 +251,13 @@
 			text = "确定要启用此条数据吗？";
 			userOffSet(0,requestUrl, id,text);
 		};
+        //删除
+        var delData = function(id){
+            //删除的url
+            requestUrl= "<%=request.getContextPath()%>/admin/warningInfo/delete";
+            text = "确定要删除此条数据吗？";
+            userOffSet(2,requestUrl, id,text);
+        };
 
 		var userOffSet = function (type ,requestUrl,id,text) {
 			layer.open({
@@ -263,7 +273,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"id":id},
+						data: {"warningId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){

@@ -62,6 +62,30 @@ public interface ReleaseInfoService {
      * @return   PageUtil
      */
     PageUtil pageQuery(ReleaseInfo entity, int pageNum, int pageSize);
+
+    /**
+     * 分页查询ReleaseInfo对象
+     * @param entity 对象
+     * @param pageNum	页数
+     * @param pageSize	大小
+     * @author  ysh
+     * @date  2018-11-14 23:45:41
+     * @updater or other
+     * @return   PageUtil
+     */
+    PageUtil pageQueryUserId(ReleaseInfo entity, int pageNum, int pageSize);
+
+    /**
+     * 分页查询ReleaseInfo对象
+     * @param entity 对象
+     * @param pageNum	页数
+     * @param pageSize	大小
+     * @author  ysh
+     * @date  2018-11-14 23:45:41
+     * @updater or other
+     * @return   PageUtil
+     */
+    PageUtil pageQueryUserAll(ReleaseInfo entity, int pageNum, int pageSize);
     
     /**
 	 * 根据 id获取 信息发布

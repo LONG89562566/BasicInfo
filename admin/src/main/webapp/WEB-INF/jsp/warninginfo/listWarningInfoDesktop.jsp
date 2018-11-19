@@ -75,16 +75,12 @@
 		            <div class="box">
 			           <div class="box-body">
 			             <div class="site-demo-button" >
-						   <button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>
+						   <%--<button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>--%>
 						 </div>
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
+				                <th field="sys_xh">序号</th>
 			                    <th field="seq"  >排序号</th>
 			                    <th field="title"  >标题</th>
 			                    <th field="content"  >内容</th>
@@ -92,20 +88,15 @@
 			                    <th field="receiveUser"  >接收人编号</th>
 			                    <th field="options"  >对象属性</th>
 			                    <th field="true_val"  >值</th>
-			                    <th field="condition"  >（大/小/等/不大/不小/不等于）</th>
+			                    <th field="checkCondition"  >（大/小/等/不大/不小/不等于）</th>
 			                    <th field="warn_val"  >预警值</th>
-
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
 					            <td>${r.seq}</td>
 					            <td>${r.title}</td>
 					            <td>${r.content}</td>
@@ -113,9 +104,8 @@
 					            <td>${r.receiveUser}</td>
 					            <td>${r.options}</td>
 					            <td>${r.true_val}</td>
-					            <td>${r.condition}</td>
+					            <td>${r.checkCondition}</td>
 					            <td>${r.warn_val}</td>
-
 						        <td>
 						         <div class="site-demo-button" >
 								   <button id="updateWarningInfo" data-method="setAddOrEdit" value="${r.warningId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>

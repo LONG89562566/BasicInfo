@@ -46,7 +46,7 @@
 	      <h1>问题库管理</h1>
 	    </section>
 	    <!-- Main content -->
-	    <shiro:hasPermission name="problem library:query">
+	    <shiro:hasPermission name="problemLibrary:query">
 		    <section class="content">
 		      <div class="row">
 		        <div class="col-xs-12">
@@ -80,41 +80,36 @@
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
-			                    <th field="seq"  >排序号</th>
-			                    <th field="title"  >标题</th>
-			                    <th field="type"  >问题类型</th>
-			                    <th field="inspectContent"  >检查内容</th>
-			                    <th field="inspectUser"  >检查人编号</th>
-			                    <th field="rectifyUser"  >整改人编号</th>
-			                    <th field="rectifyTime"  type='date'>整改时间</th>
-
-				                <th field="sys_opt">操作</th>
+				                 <th field="sys_xh">序号</th>
+			                     <th field="title"  >标题</th>
+			                     <th field="type"  >问题类型</th>
+			                     <th field="inspectContent"  >检查内容</th>
+			                     <th field="inspectUser"  >检查人编号</th>
+			                     <th field="rectifyUser"  >整改人编号</th>
+			                     <th field="rectifyTime"  type='date'>整改时间</th>
+			                     <th field="createTime"  type='date'>创建时间</th>
+			                     <th field="updateTime"  type='date'>修改时间</th>
+							     <th field="seq"  >排序号</th>
+				                 <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.seq}</td>
-					            <td>${r.title}</td>
-					            <td>${r.type}</td>
-					            <td>${r.inspectContent}</td>
-					            <td>${r.inspectUser}</td>
-					            <td>${r.rectifyUser}</td>
-				                <td><fmt:formatDate value="${r.rectifyTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-
+								 <td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
+					             <td>${r.title}</td>
+					             <td>${r.type}</td>
+					             <td>${r.inspectContent}</td>
+					             <td>${r.inspectUser}</td>
+					             <td>${r.rectifyUser}</td>
+				                 <td><fmt:formatDate value="${r.rectifyTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				                 <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				                 <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								 <td>${r.seq}</td>
 						        <td>
 						         <div class="site-demo-button" >
 								   <button id="updateProblemLibrary" data-method="setAddOrEdit" value="${r.supplierId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+								   <button id="delReleaseInfo" data-method="delIfon" value="${r.supplierId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
 								 </div>
 						       </td>
 				             </tr>
@@ -153,6 +148,7 @@
 	    //列表操作按钮
 	    var tableBtn = new Array();
 	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+        tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-warm");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
@@ -178,10 +174,15 @@
 			//触发事件
 			var active = {
 				setAddOrEdit: function(data){
-					//获取userId
+					//获取 supplierId
 					var id = data.val();
 					setAddOrEdit(id);
 				},
+                delIfon: function(data){
+                    //获取supplierId
+                    var id = data.val();
+                    delData(id);
+                },
 				//启用和禁用数据弹窗
 				offset: function(othis){
 					var type = othis.data('type');
@@ -244,6 +245,13 @@
 			text = "确定要启用此条数据吗？";
 			userOffSet(0,requestUrl, id,text);
 		};
+		//删除
+		var delData = function(id){
+            //删除的url
+            requestUrl= "<%=request.getContextPath()%>/admin/problemLibrary/delete";
+            text = "确定要删除此条数据吗？";
+            userOffSet(2,requestUrl, id,text);
+		};
 
 		var userOffSet = function (type ,requestUrl,id,text) {
 			layer.open({
@@ -259,7 +267,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"id":id},
+						data: {"supplierId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){
