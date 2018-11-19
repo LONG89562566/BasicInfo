@@ -13,6 +13,8 @@
 		<result property="remarks" column="remarks" />
 		<result property="createTime" column="create_time" />
 		<result property="lastUpdateTime" column="last_update_time" />
+		<result property="isBound" column="is_bound" />
+		<result property="staffId" column="staff_id" />
 	</resultMap>
 	
 	<sql id="filterCondition">
@@ -25,6 +27,12 @@
 	    </if>
 	    <if test="user.status != null ">
 	        and status = #{user.status}
+	    </if>
+		  <if test="user.isBound != null ">
+	        and is_bound = #{user.isBound}
+		</if>
+		  <if test="user.staffId != null ">
+	        and staff_id = #{user.staffId}
 	    </if>
 	  </trim>
 	</sql>
@@ -125,36 +133,47 @@
 	<update id="updateSysUser" parameterType="com.info.admin.entity.SysUser" >
 	    update sys_user
 	    <trim suffixOverrides=",">
-	      <set>
-	        <if test="userName != null and userName != '' ">
-		      userName = #{userName},
-		    </if>
-		    <if test="password != null and password != '' ">
-		      password = #{password},
-		    </if>
-		    <if test="email != null and email != '' ">
-		      email = #{email},
-		    </if>
-		    <if test="phone != null and phone != '' ">
-		      phone = #{phone},
-		    </if>
-		    <if test="name != null and name != '' ">
-		      name = #{name},
-		    </if>
-		    <if test="salt != null and salt != '' ">
-		      salt = #{salt},
-		    </if>
-		    <if test="remarks != null and remarks != '' ">
-		      remarks = #{remarks},
-		    </if>
-		    <if test="lastUpdateTime != null ">
-		      last_update_time = #{lastUpdateTime},
-		    </if>
-	      </set>
+			  <set>
+					<if test="userName != null and userName != '' ">
+					  userName = #{userName},
+					</if>
+					<if test="password != null and password != '' ">
+					  password = #{password},
+					</if>
+					<if test="email != null and email != '' ">
+					  email = #{email},
+					</if>
+					<if test="phone != null and phone != '' ">
+					  phone = #{phone},
+					</if>
+					<if test="name != null and name != '' ">
+					  name = #{name},
+					</if>
+					<if test="salt != null and salt != '' ">
+					  salt = #{salt},
+					</if>
+					<if test="remarks != null and remarks != '' ">
+					  remarks = #{remarks},
+					</if>
+					<if test="lastUpdateTime != null ">
+					  last_update_time = #{lastUpdateTime},
+					</if>
+				  <if test="isBound != null ">
+					  is_bound = #{isBound},
+				  </if>
+				  <if test="staffId != null ">
+					  staff_id = #{staffId},
+				  </if>
+			  </set>
 	    </trim>
 	    where id = #{id}
 	</update>
 	
+	<!-- 取消绑定系统用户 -->
+	<update id="escBoundUser" parameterType="com.info.admin.entity.SysUser" >
+	    update sys_user set is_bound = 0,staff_id = '' where is_bound = #{isBound} and staff_id = #{staffId}
+	</update>
+
 	<!-- 禁用系统用户 -->
 	<update id="disabledSysUser" parameterType="Long" >
 	    update sys_user set status=-1 where id = #{id}

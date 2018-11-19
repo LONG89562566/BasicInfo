@@ -44,6 +44,13 @@ public class StaffInfo implements Serializable {
 	 private String phone;
 	 /*****职位*****/
 	 private String position;
+	 /*****绑定用户id*****/
+	 private String boundUserId;
+	/*****
+	 * 是否绑定 0：未绑定 1 ：绑定
+	 */
+	private String isBound;
+
 
 
 	 public String getStaffId() {
@@ -194,7 +201,22 @@ public class StaffInfo implements Serializable {
 		 this.position = position;
 	 }
 
-	 
+	public String getBoundUserId() {
+		return boundUserId;
+	}
+
+	public void setBoundUserId(String boundUserId) {
+		this.boundUserId = boundUserId;
+	}
+
+	public String getIsBound() {
+		return isBound;
+	}
+
+	public void setIsBound(String isBound) {
+		this.isBound = isBound;
+	}
+
 	public StaffInfo() {
 		super();
 	}

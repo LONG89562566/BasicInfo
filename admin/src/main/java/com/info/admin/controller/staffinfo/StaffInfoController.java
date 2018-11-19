@@ -2,9 +2,11 @@ package com.info.admin.controller.staffinfo;
 
 import com.info.admin.controller.base.BaseController;
 import com.info.admin.entity.StaffInfo;
+import com.info.admin.entity.SysUser;
 import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.StaffInfoService;
+import com.info.admin.service.SysUserService;
 import com.info.admin.utils.PageUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -21,27 +23,30 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author administrator  
- * @date 2018-11-14 23:45:42 
+ * @author administrator
+ * @date 2018-11-14 23:45:42
  * @describe 员工信息 Controller
  */
 @Controller
 @RequestMapping("/admin/staffInfo")
-public class StaffInfoController extends BaseController{	
-	
+public class StaffInfoController extends BaseController {
+
     private static final Logger logger = LoggerFactory.getLogger(StaffInfoController.class);
 
     @Autowired
     private StaffInfoService service;
-    
-     /**
-     *查询员工信息列表
-     *@author   ysh
-     *@date  2018-07-12 10:50:32
-     *@updater  or other
-     *@return   String
+    @Autowired
+    private SysUserService sysUserService;
+
+    /**
+     * 查询员工信息列表
+     *
+     * @return String
+     * @author ysh
+     * @date 2018-07-12 10:50:32
+     * @updater or other
      */
-    @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
     @RequiresPermissions("staffInfo:query")
     public String getStaffInfoList(HttpServletRequest request, @ModelAttribute StaffInfo entity, Model model) {
         logger.info("[StaffInfoController][getStaffInfoList] 查询员工信息列表:");
@@ -55,14 +60,15 @@ public class StaffInfoController extends BaseController{
         return "staffinfo/listStaffInfo";
     }
 
-     /**
-     *我的桌面查询员工信息列表
-     *@author   ysh
-     *@date  2018-07-12 10:50:32
-     *@updater  or other
-     *@return   String
+    /**
+     * 我的桌面查询员工信息列表
+     *
+     * @return String
+     * @author ysh
+     * @date 2018-07-12 10:50:32
+     * @updater or other
      */
-    @RequestMapping(value = "/list/desktop", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/list/desktop", method = {RequestMethod.GET, RequestMethod.POST})
     @RequiresPermissions("staffInfo:query")
     public String getStaffInfoListDesktop(HttpServletRequest request, @ModelAttribute StaffInfo entity, Model model) {
         logger.info("[StaffInfoController][getStaffInfoListDesktop] 我的桌面查询员工信息列表:");
@@ -77,16 +83,17 @@ public class StaffInfoController extends BaseController{
     }
 
     /**
-     *跳转到新增页面
-     *@author
-     *@date  2018-07-12 10:50:32
-     *@updater  or other
-     *@return   String
+     * 跳转到新增页面
+     *
+     * @return String
+     * @author
+     * @date 2018-07-12 10:50:32
+     * @updater or other
      */
-    @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String staffId,String orgId,Model model){
-        try{
-            if(null != staffId){
+    @RequestMapping(value = "/addOrEdit", method = {RequestMethod.GET, RequestMethod.POST})
+    public String addOrEdit(HttpServletRequest request, String staffId, String orgId, Model model) {
+        try {
+            if (null != staffId) {
                 //根据id查询系统用户
                 StaffInfo staffInfo = service.getStaffInfoById(staffId);
                 model.addAttribute("staffInfo", staffInfo);
@@ -94,24 +101,44 @@ public class StaffInfoController extends BaseController{
             model.addAttribute("staffId", staffId);
             model.addAttribute("orgId", orgId);
             return "staffinfo/addStaffInfo";
-        }catch(Exception e){
-            logger.error("[StaffInfoController][addOrEdit]: staffId="+staffId, e);
+        } catch (Exception e) {
+            logger.error("[StaffInfoController][addOrEdit]: staffId=" + staffId, e);
+            return "500";
+        }
+    }
+
+    /**
+     * 跳转到绑定页面
+     *
+     * @return String
+     * @author
+     * @date 2018-07-12 10:50:32
+     * @updater or other
+     */
+    @RequestMapping(value = "/boundUser", method = {RequestMethod.GET, RequestMethod.POST})
+    public String boundUser(HttpServletRequest request, String staffId, Model model) {
+        try {
+            model.addAttribute("staffId", staffId);
+            return "staffinfo/boundUser";
+        } catch (Exception e) {
+            logger.error("[StaffInfoController][boundUser]: staffId=" + staffId, e);
             return "500";
         }
     }
 
     /**
      * 新增或者修改StaffInfo对象
-     * @param    request  请求
-     * @param    entity  对象
-     * @author   ysh
-     * @date   2018-11-14 23:45:42 
-     * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     *
+     * @param request 请求
+     * @param entity  对象
+     * @return com.netcai.admin.result.JsonResult
+     * @author ysh
+     * @date 2018-11-14 23:45:42
+     * @updater or other
      */
     @ResponseBody
-    @RequestMapping(value = "insertAndUpdate", method = { RequestMethod.GET, RequestMethod.POST })
-    public JsonResult insertAndUpdate(HttpServletRequest request,StaffInfo entity) {
+    @RequestMapping(value = "insertAndUpdate", method = {RequestMethod.GET, RequestMethod.POST})
+    public JsonResult insertAndUpdate(HttpServletRequest request, StaffInfo entity) {
         logger.info("[StaffInfoController][insertAndUpdate] 新增或者修改StaffInfo对象:");
         try {
             int result;
@@ -137,15 +164,88 @@ public class StaffInfoController extends BaseController{
     }
 
     /**
-     * 查询StaffInfo对象
-     * @param    entity  对象
-     * @author   ysh
-     * @date   2018-11-14 23:45:42 
-     * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     * 保存绑定数据
+     *
+     * @param request 请求
+     * @param staffId  人员id
+     * @param boundUserId  绑定用户id
+     * @return com.netcai.info.result.JsonResult
+     * @author ysh
+     * @date 2018-11-14 23:45:42
+     * @updater or other
      */
     @ResponseBody
-    @RequestMapping(value = "query", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "saveBoundUser", method = {RequestMethod.GET, RequestMethod.POST})
+    public JsonResult saveBoundUser(HttpServletRequest request, String staffId,Long boundUserId) {
+        logger.info("[StaffInfoController][saveBoundUser] 新增或者修改StaffInfo对象:");
+        try {
+            if (StringUtils.isEmpty(staffId)) {
+                return new JsonResult(JsonResultCode.FAILURE, "请输入数据", "");
+            }
+
+            SysUser user = new SysUser();
+            user.setIsBound("1");
+            user.setStaffId(staffId);
+            user.setId(boundUserId);
+            int  result = sysUserService.updateSysUser(user);
+
+            if (result > 0) {
+                return new JsonResult(JsonResultCode.SUCCESS, "操作成功", "");
+            } else {
+                return new JsonResult(JsonResultCode.FAILURE, "操作失败", "");
+            }
+        } catch (Exception e) {
+            logger.error("[StaffInfoController][saveBoundUser] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
+     * 取消绑定的用户
+     *
+     * @param request 请求
+     * @param staffId  人员id
+     * @return com.netcai.info.result.JsonResult
+     * @author ysh
+     * @date 2018-11-14 23:45:42
+     * @updater or other
+     */
+    @ResponseBody
+    @RequestMapping(value = "escBoundUser", method = {RequestMethod.GET, RequestMethod.POST})
+    public JsonResult escBoundUser(HttpServletRequest request, String staffId) {
+        logger.info("[StaffInfoController][escBoundUser] 取消绑定的用户:");
+        try {
+            if (StringUtils.isEmpty(staffId)) {
+                return new JsonResult(JsonResultCode.FAILURE, "请输入数据", "");
+            }
+
+            SysUser user = new SysUser();
+            user.setIsBound("1");
+            user.setStaffId(staffId);
+            int  result = sysUserService.escBoundUser(user);
+
+            if (result > 0) {
+                return new JsonResult(JsonResultCode.SUCCESS, "操作成功", "");
+            } else {
+                return new JsonResult(JsonResultCode.FAILURE, "操作失败", "");
+            }
+        } catch (Exception e) {
+            logger.error("[StaffInfoController][insertAndUpdate] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
+     * 查询StaffInfo对象
+     *
+     * @param entity 对象
+     * @return com.netcai.admin.result.JsonResult
+     * @author ysh
+     * @date 2018-11-14 23:45:42
+     * @updater or other
+     */
+    @ResponseBody
+    @RequestMapping(value = "query", method = {RequestMethod.GET, RequestMethod.POST})
     public JsonResult query(StaffInfo entity) {
         logger.info("[StaffInfoController][query] 查询StaffInfo对象:");
         try {
@@ -158,14 +258,15 @@ public class StaffInfoController extends BaseController{
 
     /**
      * 删除StaffInfo对象
-     * @param    entity  对象
-     * @author   ysh
-     * @date   2018-11-14 23:45:42 
-     * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     *
+     * @param entity 对象
+     * @return com.netcai.admin.result.JsonResult
+     * @author ysh
+     * @date 2018-11-14 23:45:42
+     * @updater or other
      */
     @ResponseBody
-    @RequestMapping(value = "delete", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "delete", method = {RequestMethod.GET, RequestMethod.POST})
     public JsonResult delete(StaffInfo entity) {
         logger.info("[StaffInfoController][delete] 删除StaffInfo对象:");
         try {
@@ -186,15 +287,16 @@ public class StaffInfoController extends BaseController{
 
     /**
      * 分页查询StaffInfo对象
-     * @param    entity  对象
-     * @author   ysh
-     * @date   2018-11-14 23:45:42 
-     * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     *
+     * @param entity 对象
+     * @return com.netcai.admin.result.JsonResult
+     * @author ysh
+     * @date 2018-11-14 23:45:42
+     * @updater or other
      */
     @ResponseBody
-    @RequestMapping(value = "pageQuery", method = { RequestMethod.GET, RequestMethod.POST })
-    public JsonResult pageQuery(HttpServletRequest request,StaffInfo entity) {
+    @RequestMapping(value = "pageQuery", method = {RequestMethod.GET, RequestMethod.POST})
+    public JsonResult pageQuery(HttpServletRequest request, StaffInfo entity) {
         logger.info("[StaffInfoController][pageQuery] 查询StaffInfo对象:");
         try {
             // 获取分页当前的页码
@@ -202,11 +304,11 @@ public class StaffInfoController extends BaseController{
             // 获取分页的大小
             int pageSize = this.getPageSize(request);
 
-            PageUtil paginator = service.pageQuery(entity , pageNum, pageSize);
+            PageUtil paginator = service.pageQuery(entity, pageNum, pageSize);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
         } catch (Exception e) {
             logger.error("[StaffInfoController][pageQuery] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
-    }	
+    }
 }	

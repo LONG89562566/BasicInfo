@@ -53,6 +53,8 @@ public class SysUserServiceImpl implements SysUserService {
 		user.setPassword(sysUser.getPassword());
 		user.setName(sysUser.getName());
 		user.setSalt(sysUser.getSalt());
+		user.setIsBound(sysUser.getIsBound());
+		user.setStaffId(sysUser.getStaffId());
 		
 		//查询用户拥有的菜单
 		List<SysMenu> menuList = sysMenuDao.getAllMenuByUserId(sysUser.getId(), 1);
@@ -99,6 +101,7 @@ public class SysUserServiceImpl implements SysUserService {
 			main.put("id",sysUser.getId());
 			main.put("name",sysUser.getName());
 			main.put("text",sysUser.getName());
+			main.put("staffId",sysUser.getStaffId());
 			main.put("select","true");
 			all.add(main);
 		}
@@ -119,6 +122,22 @@ public class SysUserServiceImpl implements SysUserService {
 	@Override
 	public SysUser getUserByPhone(String phone) {
 		return sysUserDao.getUserByPhone(phone);
+	}
+
+	/**
+	 * 更新
+	 */
+	@Override
+	public int updateSysUser(SysUser user) {
+		return sysUserDao.updateSysUser(user);
+	}
+
+	/**
+	 * 取消绑定用户
+	 */
+	@Override
+	public int escBoundUser(SysUser user) {
+		return sysUserDao.escBoundUser(user);
 	}
 
 	/**

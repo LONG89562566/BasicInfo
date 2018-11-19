@@ -100,7 +100,7 @@
 
 		$(function () {
             $("#releaseUser").combotree({
-                url: '/admin/sysUser/getUserTree',
+                url: '/admin/sysUser/getUserTreeYesBound',
                 // multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框
                 data : [{},{},{}],//数据省略
             	required: true,
@@ -127,7 +127,7 @@
 			});
 
             $("#receiveUser").combotree({
-                url: '/admin/sysUser/getUserTree',
+                url: '/admin/sysUser/getUserTreeYesBound',
                 multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框
                 data : [{},{},{}],//数据省略
             	required: true,

@@ -177,6 +177,41 @@ public class SysUserController extends BaseController {
 			return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
 		}
 	}
+
+	/**
+	 * 查询系统已绑定用户列表
+	 */
+	@ResponseBody
+	@RequestMapping(value="/sysUser/getUserTreeYesBound",method={RequestMethod.GET,RequestMethod.POST})
+	public Object getUserTreeYesBound(HttpServletRequest request, HttpServletResponse response,Model model,SysUser user)	{
+		logger.info("[SysUserController][getUserTreeYesBound] 查询CkCommunity对象:");
+		try {
+			user.setIsBound("1");
+			List<SysUser>  sysUserList = sysUserService.getAllSysUserList(user);
+			return sysUserService.getUserTree(sysUserList);
+		} catch (Exception e) {
+			logger.error("[SysUserController][getUserTreeYesBound] exception", e);
+			return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+		}
+	}
+
+	/**
+	 * 查询系统未绑定用户列表
+	 */
+	@ResponseBody
+	@RequestMapping(value="/sysUser/getUserTreeNoBound",method={RequestMethod.GET,RequestMethod.POST})
+	public Object getUserTreeNoBound(HttpServletRequest request, HttpServletResponse response,Model model,SysUser user)	{
+		logger.info("[SysUserController][getUserTreeNoBound] 查询CkCommunity对象:");
+		try {
+			user.setIsBound("0");
+			user.setStaffId("");
+			List<SysUser>  sysUserList = sysUserService.getAllSysUserList(user);
+			return sysUserService.getUserTree(sysUserList);
+		} catch (Exception e) {
+			logger.error("[SysUserController][getUserTreeNoBound] exception", e);
+			return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+		}
+	}
 	
 	/**
 	 * 跳转到新增页面

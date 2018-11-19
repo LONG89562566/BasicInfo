@@ -183,8 +183,8 @@
 	    //列表操作按钮
 	    var tableBtn = new Array();
 	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
-		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
-		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
+		tableBtn = addBtn(tableBtn,"escBoundUser","解绑","","","isBound","true","1","layui-btn-danger");
+		tableBtn = addBtn(tableBtn,"boundUser","绑定","","","isBound","true","0","layui-btn-danger");
 	</script>
 
 
@@ -202,10 +202,10 @@
                 $(this).treegrid('collapseAll');
             },
             onClickRow:function(row){
-                console.log("----------------------------------------------");
-                console.log("row.projectId : "+row.projectId);
-                console.log("row.orgId : "+row.orgId);
-                console.log("----------------------------------------------");
+                // console.log("----------------------------------------------");
+                // console.log("row.projectId : "+row.projectId);
+                // console.log("row.orgId : "+row.orgId);
+                // console.log("----------------------------------------------");
                 $('#pageNum').val(1);
                 $("#orgId").val(row.orgId);
                 $("#projectId").val(row.projectId);
@@ -316,12 +316,36 @@
                 return;
 			}
 		};
+
+		//新增、编辑打开
+		var boundUser = function(staffId){
+            //多窗口模式，层叠置顶
+            layer.open({
+                type: 2,
+                title: '员工绑定用户',
+                area: ['70%', '40%'],
+                shade: 0.5,
+                anim: 3,//0-6的动画形式，-1不开启
+                content: '<%=request.getContextPath()%>/admin/staffInfo/boundUser?staffId='+staffId,
+                zIndex: layer.zIndex, //重点1
+                success: function (layero, index) {
+                    // layer.setAddOrEdit(layero);
+                    var body = layer.getChildFrame('body', index);
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    body.find('input[name="staffId"]').val(staffId);
+                    //弹窗表单的取消操作时关闭弹窗
+                    var canclebtn = body.find('button[name="cancleSubmit"]').click(function cancleSubmit() {
+                        layer.closeAll();
+                    });
+                }
+            });
+		};
 		
 		//禁用
-		var enabled = function (id) {
+		var escBoundUser = function (id) {
 			//禁用的url
-			requestUrl="<%=request.getContextPath()%>/admin/staffInfo/disabled";
-			text = "确定要禁用此条数据吗？";
+			requestUrl="<%=request.getContextPath()%>/admin/staffInfo/escBoundUser";
+			text = "确定要对该用户解除绑定吗？";
 			userOffSet(1,requestUrl, id,text);
 		};
 		//启用
@@ -346,7 +370,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"id":id},
+						data: {"staffId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){

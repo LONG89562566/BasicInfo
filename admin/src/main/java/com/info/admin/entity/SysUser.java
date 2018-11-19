@@ -58,6 +58,15 @@ public class SysUser implements Serializable {
 	 * 角色
 	 */
 	private List<Long> roleIds;
+	/*****
+	 * 是否绑定 0：未绑定 1 ：绑定
+	 */
+	private String isBound;
+
+	/****
+	 * 员信息id
+	 */
+	private String staffId;
 
 	public SysUser() {
 		super();
@@ -159,4 +168,19 @@ public class SysUser implements Serializable {
 		this.roleIds = roleIds;
 	}
 
+	public String getIsBound() {
+		return isBound;
+	}
+
+	public void setIsBound(String isBound) {
+		this.isBound = isBound;
+	}
+
+	public String getStaffId() {
+		return staffId;
+	}
+
+	public void setStaffId(String staffId) {
+		this.staffId = staffId;
+	}
 }
