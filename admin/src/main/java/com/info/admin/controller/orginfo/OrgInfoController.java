@@ -2,10 +2,13 @@ package com.info.admin.controller.orginfo;
 
 import com.info.admin.controller.base.BaseController;
 import com.info.admin.entity.OrgInfo;
+import com.info.admin.entity.OrgInfoTree;
 import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.OrgInfoService;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.utils.TreeUtils;
+import com.info.admin.vo.OrgInfoVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author administrator  
@@ -206,5 +211,21 @@ public class OrgInfoController extends BaseController{
             logger.error("[OrgInfoController][pageQuery] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
-    }	
+    }
+
+    /**
+     *组织结构 树
+     *@return   java.lang.String
+     *@author
+     *@createTime   2018/11/17
+     *@updater  or other
+     */
+    @ResponseBody
+    @RequestMapping(value = "/orgInfoTree", method = { RequestMethod.GET, RequestMethod.POST })
+    public Object orgInfoTree( OrgInfoTree orgInfoTree ) {
+            List<OrgInfoTree> orgInfoList = service.getOrgInfo(orgInfoTree);
+            CopyOnWriteArrayList<OrgInfoTree> cowList = new CopyOnWriteArrayList<>(orgInfoList);
+            return TreeUtils.getTreeJson(cowList, "0","parentId","orgId");
+    }
+
 }	

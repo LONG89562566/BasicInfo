@@ -10,39 +10,9 @@
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="materialId" name="materialId" value="${material.materialId}"/>
+ 			<input  type="hidden" id="projectId" name="projectId" value="${projectId}"/>
      		<div class="layui-form-item" >
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">创建时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="createTime" id="createTime" value="${material.createTimeStr}" class="form-control input-small" placeholder="请选择创建时间"/>
-		            	<span style="color: red" id="s-createTime"></span>
-		        	</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">创建人编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="createUser" name="createUser" placeholder="请输入创建人编号"  value="${material.createUser }" class="layui-input"/>
-		        		<span style="color: red" id="s-createUser"></span>
-		     		</div>
-     			</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">删除标记</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="deleteFlag" name="deleteFlag" placeholder="请输入删除标记"  value="${material.deleteFlag }" class="layui-input"/>
-		        		<span style="color: red" id="s-deleteFlag"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">修改时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="updateTime" id="updateTime" value="${material.updateTimeStr}" class="form-control input-small" placeholder="请选择修改时间"/>
-		            	<span style="color: red" id="s-updateTime"></span>
-		        	</div>
-     			</div>
-			</div>
+
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
@@ -51,20 +21,13 @@
 		        		<span style="color: red" id="s-seq"></span>
 		     		</div>
      			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">项目编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="projectId" name="projectId" placeholder="请输入项目编号"  value="${material.projectId }" class="layui-input"/>
-		        		<span style="color: red" id="s-projectId"></span>
-		     		</div>
-     			</div>
 			</div>
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">材料名称</label>
 		        	<div class="layui-input-inline">
-		        		<input type="text" id="materialname" name="materialname" placeholder="请输入材料名称"  value="${material.materialname }" class="layui-input"/>
-		        		<span style="color: red" id="s-materialname"></span>
+		        		<input type="text" id="materialName" name="materialName" placeholder="请输入材料名称"  value="${material.materialName }" class="layui-input"/>
+		        		<span style="color: red" id="s-materialName"></span>
 		     		</div>
      			</div>
      			<div class="layui-inline">
@@ -95,8 +58,8 @@
      			<div class="layui-inline">
 		        	<label class="layui-form-label">生产厂家</label>
 		        	<div class="layui-input-inline">
-		        		<input type="text" id="manufacturer" name="manufacturer" placeholder="请输入生产厂家"  value="${material.manufacturer }" class="layui-input"/>
-		        		<span style="color: red" id="s-manufacturer"></span>
+		        		<input type="text" id="manufactrer" name="manufactrer" placeholder="请输入生产厂家"  value="${material.manufactrer }" class="layui-input"/>
+		        		<span style="color: red" id="s-manufactrer"></span>
 		     		</div>
      			</div>
      			<div class="layui-inline">
@@ -194,11 +157,11 @@
 	    var updateTime = $("#updateTime").val();
 	    var seq = $("#seq").val();
 	    var projectId = $("#projectId").val();
-	    var materialname = $("#materialname").val();
+	    var materialName = $("#materialName").val();
 	    var model = $("#model").val();
 	    var unit = $("#unit").val();
 	    var entryNum = $("#entryNum").val();
-	    var manufacturer = $("#manufacturer").val();
+	    var manufactrer = $("#manufactrer").val();
 	    var supplyer = $("#supplyer").val();
 	    var certificateQuality = $("#certificateQuality").val();
 	    var inspection = $("#inspection").val();
@@ -216,11 +179,11 @@
             "updateTimeStr":updateTime,
             "seq":seq,
             "projectId":projectId,
-            "materialname":materialname,
+            "materialName":materialName,
             "model":model,
             "unit":unit,
             "entryNum":entryNum,
-            "manufacturer":manufacturer,
+            "manufactrer":manufactrer,
             "supplyer":supplyer,
             "certificateQuality":certificateQuality,
             "inspection":inspection,

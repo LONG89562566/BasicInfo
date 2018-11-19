@@ -1,6 +1,7 @@
 package com.info.admin.dao;
 
 import com.info.admin.entity.ProjectSurvey;
+import com.info.admin.entity.ProjectSurveyTree;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -82,4 +83,15 @@ public interface ProjectSurveyDao {
 	 *@return   ProjectSurvey
 	 */
 	public ProjectSurvey getProjectSurveyById(String projectId);
+
+
+	 /**
+	  * 梁场信息List
+	  * @author
+	  * @param
+	  * @date  2018-11-14 23:45:42
+	  * @updater  or other
+	  * @return   OrgInfo
+	  */
+	 public List<ProjectSurveyTree>  getProjectSurveyTree(@Param("entity")ProjectSurveyTree entity);
 }

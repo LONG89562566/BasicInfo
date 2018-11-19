@@ -11,9 +11,7 @@
 			<if test=" materialId != null">
 				material_id,
 			</if>
-			<if test=" createTime != null">
 				create_time,
-			</if>
 			<if test=" createUser != null">
 				create_user,
 			</if>
@@ -29,8 +27,8 @@
 			<if test=" projectId != null">
 				project_id,
 			</if>
-			<if test=" materialname != null">
-				materialname,
+			<if test=" materialName != null">
+				material_name,
 			</if>
 			<if test=" model != null">
 				model,
@@ -41,8 +39,8 @@
 			<if test=" entryNum != null">
 				entry_num,
 			</if>
-			<if test=" manufacturer != null">
-				manufacturer,
+			<if test=" manufactrer != null">
+				manufactrer,
 			</if>
 			<if test=" supplyer != null">
 				supplyer,
@@ -74,9 +72,7 @@
 			<if test="materialId != null ">
 		        #{materialId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
+			now(),
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -92,8 +88,8 @@
 			<if test="projectId != null ">
 		        #{projectId},
 		    </if>
-			<if test="materialname != null ">
-		        #{materialname},
+			<if test="materialName != null ">
+		        #{materialName},
 		    </if>
 			<if test="model != null ">
 		        #{model},
@@ -104,8 +100,8 @@
 			<if test="entryNum != null ">
 		        #{entryNum},
 		    </if>
-			<if test="manufacturer != null ">
-		        #{manufacturer},
+			<if test="manufactrer != null ">
+		        #{manufactrer},
 		    </if>
 			<if test="supplyer != null ">
 		        #{supplyer},
@@ -158,8 +154,8 @@
 				<if test=" projectId != null">
 					project_id = #{projectId},
 				</if>
-				<if test=" materialname != null">
-					materialname = #{materialname},
+				<if test=" materialName != null">
+					material_name = #{materialName},
 				</if>
 				<if test=" model != null">
 					model = #{model},
@@ -170,8 +166,8 @@
 				<if test=" entryNum != null">
 					entry_num = #{entryNum},
 				</if>
-				<if test=" manufacturer != null">
-					manufacturer = #{manufacturer},
+				<if test=" manufactrer != null">
+					manufactrer = #{manufactrer},
 				</if>
 				<if test=" supplyer != null">
 					supplyer = #{supplyer},
@@ -220,11 +216,11 @@
 		<result column="updateTime" property="updateTimeStr" />
 		<result column="seq" property="seq" />
 		<result column="project_id" property="projectId" />
-		<result column="materialname" property="materialname" />
+		<result column="materialName" property="materialName" />
 		<result column="model" property="model" />
 		<result column="unit" property="unit" />
 		<result column="entry_num" property="entryNum" />
-		<result column="manufacturer" property="manufacturer" />
+		<result column="manufactrer" property="manufactrer" />
 		<result column="supplyer" property="supplyer" />
 		<result column="certificate_quality" property="certificateQuality" />
 		<result column="inspection" property="inspection" />
@@ -272,8 +268,8 @@
 		    <if test=" entity.entryNum != null">
 			    and entry_num =  #{entity.entryNum} 
 		    </if>
-		    <if test=" entity.manufacturer != null">
-			    and manufacturer =  #{entity.manufacturer} 
+		    <if test=" entity.manufactrer != null">
+			    and manufactrer =  #{entity.manufactrer}
 		    </if>
 		    <if test=" entity.supplyer != null">
 			    and supplyer =  #{entity.supplyer} 
@@ -331,7 +327,7 @@
     </select>
     
     <!-- 根据id 查询 材料 -->
-	<select id="getMaterialById" parameterType="Long" resultMap="materialMap" >
+	<select id="getMaterialById" parameterType="String" resultMap="materialMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

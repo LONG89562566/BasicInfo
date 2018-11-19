@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -10,6 +9,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="stylesheet" href="/layui/css/layui.css"  media="all">
 		<title></title>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<!-- 引入公共部分css jsp文件 -->
@@ -27,18 +27,35 @@
 				position:relative;
 				left:800px;
 			}
-			table th{
-				background:#ffffff;
-			}
-			table tr:nth-child(odd){
-				background:#F0F0F0;
-			}
 			.col-sm-2 {
 				width: 10%;
 			}
 		</style>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
+	<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/bootstrap/js/fileinput.js"></script>
+	<script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/jquery.form.js"></script>
+	<script src="/js/fromVal.js"></script>
+	<script src="/js/date-format.js"></script>
+	<script src="/layui/layui.js"></script>
+	<script src="/dist/js/app.min.js"></script>
+	<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/My97DatePicker/WdatePicker.js" charset="utf-8" ></script>
+	<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+	<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/bootstrap/js/fileinput.js"></script>
+	<script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/jquery.form.js"></script>
+	<script src="/layui/layui.js"></script>
+	<script src="/dist/js/app.min.js"></script>
+	<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/My97DatePicker/WdatePicker.js" charset="utf-8" ></script>
+
 	  <!-- 员工信息列表start -->
 	  <div class="content-wrapper">
 	    <!-- Content Header (Page header) --> 
@@ -48,27 +65,59 @@
 	    <!-- Main content -->
 	    <shiro:hasPermission name="staffInfo:query">
 		    <section class="content">
-		      <div class="row">
-		        <div class="col-xs-12">
-		          <div class="box">
-		            <div class="box-header">
-		              <h3 class="box-title">员工信息列表 :${sessionScope.login_session_admin.userName}</h3>
-		            </div>
+
+					<div class="row">
+						<div style="float: left;width: 18%;height: 500px;background-color: white;">
+							<table id="orgInfoTree" title="所有组织" style="width:100%;height:500px">
+								<thead>
+								<tr>
+									<th data-options="field:'orgName'" width="220px">梁场名称</th>
+								</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="box" style="float: right;width: 81%;height: auto; background-color: white;">
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="box">
+										<div class="box-header">
+											<h3 class="box-title">员工信息列表 :${sessionScope.login_session_admin.userName}</h3>
+										</div>
 			        <div class="box box-info">
 			           <!-- form start -->
-			           <form  id="form_submit" class="form-horizontal" action="/admin/staffInfo/list" method="post">
+						<form  id="form_submit">
 			           	  <input type="hidden" name="pageNum" id="pageNum" value="${paginator.currentPage}">
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
+	                      <input type="hidden" name="orgId" id="orgId" value="">
 			              <div class="box-body">
 			                 <div class="form-group">
-
+								 <div class="layui-inline">
+									 <label class="layui-form-label">机构名称：</label>
+									 <div class="layui-input-inline" >
+										 <span id="orgName" name="orgName" ></span>
+									 </div>
+								 </div>
+							 </div>
+							 <div class="form-group">
+							 	<div class="form-group">
+									 <div class="layui-inline">
+										 <label class="layui-form-label">机构别名：</label>
+										 <div class="layui-input-inline">
+											 <span id="otName" name="otName" ></span>
+										 </div>
+										 <label class="layui-form-label">机构编号：</label>
+										 <div class="layui-input-inline">
+											 <span  id="orgCode" name="orgCode"></span>
+										 </div>
+										 <label class="layui-form-label">梁场编号：</label>
+										 <div class="layui-input-inline">
+											 <span id="projectId" name="projectId" ></span>
+										 </div>
+									 </div>
+								 </div>
 			                 </div>
-			                 <div class="box-footer">
-			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
-			                 	<button type="reset" onclick='resetRefreshTheCurrentPage()' id="reset" class="btn btn-info ">重置</button>
-			               	 </div>
 			             </div>
-			           </form>
+						</form>
 			           <!-- form end -->
 			        </div>
 					<!-- 表格列表start -->
@@ -80,51 +129,24 @@
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
+				                <th field="sys_xh">序号</th>
+			                    <%--<th field="createUser"  >创建人编号</th>--%>
 			                    <th field="seq"  >排序号</th>
 			                    <th field="orgId"  >机构编号</th>
 			                    <th field="name"  >姓名</th>
 			                    <th field="sex"  >性别</th>
-			                    <th field="native"  >籍贯</th>
+			                    <th field="natives"  >籍贯</th>
 			                    <th field="nation"  >民族</th>
 			                    <th field="idCard"  >身份证号</th>
 			                    <th field="address"  >家庭住址</th>
 			                    <th field="phone"  >联系电话</th>
 			                    <th field="position"  >职位</th>
+								  <th field="createTime"  type='date'>创建时间</th>
 
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
-			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
-				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.seq}</td>
-					            <td>${r.orgId}</td>
-					            <td>${r.name}</td>
-					            <td>${r.sex}</td>
-					            <td>${r.native}</td>
-					            <td>${r.nation}</td>
-					            <td>${r.idCard}</td>
-					            <td>${r.address}</td>
-					            <td>${r.phone}</td>
-					            <td>${r.position}</td>
-
-						        <td>
-						         <div class="site-demo-button" >
-								   <button id="updateStaffInfo" data-method="setAddOrEdit" value="${r.staffId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
-								 </div>
-						       </td>
-				             </tr>
-						   </c:forEach>
 		                  </tbody>
 			             </table>
 			           </div>
@@ -138,6 +160,8 @@
 		          </div>
 		        </div>
 		      </div>
+			  </div>
+			  </div>
 		    </section>
 	    </shiro:hasPermission>
 	  </div>
@@ -164,7 +188,51 @@
 	</script>
 
 
-	<script type="text/javascript">
+	<script type="text/javascript" charset="utf-8">
+        layui.use(['layer','jquery','form','element'], function(){ })
+        //加载菜单
+        $('#orgInfoTree').treegrid({
+            url:'<%=request.getContextPath()%>/admin/orgInfo/orgInfoTree',
+            method:'get',          //请求方式
+            idField:'orgId',           //定义标识树节点的键名字段
+            treeField:'orgName',       //定义树节点的字段
+            fit:true,               //网格自动撑满
+            fitColumns:true,
+            onLoadSuccess:function(node, data){
+                $(this).treegrid('collapseAll');
+            },
+            onClickRow:function(row){
+                console.log("----------------------------------------------");
+                console.log("row.projectId : "+row.projectId);
+                console.log("row.orgId : "+row.orgId);
+                console.log("----------------------------------------------");
+                $('#pageNum').val(1);
+                $("#orgId").val(row.orgId);
+                $("#projectId").val(row.projectId);
+                $("#orgName").val(row.orgName);
+                $("#orgName").html(row.orgName);
+                $("#orgId").html(row.orgId);
+                $("#orgCode").html(row.orgCode);
+                $("#otName").html(row.otName);
+                $("#projectId").html(row.projectId);
+                //点击时初始化数据
+                initPaginator(row.orgId);
+
+
+
+            }
+        });
+        //初始化列表
+        var initPaginator = function (orgId) {
+            var selectRow = $('#orgInfoTree').datagrid('getSelected');
+            if (selectRow) {
+                orgId = selectRow.orgId;
+            } else {
+                layer.msg('请先选择一个组织机构！');
+                return;
+            }
+            loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
+        }
 
 		var methodStatus = function (val , obj) {
 			var retVal = "";
@@ -214,26 +282,39 @@
 		
 		//新增、编辑打开
 		var setAddOrEdit = function(staffId){
-		     //多窗口模式，层叠置顶
-		     layer.open({
-		         type: 2, 
-		         title: '新增/修改 员工信息',
-		         area: ['70%', '86%'],
-		         shade: 0.5,
-		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/staffInfo/addOrEdit?staffId='+staffId,
-		         zIndex: layer.zIndex, //重点1
-		         success: function(layero, index){
-		        	 //layer.setAddOrEdit(layero);
-		        	 var body = layer.getChildFrame('body', index);
-		             var iframeWin = window[layero.find('iframe')[0]['name']]; 
-		             body.find('input[name="staffId"]').val(staffId);
-		             //弹窗表单的取消操作时关闭弹窗
-		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
-		            	 layer.closeAll();
-		             });
-		         }
-		     });
+
+            var selectRow = $('#orgInfoTree').datagrid('getSelected');
+            if (selectRow) {
+                var orgId = selectRow.orgId;
+            } else {
+                layer.msg('请先选择一个组织机构！');
+                return;
+            }
+            if( selectRow || orgId != "" || orgId != null) {
+                //多窗口模式，层叠置顶
+                layer.open({
+                    type: 2,
+                    title: '新增/修改 员工信息',
+                    area: ['70%', '86%'],
+                    shade: 0.5,
+                    anim: 3,//0-6的动画形式，-1不开启
+                    content: '<%=request.getContextPath()%>/admin/staffInfo/addOrEdit?staffId='+staffId+"&orgId="+orgId,
+                    zIndex: layer.zIndex, //重点1
+                    success: function (layero, index) {
+                        //layer.setAddOrEdit(layero);
+                        var body = layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        body.find('input[name="staffId"]').val(staffId);
+                        //弹窗表单的取消操作时关闭弹窗
+                        var canclebtn = body.find('button[name="cancleSubmit"]').click(function cancleSubmit() {
+                            layer.closeAll();
+                        });
+                    }
+                });
+            }else {
+                layer.msg('请先选择一个组织机构！');
+                return;
+			}
 		};
 		
 		//禁用

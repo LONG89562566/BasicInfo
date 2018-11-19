@@ -11,9 +11,7 @@
 			<if test=" supplierId != null">
 				supplier_id,
 			</if>
-			<if test=" createTime != null">
 				create_time,
-			</if>
 			<if test=" createUser != null">
 				create_user,
 			</if>
@@ -59,9 +57,7 @@
 			<if test="supplierId != null ">
 		        #{supplierId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
+				now(),
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -198,9 +194,7 @@
 		    <if test=" entity.createUser != null">
 			    and create_user =  #{entity.createUser} 
 		    </if>
-		    <if test=" entity.deleteFlag != null">
-			    and delete_flag =  #{entity.deleteFlag} 
-		    </if>
+
 		    <if test="entity.updateTime!=null">
 		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
 		    </if>
@@ -234,7 +228,7 @@
 		    <if test=" entity.phone != null">
 			    and phone =  #{entity.phone} 
 		    </if>
-
+				and delete_flag =  0
         </trim>
     </sql>
     

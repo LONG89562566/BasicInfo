@@ -1,7 +1,9 @@
 package com.info.admin.service;
 
 import com.info.admin.entity.OrgInfo;
+import com.info.admin.entity.OrgInfoTree;
 import com.info.admin.utils.PageUtil;
+import net.sf.json.JSONArray;
 
 import java.util.List;
 
@@ -71,7 +73,16 @@ public interface OrgInfoService {
 	 * @updater  or other
 	 * @return   OrgInfo
 	 */ 
-	public OrgInfo getOrgInfoById(String orgId);
+	OrgInfo getOrgInfoById(String orgId);
+    /**
+     * 查询组织机构信息List
+     * @author
+     * @param orgInfoTree
+     * @date  2018-11-14 23:45:42
+     * @updater  or other
+     * @return   OrgInfo
+     */
+    List<OrgInfoTree>  getOrgInfo(OrgInfoTree orgInfoTree);
 	
 }
 

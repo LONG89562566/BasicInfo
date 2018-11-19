@@ -8,12 +8,11 @@
 			useGeneratedKeys="true" keyProperty="projectId">
 		insert into project_survey
         <trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
 			<if test=" projectId != null">
 				project_id,
 			</if>
-			<if test=" createTime != null">
-				create_time,
-			</if>
+
 			<if test=" createUser != null">
 				create_user,
 			</if>
@@ -80,12 +79,10 @@
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(),
 			<if test="projectId != null ">
 		        #{projectId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -278,9 +275,7 @@
 		    <if test=" entity.createUser != null">
 			    and create_user =  #{entity.createUser} 
 		    </if>
-		    <if test=" entity.deleteFlag != null">
-			    and delete_flag =  #{entity.deleteFlag} 
-		    </if>
+
 		    <if test="entity.updateTime!=null">
 		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
 		    </if>
@@ -338,6 +333,7 @@
 		    <if test=" entity.ophGoal != null">
 			    and oph_goal =  #{entity.ophGoal} 
 		    </if>
+				and delete_flag = 0
 
         </trim>
     </sql>
@@ -370,11 +366,80 @@
     </select>
     
     <!-- 根据id 查询 工程概况 -->
-	<select id="getProjectSurveyById" parameterType="Long" resultMap="projectSurveyMap" >
+	<select id="getProjectSurveyById" parameterType="String" resultMap="projectSurveyMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
 		 from project_survey where project_id= #{projectId}
 	</select>
+	<!-- 返回 工程概况 对象 -->
+	<resultMap type="com.info.admin.entity.ProjectSurveyTree" id="projectSurveyTreeMap">
+		<result column="project_id" property="projectId" />
+		<result column="seq" property="seq" />
+		<result column="lc_name" property="lcName" />
+		<result column="lc_addr" property="lcAddr" />
+		<result column="line_mileage" property="lineMileage" />
+		<result column="lc_scale" property="lcScale" />
+		<result column="bear_task" property="bearTask" />
+		<result column="supply_mileage" property="supplyMileage" />
+		<result column="throughput" property="throughput" />
+		<result column="construction_unit" property="constructionUnit" />
+		<result column="bear_unit" property="bearUnit" />
+		<result column="control_unit" property="controlUnit" />
+		<result column="design_unit" property="designUnit" />
+
+	</resultMap>
+	<!-- 分页条件 -->
+	<sql id="filterConditionTree">
+		<trim prefix="where " prefixOverrides="and " >
+			<if test=" entity.projectId != null">
+				and project_id =  #{entity.projectId}
+			</if>
+			<if test=" entity.lcName != null">
+				and lc_name =  #{entity.lcName}
+			</if>
+			<if test=" entity.lcAddr != null">
+				and lc_addr =  #{entity.lcAddr}
+			</if>
+			<if test=" entity.lineMileage != null">
+				and line_mileage =  #{entity.lineMileage}
+			</if>
+			<if test=" entity.lcScale != null">
+				and lc_scale =  #{entity.lcScale}
+			</if>
+			<if test=" entity.bearTask != null">
+				and bear_task =  #{entity.bearTask}
+			</if>
+			<if test=" entity.supplyMileage != null">
+				and supply_mileage =  #{entity.supplyMileage}
+			</if>
+			<if test=" entity.throughput != null">
+				and throughput =  #{entity.throughput}
+			</if>
+			<if test=" entity.constructionUnit != null">
+				and construction_unit =  #{entity.constructionUnit}
+			</if>
+			<if test=" entity.bearUnit != null">
+				and bear_unit =  #{entity.bearUnit}
+			</if>
+			<if test=" entity.controlUnit != null">
+				and control_unit =  #{entity.controlUnit}
+			</if>
+			<if test=" entity.designUnit != null">
+				and design_unit =  #{entity.designUnit}
+			</if>
+			and delete_flag = 0
+
+		</trim>
+	</sql>
+
+	<!-- 根据梁场-->
+	<select id="getProjectSurveyTree"  resultMap="projectSurveyTreeMap" >
+		select
+		*
+		from project_survey
+		<include refid="filterConditionTree"></include>
+	</select>
+
 </mapper>	

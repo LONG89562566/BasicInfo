@@ -10,52 +10,14 @@
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="staffId" name="staffId" value="${staffInfo.staffId}"/>
+ 			<input  type="hidden" id="orgId" name="orgId" value="${orgId}"/>
      		<div class="layui-form-item" >
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">创建时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="createTime" id="createTime" value="${staffInfo.createTimeStr}" class="form-control input-small" placeholder="请选择创建时间"/>
-		            	<span style="color: red" id="s-createTime"></span>
-		        	</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">创建人编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="createUser" name="createUser" placeholder="请输入创建人编号"  value="${staffInfo.createUser }" class="layui-input"/>
-		        		<span style="color: red" id="s-createUser"></span>
-		     		</div>
-     			</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">删除标记</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="deleteFlag" name="deleteFlag" placeholder="请输入删除标记"  value="${staffInfo.deleteFlag }" class="layui-input"/>
-		        		<span style="color: red" id="s-deleteFlag"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">修改时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="updateTime" id="updateTime" value="${staffInfo.updateTimeStr}" class="form-control input-small" placeholder="请选择修改时间"/>
-		            	<span style="color: red" id="s-updateTime"></span>
-		        	</div>
-     			</div>
-			</div>
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
 		        	<div class="layui-input-inline">
 		        		<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${staffInfo.seq }" class="layui-input"/>
 		        		<span style="color: red" id="s-seq"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">机构编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="orgId" name="orgId" placeholder="请输入机构编号"  value="${staffInfo.orgId }" class="layui-input"/>
-		        		<span style="color: red" id="s-orgId"></span>
 		     		</div>
      			</div>
 			</div>
@@ -79,7 +41,7 @@
      			<div class="layui-inline">
 		        	<label class="layui-form-label">籍贯</label>
 		        	<div class="layui-input-inline">
-		        		<input type="text" id="native" name="native" placeholder="请输入籍贯"  value="${staffInfo.native }" class="layui-input"/>
+		        		<input type="text" id="native" name="native" placeholder="请输入籍贯"  value="${staffInfo.natives }" class="layui-input"/>
 		        		<span style="color: red" id="s-native"></span>
 		     		</div>
      			</div>
@@ -151,7 +113,6 @@
 	
 	function saveData() {
 	    var staffId = $("#staffId").val();
-	    var createTime = $("#createTime").val();
 	    var createUser = $("#createUser").val();
 	    var deleteFlag = $("#deleteFlag").val();
 	    var updateTime = $("#updateTime").val();
@@ -168,7 +129,6 @@
 
         var requestData={
             "staffId":staffId,
-            "createTimeStr":createTime,
             "createUser":createUser,
             "deleteFlag":deleteFlag,
             "updateTimeStr":updateTime,
@@ -176,9 +136,9 @@
             "orgId":orgId,
             "name":name,
             "sex":sex,
-            "native":native,
+            "natives":native,
             "nation":nation,
-            "IdCard":IdCard,
+            "IdCard":idCard,
             "address":address,
             "phone":phone,
             "position":position

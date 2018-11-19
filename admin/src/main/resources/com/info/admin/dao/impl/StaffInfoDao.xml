@@ -11,9 +11,7 @@
 			<if test=" staffId != null">
 				staff_id,
 			</if>
-			<if test=" createTime != null">
 				create_time,
-			</if>
 			<if test=" createUser != null">
 				create_user,
 			</if>
@@ -59,9 +57,7 @@
 			<if test="staffId != null ">
 		        #{staffId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
+			now(),
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -266,7 +262,7 @@
     </select>
     
     <!-- 根据id 查询 员工信息 -->
-	<select id="getStaffInfoById" parameterType="Long" resultMap="staffInfoMap" >
+	<select id="getStaffInfoById" parameterType="String" resultMap="staffInfoMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

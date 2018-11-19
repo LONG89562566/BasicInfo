@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.SupplierService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,7 +84,7 @@ public class SupplierController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String supplierId,Model model){
+    public String addOrEdit(HttpServletRequest request,String supplierId,String projectId,Model model){
         try{
             if(null != supplierId){
                 //根据id查询系统用户
@@ -91,6 +92,7 @@ public class SupplierController extends BaseController{
                 model.addAttribute("supplier", supplier);
             }
             model.addAttribute("supplierId", supplierId);
+            model.addAttribute("projectId", projectId);
             return "supplier/addSupplier";
         }catch(Exception e){
             logger.error("[SupplierController][addOrEdit]: supplierId="+supplierId, e);
@@ -118,7 +120,7 @@ public class SupplierController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getSupplierId()) {
+            if (StringUtils.isNotEmpty(entity.getSupplierId()) ) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);
