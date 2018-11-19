@@ -7,6 +7,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.OrgInfoService;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.utils.TreeUtils;
 import com.info.admin.vo.OrgInfoVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author administrator  
@@ -222,7 +224,8 @@ public class OrgInfoController extends BaseController{
     @RequestMapping(value = "/orgInfoTree", method = { RequestMethod.GET, RequestMethod.POST })
     public Object orgInfoTree( OrgInfoTree orgInfoTree ) {
             List<OrgInfoTree> orgInfoList = service.getOrgInfo(orgInfoTree);
-             return service.orgInfoTree(orgInfoList, 0);
+            CopyOnWriteArrayList<OrgInfoTree> cowList = new CopyOnWriteArrayList<>(orgInfoList);
+            return TreeUtils.getTreeJson(cowList, "0","parentId","orgId");
     }
 
 }	

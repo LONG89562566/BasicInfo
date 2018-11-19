@@ -73,25 +73,16 @@ public interface OrgInfoService {
 	 * @updater  or other
 	 * @return   OrgInfo
 	 */ 
-	public OrgInfo getOrgInfoById(String orgId);
+	OrgInfo getOrgInfoById(String orgId);
     /**
      * 查询组织机构信息List
      * @author
-     * @param
+     * @param orgInfoTree
      * @date  2018-11-14 23:45:42
      * @updater  or other
      * @return   OrgInfo
      */
-    public List<OrgInfoTree>  getOrgInfo(OrgInfoTree orgInfoTree);
-    /**
-     *组织机构树
-     *@param
-     *@param  parentId 父节点
-     *@return JSONArray
-     *@author
-     *@createTime
-     */
-    public JSONArray orgInfoTree(List<OrgInfoTree> orgInfoList, int parentId);
+    List<OrgInfoTree>  getOrgInfo(OrgInfoTree orgInfoTree);
 	
 }
 

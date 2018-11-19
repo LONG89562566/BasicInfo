@@ -132,18 +132,7 @@ public class OrgInfoServiceImpl implements OrgInfoService {
         return dao.getOrgInfo(orgInfoTree);
     };
 
-    /**
-     * 组织结构名称树
-     */
-    @Override
-    public JSONArray orgInfoTree(List<OrgInfoTree> orgInfoList, int parentId) {
-        JSONArray all = new JSONArray();
-        for (OrgInfoTree orgInfoTree : orgInfoList) {
-            JSONObject main = JSONObject.fromObject(orgInfoTree);
-                all.add(main);
-            }
-        return all;
-    }
+
 
 }
 
