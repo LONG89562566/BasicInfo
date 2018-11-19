@@ -253,7 +253,7 @@
     </select>
     
     <!-- 根据id 查询 预警设置 -->
-	<select id="getWarningInfoById" parameterType="Long" resultMap="warningInfoMap" >
+	<select id="getWarningInfoById" parameterType="String" resultMap="warningInfoMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

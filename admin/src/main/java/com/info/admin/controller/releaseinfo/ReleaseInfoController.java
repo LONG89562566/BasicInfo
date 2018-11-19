@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.ReleaseInfoService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * @author administrator  
@@ -43,6 +45,7 @@ public class ReleaseInfoController extends BaseController{
     @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
     @RequiresPermissions("releaseInfo:query")
     public String getReleaseInfoList(HttpServletRequest request, @ModelAttribute ReleaseInfo entity, Model model) {
+        entity.setDeleteFlag(0L);
         logger.info("[ReleaseInfoController][getReleaseInfoList] 查询信息发布列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
@@ -64,6 +67,7 @@ public class ReleaseInfoController extends BaseController{
     @RequestMapping(value = "/list/desktop", method = { RequestMethod.GET, RequestMethod.POST })
     @RequiresPermissions("releaseInfo:query")
     public String getReleaseInfoListDesktop(HttpServletRequest request, @ModelAttribute ReleaseInfo entity, Model model) {
+        entity.setDeleteFlag(0L);
         logger.info("[ReleaseInfoController][getReleaseInfoListDesktop] 我的桌面查询信息发布列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
@@ -116,11 +120,22 @@ public class ReleaseInfoController extends BaseController{
             if (null == entity) {
                 return new JsonResult(JsonResultCode.FAILURE, "请输入数据", "");
             }
-
+            String[] releaseUsers = request.getParameterValues("releaseUsers[]");
+            if(releaseUsers != null && releaseUsers.length > 0){
+                entity.setReleaseUser(StringUtils.join(releaseUsers,","));
+            }
+            String[] receiveUsers = request.getParameterValues("receiveUsers[]");
+            String[] receiveUserCns = request.getParameterValues("receiveUserCns[]");
+            if(receiveUsers != null && receiveUsers.length> 0){
+                entity.setReceiveUser(StringUtils.join(receiveUsers,","));
+                entity.setReceiveUserCn(StringUtils.join(receiveUserCns,","));
+            }
             // 通过id来判断是新增还是修改
-            if (null != entity.getReleaseId()) {
+            if (null != entity.getReleaseId() && StringUtils.isNotBlank(entity.getReleaseId())) {
+                entity.setUpdateTime(new Date());
                 result = service.update(entity);
             } else {
+                entity.setCreateUser(getLoginUserId(request));
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -146,6 +161,7 @@ public class ReleaseInfoController extends BaseController{
     @RequestMapping(value = "query", method = { RequestMethod.GET, RequestMethod.POST })
     public JsonResult query(ReleaseInfo entity) {
         logger.info("[ReleaseInfoController][query] 查询ReleaseInfo对象:");
+        entity.setDeleteFlag(0L);
         try {
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.query(entity));
         } catch (Exception e) {
@@ -194,6 +210,7 @@ public class ReleaseInfoController extends BaseController{
     @RequestMapping(value = "pageQuery", method = { RequestMethod.GET, RequestMethod.POST })
     public JsonResult pageQuery(HttpServletRequest request,ReleaseInfo entity) {
         logger.info("[ReleaseInfoController][pageQuery] 查询ReleaseInfo对象:");
+        entity.setDeleteFlag(0L);
         try {
             // 获取分页当前的页码
             int pageNum = this.getPageNum(request);

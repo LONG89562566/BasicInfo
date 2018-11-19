@@ -5,6 +5,9 @@ import com.info.admin.entity.SysUser;
 import com.info.admin.entity.ActiveSysUser;
 import com.info.admin.entity.SysUser;
 import com.info.admin.utils.PageUtil;
+import net.sf.json.JSONArray;
+
+import java.util.List;
 
 public interface SysUserService {
 	
@@ -17,7 +20,22 @@ public interface SysUserService {
 	 * @return
 	 */
 	public PageUtil getAllSysUser(SysUser user, int pageNum, int pageSize);
-	
+
+	/**
+	 * 分页查询用户信息
+	 *
+	 * @param user
+	 * @param offset
+	 * @param pageSize
+	 * @return
+	 */
+	public List<SysUser> getAllSysUserList(SysUser user);
+
+	/**
+	 *
+	 * @return
+	 */
+	public JSONArray getUserTree(List<SysUser> sysUsers);
 
 	/**
 	 * 根据登录名称查询用户

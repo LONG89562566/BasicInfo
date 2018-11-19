@@ -266,7 +266,7 @@
     </select>
     
     <!-- 根据id 查询 供应商 -->
-	<select id="getSupplierById" parameterType="Long" resultMap="supplierMap" >
+	<select id="getSupplierById" parameterType="String" resultMap="supplierMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

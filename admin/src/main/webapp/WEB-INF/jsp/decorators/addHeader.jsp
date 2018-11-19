@@ -20,13 +20,11 @@
 <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
 
 <script type="text/javascript" src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
 
 <script charset="utf-8" src="/kindeditor/kindeditor-all.js"></script>
 <script charset="utf-8" src="/kindeditor/lang/zh-CN.js"></script>
 <script charset="utf-8" src="/kindeditor/plugins/code/prettify.js"></script>
-<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+
 
 <script type="text/javascript" src="/js/jquery.formPlugin.js"></script>
 <script type="text/javascript" src="/js/jquery.form.js"></script>
@@ -37,6 +35,8 @@
 <script type="text/javascript" src="/js/fromVal.js"></script>
 <script type="text/javascript" src="/My97DatePicker/WdatePicker.js" charset="utf-8" ></script>
 
+<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 
 <style type="text/css">
     .layui-input-inline{

@@ -139,7 +139,7 @@ var loadThisPageData = function (currentPage,pageSize,json,parm) {
                                 html += "<shiro:hasPermission name='"+btn.jurisdiction+"'>";
                             }
 
-                            html += "<button id='updatePlantationsMassif' style='margin: 2px 2px 2px 2px;' onclick='"+btn.method+"("+ n[primarykey]+")' value='"+ n[primarykey]+"' class='layui-btn "+btn.btnClass+" layui-btn-small'>";
+                            html += "<button id='updatePlantationsMassif' style='margin: 2px 2px 2px 2px;' onclick='"+btn.method+"(\""+ n[primarykey]+"\")' value='"+ n[primarykey]+"' class='layui-btn "+btn.btnClass+" layui-btn-small'>";
                             if(btn.icon != "" && btn.icon != undefined && btn.icon.length > 0){
                                 html += "<i class='"+btn.icon+"'></i>";
                             }

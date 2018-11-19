@@ -36,6 +36,7 @@
 			.col-sm-2 {
 				width: 10%;
 			}
+			body{font-size: 12px;}
 		</style>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -80,39 +81,38 @@
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
-			                    <th field="seq"  >排序号</th>
-			                    <th field="title"  >标题</th>
-			                    <th field="content"  >内容</th>
-			                    <th field="releaseUser"  >发布人编号</th>
-			                    <th field="receiveUser"  >接收人编号</th>
-
-				                <th field="sys_opt">操作</th>
+				                <th field="sys_xh" style="width: 3%;">序号</th>
+							    <th field="releaseTime"  type='date' width="10%">发布时间</th>
+							    <th field="releaseNo"  width="8%">事件编号</th>
+			                    <th field="title"  width="15%">标题</th>
+			                    <th field="content"  width="15%">内容</th>
+			                    <th field="releaseUser" width="7%">发布人编号</th>
+			                    <th field="receiveUser" width="8%">接收人编号</th>
+								  <th field="createTime" type='date' width="10%">创建时间</th>
+								  <th field="updateTime"  type='date' width="10%">修改时间</th>
+								  <th field="seq"  width="4%">排序号</th>
+				                <th field="sys_opt" width="10%">操作</th>
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.seq}</td>
-					            <td>${r.title}</td>
-					            <td>${r.content}</td>
-					            <td>${r.releaseUser}</td>
-					            <td>${r.receiveUser}</td>
-
-						        <td>
-						         <div class="site-demo-button" >
-								   <button id="updateReleaseInfo" data-method="setAddOrEdit" value="${r.releaseId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
-								 </div>
-						       </td>
+								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
+								 <td><fmt:formatDate value="${r.releaseTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+					             <td>${r.releaseNo}</td>
+					             <td>${r.title}</td>
+					             <td>${r.content}</td>
+					             <td>${r.releaseUser}</td>
+					             <td>${r.receiveUser}</td>
+								 <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								 <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								 <td>${r.seq}</td>
+						         <td>
+									 <div class="site-demo-button" >
+									   <button id="updateReleaseInfo" data-method="setAddOrEdit" value="${r.releaseId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+									   <button id="delReleaseInfo" data-method="delIfon" value="${r.releaseId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
+									 </div>
+						         </td>
 				             </tr>
 						   </c:forEach>
 		                  </tbody>
@@ -149,6 +149,7 @@
 	    //列表操作按钮
 	    var tableBtn = new Array();
 	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+	    tableBtn = addBtn(tableBtn,"delIfon","删除","","","","","","layui-btn-normal");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
@@ -177,6 +178,11 @@
 					//获取userId
 					var id = data.val();
 					setAddOrEdit(id);
+				},
+                delIfon: function(data){
+					//获取userId
+					var id = data.val();
+                    delIfon(3,id);
 				},
 				//启用和禁用数据弹窗
 				offset: function(othis){
@@ -208,7 +214,7 @@
 		     layer.open({
 		         type: 2, 
 		         title: '新增/修改 信息发布',
-		         area: ['70%', '86%'],
+		         area: ['70%', '70%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
 		         content: '<%=request.getContextPath()%>/admin/releaseInfo/addOrEdit?releaseId='+releaseId,
@@ -241,6 +247,44 @@
 			userOffSet(0,requestUrl, id,text);
 		};
 
+		var requestidDelUrl = "<%=request.getContextPath()%>/admin/releaseInfo/delete";
+		var delIfon = function (type ,id) {
+			layer.open({
+				type: 1,
+				offset: type,
+				id: 'LAY_demo'+type, //防止重复弹出
+				content: '<div style="padding: 20px 100px;">确定要删除此条数据吗？</div>',
+				btn: ['确定', '取消'],
+				btnAlign: 'c', //按钮居中
+				shade: 0.5 ,//不显示遮罩
+				yes: function(){
+					layer.closeAll();
+					$.ajax({
+						type: "POST",
+						url: requestidDelUrl,
+						data: {"releaseId":id},
+						dataType: "json",
+						cache:false,
+						success: function(data){
+							var code = data.code;
+							var msg = data.message;
+							if(code == "200"){
+								layer.msg(msg, {icon: 1,time: 2000});//2秒关闭
+								//刷新页面
+								refreshTheCurrentPage();
+							}
+						},
+						error:function(){
+							layer.msg("操作失败", {icon: 1,time: 2000});//1.5秒关闭
+						}
+					});
+				},
+				btn2: function(){
+					layer.closeAll();
+				}
+			});
+		}
+
 		var userOffSet = function (type ,requestUrl,id,text) {
 			layer.open({
 				type: 1,
@@ -255,7 +299,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"id":id},
+						data: {"releaseId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){

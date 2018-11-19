@@ -26,6 +26,16 @@ public interface SysUserDao {
                                        @Param("pageSize") int pageSize);
 
 	/**
+	 * 分页查询用户信息
+	 *
+	 * @param user
+	 * @param offset
+	 * @param pageSize
+	 * @return
+	 */
+	public List<SysUser> getAllSysUserList(@Param("user") SysUser user);
+
+	/**
 	 * 查询总记录数
 	 * 
 	 * @param user

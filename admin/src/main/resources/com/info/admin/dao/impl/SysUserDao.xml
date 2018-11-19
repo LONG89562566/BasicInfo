@@ -35,6 +35,13 @@
 	    <include refid="filterCondition"></include>
 	    order by create_time desc limit #{offset},#{pageSize}
 	</select>
+
+	<!-- 分页查询系统用户 -->
+	<select id="getAllSysUserList" resultMap="sysUserMap" resultType="list" >
+	    select * from sys_user
+	    <include refid="filterCondition"></include>
+	    order by create_time desc
+	</select>
 	
 	<!-- 查询总记录数 -->
 	<select id="getPageCount" resultType="int" >
