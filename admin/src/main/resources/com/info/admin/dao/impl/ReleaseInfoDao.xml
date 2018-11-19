@@ -309,6 +309,19 @@
         <include refid="filterConditionUserId"></include>
         order by seq ,ri.create_time desc,ri.update_time desc LIMIT #{offset},#{pageSize}
     </select>
+
+	<!-- 分页查询 信息发布 对象列表  -->
+    <select id="pageQueryUserAll" resultMap="releaseInfoMap">
+        select
+         *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+           ,date_format(release_time,'%Y-%m-%d %H:%i:%s') as releaseTime
+           ,(select su.name from sys_user su where su.id = ri.release_user ) as releaseUserCn
+        from release_info ri
+        where release_type = 0 and delete_flag = 0
+        order by seq ,ri.create_time desc,ri.update_time desc LIMIT #{offset},#{pageSize}
+    </select>
     
     <!-- 根据id 查询 信息发布 -->
 	<select id="getReleaseInfoById" parameterType="String" resultMap="releaseInfoMap" >

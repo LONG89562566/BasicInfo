@@ -10,39 +10,7 @@
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="warningId" name="warningId" value="${warningInfo.warningId}"/>
-     		<div class="layui-form-item" >
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">创建时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="createTime" id="createTime" value="${warningInfo.createTimeStr}" class="form-control input-small" placeholder="请选择创建时间"/>
-		            	<span style="color: red" id="s-createTime"></span>
-		        	</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">创建人编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="createUser" name="createUser" placeholder="请输入创建人编号"  value="${warningInfo.createUser }" class="layui-input"/>
-		        		<span style="color: red" id="s-createUser"></span>
-		     		</div>
-     			</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">删除标记</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="deleteFlag" name="deleteFlag" placeholder="请输入删除标记"  value="${warningInfo.deleteFlag }" class="layui-input"/>
-		        		<span style="color: red" id="s-deleteFlag"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">修改时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="updateTime" id="updateTime" value="${warningInfo.updateTimeStr}" class="form-control input-small" placeholder="请选择修改时间"/>
-		            	<span style="color: red" id="s-updateTime"></span>
-		        	</div>
-     			</div>
-			</div>
+
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
@@ -74,7 +42,7 @@
 		        		<span style="color: red" id="s-releaseUser"></span>
 		     		</div>
      			</div>
-     			<div class="layui-inline">
+     			<div class="layui-inline" id="div-receiveUser">
 		        	<label class="layui-form-label">接收人编号</label>
 		        	<div class="layui-input-inline">
 		        		<input type="text" id="receiveUser" name="receiveUser" placeholder="请输入接收人编号"  value="${warningInfo.receiveUser }" class="layui-input"/>
@@ -102,8 +70,8 @@
      			<div class="layui-inline">
 		        	<label class="layui-form-label">（大/小/等/不大/不小/不等于）</label>
 		        	<div class="layui-input-inline">
-		        		<input type="text" id="condition" name="condition" placeholder="请输入（大/小/等/不大/不小/不等于）"  value="${warningInfo.condition }" class="layui-input"/>
-		        		<span style="color: red" id="s-condition"></span>
+		        		<input type="text" id="checkCondition" name="checkCondition" placeholder="请输入（大/小/等/不大/不小/不等于）"  value="${warningInfo.checkCondition }" class="layui-input"/>
+		        		<span style="color: red" id="s-checkCondition"></span>
 		     		</div>
      			</div>
      			<div class="layui-inline">
@@ -113,7 +81,6 @@
 		        		<span style="color: red" id="s-warn_val"></span>
 		     		</div>
      			</div>
-	   </div>
 
 	 		</div>
 	 		<div class="layui-input-block" style="margin-top:30px;margin-left:324px;">
@@ -123,9 +90,72 @@
   		</form>
 	</body>
 
+	<%--<script type="text/javascript">--%>
+        <%--$(function () {--%>
+            <%--$("#releaseUser").combotree({--%>
+                <%--url: '/admin/sysUser/getUserTree',--%>
+                <%--// multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框--%>
+                <%--data : [{},{},{}],//数据省略--%>
+                <%--required: true,--%>
+                <%--checkbox : true,//显示多选框--%>
+                <%--onlyLeafCheck : true,//只在叶子节点显示多选框--%>
+                <%--onBeforeSelect : function(node){--%>
+                    <%--if(!$(this).tree("isLeaf", node.target)){//如果不是叶子节点，不让选择--%>
+                        <%--return false;--%>
+                    <%--}--%>
+                <%--},--%>
+                <%--onBeforeCheck : function(node, checked){//控制只能选一项--%>
+                    <%--if(checked){//当前为选中操作--%>
+                        <%--var nodes = $(this).tree("getChecked");--%>
+                        <%--//控制只能选一项，选中某一项后后面不能再勾选--%>
+                        <%--if(nodes.length == 0){--%>
+                            <%--return true;--%>
+                        <%--}else{--%>
+                            <%--return false;--%>
+                        <%--}--%>
+                    <%--}else{//当前为取消选中操作--%>
+                        <%--return true;--%>
+                    <%--}--%>
+                <%--}--%>
+            <%--});--%>
+
+            <%--$("#releaseUser").combotree({--%>
+                <%--url: '/admin/sysUser/getUserTree',--%>
+                <%--multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框--%>
+                <%--data : [{},{},{}],//数据省略--%>
+                <%--required: true,--%>
+                <%--checkbox : true,//显示多选框--%>
+                <%--onlyLeafCheck : true,//只在叶子节点显示多选框--%>
+                <%--onBeforeSelect : function(node){--%>
+                    <%--if(!$(this).tree("isLeaf", node.target)){//如果不是叶子节点，不让选择--%>
+                        <%--return false;--%>
+                    <%--}--%>
+                <%--},--%>
+                <%--onBeforeCheck : function(node, checked){//控制只能选一项--%>
+                    <%--if(checked){//当前为选中操作--%>
+                        <%--var nodes = $(this).tree("getChecked");--%>
+                        <%--$("#div-receiveUser").append("<input type='hidden' id='receiveUserCn-"+node.id+"' name='receiveUserCn-"+node.id+"' value='"+node.name+"'/>");--%>
+                        <%--//控制只能选一项，选中某一项后后面不能再勾选--%>
+                        <%--// if(nodes.length == 0){--%>
+                        <%--//     return true;--%>
+                        <%--// }else{--%>
+                        <%--//     return false;--%>
+                        <%--// }--%>
+                    <%--}else{//当前为取消选中操作--%>
+                        <%--$("#receiveUserCn-"+node.id+"").remove();--%>
+                        <%--return true;--%>
+                    <%--}--%>
+                <%--}--%>
+            <%--});--%>
+        <%--});--%>
+
+	<%--</script>--%>
+
 	<script type="text/javascript">
 		var reqUpdateAndAddUrl = "/admin/warningInfo/insertAndUpdate";
 	</script>
+
+
 
 	<script type="text/javascript">
 		//提交表单数据
@@ -142,10 +172,6 @@
 	
 	function saveData() {
 	    var warningId = $("#warningId").val();
-	    var createTime = $("#createTime").val();
-	    var createUser = $("#createUser").val();
-	    var deleteFlag = $("#deleteFlag").val();
-	    var updateTime = $("#updateTime").val();
 	    var seq = $("#seq").val();
 	    var title = $("#title").val();
 	    var content = $("#content").val();
@@ -153,15 +179,11 @@
 	    var receiveUser = $("#receiveUser").val();
 	    var options = $("#options").val();
 	    var true_val = $("#true_val").val();
-	    var condition = $("#condition").val();
+	    var checkCondition = $("#checkCondition").val();
 	    var warn_val = $("#warn_val").val();
 
         var requestData={
             "warningId":warningId,
-            "createTimeStr":createTime,
-            "createUser":createUser,
-            "deleteFlag":deleteFlag,
-            "updateTimeStr":updateTime,
             "seq":seq,
             "title":title,
             "content":content,
@@ -169,7 +191,7 @@
             "receiveUser":receiveUser,
             "options":options,
             "true_val":true_val,
-            "condition":condition,
+            "checkCondition":checkCondition,
             "warn_val":warn_val
         };
         updateAndAdd(requestData);

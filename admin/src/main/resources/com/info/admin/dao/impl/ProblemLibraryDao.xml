@@ -8,11 +8,9 @@
 			useGeneratedKeys="true" keyProperty="supplierId">
 		insert into problem_library
         <trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
 			<if test=" supplierId != null">
 				supplier_id,
-			</if>
-			<if test=" createTime != null">
-				create_time,
 			</if>
 			<if test=" createUser != null">
 				create_user,
@@ -47,12 +45,10 @@
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(),
 			<if test="supplierId != null ">
 		        #{supplierId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -92,12 +88,6 @@
 		update problem_library
         <set>
             <trim suffixOverrides=",">
-				<if test=" createTime != null">
-					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-				</if>
-				<if test=" createUser != null">
-					create_user = #{createUser},
-				</if>
 				<if test=" deleteFlag != null">
 					delete_flag = #{deleteFlag},
 				</if>
@@ -154,7 +144,6 @@
 		<result column="rectify_user" property="rectifyUser" />
 		<result column="rectify_time" property="rectifyTime" />
 		<result column="rectifyTime" property="rectifyTimeStr" />
-
     </resultMap>
 
     <!-- 分页条件 -->
@@ -196,7 +185,6 @@
 		    <if test="entity.rectifyTime!=null">
 		        and rectify_time = STR_TO_DATE(#{entity.rectifyTime},"%Y-%m-%d %T")
 		    </if>
-
         </trim>
     </sql>
     
@@ -209,7 +197,8 @@
            ,date_format(rectify_time,'%Y-%m-%d %H:%i:%s') as rectifyTime 
           from problem_library
         <include refid="filterCondition"></include>
-    </select>
+		order by seq
+	</select>
     
     <!-- 查询 问题库 总记录数 -->
     <select id="getPageCount" resultType="int">
@@ -226,7 +215,7 @@
            ,date_format(rectify_time,'%Y-%m-%d %H:%i:%s') as rectifyTime 
          from problem_library
         <include refid="filterCondition"></include>
-        LIMIT #{offset},#{pageSize}
+        order by seq LIMIT #{offset},#{pageSize}
     </select>
     
     <!-- 根据id 查询 问题库 -->
