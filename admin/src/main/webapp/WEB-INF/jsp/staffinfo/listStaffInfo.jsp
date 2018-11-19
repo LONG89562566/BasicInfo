@@ -27,12 +27,6 @@
 				position:relative;
 				left:800px;
 			}
-			table th{
-				background:#ffffff;
-			}
-			table tr:nth-child(odd){
-				background:#F0F0F0;
-			}
 			.col-sm-2 {
 				width: 10%;
 			}
