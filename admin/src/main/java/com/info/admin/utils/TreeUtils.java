@@ -6,13 +6,19 @@ import net.sf.json.JSONObject;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * url转码、解码
- * @author administrator 
+ * 树形结构优化
+ * @author ljuenan
+ * @date 2018/11/19 15:16:00
  */
 public class TreeUtils {
-	
+
     /**
-     * URL 解码
+     * 返回树形结构json数据
+     * @param list 数据，因读大于写
+     * @param parentIdV 父节点的值
+     * @param parentIdN 父节点的名称
+     * @param IdN 节点编号
+     * @return JSONArray
      */
     public static JSONArray getTreeJson(CopyOnWriteArrayList<?> list, String parentIdV,String parentIdN,String IdN) {
         JSONArray all = new JSONArray();
