@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 信息发布日志 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.ReleaseInfoLogDao">
+
+	<!-- 新增 信息发布日志 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.ReleaseInfoLog"
+			useGeneratedKeys="true" keyProperty="releaseInfoLogId">
+		insert into release_info_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" createTime != null">
+				create_time,
+			</if>
+			<if test=" releaseInfoId != null">
+				release_info_id,
+			</if>
+			<if test=" accepter != null">
+				accepter,
+			</if>
+			<if test=" isRead != null">
+				is_read,
+			</if>
+			<if test=" readTime != null">
+				read_time,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="createTime != null">
+				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="releaseInfoId != null ">
+		        #{releaseInfoId},
+		    </if>
+			<if test="accepter != null ">
+		        #{accepter},
+		    </if>
+			<if test="isRead != null ">
+		        #{isRead},
+		    </if>
+			<if test="readTime != null ">
+		        #{readTime},
+		    </if>
+
+        </trim>
+	</insert>
+
+	<!-- 更新 信息发布日志 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.ReleaseInfoLog">
+		update release_info_log
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" releaseInfoId != null">
+					release_info_id = #{releaseInfoId},
+				</if>
+				<if test=" accepter != null">
+					accepter = #{accepter},
+				</if>
+				<if test=" isRead != null">
+					is_read = #{isRead},
+				</if>
+				<if test=" readTime != null">
+					read_time = #{readTime},
+				</if>
+
+            </trim>
+        </set>
+		where release_info_log_id = #{releaseInfoLogId}
+	</update>
+
+    <!-- 删除 信息发布日志 对象 -->
+    <delete id="delete">
+        delete from release_info_log
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 信息发布日志 对象 -->
+    <resultMap type="com.info.admin.entity.ReleaseInfoLog" id="releaseInfoLogMap">
+		<result column="release_info_log_id" property="releaseInfoLogId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="release_info_id" property="releaseInfoId" />
+		<result column="accepter" property="accepter" />
+		<result column="is_read" property="isRead" />
+		<result column="read_time" property="readTime" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.releaseInfoLogId != null">
+			    and release_info_log_id =  #{entity.releaseInfoLogId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.releaseInfoId != null">
+			    and release_info_id =  #{entity.releaseInfoId} 
+		    </if>
+		    <if test=" entity.accepter != null">
+			    and accepter =  #{entity.accepter} 
+		    </if>
+		    <if test=" entity.isRead != null">
+			    and is_read =  #{entity.isRead} 
+		    </if>
+		    <if test=" entity.readTime != null">
+			    and read_time =  #{entity.readTime} 
+		    </if>
+
+        </trim>
+    </sql>
+    
+    <!-- 查询 信息发布日志 对象列表 -->
+    <select id="query"  resultMap="releaseInfoLogMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+          from release_info_log
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 信息发布日志 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from release_info_log
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 信息发布日志 对象列表  -->
+    <select id="pageQuery" resultMap="releaseInfoLogMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+         from release_info_log
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 信息发布日志 -->
+	<select id="getReleaseInfoLogById" parameterType="String" resultMap="releaseInfoLogMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+		 from release_info_log where release_info_log_id= #{releaseInfoLogId}
+	</select>
+</mapper>	

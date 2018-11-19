@@ -57,6 +57,29 @@ public class ReleaseInfoController extends BaseController{
         return "releaseinfo/listReleaseInfo";
     }
 
+    /**
+     *查询信息发布列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/listUser", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequiresPermissions("releaseInfoUser:query")
+    public String getReleaseInfoListUser(HttpServletRequest request, @ModelAttribute ReleaseInfo entity, Model model) {
+        entity.setDeleteFlag(0L);
+        entity.setReceiveUser(String.valueOf(getLoginUserId(request)));
+        logger.info("[ReleaseInfoController][getReleaseInfoListUser] 查询信息发布列表:");
+        // 获取分页当前的页码
+        int currentPageNum = this.getPageNum(request);
+        // 获取分页的大小
+        int currentPageSize = this.getPageSize(request);
+        PageUtil paginator = service.pageQueryUserId(entity, currentPageNum, currentPageSize);
+        model.addAttribute("paginator", paginator);
+        model.addAttribute("releaseInfo", entity);
+        return "releaseinfo/listReleaseInfoUser";
+    }
+
      /**
      *我的桌面查询信息发布列表
      *@author   ysh
@@ -80,6 +103,28 @@ public class ReleaseInfoController extends BaseController{
     }
 
     /**
+     *我的桌面查询信息发布列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/listUser/desktop", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequiresPermissions("releaseInfoUser:query")
+    public String getReleaseInfoListUserDesktop(HttpServletRequest request, @ModelAttribute ReleaseInfo entity, Model model) {
+        entity.setDeleteFlag(0L);
+        logger.info("[ReleaseInfoController][getReleaseInfoListUserDesktop] 我的桌面查询信息发布列表:");
+        // 获取分页当前的页码
+        int currentPageNum = this.getPageNum(request);
+        // 获取分页的大小
+        int currentPageSize = this.getPageSize(request);
+        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        model.addAttribute("paginator", paginator);
+        model.addAttribute("releaseInfo", entity);
+        return "releaseinfo/listReleaseInfoUserDesktop";
+    }
+
+    /**
      *跳转到新增页面
      *@author
      *@date  2018-07-12 10:50:32
@@ -89,7 +134,7 @@ public class ReleaseInfoController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String releaseId,Model model){
         try{
-            if(null != releaseId){
+            if(null != releaseId && StringUtils.isNotBlank(releaseId)){
                 //根据id查询系统用户
                 ReleaseInfo releaseInfo = service.getReleaseInfoById(releaseId);
                 model.addAttribute("releaseInfo", releaseInfo);
@@ -98,6 +143,29 @@ public class ReleaseInfoController extends BaseController{
             return "releaseinfo/addReleaseInfo";
         }catch(Exception e){
             logger.error("[ReleaseInfoController][addOrEdit]: releaseId="+releaseId, e);
+            return "500";
+        }
+    }
+
+    /**
+     *跳转到新增页面
+     *@author
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value="/addOrEditUser",method={RequestMethod.GET,RequestMethod.POST})
+    public String addOrEditUser(HttpServletRequest request,String releaseId,Model model){
+        try{
+            if(null != releaseId && StringUtils.isNotBlank(releaseId)){
+                //根据id查询系统用户
+                ReleaseInfo releaseInfo = service.getReleaseInfoById(releaseId);
+                model.addAttribute("releaseInfo", releaseInfo);
+            }
+            model.addAttribute("releaseId", releaseId);
+            return "releaseinfo/addReleaseInfoUser";
+        }catch(Exception e){
+            logger.error("[ReleaseInfoController][addOrEditUser]: releaseId="+releaseId, e);
             return "500";
         }
     }
@@ -223,5 +291,32 @@ public class ReleaseInfoController extends BaseController{
             logger.error("[ReleaseInfoController][pageQuery] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
-    }	
+    }
+
+    /**
+     * 分页查询ReleaseInfo对象
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "pageQueryUser", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult pageQueryUser(HttpServletRequest request,ReleaseInfo entity) {
+        logger.info("[ReleaseInfoController][pageQuery] 查询ReleaseInfo对象:");
+        entity.setDeleteFlag(0L);
+        try {
+            // 获取分页当前的页码
+            int pageNum = this.getPageNum(request);
+            // 获取分页的大小
+            int pageSize = this.getPageSize(request);
+
+            PageUtil paginator = service.pageQueryUserId(entity , pageNum, pageSize);
+            return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
+        } catch (Exception e) {
+            logger.error("[ReleaseInfoController][pageQueryUser] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
 }	

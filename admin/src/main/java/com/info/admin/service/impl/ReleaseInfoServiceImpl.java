@@ -95,11 +95,29 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 
         List<ReleaseInfo> result = dao.pageQuery(entity, offset, pageSize);
 
-        PageUtil paginator = new PageUtil(pageSize, size, pageNum);
+        return new PageUtil(pageSize, size, pageNum, result);
+    }
 
-        paginator.setObject(result);
+    /**
+     * 分页查询ReleaseInfo对象
+     * @param entity 对象
+     * @param pageNum	页数
+     * @param pageSize	大小
+     * @author  ysh
+     * @date  2018-11-15 22:58:49
+     * @updater or other
+     * @return   PageUtil
+     */
+    @Override
+    public PageUtil pageQueryUserId(ReleaseInfo entity, int pageNum, int pageSize){
+        int size = dao.getPageCount(entity);
 
-        return paginator;
+        int offset = pageNum > 1 ? (pageNum - 1) * pageSize : 0;
+
+        List<ReleaseInfo> result = dao.pageQueryUserId(entity, offset, pageSize);
+
+        return new PageUtil(pageSize, size, pageNum, result);
+
     }
     
     /**

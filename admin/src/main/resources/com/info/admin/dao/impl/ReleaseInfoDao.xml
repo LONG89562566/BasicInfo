@@ -165,13 +165,14 @@
 		<result column="releaseTime" property="releaseTimeStr" />
 		<result column="release_no" property="releaseNo" />
 		<result column="release_type" property="releaseType" />
+		<result column="releaseUserCn" property="releaseUserCn" />
 
     </resultMap>
 
     <!-- 分页条件 -->
     <sql id="filterCondition">
         <trim prefix="where " prefixOverrides="and " >
-		    <if test=" entity.releaseId != null">
+		    <if test=" entity.releaseId != null and entity.releaseId != ''">
 			    and release_id =  #{entity.releaseId} 
 		    </if>
 		    <if test="entity.createTime!=null">
@@ -213,7 +214,54 @@
 			<if test=" entity.releaseType != null">
 				and release_type =  #{entity.releaseType}
 			</if>
+        </trim>
+    </sql>
 
+    <!-- 分页条件 -->
+    <sql id="filterConditionUserId">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.releaseId != null and entity.releaseId != '' ">
+			    and release_id =  #{entity.releaseId}
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.createUser != null">
+			    and create_user =  #{entity.createUser}
+		    </if>
+		    <if test=" entity.deleteFlag != null">
+			    and delete_flag =  #{entity.deleteFlag}
+		    </if>
+		    <if test="entity.updateTime!=null">
+		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.seq != null">
+			    and seq =  #{entity.seq}
+		    </if>
+		    <if test=" entity.title != null">
+			    and title =  #{entity.title}
+		    </if>
+		    <if test=" entity.content != null">
+			    and content =  #{entity.content}
+		    </if>
+		    <if test=" entity.releaseUser != null">
+			    and release_user =  #{entity.releaseUser}
+		    </if>
+		    <if test=" entity.receiveUser != null">
+			    and receive_user like concat('%',#{entity.receiveUser},'%')
+		    </if>
+			<if test=" entity.receiveUserCn != null">
+				and receive_user_cn like concat('%',#{entity.receiveUserCn},'%')
+		    </if>
+			<if test=" entity.releaseTime != null">
+			    and release_time =  STR_TO_DATE(#{entity.releaseTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.releaseNo != null">
+			    and release_no =  #{entity.releaseNo}
+		    </if>
+			<if test=" entity.releaseType != null">
+				and release_type =  #{entity.releaseType}
+			</if>
         </trim>
     </sql>
     
@@ -224,8 +272,10 @@
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
            ,date_format(release_time,'%Y-%m-%d %H:%i:%s') as releaseTime
-          from release_info
+           ,(select su.name from sys_user su where su.id = ri.release_user ) as releaseUserCn
+          from release_info ri
         <include refid="filterCondition"></include>
+        order by seq,ri.update_time desc
     </select>
     
     <!-- 查询 信息发布 总记录数 -->
@@ -241,9 +291,23 @@
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
            ,date_format(release_time,'%Y-%m-%d %H:%i:%s') as releaseTime
-         from release_info
+           ,(select su.name from sys_user su where su.id = ri.release_user ) as releaseUserCn
+        from release_info ri
         <include refid="filterCondition"></include>
-        LIMIT #{offset},#{pageSize}
+        order by seq ,ri.update_time desc  LIMIT #{offset},#{pageSize}
+    </select>
+
+    <!-- 分页查询 信息发布 对象列表  -->
+    <select id="pageQueryUserId" resultMap="releaseInfoMap">
+        select
+         *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+           ,date_format(release_time,'%Y-%m-%d %H:%i:%s') as releaseTime
+           ,(select su.name from sys_user su where su.id = ri.release_user ) as releaseUserCn
+        from release_info ri
+        <include refid="filterConditionUserId"></include>
+        order by seq ,ri.create_time desc,ri.update_time desc LIMIT #{offset},#{pageSize}
     </select>
     
     <!-- 根据id 查询 信息发布 -->
@@ -253,6 +317,8 @@
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
            ,date_format(release_time,'%Y-%m-%d %H:%i:%s') as releaseTime
-		 from release_info where release_id= #{releaseId}
+		   ,(select su.name from sys_user su where su.id = ri.release_user ) as releaseUserCn
+          from release_info ri
+		 where release_id= #{releaseId}
 	</select>
 </mapper>	

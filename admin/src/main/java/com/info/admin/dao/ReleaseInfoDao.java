@@ -64,6 +64,18 @@ public interface ReleaseInfoDao {
     List<ReleaseInfo> pageQuery(@Param("entity") ReleaseInfo entity, @Param("offset") int offset, @Param("pageSize") int pageSize);
 
     /**
+     * 分页查询ReleaseInfo对象
+     * @param entity  对象
+     * @param offset	页数
+     * @param pageSize	大小
+     * @author  ysh
+     * @date  2018-11-14 23:45:41
+     * @updater or other
+     * @return   List<ReleaseInfo>
+     */
+    List<ReleaseInfo> pageQueryUserId(@Param("entity") ReleaseInfo entity, @Param("offset") int offset, @Param("pageSize") int pageSize);
+
+    /**
      * 查询ReleaseInfo总记录数
      * @param entity  对象
      * @author  ysh

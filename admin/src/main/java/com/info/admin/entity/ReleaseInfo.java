@@ -32,6 +32,8 @@ public class ReleaseInfo implements Serializable {
 	 private String content;
 	 /*****发布人编号*****/
 	 private String releaseUser;
+	 /*****发布人编号*****/
+	 private String releaseUserCn;
 	 /*****接收人编号*****/
 	 private String receiveUser;
 	 /*****接收人名称*****/
@@ -191,6 +193,14 @@ public class ReleaseInfo implements Serializable {
 
 	public void setReleaseType(String releaseType) {
 		this.releaseType = releaseType;
+	}
+
+	public String getReleaseUserCn() {
+		return releaseUserCn;
+	}
+
+	public void setReleaseUserCn(String releaseUserCn) {
+		this.releaseUserCn = releaseUserCn;
 	}
 
 	public String getReceiveUserCn() {

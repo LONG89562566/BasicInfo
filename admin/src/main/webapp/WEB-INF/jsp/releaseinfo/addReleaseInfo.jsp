@@ -17,8 +17,25 @@
 			<div class='layui-form-item'>
 				<label class="layui-form-label">标题</label>
 				<div class="layui-input-block">
-					<input type="text" id="title" style="width: 90%;" name="title" placeholder="请输入标题"  value="${releaseInfo.title }" class="layui-input"/>
+					<input type="text" id="title" style="width: 80%;" name="title" placeholder="请输入标题"  value="${releaseInfo.title }" class="layui-input"/>
 					<span style="color: red" id="s-title"></span>
+				</div>
+			</div>
+			<div class='layui-form-item'>
+				<div class="layui-inline">
+					<label class="layui-form-label">发布人编号</label>
+					<div class="layui-input-inline">
+						<input type="text" id="releaseUser" name="releaseUser" placeholder="请输入发布人编号"  value="${releaseInfo.releaseUser }" class="layui-input"/>
+						<span style="color: red" id="s-releaseUser"></span>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">接收人编号</label>
+					<div class="layui-input-inline" id="div-receiveUser">
+						<input type="text" id="receiveUser" name="receiveUser" placeholder="请输入接收人编号"  value="${releaseInfo.receiveUser }" class="layui-input"/>
+						<span style="color: red" id="s-receiveUser"></span>
+					</div>
+
 				</div>
 			</div>
 			<div class='layui-form-item'>
@@ -29,50 +46,22 @@
 						<span style="color: red" id="s-releaseTime"></span>
 					</div>
 				</div>
-				<div class="layui-inline">
-					<label class="layui-form-label">事件编号</label>
-					<div class="layui-input-inline">
-						<input type="text" id="releaseNo" name="releaseNo" placeholder="请输入事件编号"  value="${releaseInfo.releaseNo }" class="layui-input"/>
-						<span style="color: red" id="s-releaseNo"></span>
-					</div>
-				</div>
-			</div>
-			<div class='layui-form-item'>
-		        <label class="layui-form-label">内容</label>
-				<div class="layui-input-block">
-					<textarea placeholder="请输入内容" style="width: 90%;" class="layui-textarea"  id="content" name = "content" lay-verify="content">${releaseInfo.content}</textarea>
-					<span style="color: red" id="s-content"></span>
-				</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">发布人编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="releaseUser" name="releaseUser" placeholder="请输入发布人编号"  value="${releaseInfo.releaseUser }" class="layui-input"/>
-		        		<span style="color: red" id="s-releaseUser"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">接收人编号</label>
-		        	<div class="layui-input-inline" id="div-receiveUser">
-		        		<input type="text" id="receiveUser" name="receiveUser" placeholder="请输入接收人编号"  value="${releaseInfo.receiveUser }" class="layui-input"/>
-		        		<span style="color: red" id="s-receiveUser"></span>
-		     		</div>
 
-     			</div>
-			</div>
-
-			<div class='layui-form-item'>
 				<div class="layui-inline">
 					<label class="layui-form-label">发布类型</label>
 					<div class="layui-input-inline">
 						<select id="releaseType" name="releaseType">
-							<option value="1">指定人</option>
-							<option value="0">全部</option>
+							<option value="1" <c:if test="${releaseInfo.releaseType == 1}"> selected </c:if> >指定人</option>
+							<option value="0" <c:if test="${releaseInfo.releaseType == 0}"> selected </c:if>>全部</option>
 						</select>
 						<span style="color: red" id="s-releaseType"></span>
 					</div>
 				</div>
+
+			</div>
+
+			<div class='layui-form-item'>
+
 
 				<div class="layui-inline">
 					<label class="layui-form-label">排序号</label>
@@ -82,10 +71,26 @@
 					</div>
 				</div>
 
-	 		</div>
+				<div class="layui-inline" style="display: none;">
+					<label class="layui-form-label">事件编号</label>
+					<div class="layui-input-inline">
+						<input type="text" id="releaseNo" name="releaseNo" placeholder="请输入事件编号"  value="${releaseInfo.releaseNo }" class="layui-input"/>
+						<span style="color: red" id="s-releaseNo"></span>
+					</div>
+				</div>
+
+			</div>
+
+			<div class='layui-form-item'>
+		        <label class="layui-form-label">内容</label>
+				<div class="layui-input-block">
+					<textarea placeholder="请输入内容" style="width: 80%;" class="layui-textarea"  id="content" name = "content" lay-verify="content">${releaseInfo.content}</textarea>
+					<span style="color: red" id="s-content"></span>
+				</div>
+			</div>
 
 
-	 		<div class="layui-input-block" style="margin-top:30px;margin-left:324px;">
+	 		<div class="layui-input-block" style="margin-top:30px;margin-left:40%;">
 	 			<input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
        			<button class="layui-btn" name="cancleSubmit" >取消</button>
      		</div>
@@ -183,7 +188,7 @@
 			var releaseUser = $('#releaseUser').combotree('getValues');
 			var receiveUser = $('#receiveUser').combotree('getValues');
 			var receiveUserCn = getVals("receiveUserCn-");
-
+			var releaseType  = $("#releaseType").val();
 			var requestData={
 				"releaseId":releaseId,
 				"releaseTimeStr":releaseTime,
@@ -193,6 +198,7 @@
 				"content":content,
 				"releaseUsers":releaseUser,
 				"receiveUsers":receiveUser,
+				"releaseType":releaseType,
 				"receiveUserCns":receiveUserCn
 			};
 			updateAndAdd(requestData);

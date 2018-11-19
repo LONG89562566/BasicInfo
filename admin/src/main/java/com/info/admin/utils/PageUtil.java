@@ -57,6 +57,22 @@ public class PageUtil implements Serializable {
 		setCurrentPage(currentPage);
 	}
 
+	public PageUtil(int pageRecord, int totalRecord, int currentPage,Object object) {
+		this.pageRecord = pageRecord;
+		this.totalRecord = totalRecord;
+		this.currentPage = currentPage;
+		// 设置总页数
+		setTotalRecord(totalRecord);
+		// 设置开始页
+		setPageNumStart(pageNumStart);
+		// 设置结束页
+		setPageNumEnd(pageNumEnd);
+		// 设置当前页
+		setCurrentPage(currentPage);
+		//设置返回数据对象
+		setObject(object);
+	}
+
 	public int getPageRecord() {
 		return pageRecord;
 	}
