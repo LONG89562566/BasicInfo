@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.ConcreteInfoService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +86,7 @@ public class ConcreteInfoController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String concreteId,Model model){
         try{
-            if(null != concreteId){
+            if(null != concreteId && StringUtils.isNotBlank(concreteId)){
                 //根据id查询系统用户
                 ConcreteInfo concreteInfo = service.getConcreteInfoById(concreteId);
                 model.addAttribute("concreteInfo", concreteInfo);
@@ -118,7 +119,7 @@ public class ConcreteInfoController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getConcreteId()) {
+            if (null != entity.getConcreteId() && StringUtils.isNotBlank(entity.getConcreteId())) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);

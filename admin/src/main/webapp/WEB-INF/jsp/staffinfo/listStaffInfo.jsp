@@ -212,8 +212,8 @@
 	    //列表操作按钮
 	    var tableBtn = new Array();
 	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
-		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
-		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
+		tableBtn = addBtn(tableBtn,"escBoundUser","解绑","","","isBound","true","1","layui-btn-danger");
+		tableBtn = addBtn(tableBtn,"boundUser","绑定","","","isBound","true","0","layui-btn-danger");
 	</script>
 
 
@@ -235,6 +235,10 @@
                 console.log("row.projectId : "+row.projectId);
                 console.log("row.seq : "+row.seq);
                 console.log("----------------------------------------------");
+                // console.log("----------------------------------------------");
+                // console.log("row.projectId : "+row.projectId);
+                // console.log("row.orgId : "+row.orgId);
+                // console.log("----------------------------------------------");
                 $('#pageNum').val(1);
                 $("#orgId").val(row.orgId);
                 $("#orgIds").val(row.orgId);
@@ -415,12 +419,70 @@
                 return;
 			}
 		};
-		
+
+		//新增、编辑打开
+		var boundUser = function(staffId){
+
+            //多窗口模式，层叠置顶
+            layer.open({
+                type: 2,
+                title: '员工绑定用户',
+                area: ['40%', '60%'],
+                btn: ['确定', '取消'],
+                shade: 0.5,
+                anim: 3,//0-6的动画形式，-1不开启
+                content: '<%=request.getContextPath()%>/admin/staffInfo/boundUser?staffId='+staffId,
+                zIndex: layer.zIndex, //重点1
+                success: function (layero, index) {
+                    // layer.setAddOrEdit(layero);
+                    var body = layer.getChildFrame('body', index);
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    body.find('input[name="staffId"]').val(staffId);
+                    //弹窗表单的取消操作时关闭弹窗
+                    var canclebtn = body.find('button[name="cancleSubmit"]').click(function cancleSubmit() {
+                        layer.closeAll();
+                    });
+                },
+                yes: function(index, layero){
+                    var body = layer.getChildFrame('body', index);
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    var data = iframeWin.getData();
+                    if(data != false){
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/staffInfo/saveBoundUser",
+                            data: data,
+                            dataType: "json",
+                            cache:false,
+                            success: function(data){
+                                var code = data.code;
+                                var msg = data.message;
+                                if(code == "200"){
+                                    layer.msg(msg, {icon: 1,time: 2000});//2秒关闭
+                                    //刷新页面
+                                    refreshTheCurrentPage();
+                                }
+                            },
+                            error:function(){
+                                layer.msg("操作失败", {icon: 1,time: 2000});//1.5秒关闭
+                            }
+                        });
+                        //按钮【按钮一】的回调
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    }
+
+                },cancel: function(){
+                        //右上角关闭回调
+                    // alert(4);
+                }
+            });
+		};
+
 		//禁用
-		var enabled = function (id) {
+		var escBoundUser = function (id) {
 			//禁用的url
-			requestUrl="<%=request.getContextPath()%>/admin/staffInfo/disabled";
-			text = "确定要禁用此条数据吗？";
+			requestUrl="<%=request.getContextPath()%>/admin/staffInfo/escBoundUser";
+			text = "确定要对该用户解除绑定吗？";
 			userOffSet(1,requestUrl, id,text);
 		};
 		//启用
@@ -445,7 +507,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"id":id},
+						data: {"staffId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){
@@ -467,51 +529,6 @@
 				}
 			});
 		}
-        //删除
-        var deletes = function (id) {
-            //启用的url
-            requestUrl="<%=request.getContextPath()%>/admin/orgInfo/delete";
-            text = "确定要删除此条数据吗？";
-            deletesUserOffSet(0,requestUrl, id,text);
-        };
-
-        var deletesUserOffSet = function (type ,requestUrl,id,text) {
-            layer.open({
-                type: 1,
-                offset: type,
-                id: 'LAY_demo'+type, //防止重复弹出
-                content: '<div style="padding: 20px 100px;">'+ text +'</div>',
-                btn: ['确定', '取消'],
-                btnAlign: 'c', //按钮居中
-                shade: 0.5 ,//不显示遮罩
-                yes: function(){
-                    layer.closeAll();
-                    $.ajax({
-                        type: "POST",
-                        url: requestUrl,
-                        data: {"orgId":id},
-                        dataType: "json",
-                        cache:false,
-                        success: function(data){
-                            var code = data.code;
-                            var msg = data.message;
-                            if(code == "200"){
-                                layer.msg(msg, {icon: 1,time: 2000});//2秒关闭
-                                //刷新页面
-                                $('#orgInfoTree').treegrid('reload')
-                                refreshTheCurrentPage();
-                            }
-                        },
-                        error:function(){
-                            layer.msg("操作失败", {icon: 1,time: 2000});//1.5秒关闭
-                        }
-                    });
-                },
-                btn2: function(){
-                    layer.closeAll();
-                }
-            });
-        }
 	</script>
 </body>
 </html>

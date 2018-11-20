@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.EquipmentInfoService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author administrator  
- * @date 2018-11-14 23:45:42 
+ * @date 2018-11-20 17:37:49 
  * @describe 设备信息 Controller
  */
 @Controller
@@ -44,6 +45,7 @@ public class EquipmentInfoController extends BaseController{
     @RequiresPermissions("equipmentInfo:query")
     public String getEquipmentInfoList(HttpServletRequest request, @ModelAttribute EquipmentInfo entity, Model model) {
         logger.info("[EquipmentInfoController][getEquipmentInfoList] 查询设备信息列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -65,6 +67,7 @@ public class EquipmentInfoController extends BaseController{
     @RequiresPermissions("equipmentInfo:query")
     public String getEquipmentInfoListDesktop(HttpServletRequest request, @ModelAttribute EquipmentInfo entity, Model model) {
         logger.info("[EquipmentInfoController][getEquipmentInfoListDesktop] 我的桌面查询设备信息列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -85,7 +88,7 @@ public class EquipmentInfoController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String supplierId,Model model){
         try{
-            if(null != supplierId){
+            if(null != supplierId && StringUtils.isNotBlank(supplierId)){
                 //根据id查询系统用户
                 EquipmentInfo equipmentInfo = service.getEquipmentInfoById(supplierId);
                 model.addAttribute("equipmentInfo", equipmentInfo);
@@ -103,9 +106,9 @@ public class EquipmentInfoController extends BaseController{
      * @param    request  请求
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-14 23:45:42 
+     * @date   2018-11-20 17:37:49 
      * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     * @return   com.info.admin.result.JsonResult
      */
     @ResponseBody
     @RequestMapping(value = "insertAndUpdate", method = { RequestMethod.GET, RequestMethod.POST })
@@ -118,9 +121,11 @@ public class EquipmentInfoController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getSupplierId()) {
+            if (null != entity.getSupplierId() && StringUtils.isNotBlank(entity.getSupplierId())) {
                 result = service.update(entity);
             } else {
+                entity.setDeleteFlag(0L);
+                entity.setCreateUser(getLoginUserId(request));
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -138,15 +143,16 @@ public class EquipmentInfoController extends BaseController{
      * 查询EquipmentInfo对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-14 23:45:42 
+     * @date   2018-11-20 17:37:49 
      * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     * @return   com.info.admin.result.JsonResult
      */
     @ResponseBody
     @RequestMapping(value = "query", method = { RequestMethod.GET, RequestMethod.POST })
     public JsonResult query(EquipmentInfo entity) {
         logger.info("[EquipmentInfoController][query] 查询EquipmentInfo对象:");
         try {
+            entity.setDeleteFlag(0L);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.query(entity));
         } catch (Exception e) {
             logger.error("[EquipmentInfoController][query] exception", e);
@@ -158,9 +164,9 @@ public class EquipmentInfoController extends BaseController{
      * 删除EquipmentInfo对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-14 23:45:42 
+     * @date   2018-11-20 17:37:49 
      * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     * @return   com.info.admin.result.JsonResult
      */
     @ResponseBody
     @RequestMapping(value = "delete", method = { RequestMethod.GET, RequestMethod.POST })
@@ -186,15 +192,16 @@ public class EquipmentInfoController extends BaseController{
      * 分页查询EquipmentInfo对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-14 23:45:42 
+     * @date   2018-11-20 17:37:49 
      * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     * @return   com.info.admin.result.JsonResult
      */
     @ResponseBody
     @RequestMapping(value = "pageQuery", method = { RequestMethod.GET, RequestMethod.POST })
     public JsonResult pageQuery(HttpServletRequest request,EquipmentInfo entity) {
         logger.info("[EquipmentInfoController][pageQuery] 查询EquipmentInfo对象:");
         try {
+            entity.setDeleteFlag(0L);
             // 获取分页当前的页码
             int pageNum = this.getPageNum(request);
             // 获取分页的大小

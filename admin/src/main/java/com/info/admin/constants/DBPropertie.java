@@ -3,6 +3,7 @@ package com.info.admin.constants;
 
 /**
  * 数据库属性
+ * @author ljuenan
  */
 public class DBPropertie {
     /**

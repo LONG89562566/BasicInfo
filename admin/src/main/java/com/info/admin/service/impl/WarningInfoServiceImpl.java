@@ -72,7 +72,7 @@ public class WarningInfoServiceImpl implements WarningInfoService {
      */
     @Override
     public int delete(WarningInfo entity){
-      entity.setDeleteFlag(1L);
+         entity.setDeleteFlag(1L);
          return dao.update(entity);
 
     }

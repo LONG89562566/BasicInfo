@@ -15,7 +15,7 @@ public interface SysUserService {
 	 * 分页查询用户信息
 	 * 
 	 * @param user
-	 * @param offset
+	 * @param pageNum
 	 * @param pageSize
 	 * @return
 	 */
@@ -25,8 +25,6 @@ public interface SysUserService {
 	 * 分页查询用户信息
 	 *
 	 * @param user
-	 * @param offset
-	 * @param pageSize
 	 * @return
 	 */
 	public List<SysUser> getAllSysUserList(SysUser user);
@@ -39,14 +37,14 @@ public interface SysUserService {
 
 	/**
 	 * 根据登录名称查询用户
-	 * @param loginName
+	 * @param username
 	 * @return
 	 */
 	public ActiveSysUser getUserByUserName(String username);
 	
 	/**
 	 * 根据登录名称查询用户
-	 * @param loginName
+	 * @param phone
 	 * @return
 	 */
 	public SysUser getUserByPhone(String phone);
@@ -57,6 +55,20 @@ public interface SysUserService {
 	 * @return
 	 */
 	public SysUser getUserById(Long id);
+
+	/**
+	 * 修改数据
+	 * @param user
+	 * @return
+	 */
+	int updateSysUser(SysUser user);
+
+	/**
+	 * 取消绑定用户
+	 * @param user
+	 * @return
+	 */
+	int escBoundUser(SysUser user);
 	
 	/**
 	 * 新增系统用户

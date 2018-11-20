@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-14 23:45:41 
+ * @date 2018-11-19 18:06:32 
  * @describe 问题库 Service
  */
 public interface ProblemLibraryService {
@@ -15,7 +15,7 @@ public interface ProblemLibraryService {
      *添加ProblemLibrary对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-14 23:45:41 
+     *@date  2018-11-19 18:06:32 
      *@updater or other
      *@return int
      */
@@ -25,7 +25,7 @@ public interface ProblemLibraryService {
      *修改ProblemLibrary对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-14 23:45:41 
+     *@date  2018-11-19 18:06:32 
      *@updater or other
      *@return int
      */
@@ -35,7 +35,7 @@ public interface ProblemLibraryService {
      *查询ProblemLibrary对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-14 23:45:41 
+     *@date  2018-11-19 18:06:32 
      *@updater or other
      *@return List<ProblemLibrary>
      */
@@ -45,7 +45,7 @@ public interface ProblemLibraryService {
      *删除ProblemLibrary对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-14 23:45:41 
+     *@date  2018-11-19 18:06:32 
      *@updater or other
      *@return int
      */
@@ -57,7 +57,7 @@ public interface ProblemLibraryService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-14 23:45:41 
+     * @date  2018-11-19 18:06:32 
      * @updater or other
      * @return   PageUtil
      */
@@ -67,7 +67,7 @@ public interface ProblemLibraryService {
 	 * 根据 id获取 问题库
 	 * @author   ysh
 	 * @param supplierId 主键id
-	 * @date  2018-11-14 23:45:41
+	 * @date  2018-11-19 18:06:32
 	 * @updater  or other
 	 * @return   ProblemLibrary
 	 */ 

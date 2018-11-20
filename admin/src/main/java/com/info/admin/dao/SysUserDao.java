@@ -77,6 +77,13 @@ public interface SysUserDao {
 	 * @return
 	 */
 	public int updateSysUser(SysUser user);
+
+	/**
+	 * 取消绑定用户
+	 * @param user
+	 * @return
+	 */
+	public int escBoundUser(SysUser user);
 	
 	/**
 	 * 禁用系统用户

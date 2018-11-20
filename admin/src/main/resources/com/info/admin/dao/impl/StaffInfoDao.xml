@@ -179,7 +179,8 @@
 		<result column="address" property="address" />
 		<result column="phone" property="phone" />
 		<result column="position" property="position" />
-
+		<result column="isBound" property="isBound" />
+		<result column="su_id" property="boundUserId" />
     </resultMap>
 
     <!-- 分页条件 -->
@@ -239,8 +240,10 @@
         select  
           *
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
-           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+			,IFNULL(is_bound,'0') isBound
           from staff_info
+			LEFT JOIN (select id as su_id,is_bound,staff_id as sy_staff_id from sys_user ) as su  on staff_info.staff_id = su.sy_staff_id
         <include refid="filterCondition"></include>
     </select>
     
@@ -255,8 +258,10 @@
         select
          * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
-           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+		,IFNULL(is_bound,'0') isBound
          from staff_info
+		 LEFT JOIN (select id as su_id,is_bound,staff_id as sy_staff_id from sys_user ) as su  on staff_info.staff_id = su.sy_staff_id
         <include refid="filterCondition"></include>
         LIMIT #{offset},#{pageSize}
     </select>
@@ -266,7 +271,10 @@
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
-           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-		 from staff_info where staff_id= #{staffId}
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+           ,IFNULL(is_bound,'0') isBound
+		 from staff_info
+		 LEFT JOIN (select id as su_id,is_bound,staff_id as sy_staff_id from sys_user ) as su  on staff_info.staff_id = su.sy_staff_id
+		 where staff_id= #{staffId}
 	</select>
 </mapper>	

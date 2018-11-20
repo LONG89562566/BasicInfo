@@ -8,11 +8,9 @@
 			useGeneratedKeys="true" keyProperty="warningId">
 		insert into warning_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
 			<if test=" warningId != null">
 				warning_id,
-			</if>
-			<if test=" createTime != null">
-				create_time,
 			</if>
 			<if test=" createUser != null">
 				create_user,
@@ -44,8 +42,8 @@
 			<if test=" true_val != null">
 				true_val,
 			</if>
-			<if test=" condition != null">
-				condition,
+			<if test=" checkCondition != null">
+				check_condition,
 			</if>
 			<if test=" warn_val != null">
 				warn_val,
@@ -53,12 +51,10 @@
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(),
 			<if test="warningId != null ">
 		        #{warningId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -89,8 +85,8 @@
 			<if test="true_val != null ">
 		        #{true_val},
 		    </if>
-			<if test="condition != null ">
-		        #{condition},
+			<if test="checkCondition != null ">
+		        #{checkCondition},
 		    </if>
 			<if test="warn_val != null ">
 		        #{warn_val},
@@ -104,9 +100,6 @@
 		update warning_info
         <set>
             <trim suffixOverrides=",">
-				<if test=" createTime != null">
-					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-				</if>
 				<if test=" createUser != null">
 					create_user = #{createUser},
 				</if>
@@ -137,13 +130,12 @@
 				<if test=" true_val != null">
 					true_val = #{true_val},
 				</if>
-				<if test=" condition != null">
-					condition = #{condition},
+				<if test=" checkCondition != null">
+					check_condition = #{checkCondition},
 				</if>
 				<if test=" warn_val != null">
 					warn_val = #{warn_val},
 				</if>
-
             </trim>
         </set>
 		where warning_id = #{warningId}
@@ -171,9 +163,8 @@
 		<result column="receive_user" property="receiveUser" />
 		<result column="options" property="options" />
 		<result column="true_val" property="true_val" />
-		<result column="condition" property="condition" />
+		<result column="check_condition" property="checkCondition" />
 		<result column="warn_val" property="warn_val" />
-
     </resultMap>
 
     <!-- 分页条件 -->
@@ -215,13 +206,12 @@
 		    <if test=" entity.true_val != null">
 			    and true_val =  #{entity.true_val} 
 		    </if>
-		    <if test=" entity.condition != null">
-			    and condition =  #{entity.condition} 
+		    <if test=" entity.checkCondition != null">
+			    and check_condition =  #{entity.checkCondition}
 		    </if>
 		    <if test=" entity.warn_val != null">
 			    and warn_val =  #{entity.warn_val} 
 		    </if>
-
         </trim>
     </sql>
     

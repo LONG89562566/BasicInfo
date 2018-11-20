@@ -39,7 +39,7 @@ public class WarningInfo implements Serializable {
 	 /*****值*****/
 	 private String true_val;
 	 /*****（大/小/等/不大/不小/不等于）*****/
-	 private Long condition;
+	 private Long checkCondition;
 	 /*****预警值*****/
 	 private String warn_val;
 
@@ -168,15 +168,15 @@ public class WarningInfo implements Serializable {
 		 this.true_val = true_val;
 	 }
 
-	 public Long getCondition() {
-		 return condition;
-	 }
+	public Long getCheckCondition() {
+		return checkCondition;
+	}
 
-	 public void setCondition(Long condition) {
-		 this.condition = condition;
-	 }
+	public void setCheckCondition(Long checkCondition) {
+		this.checkCondition = checkCondition;
+	}
 
-	 public String getWarn_val() {
+	public String getWarn_val() {
 		 return warn_val;
 	 }
 

@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.WarningInfoService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,7 @@ public class WarningInfoController extends BaseController{
     @RequiresPermissions("warningInfo:query")
     public String getWarningInfoList(HttpServletRequest request, @ModelAttribute WarningInfo entity, Model model) {
         logger.info("[WarningInfoController][getWarningInfoList] 查询预警设置列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -65,6 +67,7 @@ public class WarningInfoController extends BaseController{
     @RequiresPermissions("warningInfo:query")
     public String getWarningInfoListDesktop(HttpServletRequest request, @ModelAttribute WarningInfo entity, Model model) {
         logger.info("[WarningInfoController][getWarningInfoListDesktop] 我的桌面查询预警设置列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -85,7 +88,7 @@ public class WarningInfoController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String warningId,Model model){
         try{
-            if(null != warningId){
+            if(null != warningId && StringUtils.isNotBlank(warningId)){
                 //根据id查询系统用户
                 WarningInfo warningInfo = service.getWarningInfoById(warningId);
                 model.addAttribute("warningInfo", warningInfo);
@@ -118,9 +121,11 @@ public class WarningInfoController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getWarningId()) {
+            if (null != entity.getWarningId() && StringUtils.isNotBlank(entity.getWarningId())) {
                 result = service.update(entity);
             } else {
+                entity.setDeleteFlag(0L);
+                entity.setCreateUser(getLoginUserId(request));
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -147,6 +152,7 @@ public class WarningInfoController extends BaseController{
     public JsonResult query(WarningInfo entity) {
         logger.info("[WarningInfoController][query] 查询WarningInfo对象:");
         try {
+            entity.setDeleteFlag(0L);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.query(entity));
         } catch (Exception e) {
             logger.error("[WarningInfoController][query] exception", e);
@@ -199,7 +205,7 @@ public class WarningInfoController extends BaseController{
             int pageNum = this.getPageNum(request);
             // 获取分页的大小
             int pageSize = this.getPageSize(request);
-
+            entity.setDeleteFlag(0L);
             PageUtil paginator = service.pageQuery(entity , pageNum, pageSize);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
         } catch (Exception e) {

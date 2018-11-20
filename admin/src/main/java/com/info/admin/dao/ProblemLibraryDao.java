@@ -7,7 +7,7 @@ import java.util.List;
 
  /**
  * @author ysh
- * @date 2018-11-14 23:45:41
+ * @date 2018-11-19 18:06:32
  * @describe 问题库 Dao
  */
 public interface ProblemLibraryDao {
@@ -15,7 +15,7 @@ public interface ProblemLibraryDao {
 	 *添加ProblemLibrary对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-14 23:45:41 
+	 *@date  2018-11-19 18:06:32 
 	 *@updater or other
 	 *@return int
 	 */
@@ -25,7 +25,7 @@ public interface ProblemLibraryDao {
 	 *修改ProblemLibrary对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-14 23:45:41 
+	 *@date  2018-11-19 18:06:32 
 	 *@updater or other
 	 *@return int
 	 */
@@ -35,7 +35,7 @@ public interface ProblemLibraryDao {
 	 *查询ProblemLibrary对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-14 23:45:41 
+	 *@date  2018-11-19 18:06:32 
 	 *@updater or other
 	 *@return List<ProblemLibrary>
 	 */
@@ -45,7 +45,7 @@ public interface ProblemLibraryDao {
 	 *删除ProblemLibrary对象
 	 *@param  entity 对象
 	 *@author  ysh
-	 *@date  2018-11-14 23:45:41 
+	 *@date  2018-11-19 18:06:32 
 	 *@updater or other
 	 *@return int
 	 */
@@ -57,9 +57,9 @@ public interface ProblemLibraryDao {
      * @param offset	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-14 23:45:41 
+     * @date  2018-11-19 18:06:32 
      * @updater or other
-     * @return   List<ProblemLibrary>
+     * @return   List<ProblemLibrary> 
      */
     List<ProblemLibrary> pageQuery(@Param("entity") ProblemLibrary entity, @Param("offset") int offset, @Param("pageSize") int pageSize);
 
@@ -67,7 +67,7 @@ public interface ProblemLibraryDao {
      * 查询ProblemLibrary总记录数
      * @param entity  对象
      * @author  ysh
-     * @date  2018-11-14 23:45:41 
+     * @date  2018-11-19 18:06:32 
      * @updater or other
      * @return   int
      */
@@ -77,9 +77,9 @@ public interface ProblemLibraryDao {
 	 * 根据 id获取 问题库 
 	 *@author   ysh
 	 *@param supplierId 主键id
-	 *@date  2018-11-14 23:45:41
+	 *@date  2018-11-19 18:06:32
 	 *@updater  or other
 	 *@return   ProblemLibrary
 	 */
-	 ProblemLibrary getProblemLibraryById(String supplierId);
+	public ProblemLibrary getProblemLibraryById(String supplierId);
 }

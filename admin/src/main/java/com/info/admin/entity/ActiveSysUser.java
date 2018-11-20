@@ -27,6 +27,17 @@ public class ActiveSysUser {
 	 * 加密的盐
 	 */
 	private String salt;
+
+	/*****
+	 * 是否绑定 0：未绑定 1 ：绑定
+	 */
+	private String isBound;
+
+	/****
+	 * 员信息id
+	 */
+	private String staffId;
+
 	/**
 	 * 菜单
 	 */
@@ -92,4 +103,19 @@ public class ActiveSysUser {
 		this.permissions = permissions;
 	}
 
+	public String getIsBound() {
+		return isBound;
+	}
+
+	public void setIsBound(String isBound) {
+		this.isBound = isBound;
+	}
+
+	public String getStaffId() {
+		return staffId;
+	}
+
+	public void setStaffId(String staffId) {
+		this.staffId = staffId;
+	}
 }
