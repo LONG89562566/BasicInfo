@@ -24,8 +24,6 @@ public class ConcreteInfo implements Serializable {
 	 private Date updateTime;
 	 /*****修改时间 日常的字符串*****/
 	 private String updateTimeStr;
-	 /*****排序号*****/
-	 private Long seq;
 	 /*****项目编号*****/
 	 private String projectId;
 	 /*****混泥土别名*****/
@@ -108,13 +106,6 @@ public class ConcreteInfo implements Serializable {
 		 }
 	 }
 
-	 public Long getSeq() {
-		 return seq;
-	 }
-
-	 public void setSeq(Long seq) {
-		 this.seq = seq;
-	 }
 
 	 public String getProjectId() {
 		 return projectId;

@@ -27,12 +27,7 @@
 				position:relative;
 				left:800px;
 			}
-			table th{
-				background:#ffffff;
-			}
-			table tr:nth-child(odd){
-				background:#F0F0F0;
-			}
+
 			.col-sm-2 {
 				width: 10%;
 			}
@@ -49,6 +44,16 @@
 	    <shiro:hasPermission name="proportions:query">
 		    <section class="content">
 		      <div class="row">
+				  <div style="float: left;width: 18%;height: 500px;background-color: white;">
+					  <table id="projectSurveyTree" title="所有梁场" style="width:100%;height:500px">
+						  <thead>
+						  <tr>
+							  <th data-options="field:'lcName'" width="220px">梁场名称</th>
+						  </tr>
+						  </thead>
+					  </table>
+				  </div>
+				  <div class="box" style="float: right;width: 81%;height: auto; background-color: white;">
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
@@ -59,9 +64,15 @@
 			           <form  id="form_submit" class="form-horizontal" action="/admin/proportions/list" method="post">
 			           	  <input type="hidden" name="pageNum" id="pageNum" value="${paginator.currentPage}">
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
+	                      <input type="hidden" name="projectId" id="projectId" value="">
 			              <div class="box-body">
 			                 <div class="form-group">
-
+								 <div class="form-group">
+									 <label for="name" class="col-sm-2 control-label">配合比名：</label>
+									 <div class="col-xs-2">
+										 <input type="text" class="form-control" id="name" name="name" value="${proportions.name}" placeholder="请输入配合比名">
+									 </div>
+								 </div>
 			                 </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
@@ -81,12 +92,7 @@
 			               <thead>
 				              <tr>
 				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
-			                    <th field="seq"  >排序号</th>
-			                    <th field="projectId"  >项目编号</th>
+
 			                    <th field="name"  >配合比名称</th>
 
 				                <th field="sys_opt">操作</th>
@@ -96,17 +102,14 @@
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
 								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.seq}</td>
-					            <td>${r.projectId}</td>
+
 					            <td>${r.name}</td>
 
 						        <td>
 						         <div class="site-demo-button" >
-								   <button id="updateProportions" data-method="setAddOrEdit" value="${r.proportionsId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+									 <button id="updateProportions" data-method="setAddOrEdit" value="${r.proportionsId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+									 <button id="deletes" data-method="deletes" value="${r.proportionsId}" class="layui-btn layui-btn-danger layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
+
 								 </div>
 						       </td>
 				             </tr>
@@ -123,10 +126,14 @@
 		            </div>
 		          </div>
 		        </div>
+				  </div>
 		      </div>
 		    </section>
 	    </shiro:hasPermission>
 	  </div>
+	  <script src="/js/jquery.form.js"></script>
+	  <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
+	  <script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 	
 	<script type="text/javascript">
 
@@ -145,6 +152,7 @@
 	    //列表操作按钮
 	    var tableBtn = new Array();
 	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+	    tableBtn = addBtn(tableBtn,"deletes","删除","","","","","","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
@@ -152,7 +160,48 @@
 
 	<script type="text/javascript">
 
-		var methodStatus = function (val , obj) {
+
+        //加载菜单
+        $('#projectSurveyTree').treegrid({
+            url:'<%=request.getContextPath()%>/admin/projectSurvey/projectSurveyTree',
+            method:'get',          //请求方式
+            idField:'projectId',           //定义标识树节点的键名字段
+            treeField:'lcName',       //定义树节点的字段
+            fit:true,               //网格自动撑满
+            fitColumns:true,
+            onLoadSuccess:function(node, data){
+                $(this).treegrid('collapseAll');
+            },
+            onClickRow:function(row){
+                // console.log("----------------------------------------------");
+                // console.log("row.projectId : "+row.projectId);
+                // console.log("row.lcName : "+row.lcName);
+                // console.log("----------------------------------------------");
+                $('#pageNum').val(1);
+                $("#projectId").val(row.projectId);
+                $("#lcName").val(row.lcName);
+                $("#lcName").html(row.lcName);
+                //点击时初始化数据
+                initPaginator(row.projectId);
+
+
+
+            }
+        });
+        //初始化列表
+        var initPaginator = function (projectId) {
+            var selectRow = $('#projectSurveyTree').datagrid('getSelected');
+            if (selectRow) {
+                projectId = selectRow.projectId;
+            } else {
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
+            loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
+        }
+
+
+        var methodStatus = function (val , obj) {
 			var retVal = "";
 			if(val == 1){
 				retVal = "启用";
@@ -173,6 +222,11 @@
 					//获取userId
 					var id = data.val();
 					setAddOrEdit(id);
+				},
+                deletes: function(data){
+					//获取userId
+					var id = data.val();
+                    deletes(id);
 				},
 				//启用和禁用数据弹窗
 				offset: function(othis){
@@ -200,14 +254,22 @@
 		
 		//新增、编辑打开
 		var setAddOrEdit = function(proportionsId){
+            var selectRow = $('#projectSurveyTree').datagrid('getSelected');
+            if (selectRow) {
+                var projectId = selectRow.projectId;
+            } else {
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
+            if(selectRow || projectId != null  ){
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
 		         title: '新增/修改 配合比',
-		         area: ['70%', '86%'],
+		         area: ['30%', '40%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/proportions/addOrEdit?proportionsId='+proportionsId,
+		         content: '<%=request.getContextPath()%>/admin/proportions/addOrEdit?proportionsId='+proportionsId+"&projectId="+projectId,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);
@@ -220,6 +282,10 @@
 		             });
 		         }
 		     });
+            } else {
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
 		};
 		
 		//禁用
@@ -273,6 +339,49 @@
 				}
 			});
 		}
+        var deletes = function (id) {
+            //启用的url
+            requestUrl="<%=request.getContextPath()%>/admin/proportions/delete";
+            text = "确定要删除条数据吗？";
+            deletesOffSet(0,requestUrl, id,text);
+        };
+
+        var deletesOffSet = function (type ,requestUrl,id,text) {
+            layer.open({
+                type: 1,
+                offset: type,
+                id: 'LAY_demo'+type, //防止重复弹出
+                content: '<div style="padding: 20px 100px;">'+ text +'</div>',
+                btn: ['确定', '取消'],
+                btnAlign: 'c', //按钮居中
+                shade: 0.5 ,//不显示遮罩
+                yes: function(){
+                    layer.closeAll();
+                    $.ajax({
+                        type: "POST",
+                        url: requestUrl,
+                        data: {"proportionsId":id},
+                        dataType: "json",
+                        cache:false,
+                        success: function(data){
+                            var code = data.code;
+                            var msg = data.message;
+                            if(code == "200"){
+                                layer.msg(msg, {icon: 1,time: 2000});//2秒关闭
+                                //刷新页面
+                                refreshTheCurrentPage();
+                            }
+                        },
+                        error:function(){
+                            layer.msg("操作失败", {icon: 1,time: 2000});//1.5秒关闭
+                        }
+                    });
+                },
+                btn2: function(){
+                    layer.closeAll();
+                }
+            });
+        }
 	</script>
 </body>
 </html>
