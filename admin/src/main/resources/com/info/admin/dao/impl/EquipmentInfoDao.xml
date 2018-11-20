@@ -8,11 +8,9 @@
 			useGeneratedKeys="true" keyProperty="supplierId">
 		insert into equipment_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
 			<if test=" supplierId != null">
 				supplier_id,
-			</if>
-			<if test=" createTime != null">
-				create_time,
 			</if>
 			<if test=" createUser != null">
 				create_user,
@@ -29,15 +27,12 @@
 			<if test=" projectId != null">
 				project_id,
 			</if>
-
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(),
 			<if test="supplierId != null ">
 		        #{supplierId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -62,9 +57,6 @@
 		update equipment_info
         <set>
             <trim suffixOverrides=",">
-				<if test=" createTime != null">
-					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-				</if>
 				<if test=" createUser != null">
 					create_user = #{createUser},
 				</if>
@@ -109,7 +101,7 @@
     <!-- 分页条件 -->
     <sql id="filterCondition">
         <trim prefix="where " prefixOverrides="and " >
-		    <if test=" entity.supplierId != null">
+		    <if test=" entity.supplierId != null and entity.supplierId != ''">
 			    and supplier_id =  #{entity.supplierId} 
 		    </if>
 		    <if test="entity.createTime!=null">
@@ -162,7 +154,7 @@
     </select>
     
     <!-- 根据id 查询 设备信息 -->
-	<select id="getEquipmentInfoById" parameterType="Long" resultMap="equipmentInfoMap" >
+	<select id="getEquipmentInfoById" parameterType="String" resultMap="equipmentInfoMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

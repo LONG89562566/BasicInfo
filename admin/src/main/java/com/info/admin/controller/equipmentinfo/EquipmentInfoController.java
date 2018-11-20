@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.EquipmentInfoService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +86,7 @@ public class EquipmentInfoController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String supplierId,Model model){
         try{
-            if(null != supplierId){
+            if(null != supplierId && StringUtils.isNotBlank(supplierId)){
                 //根据id查询系统用户
                 EquipmentInfo equipmentInfo = service.getEquipmentInfoById(supplierId);
                 model.addAttribute("equipmentInfo", equipmentInfo);
@@ -118,7 +119,7 @@ public class EquipmentInfoController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getSupplierId()) {
+            if (null != entity.getSupplierId() && StringUtils.isNotBlank(entity.getSupplierId())) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);

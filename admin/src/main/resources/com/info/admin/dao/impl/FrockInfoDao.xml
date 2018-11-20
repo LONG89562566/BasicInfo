@@ -8,11 +8,9 @@
 			useGeneratedKeys="true" keyProperty="supplierId">
 		insert into frock_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
 			<if test=" supplierId != null">
 				supplier_id,
-			</if>
-			<if test=" createTime != null">
-				create_time,
 			</if>
 			<if test=" createUser != null">
 				create_user,
@@ -59,12 +57,10 @@
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(),
 			<if test="supplierId != null ">
 		        #{supplierId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -116,9 +112,6 @@
 		update frock_info
         <set>
             <trim suffixOverrides=",">
-				<if test=" createTime != null">
-					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-				</if>
 				<if test=" createUser != null">
 					create_user = #{createUser},
 				</if>
@@ -161,7 +154,6 @@
 				<if test=" purchaseTime != null">
 					purchase_time = date_format(#{purchaseTime},'%Y-%m-%d %H:%i:%s'),
 				</if>
-
             </trim>
         </set>
 		where supplier_id = #{supplierId}
@@ -282,7 +274,7 @@
     </select>
     
     <!-- 根据id 查询 设备信息 -->
-	<select id="getFrockInfoById" parameterType="Long" resultMap="frockInfoMap" >
+	<select id="getFrockInfoById" parameterType="String" resultMap="frockInfoMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

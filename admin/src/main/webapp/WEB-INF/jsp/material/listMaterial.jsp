@@ -250,6 +250,7 @@
 		         type: 2, 
 		         title: '新增/修改 材料',
 		         area: ['70%', '86%'],
+                 btn: ['确定', '取消'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
 		         content: '<%=request.getContextPath()%>/admin/material/addOrEdit?materialId='+materialId+"&projectId="+projectId,
@@ -263,7 +264,39 @@
 		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
 		            	 layer.closeAll();
 		             });
-		         }
+		         },
+                 yes: function(index, layero){
+                     var body = layer.getChildFrame('body', index);
+                     var iframeWin = window[layero.find('iframe')[0]['name']];
+                     var data = iframeWin.getData();
+                     if(data != false){
+                         $.ajax({
+                             type: "POST",
+                             url: "/admin/material/insertAndUpdate",
+                             data: data,
+                             dataType: "json",
+                             cache:false,
+                             success: function(data){
+                                 var code = data.code;
+                                 var msg = data.message;
+                                 if(code == "200"){
+                                     layer.msg(msg, {icon: 1,time: 2000});//2秒关闭
+                                     //刷新页面
+                                     refreshTheCurrentPage();
+                                 }
+                             },
+                             error:function(){
+                                 layer.msg("操作失败", {icon: 1,time: 2000});//1.5秒关闭
+                             }
+                         });
+                         //按钮【按钮一】的回调
+                         layer.close(index); //如果设定了yes回调，需进行手工关闭
+                     }
+
+                 },cancel: function(){
+                     //右上角关闭回调
+                     // alert(4);
+                 }
 		     });
             } else {
                 layer.msg('请先选择一个梁场！');

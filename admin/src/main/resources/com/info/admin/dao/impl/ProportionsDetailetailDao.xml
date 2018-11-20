@@ -8,11 +8,9 @@
 			useGeneratedKeys="true" keyProperty="detailId">
 		insert into proportions_detailetail
         <trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
 			<if test=" detailId != null">
 				detail_id,
-			</if>
-			<if test=" createTime != null">
-				create_time,
 			</if>
 			<if test=" createUser != null">
 				create_user,
@@ -38,12 +36,10 @@
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(),
 			<if test="detailId != null ">
 		        #{detailId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -74,9 +70,6 @@
 		update proportions_detailetail
         <set>
             <trim suffixOverrides=",">
-				<if test=" createTime != null">
-					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-				</if>
 				<if test=" createUser != null">
 					create_user = #{createUser},
 				</if>
@@ -129,7 +122,7 @@
     <!-- 分页条件 -->
     <sql id="filterCondition">
         <trim prefix="where " prefixOverrides="and " >
-		    <if test=" entity.detailId != null">
+		    <if test=" entity.detailId != null and entity.detailId != '' ">
 			    and detail_id =  #{entity.detailId} 
 		    </if>
 		    <if test="entity.createTime!=null">
@@ -188,7 +181,7 @@
     </select>
     
     <!-- 根据id 查询 配合比详情 -->
-	<select id="getProportionsDetailetailById" parameterType="Long" resultMap="proportionsDetailetailMap" >
+	<select id="getProportionsDetailetailById" parameterType="String" resultMap="proportionsDetailetailMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
