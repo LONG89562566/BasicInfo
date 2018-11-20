@@ -31,7 +31,7 @@
 		  <if test="user.isBound != null ">
 	        and is_bound = #{user.isBound}
 		</if>
-		  <if test="user.staffId != null ">
+		  <if test="user.staffId != null and user.staffId != '' ">
 	        and staff_id = #{user.staffId}
 	    </if>
 	  </trim>

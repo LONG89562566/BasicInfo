@@ -13,6 +13,7 @@
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="releaseId" name="releaseId" value="${releaseInfo.releaseId}"/>
+ 			<input  type="hidden" id="releaseUser" name="releaseUser" value="${releaseInfo.releaseUser}${userId}"/>
 
 			<div class='layui-form-item'>
 				<label class="layui-form-label">标题</label>
@@ -23,14 +24,14 @@
 			</div>
 			<div class='layui-form-item'>
 				<div class="layui-inline">
-					<label class="layui-form-label">发布人编号</label>
+					<label class="layui-form-label">发布人</label>
 					<div class="layui-input-inline">
-						<input type="text" id="releaseUser" name="releaseUser" placeholder="请输入发布人编号"  value="${releaseInfo.releaseUser }" class="layui-input"/>
+						<input type="text" id="releaseUserName" name="releaseUserName" placeholder="请输入发布人编号"  value="${releaseInfo.releaseUserCn }${userName}" class="layui-input" readonly/>
 						<span style="color: red" id="s-releaseUser"></span>
 					</div>
 				</div>
 				<div class="layui-inline">
-					<label class="layui-form-label">接收人编号</label>
+					<label class="layui-form-label">接收人</label>
 					<div class="layui-input-inline" id="div-receiveUser">
 						<input type="text" id="receiveUser" name="receiveUser" placeholder="请输入接收人编号"  value="${releaseInfo.receiveUser }" class="layui-input"/>
 						<span style="color: red" id="s-receiveUser"></span>
@@ -61,8 +62,6 @@
 			</div>
 
 			<div class='layui-form-item'>
-
-
 				<div class="layui-inline">
 					<label class="layui-form-label">排序号</label>
 					<div class="layui-input-inline">
@@ -99,8 +98,8 @@
 	<script type="text/javascript">
 
 		$(function () {
-            $("#releaseUser").combotree({
-                url: '/admin/sysUser/getUserTreeYesBound',
+   /*         $("#releaseUser").combotree({
+                url: '/admin/staffInfo/staffInfoTree',
                 // multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框
                 data : [{},{},{}],//数据省略
             	required: true,
@@ -124,11 +123,13 @@
 						return true;
 					}
 				}
-			});
+			});*/
 
             $("#receiveUser").combotree({
-                url: '/admin/sysUser/getUserTreeYesBound',
+                url: '/admin/staffInfo/staffInfoTree',
                 multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框
+                idField:'staffId',           //定义标识树节点的键名字段
+                treeField:'name',       //定义树节点的字段
                 data : [{},{},{}],//数据省略
             	required: true,
                 checkbox : true,//显示多选框
@@ -141,7 +142,7 @@
 				onBeforeCheck : function(node, checked){//控制只能选一项
 					if(checked){//当前为选中操作
 						var nodes = $(this).tree("getChecked");
-						$("#div-receiveUser").append("<input type='hidden' id='receiveUserCn-"+node.id+"' name='receiveUserCn-"+node.id+"' value='"+node.name+"'/>");
+						$("#div-receiveUser").append("<input type='hidden' id='receiveUserCn-"+node.id+"' name='receiveUserCn-"+node.id+"' value='"+node.text+"'/>");
 						//控制只能选一项，选中某一项后后面不能再勾选
 						// if(nodes.length == 0){
 						//     return true;
@@ -183,7 +184,7 @@
 			var seq = $("#seq").val();
 			var title = $("#title").val();
 			var content = $("#content").val();
-			var releaseUser = $('#releaseUser').combotree('getValues');
+			var releaseUser = $('#releaseUser').val();
 			var receiveUser = $('#receiveUser').combotree('getValues');
 			var receiveUserCn = getVals("receiveUserCn-");
 			var releaseType  = $("#releaseType").val();
@@ -194,7 +195,7 @@
 				"seq":seq,
 				"title":title,
 				"content":content,
-				"releaseUsers":releaseUser,
+				"releaseUser":releaseUser,
 				"receiveUsers":receiveUser,
 				"releaseType":releaseType,
 				"receiveUserCns":receiveUserCn
