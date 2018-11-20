@@ -85,7 +85,7 @@
 										</div>
 			              <div class="box-body">
 
-							  <div class='layui-form-item'>
+
 							  <div class='layui-form-item'>
 			               		  <div class="layui-inline">
 									<label for="inputName3" class="layui-form-label">机构名称：</label>
@@ -96,14 +96,15 @@
 									 <input type="hidden"  name="orgIds" class="layui-input" id="orgIds" value="" >
 								 	</div>
 								  </div>
-							 </div>
-								  <div class='layui-form-item'>
+
 									  <div class="layui-inline">
 										  <label for="inputName3" class="layui-form-label">机构别名：</label>
 										  <div class="layui-input-inline">
 											  <input type="text"  name="otName" class="layui-input" id="otName" placeholder="请输入机构别名">
 										  </div>
 									  </div>
+							  </div>
+								  <div class='layui-form-item'>
 									  <div class="layui-inline">
 											<label for="inputName3" class="layui-form-label">机构编号：</label>
 											<div class="layui-input-inline">
@@ -190,7 +191,7 @@
 		        </div>
 		      </div>
 			  </div>
-			  </div>
+
 		    </section>
 	    </shiro:hasPermission>
 	  </div>
@@ -214,6 +215,7 @@
 	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
 		tableBtn = addBtn(tableBtn,"escBoundUser","解绑","","","isBound","true","1","layui-btn-danger");
 		tableBtn = addBtn(tableBtn,"boundUser","绑定","","","isBound","true","0","layui-btn-danger");
+        tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-normal");
 	</script>
 
 
@@ -490,6 +492,13 @@
 			//启用的url
 			requestUrl="<%=request.getContextPath()%>/admin/staffInfo/enabled";
 			text = "确定要启用此条数据吗？";
+			userOffSet(0,requestUrl, id,text);
+		};
+		//删除
+		var delData = function (id) {
+			//启用的url
+			requestUrl="<%=request.getContextPath()%>/admin/staffInfo/delete";
+			text = "确定要删除此条数据吗？";
 			userOffSet(0,requestUrl, id,text);
 		};
 
