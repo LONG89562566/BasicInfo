@@ -20,13 +20,6 @@
 		        		<span style="color: red" id="s-seq"></span>
 		     		</div>
      			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">项目编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="projectId" name="projectId" placeholder="请输入项目编号"  value="${supplier.projectId }" class="layui-input"/>
-		        		<span style="color: red" id="s-projectId"></span>
-		     		</div>
-     			</div>
 			</div>
 			<div class='layui-form-item'>
      			<div class="layui-inline">

@@ -44,6 +44,7 @@ public class ProjectSurveyServiceImpl implements ProjectSurveyService {
         orgInfo.setProjectId(entity.getProjectId());
         orgInfo.setLevel(Long.valueOf(0));
         orgInfo.setParentId("0");
+        orgInfo.setIsEnd(Long.valueOf(2));
         orgInfo.setOrgName(entity.getLcName());
         orgInfoService.insert(orgInfo);}
         return dao.insert(entity);

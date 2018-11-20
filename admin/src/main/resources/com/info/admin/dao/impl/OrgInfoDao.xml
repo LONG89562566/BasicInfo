@@ -287,6 +287,8 @@
 		<result column="ot_name" property="otName" />
 		<result column="org_code" property="orgCode" />
 		<result column="project_id" property="projectId" />
+		<result column="seq" property="seq" />
+		<result column="is_end" property="isEnd" />
 	</resultMap>
 	<!-- 分页条件 -->
 	<sql id="filterConditionTree">
@@ -318,15 +320,7 @@
 	<!-- 根据 组织机构信息树 -->
 	<select id="getOrgInfo"  resultMap="orgInfoTreeMap" >
 		select
-		org_info.org_id,
-		org_info.create_time,
-		org_info.delete_flag,
-		org_info.level,
-		org_info.parent_id,
-		org_info.org_name,
-		org_info.ot_name,
-		org_info.org_code,
-		org_info.project_id
+			*
 		from org_info
 		<include refid="filterConditionTree"></include>
 	</select>
