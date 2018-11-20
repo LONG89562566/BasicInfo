@@ -327,7 +327,7 @@ public class StaffInfoController extends BaseController {
     public Object staffInfoTree( StaffInfo entity ) {
         List<StaffInfo> staffInfoList = service.query(entity);
         CopyOnWriteArrayList<StaffInfo> cowList = new CopyOnWriteArrayList<>(staffInfoList);
-        return TreeUtils.getTreeJson(cowList, "0","parentId","staffId");
+        return service.getTreeJson(cowList);
     }
 
 

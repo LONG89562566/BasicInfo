@@ -36,6 +36,20 @@ public class TreeUtils {
 
         return all;
     }
+
+    /**
+     * 返回树形结构json数据
+     * @param list 数据，因读大于写
+     * @return JSONArray
+     */
+    public static JSONArray getTreeJson(CopyOnWriteArrayList<?> list) {
+        JSONArray all = new JSONArray();
+        for (Object obj : list){
+            JSONObject main = JSONObject.fromObject(obj);
+            all.add(main);
+        }
+        return all;
+    }
     
 
 }
