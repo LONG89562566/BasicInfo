@@ -60,9 +60,12 @@
 			           	  <input type="hidden" name="pageNum" id="pageNum" value="${paginator.currentPage}">
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">
 			              <div class="box-body">
-			                 <div class="form-group">
-
-			                 </div>
+							  <div class="form-group">
+								  <label for="lcName" class="col-sm-1 control-label">梁场名称:</label>
+								  <div class="col-sm-3" style="width: 200px">
+									  <input type="text" name="lcName" id="lcName" value="" class="form-control input-small" placeholder="请输入梁场名称！">
+								  </div>
+							  </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
 			                 	<button type="reset" onclick='refreshTheCurrentPage()' id="reset" class="btn btn-info ">重置</button>

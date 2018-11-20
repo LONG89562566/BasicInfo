@@ -31,6 +31,7 @@ public class CodeInfoServiceImpl implements CodeInfoService {
     @Override
     public int insert(CodeInfo entity){
         entity.setCodeId(com.info.admin.utils.UUIDUtils.getUUid());
+        entity.setCode(com.info.admin.utils.UUIDUtils.getUUid());
         return dao.insert(entity);
     }
 

@@ -16,8 +16,8 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">梁场名称</label>
 					<div class="layui-input-inline">
-						<input type="text" id="lcName" name="lcName" placeholder="请输入梁场名称"  value="${projectSurvey.lcName }" class="layui-input"/>
-						<span style="color: red" id="s-lcName"></span>
+						<%--<input type="text" id="lcName" name="lcName" placeholder="请输入梁场名称"  value="${projectSurvey.lcName }" class="layui-input"/>--%>
+						<span style="color: red" id="s-lcName">${projectSurvey.lcName }</span>
 					</div>
 				</div>
 			<div class='layui-form-item'>

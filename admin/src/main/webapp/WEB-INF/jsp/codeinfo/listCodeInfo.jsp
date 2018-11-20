@@ -17,26 +17,22 @@
 		<!-- 引入公共部分js jsp文件 -->
 		<%@include file="/WEB-INF/jsp/decorators/listHeader.jsp" %>
 		<style type="text/css">
-			.layui-form-label{
-				width:100px;
-			}
+            .layui-form-label{
+                width:100px;
+            }
 
-			.layui-input-block{
-				width:auto;
-				height:auto;
-				position:relative;
-				left:800px;
-			}
-			table th{
-				background:#ffffff;
-			}
-			table tr:nth-child(odd){
-				background:#F0F0F0;
-			}
-			.col-sm-2 {
-				width: 10%;
-			}
+            .layui-input-block{
+                width:auto;
+                height:auto;
+                position:relative;
+                left:800px;
+            }
+            .col-sm-2 {
+                width: 10%;
+            }
 		</style>
+		<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
 	  <!-- 二维码信息列表start -->
@@ -49,6 +45,17 @@
 	    <shiro:hasPermission name="codeInfo:query">
 		    <section class="content">
 		      <div class="row">
+                <div style="float: left;width: 18%;height: 500px;background-color: white;">
+                      <table id="lcTree" title="所有梁场" style="width:100%;height:500px">
+                          <thead>
+                          <tr>
+                              <th data-options="field:'lcName'" width="220px">梁场名称</th>
+                          </tr>
+                          </thead>
+                      </table>
+                  </div>
+                <div class="box" style="float: right;width: 81%;height: auto; background-color: white;">
+                      <div class="row">
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
@@ -61,7 +68,26 @@
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
 			              <div class="box-body">
 			                 <div class="form-group">
-
+                                 <div class="form-group" hidden="hidden">
+                                     <label for="projectId" class="col-sm-1 control-label">梁场编号:</label>
+                                     <div class="col-sm-3" style="width: 200px">
+                                         <input type="text" name="projectId" id="projectId" value="" class="form-control input-small">
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label for="structureName" class="col-sm-1 control-label">结构名称:</label>
+                                     <div class="col-sm-3" style="width: 200px">
+                                         <input type="text" name="structureName" id="structureName" value="" class="form-control input-small" placeholder="请输入结构名称！">
+                                     </div>
+                                     <label for="structureType" class="col-sm-1 control-label">结构类型:</label>
+                                     <div class="col-sm-3" style="width: 200px">
+                                         <input type="text" name="structureType" id="structureType" value="" class="form-control input-small" placeholder="请输入结构类型！">
+                                     </div>
+                                     <label for="code" class="col-sm-1 control-label">码值:</label>
+                                     <div class="col-sm-3" style="width: 200px">
+                                         <input type="text" name="code" id="code" value="" class="form-control input-small" placeholder="请输入码值！">
+                                     </div>
+                                 </div>
 			                 </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
@@ -81,15 +107,11 @@
 			               <thead>
 				              <tr>
 				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
 			                    <th field="seq"  >排序号</th>
 			                    <th field="structureName"  >结构名称</th>
 			                    <th field="structureType"  >结构类型</th>
-			                    <th field="projectId"  >项目编号</th>
-
+                                <th field="code"  >码值</th>
+                                <th field="code"  >码</th>
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
@@ -97,19 +119,16 @@
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
 								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					            <td>${r.seq}</td>
 					            <td>${r.structureName}</td>
 					            <td>${r.structureType}</td>
-					            <td>${r.projectId}</td>
-
+                                <td>${r.code}</td>
+                                <td>${r.code}</td>
 						        <td>
 						         <div class="site-demo-button" >
 								   <button id="updateCodeInfo" data-method="setAddOrEdit" value="${r.codeId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
-								 </div>
+                                   <button id="delCode" data-method="delIfon" value="${r.codeId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
+                                 </div>
 						       </td>
 				             </tr>
 						   </c:forEach>
@@ -125,6 +144,8 @@
 		            </div>
 		          </div>
 		        </div>
+                      </div>
+                </div>
 		      </div>
 		    </section>
 	    </shiro:hasPermission>
@@ -147,13 +168,44 @@
 	    //列表操作按钮
 	    var tableBtn = new Array();
 	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+	    tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-normal");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
 
+      <script type="text/javascript" charset="utf-8">
+          layui.use(['layer','jquery','form','element'], function(){ })
+          //加载菜单
+          $('#lcTree').treegrid({
+              url:'<%=request.getContextPath()%>/admin/projectSurvey/projectSurveyTree',
+              method:'get',          //请求方式
+              idField:'projectId',           //定义标识树节点的键名字段
+              treeField:'lcName',       //定义树节点的字段
+              fit:true,               //网格自动撑满
+              fitColumns:true,
+              onLoadSuccess:function(node, data){
+                  $(this).treegrid('collapseAll');
+              },
+              onClickRow:function(row){
+                  $('#pageNum').val(1);
+                  $("#projectId").val(row.projectId);
+                  //点击时初始化数据
+                  initPaginator(row.projectId);
+              }
+          });
+      </script>
 
 	<script type="text/javascript">
+        //初始化列表
+        var initPaginator = function (projectId) {
+            if (projectId) {
+                loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
+            } else {
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
 
+        }
 		var methodStatus = function (val , obj) {
 			var retVal = "";
 			if(val == 1){
@@ -176,6 +228,11 @@
 					var id = data.val();
 					setAddOrEdit(id);
 				},
+                delIfon: function(data){
+                    //获取@primarykey
+                    var id = data.val();
+                    delData(id);
+                },
 				//启用和禁用数据弹窗
 				offset: function(othis){
 					var type = othis.data('type');
@@ -202,6 +259,11 @@
 		
 		//新增、编辑打开
 		var setAddOrEdit = function(codeId){
+            var projectId = $("#projectId").val();
+            if(!projectId){
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
@@ -216,6 +278,7 @@
 		        	 var body = layer.getChildFrame('body', index);
 		             var iframeWin = window[layero.find('iframe')[0]['name']]; 
 		             body.find('input[name="codeId"]').val(codeId);
+                     body.find('input[name="projectId"]').val(projectId);
 		             //弹窗表单的取消操作时关闭弹窗
 		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
 		            	 layer.closeAll();
@@ -238,7 +301,13 @@
 			text = "确定要启用此条数据吗？";
 			userOffSet(0,requestUrl, id,text);
 		};
-
+        //删除
+        var delData = function(id){
+            //删除的url
+            requestUrl= "<%=request.getContextPath()%>/admin/d3Pay/delete";
+            text = "确定要删除此条数据吗？";
+            userOffSet(2,requestUrl, id,text);
+        };
 		var userOffSet = function (type ,requestUrl,id,text) {
 			layer.open({
 				type: 1,
