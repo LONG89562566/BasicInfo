@@ -45,6 +45,7 @@ public class EquipmentInfoController extends BaseController{
     @RequiresPermissions("equipmentInfo:query")
     public String getEquipmentInfoList(HttpServletRequest request, @ModelAttribute EquipmentInfo entity, Model model) {
         logger.info("[EquipmentInfoController][getEquipmentInfoList] 查询设备信息列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -66,6 +67,7 @@ public class EquipmentInfoController extends BaseController{
     @RequiresPermissions("equipmentInfo:query")
     public String getEquipmentInfoListDesktop(HttpServletRequest request, @ModelAttribute EquipmentInfo entity, Model model) {
         logger.info("[EquipmentInfoController][getEquipmentInfoListDesktop] 我的桌面查询设备信息列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -122,6 +124,8 @@ public class EquipmentInfoController extends BaseController{
             if (null != entity.getSupplierId() && StringUtils.isNotBlank(entity.getSupplierId())) {
                 result = service.update(entity);
             } else {
+                entity.setDeleteFlag(0L);
+                entity.setCreateUser(getLoginUserId(request));
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -148,6 +152,7 @@ public class EquipmentInfoController extends BaseController{
     public JsonResult query(EquipmentInfo entity) {
         logger.info("[EquipmentInfoController][query] 查询EquipmentInfo对象:");
         try {
+            entity.setDeleteFlag(0L);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.query(entity));
         } catch (Exception e) {
             logger.error("[EquipmentInfoController][query] exception", e);
@@ -196,6 +201,7 @@ public class EquipmentInfoController extends BaseController{
     public JsonResult pageQuery(HttpServletRequest request,EquipmentInfo entity) {
         logger.info("[EquipmentInfoController][pageQuery] 查询EquipmentInfo对象:");
         try {
+            entity.setDeleteFlag(0L);
             // 获取分页当前的页码
             int pageNum = this.getPageNum(request);
             // 获取分页的大小

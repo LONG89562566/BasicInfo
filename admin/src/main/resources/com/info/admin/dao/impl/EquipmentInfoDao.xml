@@ -27,6 +27,46 @@
 			<if test=" projectId != null">
 				project_id,
 			</if>
+			<if test=" manageNum != null">
+				manage_num,
+			</if>
+			<if test=" name != null">
+				name,
+			</if>
+			<if test=" model != null">
+				model,
+			</if>
+			<if test=" power != null">
+				power,
+			</if>
+			<if test=" mtp != null">
+				mtp,
+			</if>
+			<if test=" startNum != null">
+				start_num,
+			</if>
+			<if test=" ov != null">
+				ov,
+			</if>
+			<if test=" nv != null">
+				nv,
+			</if>
+			<if test=" producPlant != null">
+				produc_plant,
+			</if>
+			<if test=" producTime != null">
+				produc_time,
+			</if>
+			<if test=" advanceTime != null">
+				advance_time,
+			</if>
+			<if test=" source != null">
+				source,
+			</if>
+			<if test=" sop != null">
+				sop,
+			</if>
+
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			now(),
@@ -48,6 +88,45 @@
 			<if test="projectId != null ">
 		        #{projectId},
 		    </if>
+			<if test="manageNum != null ">
+		        #{manageNum},
+		    </if>
+			<if test="name != null ">
+		        #{name},
+		    </if>
+			<if test="model != null ">
+		        #{model},
+		    </if>
+			<if test="power != null ">
+		        #{power},
+		    </if>
+			<if test="mtp != null ">
+		        #{mtp},
+		    </if>
+			<if test="startNum != null ">
+		        #{startNum},
+		    </if>
+			<if test="ov != null ">
+		        #{ov},
+		    </if>
+			<if test="nv != null ">
+		        #{nv},
+		    </if>
+			<if test="producPlant != null ">
+		        #{producPlant},
+		    </if>
+			<if test="producTime != null">
+				date_format(#{producTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="advanceTime != null">
+				date_format(#{advanceTime},'%Y-%m-%d %H:%i:%s'),
+			</if>			
+			<if test="source != null ">
+		        #{source},
+		    </if>
+			<if test="sop != null ">
+		        #{sop},
+		    </if>
 
         </trim>
 	</insert>
@@ -57,7 +136,7 @@
 		update equipment_info
         <set>
             <trim suffixOverrides=",">
-				<if test=" createUser != null">
+				<if test=" createUser != null ">
 					create_user = #{createUser},
 				</if>
 				<if test=" deleteFlag != null">
@@ -71,6 +150,45 @@
 				</if>
 				<if test=" projectId != null">
 					project_id = #{projectId},
+				</if>
+				<if test=" manageNum != null">
+					manage_num = #{manageNum},
+				</if>
+				<if test=" name != null">
+					name = #{name},
+				</if>
+				<if test=" model != null">
+					model = #{model},
+				</if>
+				<if test=" power != null">
+					power = #{power},
+				</if>
+				<if test=" mtp != null">
+					mtp = #{mtp},
+				</if>
+				<if test=" startNum != null">
+					start_num = #{startNum},
+				</if>
+				<if test=" ov != null">
+					ov = #{ov},
+				</if>
+				<if test=" nv != null">
+					nv = #{nv},
+				</if>
+				<if test=" producPlant != null">
+					produc_plant = #{producPlant},
+				</if>
+				<if test=" producTime != null">
+					produc_time = date_format(#{producTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" advanceTime != null">
+					advance_time = date_format(#{advanceTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" source != null">
+					source = #{source},
+				</if>
+				<if test=" sop != null">
+					sop = #{sop},
 				</if>
 
             </trim>
@@ -95,6 +213,21 @@
 		<result column="updateTime" property="updateTimeStr" />
 		<result column="seq" property="seq" />
 		<result column="project_id" property="projectId" />
+		<result column="manage_num" property="manageNum" />
+		<result column="name" property="name" />
+		<result column="model" property="model" />
+		<result column="power" property="power" />
+		<result column="mtp" property="mtp" />
+		<result column="start_num" property="startNum" />
+		<result column="ov" property="ov" />
+		<result column="nv" property="nv" />
+		<result column="produc_plant" property="producPlant" />
+		<result column="produc_time" property="producTime" />
+		<result column="producTime" property="producTimeStr" />
+		<result column="advance_time" property="advanceTime" />
+		<result column="advanceTime" property="advanceTimeStr" />
+		<result column="source" property="source" />
+		<result column="sop" property="sop" />
 
     </resultMap>
 
@@ -122,6 +255,45 @@
 		    <if test=" entity.projectId != null">
 			    and project_id =  #{entity.projectId} 
 		    </if>
+		    <if test=" entity.manageNum != null">
+			    and manage_num =  #{entity.manageNum} 
+		    </if>
+		    <if test=" entity.name != null">
+			    and name =  #{entity.name} 
+		    </if>
+		    <if test=" entity.model != null">
+			    and model =  #{entity.model} 
+		    </if>
+		    <if test=" entity.power != null">
+			    and power =  #{entity.power} 
+		    </if>
+		    <if test=" entity.mtp != null">
+			    and mtp =  #{entity.mtp} 
+		    </if>
+		    <if test=" entity.startNum != null">
+			    and start_num =  #{entity.startNum} 
+		    </if>
+		    <if test=" entity.ov != null">
+			    and ov =  #{entity.ov} 
+		    </if>
+		    <if test=" entity.nv != null">
+			    and nv =  #{entity.nv} 
+		    </if>
+		    <if test=" entity.producPlant != null">
+			    and produc_plant =  #{entity.producPlant} 
+		    </if>
+		    <if test="entity.producTime!=null">
+		        and produc_time = STR_TO_DATE(#{entity.producTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test="entity.advanceTime!=null">
+		        and advance_time = STR_TO_DATE(#{entity.advanceTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.source != null">
+			    and source =  #{entity.source} 
+		    </if>
+		    <if test=" entity.sop != null">
+			    and sop =  #{entity.sop} 
+		    </if>
 
         </trim>
     </sql>
@@ -132,6 +304,8 @@
           *
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(produc_time,'%Y-%m-%d %H:%i:%s') as producTime 
+           ,date_format(advance_time,'%Y-%m-%d %H:%i:%s') as advanceTime 
           from equipment_info
         <include refid="filterCondition"></include>
     </select>
@@ -148,6 +322,8 @@
          * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(produc_time,'%Y-%m-%d %H:%i:%s') as producTime 
+           ,date_format(advance_time,'%Y-%m-%d %H:%i:%s') as advanceTime 
          from equipment_info
         <include refid="filterCondition"></include>
         LIMIT #{offset},#{pageSize}
@@ -159,6 +335,8 @@
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(produc_time,'%Y-%m-%d %H:%i:%s') as producTime 
+           ,date_format(advance_time,'%Y-%m-%d %H:%i:%s') as advanceTime 
 		 from equipment_info where supplier_id= #{supplierId}
 	</select>
 </mapper>	

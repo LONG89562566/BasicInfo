@@ -36,6 +36,7 @@
 			.col-sm-2 {
 				width: 10%;
 			}
+            .fl{float: left;}
 		</style>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -75,18 +76,27 @@
 		            <div class="box">
 			           <div class="box-body">
 			             <div class="site-demo-button" >
-						   <button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>
+
 						 </div>
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
+				                <th field="sys_xh">序号</th>
 			                    <th field="seq"  >排序号</th>
 			                    <th field="projectId"  >项目编号</th>
+			                    <th field="manageNum"  >管理编号</th>
+			                    <th field="name"  >名称</th>
+			                    <th field="model"  >型号</th>
+			                    <th field="power"  >功率</th>
+			                    <th field="mtp"  >主要技术参数</th>
+			                    <th field="startNum"  >出场编号</th>
+			                    <th field="ov"  >原值(元)</th>
+			                    <th field="nv"  >净值(元)</th>
+			                    <th field="producPlant"  >生产厂</th>
+			                    <th field="producTime"  type='date'>出厂日期</th>
+			                    <th field="advanceTime"  type='date'>进场日期</th>
+			                    <th field="source"  >设备来源</th>
+			                    <th field="sop"  >安全操作规程</th>
 
 				                <th field="sys_opt">操作</th>
 				              </tr>
@@ -94,13 +104,22 @@
 			               <tbody id="show-data">
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
 					            <td>${r.seq}</td>
 					            <td>${r.projectId}</td>
+					            <td>${r.manageNum}</td>
+					            <td>${r.name}</td>
+					            <td>${r.model}</td>
+					            <td>${r.power}</td>
+					            <td>${r.mtp}</td>
+					            <td>${r.startNum}</td>
+					            <td>${r.ov}</td>
+					            <td>${r.nv}</td>
+					            <td>${r.producPlant}</td>
+				                <td><fmt:formatDate value="${r.producTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				                <td><fmt:formatDate value="${r.advanceTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+					            <td>${r.source}</td>
+					            <td>${r.sop}</td>
 
 						        <td>
 						         <div class="site-demo-button" >

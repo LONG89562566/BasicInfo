@@ -192,7 +192,7 @@
     <!-- 分页条件 -->
     <sql id="filterCondition">
         <trim prefix="where " prefixOverrides="and " >
-		    <if test=" entity.supplierId != null">
+		    <if test=" entity.supplierId != null and entity.supplierId != '' ">
 			    and supplier_id =  #{entity.supplierId} 
 		    </if>
 		    <if test="entity.createTime!=null">
