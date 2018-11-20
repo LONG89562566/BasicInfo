@@ -118,16 +118,16 @@
 				<if test=" parentId != null">
 					parent_id = #{parentId},
 				</if>
-				<if test=" orgName != null">
+				<if test=" orgName != null  and orgName != ''">
 					org_name = #{orgName},
 				</if>
-				<if test=" otName != null">
+				<if test=" otName != null and otName != ''">
 					ot_name = #{otName},
 				</if>
 				<if test=" orgCode != null">
 					org_code = #{orgCode},
 				</if>
-				<if test=" projectId != null">
+				<if test=" projectId != null and projectId != ''">
 					project_id = #{projectId},
 				</if>
 

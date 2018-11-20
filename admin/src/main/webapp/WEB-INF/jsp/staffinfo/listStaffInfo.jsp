@@ -88,44 +88,39 @@
 							  <div class='layui-form-item'>
 							  <div class='layui-form-item'>
 			               		  <div class="layui-inline">
-									<label for="inputName3" class="layui-form-label">机构名称：</label>
+									<label for="orgName" class="layui-form-label">机构名称：</label>
 								 	<div class="layui-input-inline">
 									 <input type="text"  name="orgName" class="layui-input" id="orgName" placeholder="请输入机构名称" >
 									 <input type="hidden"  name="parentId" class="layui-input" id="parentId" value="">
 									 <input type="hidden"  name="level" class="layui-input" id="level" value="" >
 									 <input type="hidden"  name="orgIds" class="layui-input" id="orgIds" value="" >
+                                     <input type="hidden"  name="projectId" class="layui-input" id="projectId" value="" >
 								 	</div>
 								  </div>
 							 </div>
 								  <div class='layui-form-item'>
 									  <div class="layui-inline">
-										  <label for="inputName3" class="layui-form-label">机构别名：</label>
+										  <label for="otName" class="layui-form-label">机构别名：</label>
 										  <div class="layui-input-inline">
 											  <input type="text"  name="otName" class="layui-input" id="otName" placeholder="请输入机构别名">
 										  </div>
 									  </div>
 									  <div class="layui-inline">
-											<label for="inputName3" class="layui-form-label">机构编号：</label>
+											<label for="orgCode" class="layui-form-label">机构编码：</label>
 											<div class="layui-input-inline">
-												<input type="text"  name="orgCode" class="form-control" id="orgCode" placeholder="请输入机构编号">
+												<input type="text"  name="orgCode" class="form-control" id="orgCode" placeholder="请输入机构编码">
 											</div>
-									  </div>
-									  <div class="layui-inline" id="projectIdShow" >
-										  <label  for="inputName3" class="layui-form-label">梁场编号：</label>
-										  <div class="layui-input-inline">
-											  <input type="text"  style="width: 140%" name="projectId" class="layui-input" id="projectId" placeholder="请输入梁场编号">
-										  </div>
 									  </div>
 								  </div>
 								  <div class='layui-form-item'>
 									  <div class="layui-inline">
-										  <label for="inputName3" class="layui-form-label">排序号：</label>
+										  <label for="seq" class="layui-form-label">排序号：</label>
 										  <div class="layui-input-inline">
 											  <input type="text"  name="seq" class="form-control" id="seq" placeholder="请输入排序号">
 										  </div>
 									  </div>
 									  <div class="layui-inline">
-										  <label for="inputName3" class="layui-form-label">是否末级:</label>
+										  <label for="isEnd" class="layui-form-label">是否末级:</label>
 										  <div class="layui-input-inline">
 											  <select name="isEnd" id="isEnd"   class="form-control select2" style="width: 100%;">
 												  <option value="1">是</option>
@@ -231,14 +226,6 @@
                 $(this).treegrid('collapseAll');
             },
             onClickRow:function(row){
-                console.log("----------------------------------------------");
-                console.log("row.projectId : "+row.projectId);
-                console.log("row.seq : "+row.seq);
-                console.log("----------------------------------------------");
-                // console.log("----------------------------------------------");
-                // console.log("row.projectId : "+row.projectId);
-                // console.log("row.orgId : "+row.orgId);
-                // console.log("----------------------------------------------");
                 $('#pageNum').val(1);
                 $("#orgId").val(row.orgId);
                 $("#orgIds").val(row.orgId);
@@ -282,8 +269,8 @@
 
         //新增组织结构数据
         function add() {
+
             $('#orgShow').show();
-            $('#projectIdShow').hide();
             $('#orgShow').form('clear');
             var row = $('#orgInfoTree').datagrid('getSelected');
             if (row){
@@ -295,8 +282,8 @@
                     $('#level').val(Number(row.level)+1);
                 }
             } else {
-                $('#parentId').val(0);
-                $('#level').val(0);
+                $.messager.alert('错误','必须选中一个梁场进行添加!','error');
+                return;
             }
         }
 
@@ -311,6 +298,9 @@
             var seqs = $('#seq').val();
             var isEnds= $('#isEnd').val();
             var orgCode= $('#orgCode').val();
+            if(levels==0||levels=="0"){
+                orgNames="";
+            }
             $.ajax({
                 type: 'post',
                 url: '<%=request.getContextPath()%>/admin/orgInfo/insertAndUpdate',
@@ -334,7 +324,6 @@
                         return ;
                     }
                     $('#orgInfoTree').treegrid('reload')
-                    $('#projectIdShow').show();
                 }
             });
         }
@@ -356,7 +345,8 @@
 					var id = data.val();
 					setAddOrEdit(id);
 				},
-                deletes: function(id){;
+                deletes: function(id){
+
                     deletes(id);
 				},
 				//启用和禁用数据弹窗
@@ -492,6 +482,21 @@
 			text = "确定要启用此条数据吗？";
 			userOffSet(0,requestUrl, id,text);
 		};
+        //删除
+        var deletes = function (id) {
+            var level = $("#level").val();
+            if(!level){
+                return;
+            }
+            if(level==0){
+                layer.msg('梁场不允许删除！');
+                return;
+            }
+            //启用的url
+            requestUrl="<%=request.getContextPath()%>/admin/orgInfo/delete";
+            text = "确定要启用此条数据吗？";
+            userOffSet(0,requestUrl, id,text);
+        };
 
 		var userOffSet = function (type ,requestUrl,id,text) {
 			layer.open({
