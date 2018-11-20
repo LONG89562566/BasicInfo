@@ -52,7 +52,7 @@
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
-		              <h3 class="box-title">设备信息列表 :${sessionScope.login_session_admin.userName}</h3>
+		              <h3 class="box-title">工装信息列表 :${sessionScope.login_session_admin.userName}</h3>
 		            </div>
 			        <div class="box box-info">
 			           <!-- form start -->
@@ -80,11 +80,7 @@
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
+				                <th field="sys_xh">序号</th>
 			                    <th field="seq"  >排序号</th>
 			                    <th field="projectId"  >项目编号</th>
 			                    <th field="type"  >类别</th>
@@ -103,11 +99,7 @@
 			               <tbody id="show-data">
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
 					            <td>${r.seq}</td>
 					            <td>${r.projectId}</td>
 					            <td>${r.type}</td>
@@ -123,6 +115,7 @@
 						        <td>
 						         <div class="site-demo-button" >
 								   <button id="updateFrockInfo" data-method="setAddOrEdit" value="${r.supplierId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+									 <button id="delReleaseInfo" data-method="delIfon" value="${r.supplierId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
 								 </div>
 						       </td>
 				             </tr>
@@ -161,6 +154,7 @@
 	    //列表操作按钮
 	    var tableBtn = new Array();
 	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+        tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-warm");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
@@ -190,6 +184,11 @@
 					var id = data.val();
 					setAddOrEdit(id);
 				},
+                delIfon: function(data){
+                    //获取supplierId
+                    var id = data.val();
+                    delData(id);
+                },
 				//启用和禁用数据弹窗
 				offset: function(othis){
 					var type = othis.data('type');
@@ -219,7 +218,7 @@
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
-		         title: '新增/修改 设备信息',
+		         title: '新增/修改 工装信息',
 		         area: ['70%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
@@ -252,6 +251,13 @@
 			text = "确定要启用此条数据吗？";
 			userOffSet(0,requestUrl, id,text);
 		};
+        //删除
+        var delData = function(id){
+            //删除的url
+            requestUrl= "<%=request.getContextPath()%>/admin/frockInfo/delete";
+            text = "确定要删除此条数据吗？";
+            userOffSet(2,requestUrl, id,text);
+        };
 
 		var userOffSet = function (type ,requestUrl,id,text) {
 			layer.open({
@@ -267,7 +273,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"id":id},
+						data: {"supplierId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){

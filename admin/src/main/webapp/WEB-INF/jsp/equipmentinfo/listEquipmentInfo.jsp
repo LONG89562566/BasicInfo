@@ -96,8 +96,6 @@
 			                    <th field="advanceTime"  type='date'>进场日期</th>
 			                    <th field="source"  >设备来源</th>
 			                    <th field="sop"  >安全操作规程</th>
-								  <th field="createTime"  type='date'>创建时间</th>
-								  <th field="updateTime"  type='date'>修改时间</th>
 								  <th field="seq"  >排序号</th>
 				                <th field="sys_opt">操作</th>
 				              </tr>
@@ -121,8 +119,6 @@
 				                <td><fmt:formatDate value="${r.advanceTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					            <td>${r.source}</td>
 					            <td>${r.sop}</td>
-								 <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-								 <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 								 <td>${r.seq}</td>
 						        <td>
 						         <div class="site-demo-button" >
