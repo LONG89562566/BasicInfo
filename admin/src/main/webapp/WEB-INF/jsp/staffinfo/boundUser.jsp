@@ -25,11 +25,6 @@
 
 			</div>
 
-
-	 		<div class="layui-input-block" style="margin-top:30px;margin-left:40%;">
-	 			<input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
-       			<button class="layui-btn" name="cancleSubmit" >取消</button>
-     		</div>
   		</form>
 	</body>
 	<script type="text/javascript">
@@ -83,28 +78,29 @@
 			  form.verify({
 			  });
 		});
-	
-		function saveData() {
+
+		var getData = function () {
             var boundUser = $('#boundUser').combotree('getValues');
             if(boundUser.length > 0){
                 boundUser = boundUser[0];
-			}
-			var staffId = $("#staffId").val();
-			if(boundUser == "" || boundUser.length == 0){
+            }
+            var staffId = $("#staffId").val();
+            if(boundUser == "" || boundUser.length == 0){
                 $.messager.alert({
                     title:'消息',
-					msg:'请选择绑定人！',
-					icon:'info'
-				});
-                return ;
-			}
+                    msg:'请选择绑定人！',
+                    icon:'info'
+                });
+                return false;
+            }
 
-			var requestData={
-				"staffId":staffId,
-				"boundUserId":boundUser
-			};
-			updateAndAdd(requestData);
-		}
+            var requestData={
+                "staffId":staffId,
+                "boundUserId":boundUser
+            };
+
+            return requestData;
+        };
 
 		//id开头的input 标签
         var getVals = function (lableId) {
