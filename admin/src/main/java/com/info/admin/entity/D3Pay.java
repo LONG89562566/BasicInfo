@@ -29,7 +29,7 @@ public class D3Pay implements Serializable {
 	 /*****项目编号*****/
 	 private String projectId;
 	 /*****工序*****/
-	 private String procedure;
+	 private String procedures;
 	 /*****关键工艺控制要点*****/
 	 private String processControl;
 	 /*****安全控制要点*****/
@@ -122,12 +122,12 @@ public class D3Pay implements Serializable {
 		 this.projectId = projectId;
 	 }
 
-	 public String getProcedure() {
-		 return procedure;
+	 public String getProcedures() {
+		 return procedures;
 	 }
 
-	 public void setProcedure(String procedure) {
-		 this.procedure = procedure;
+	 public void setProcedures(String procedures) {
+		 this.procedures = procedures;
 	 }
 
 	 public String getProcessControl() {

@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.D3PayService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,7 @@ public class D3PayController extends BaseController{
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("d3Pay", entity);
@@ -69,6 +71,7 @@ public class D3PayController extends BaseController{
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("d3Pay", entity);
@@ -85,7 +88,7 @@ public class D3PayController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String payId,Model model){
         try{
-            if(null != payId){
+            if(StringUtils.isNotEmpty(payId)){
                 //根据id查询系统用户
                 D3Pay d3Pay = service.getD3PayById(payId);
                 model.addAttribute("d3Pay", d3Pay);
@@ -118,9 +121,10 @@ public class D3PayController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getPayId()) {
+            if (StringUtils.isNotEmpty(entity.getPayId())) {
                 result = service.update(entity);
             } else {
+                entity.setCreateUser(this.getLoginUserId(request));
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -195,6 +199,7 @@ public class D3PayController extends BaseController{
     public JsonResult pageQuery(HttpServletRequest request,D3Pay entity) {
         logger.info("[D3PayController][pageQuery] 查询D3Pay对象:");
         try {
+            entity.setDeleteFlag(0L);
             // 获取分页当前的页码
             int pageNum = this.getPageNum(request);
             // 获取分页的大小

@@ -32,7 +32,8 @@ public class CodeInfo implements Serializable {
 	 private String structureType;
 	 /*****项目编号*****/
 	 private String projectId;
-
+	/*****码值*****/
+	private String code;
 
 	 public String getCodeId() {
 		 return codeId;
@@ -134,7 +135,14 @@ public class CodeInfo implements Serializable {
 		 this.projectId = projectId;
 	 }
 
-	 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public CodeInfo() {
 		super();
 	}

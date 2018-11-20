@@ -10,39 +10,9 @@
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="payId" name="payId" value="${d3Pay.payId}"/>
+			<input  type="hidden" id="projectId" name="projectId" value="${d3Pay.projectId}"/>
      		<div class="layui-form-item" >
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">创建时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="createTime" id="createTime" value="${d3Pay.createTimeStr}" class="form-control input-small" placeholder="请选择创建时间"/>
-		            	<span style="color: red" id="s-createTime"></span>
-		        	</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">创建人编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="createUser" name="createUser" placeholder="请输入创建人编号"  value="${d3Pay.createUser }" class="layui-input"/>
-		        		<span style="color: red" id="s-createUser"></span>
-		     		</div>
-     			</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">删除标记</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="deleteFlag" name="deleteFlag" placeholder="请输入删除标记"  value="${d3Pay.deleteFlag }" class="layui-input"/>
-		        		<span style="color: red" id="s-deleteFlag"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">修改时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="updateTime" id="updateTime" value="${d3Pay.updateTimeStr}" class="form-control input-small" placeholder="请选择修改时间"/>
-		            	<span style="color: red" id="s-updateTime"></span>
-		        	</div>
-     			</div>
-			</div>
+
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
@@ -51,19 +21,12 @@
 		        		<span style="color: red" id="s-seq"></span>
 		     		</div>
      			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">项目编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="projectId" name="projectId" placeholder="请输入项目编号"  value="${d3Pay.projectId }" class="layui-input"/>
-		        		<span style="color: red" id="s-projectId"></span>
-		     		</div>
-     			</div>
 			</div>
 			<div class='layui-form-item'>
 		        <label class="layui-form-label">工序</label>
 				<div class="layui-input-block">
-					<textarea placeholder="请输入工序" style="width: 90%;" class="layui-textarea"  id="procedure" name = "procedure" lay-verify="content">${d3Pay.procedure}</textarea>
-					<span style="color: red" id="s-procedure"></span>
+					<textarea placeholder="请输入工序" style="width: 90%;" class="layui-textarea"  id="procedures" name = "procedures" lay-verify="content">${d3Pay.procedures}</textarea>
+					<span style="color: red" id="s-procedures"></span>
 				</div>
 			</div>
 			<div class='layui-form-item'>
@@ -115,26 +78,18 @@
 	
 	function saveData() {
 	    var payId = $("#payId").val();
-	    var createTime = $("#createTime").val();
-	    var createUser = $("#createUser").val();
-	    var deleteFlag = $("#deleteFlag").val();
-	    var updateTime = $("#updateTime").val();
 	    var seq = $("#seq").val();
 	    var projectId = $("#projectId").val();
-	    var procedure = $("#procedure").val();
+	    var procedures = $("#procedures").val();
 	    var processControl = $("#processControl").val();
 	    var safetyControl = $("#safetyControl").val();
 	    var qualityControl = $("#qualityControl").val();
 
         var requestData={
             "payId":payId,
-            "createTimeStr":createTime,
-            "createUser":createUser,
-            "deleteFlag":deleteFlag,
-            "updateTimeStr":updateTime,
             "seq":seq,
             "projectId":projectId,
-            "procedure":procedure,
+            "procedures":procedures,
             "processControl":processControl,
             "safetyControl":safetyControl,
             "qualityControl":qualityControl

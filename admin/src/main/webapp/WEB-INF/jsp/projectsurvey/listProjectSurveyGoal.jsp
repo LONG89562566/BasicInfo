@@ -43,7 +43,7 @@
 	  <div class="content-wrapper">
 	    <!-- Content Header (Page header) --> 
 	    <section class="content-header">
-	      <h1>工程概况管理</h1>
+	      <h1>施工目标</h1>
 	    </section>
 	    <!-- Main content -->
 	    <shiro:hasPermission name="projectSurvey:query">
@@ -52,16 +52,19 @@
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
-		              <h3 class="box-title">工程概况列表 :${sessionScope.login_session_admin.userName}</h3>
+		              <h3 class="box-title">施工目标 :${sessionScope.login_session_admin.userName}</h3>
 		            </div>
 			        <div class="box box-info">
 			           <!-- form start -->
 			           <form  id="form_submit" class="form-horizontal" action="/admin/projectSurvey/list" method="post">
 			           	  <input type="hidden" name="pageNum" id="pageNum" value="${paginator.currentPage}">
-	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
+	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">
 			              <div class="box-body">
 			                 <div class="form-group">
-
+								 <label for="lcName" class="col-sm-1 control-label">梁场名称:</label>
+								 <div class="col-sm-3" style="width: 200px">
+									 <input type="text" name="lcName" id="lcName" value="" class="form-control input-small" placeholder="请输入梁场名称！">
+								 </div>
 			                 </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
