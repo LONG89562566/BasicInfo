@@ -7,6 +7,7 @@ import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.ProportionsService;
 import com.info.admin.utils.PageUtil;
 import com.info.admin.utils.UUIDUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +87,7 @@ public class ProportionsController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String proportionsId,Model model){
         try{
-            if(null != proportionsId){
+            if(null != proportionsId && StringUtils.isNotBlank(proportionsId)){
                 //根据id查询系统用户
                 Proportions proportions = service.getProportionsById(proportionsId);
                 if(proportions == null ){
@@ -123,7 +124,7 @@ public class ProportionsController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getProportionsId()) {
+            if (null != entity.getProportionsId() && StringUtils.isNotBlank(entity.getProportionsId())) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);

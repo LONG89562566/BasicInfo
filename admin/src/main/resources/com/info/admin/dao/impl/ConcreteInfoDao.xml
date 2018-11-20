@@ -8,11 +8,9 @@
 			useGeneratedKeys="true" keyProperty="concreteId">
 		insert into concrete_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
 			<if test=" concreteId != null">
 				concrete_id,
-			</if>
-			<if test=" createTime != null">
-				create_time,
 			</if>
 			<if test=" createUser != null">
 				create_user,
@@ -47,12 +45,10 @@
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(),
 			<if test="concreteId != null ">
 		        #{concreteId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -92,9 +88,6 @@
 		update concrete_info
         <set>
             <trim suffixOverrides=",">
-				<if test=" createTime != null">
-					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-				</if>
 				<if test=" createUser != null">
 					create_user = #{createUser},
 				</if>
@@ -159,7 +152,7 @@
     <!-- 分页条件 -->
     <sql id="filterCondition">
         <trim prefix="where " prefixOverrides="and " >
-		    <if test=" entity.concreteId != null">
+		    <if test=" entity.concreteId != null and entity.concreteId != ''">
 			    and concrete_id =  #{entity.concreteId} 
 		    </if>
 		    <if test="entity.createTime!=null">
@@ -227,7 +220,7 @@
     </select>
     
     <!-- 根据id 查询 混泥土信息 -->
-	<select id="getConcreteInfoById" parameterType="Long" resultMap="concreteInfoMap" >
+	<select id="getConcreteInfoById" parameterType="String" resultMap="concreteInfoMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
