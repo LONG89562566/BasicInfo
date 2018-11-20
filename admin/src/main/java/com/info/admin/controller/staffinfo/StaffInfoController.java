@@ -314,7 +314,6 @@ public class StaffInfoController extends BaseController {
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
     }
-    }
 
     /**
      *人员结构 树
