@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author administrator  
- * @date 2018-11-14 23:45:42 
+ * @date 2018-11-20 17:37:49 
  * @describe 设备信息 Controller
  */
 @Controller
@@ -104,9 +104,9 @@ public class EquipmentInfoController extends BaseController{
      * @param    request  请求
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-14 23:45:42 
+     * @date   2018-11-20 17:37:49 
      * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     * @return   com.info.admin.result.JsonResult
      */
     @ResponseBody
     @RequestMapping(value = "insertAndUpdate", method = { RequestMethod.GET, RequestMethod.POST })
@@ -139,9 +139,9 @@ public class EquipmentInfoController extends BaseController{
      * 查询EquipmentInfo对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-14 23:45:42 
+     * @date   2018-11-20 17:37:49 
      * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     * @return   com.info.admin.result.JsonResult
      */
     @ResponseBody
     @RequestMapping(value = "query", method = { RequestMethod.GET, RequestMethod.POST })
@@ -159,9 +159,9 @@ public class EquipmentInfoController extends BaseController{
      * 删除EquipmentInfo对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-14 23:45:42 
+     * @date   2018-11-20 17:37:49 
      * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     * @return   com.info.admin.result.JsonResult
      */
     @ResponseBody
     @RequestMapping(value = "delete", method = { RequestMethod.GET, RequestMethod.POST })
@@ -187,9 +187,9 @@ public class EquipmentInfoController extends BaseController{
      * 分页查询EquipmentInfo对象
      * @param    entity  对象
      * @author   ysh
-     * @date   2018-11-14 23:45:42 
+     * @date   2018-11-20 17:37:49 
      * @updater  or other
-     * @return   com.netcai.admin.result.JsonResult
+     * @return   com.info.admin.result.JsonResult
      */
     @ResponseBody
     @RequestMapping(value = "pageQuery", method = { RequestMethod.GET, RequestMethod.POST })

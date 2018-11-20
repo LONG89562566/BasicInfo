@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-14 23:45:41 
+ * @date 2018-11-20 17:37:49 
  * @describe 设备信息 Service
  */
 public interface EquipmentInfoService {
@@ -15,7 +15,7 @@ public interface EquipmentInfoService {
      *添加EquipmentInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-14 23:45:41 
+     *@date  2018-11-20 17:37:49 
      *@updater or other
      *@return int
      */
@@ -25,7 +25,7 @@ public interface EquipmentInfoService {
      *修改EquipmentInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-14 23:45:41 
+     *@date  2018-11-20 17:37:49 
      *@updater or other
      *@return int
      */
@@ -35,7 +35,7 @@ public interface EquipmentInfoService {
      *查询EquipmentInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-14 23:45:41 
+     *@date  2018-11-20 17:37:49 
      *@updater or other
      *@return List<EquipmentInfo>
      */
@@ -45,7 +45,7 @@ public interface EquipmentInfoService {
      *删除EquipmentInfo对象
      *@param  entity 对象
      *@author  ysh
-     *@date  2018-11-14 23:45:41 
+     *@date  2018-11-20 17:37:49 
      *@updater or other
      *@return int
      */
@@ -57,7 +57,7 @@ public interface EquipmentInfoService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-14 23:45:41 
+     * @date  2018-11-20 17:37:49 
      * @updater or other
      * @return   PageUtil
      */
@@ -67,7 +67,7 @@ public interface EquipmentInfoService {
 	 * 根据 id获取 设备信息
 	 * @author   ysh
 	 * @param supplierId 主键id
-	 * @date  2018-11-14 23:45:41
+	 * @date  2018-11-20 17:37:49
 	 * @updater  or other
 	 * @return   EquipmentInfo
 	 */ 
