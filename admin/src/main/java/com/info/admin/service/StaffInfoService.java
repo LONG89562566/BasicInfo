@@ -2,8 +2,10 @@ package com.info.admin.service;
 
 import com.info.admin.entity.StaffInfo;
 import com.info.admin.utils.PageUtil;
+import net.sf.json.JSONArray;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author ysh
@@ -71,7 +73,14 @@ public interface StaffInfoService {
 	 * @updater  or other
 	 * @return   StaffInfo
 	 */ 
-	public StaffInfo getStaffInfoById(String staffId);
+	StaffInfo getStaffInfoById(String staffId);
+
+    /**
+     * 返回树形结构json数据
+     * @param list 数据，因读大于写
+     * @return JSONArray
+     */
+    JSONArray getTreeJson(CopyOnWriteArrayList<StaffInfo> list);
 	
 }
 

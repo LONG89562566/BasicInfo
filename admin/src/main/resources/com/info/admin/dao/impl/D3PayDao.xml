@@ -11,9 +11,7 @@
 			<if test=" payId != null">
 				pay_id,
 			</if>
-			<if test=" createTime != null">
 				create_time,
-			</if>
 			<if test=" createUser != null">
 				create_user,
 			</if>
@@ -29,8 +27,8 @@
 			<if test=" projectId != null">
 				project_id,
 			</if>
-			<if test=" procedure != null">
-				procedure,
+			<if test=" procedures != null">
+				procedures,
 			</if>
 			<if test=" processControl != null">
 				process_control,
@@ -47,9 +45,7 @@
 			<if test="payId != null ">
 		        #{payId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
+				now(),
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -65,8 +61,8 @@
 			<if test="projectId != null ">
 		        #{projectId},
 		    </if>
-			<if test="procedure != null ">
-		        #{procedure},
+			<if test="procedures != null ">
+		        #{procedures},
 		    </if>
 			<if test="processControl != null ">
 		        #{processControl},
@@ -104,8 +100,8 @@
 				<if test=" projectId != null">
 					project_id = #{projectId},
 				</if>
-				<if test=" procedure != null">
-					procedure = #{procedure},
+				<if test=" procedures != null">
+					procedures = #{procedures},
 				</if>
 				<if test=" processControl != null">
 					process_control = #{processControl},
@@ -139,7 +135,7 @@
 		<result column="updateTime" property="updateTimeStr" />
 		<result column="seq" property="seq" />
 		<result column="project_id" property="projectId" />
-		<result column="procedure" property="procedure" />
+		<result column="procedures" property="procedures" />
 		<result column="process_control" property="processControl" />
 		<result column="safety_control" property="safetyControl" />
 		<result column="quality_control" property="qualityControl" />
@@ -167,11 +163,11 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.projectId != null">
+		    <if test=" entity.projectId != null and entity.projectId != ''">
 			    and project_id =  #{entity.projectId} 
 		    </if>
-		    <if test=" entity.procedure != null">
-			    and procedure =  #{entity.procedure} 
+		    <if test=" entity.procedures != null and entity.procedures != ''">
+			    and procedures =  #{entity.procedures}
 		    </if>
 		    <if test=" entity.processControl != null">
 			    and process_control =  #{entity.processControl} 
@@ -200,6 +196,7 @@
     <select id="getPageCount" resultType="int">
         select count(1) from d3_pay
         <include refid="filterCondition"></include>
+
     </select>
 
     <!-- 分页查询 三维交底 对象列表  -->
@@ -214,7 +211,7 @@
     </select>
     
     <!-- 根据id 查询 三维交底 -->
-	<select id="getD3PayById" parameterType="Long" resultMap="d3PayMap" >
+	<select id="getD3PayById" parameterType="String" resultMap="d3PayMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

@@ -42,6 +42,7 @@ public class ProjectSurveyServiceImpl implements ProjectSurveyService {
         if(entity != null){
         OrgInfo orgInfo = new OrgInfo();
         orgInfo.setProjectId(entity.getProjectId());
+        orgInfo.setOrgId(entity.getProjectId());
         orgInfo.setLevel(Long.valueOf(0));
         orgInfo.setParentId("0");
         orgInfo.setIsEnd(Long.valueOf(2));

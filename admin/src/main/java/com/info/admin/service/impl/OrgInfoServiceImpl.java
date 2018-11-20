@@ -34,7 +34,6 @@ public class OrgInfoServiceImpl implements OrgInfoService {
      */
     @Override
     public int insert(OrgInfo entity){
-        entity.setOrgId(com.info.admin.utils.UUIDUtils.getUUid());
         return dao.insert(entity);
     }
 

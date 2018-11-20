@@ -4,10 +4,13 @@ import com.info.admin.dao.StaffInfoDao;
 import com.info.admin.entity.StaffInfo;
 import com.info.admin.service.StaffInfoService;
 import com.info.admin.utils.PageUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author ysh
@@ -114,6 +117,24 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 	 public StaffInfo getStaffInfoById(String staffId) {
 		 return dao.getStaffInfoById(staffId);
 	 }
+
+    /**
+     * 返回树形结构json数据
+     * @param list 数据，因读大于写
+     * @return JSONArray
+     */
+    @Override
+    public JSONArray getTreeJson(CopyOnWriteArrayList<StaffInfo> list) {
+        JSONArray all = new JSONArray();
+        for (StaffInfo staffInfo : list){
+            JSONObject main = new JSONObject();
+            main.put("id",staffInfo.getStaffId());
+            main.put("text",staffInfo.getName());
+            main.put("pId",staffInfo.getOrgId());
+            all.add(main);
+        }
+        return all;
+    }
 }
 
 	

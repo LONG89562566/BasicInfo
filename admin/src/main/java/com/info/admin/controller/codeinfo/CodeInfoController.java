@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.CodeInfoService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,7 @@ public class CodeInfoController extends BaseController{
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("codeInfo", entity);
@@ -69,6 +71,7 @@ public class CodeInfoController extends BaseController{
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("codeInfo", entity);
@@ -85,7 +88,7 @@ public class CodeInfoController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String codeId,Model model){
         try{
-            if(null != codeId){
+            if(StringUtils.isNotEmpty(codeId)){
                 //根据id查询系统用户
                 CodeInfo codeInfo = service.getCodeInfoById(codeId);
                 model.addAttribute("codeInfo", codeInfo);
@@ -118,9 +121,10 @@ public class CodeInfoController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getCodeId()) {
+            if (StringUtils.isNotEmpty(entity.getCodeId())) {
                 result = service.update(entity);
             } else {
+                entity.setCreateUser(this.getLoginUserId(request));
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -195,6 +199,7 @@ public class CodeInfoController extends BaseController{
     public JsonResult pageQuery(HttpServletRequest request,CodeInfo entity) {
         logger.info("[CodeInfoController][pageQuery] 查询CodeInfo对象:");
         try {
+            entity.setDeleteFlag(0L);
             // 获取分页当前的页码
             int pageNum = this.getPageNum(request);
             // 获取分页的大小

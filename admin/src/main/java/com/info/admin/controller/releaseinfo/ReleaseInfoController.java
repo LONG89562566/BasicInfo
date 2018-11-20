@@ -68,7 +68,7 @@ public class ReleaseInfoController extends BaseController{
     @RequiresPermissions("releaseInfoUser:query")
     public String getReleaseInfoListUser(HttpServletRequest request, @ModelAttribute ReleaseInfo entity, Model model) {
         entity.setDeleteFlag(0L);
-        entity.setReceiveUser(String.valueOf(getLoginUserId(request)));
+        entity.setReceiveUser(getStaffId(request));
         logger.info("[ReleaseInfoController][getReleaseInfoListUser] 查询信息发布列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
@@ -136,6 +136,7 @@ public class ReleaseInfoController extends BaseController{
     @RequiresPermissions("releaseInfoUser:query")
     public String getReleaseInfoListUserDesktop(HttpServletRequest request, @ModelAttribute ReleaseInfo entity, Model model) {
         entity.setDeleteFlag(0L);
+        entity.setReceiveUser(getStaffId(request));
         logger.info("[ReleaseInfoController][getReleaseInfoListUserDesktop] 我的桌面查询信息发布列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
@@ -183,6 +184,9 @@ public class ReleaseInfoController extends BaseController{
                 //根据id查询系统用户
                 ReleaseInfo releaseInfo = service.getReleaseInfoById(releaseId);
                 model.addAttribute("releaseInfo", releaseInfo);
+            }else {
+                model.addAttribute("userName",getLoginUser(request).getName());
+                model.addAttribute("userId",getLoginUser(request).getId());
             }
             model.addAttribute("releaseId", releaseId);
             return "releaseinfo/addReleaseInfo";
@@ -379,7 +383,7 @@ public class ReleaseInfoController extends BaseController{
             int pageNum = this.getPageNum(request);
             // 获取分页的大小
             int pageSize = this.getPageSize(request);
-
+            entity.setReceiveUser(getStaffId(request));
             PageUtil paginator = service.pageQueryUserId(entity , pageNum, pageSize);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
         } catch (Exception e) {

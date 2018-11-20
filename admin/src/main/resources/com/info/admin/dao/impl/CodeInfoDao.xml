@@ -11,9 +11,7 @@
 			<if test=" codeId != null">
 				code_id,
 			</if>
-			<if test=" createTime != null">
 				create_time,
-			</if>
 			<if test=" createUser != null">
 				create_user,
 			</if>
@@ -35,15 +33,15 @@
 			<if test=" projectId != null">
 				project_id,
 			</if>
-
+			<if test=" code != null">
+				code,
+			</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="codeId != null ">
 		        #{codeId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
+				now(),
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -65,7 +63,9 @@
 			<if test="projectId != null ">
 		        #{projectId},
 		    </if>
-
+			<if test=" code != null">
+				#{code},
+			</if>
         </trim>
 	</insert>
 
@@ -98,6 +98,9 @@
 				<if test=" projectId != null">
 					project_id = #{projectId},
 				</if>
+				<if test=" code != null and code!=''">
+					code = #{code},
+				</if>
 
             </trim>
         </set>
@@ -123,7 +126,7 @@
 		<result column="structure_name" property="structureName" />
 		<result column="structure_type" property="structureType" />
 		<result column="project_id" property="projectId" />
-
+		<result column="code" property="code" />
     </resultMap>
 
     <!-- 分页条件 -->
@@ -147,16 +150,18 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.structureName != null">
+		    <if test=" entity.structureName != null  and entity.structureName != ''">
 			    and structure_name =  #{entity.structureName} 
 		    </if>
-		    <if test=" entity.structureType != null">
+		    <if test=" entity.structureType != null and entity.structureType != ''">
 			    and structure_type =  #{entity.structureType} 
 		    </if>
-		    <if test=" entity.projectId != null">
+		    <if test=" entity.projectId != null and entity.projectId != ''">
 			    and project_id =  #{entity.projectId} 
 		    </if>
-
+			<if test=" entity.code != null and entity.code != ''">
+				and code =  #{entity.code}
+			</if>
         </trim>
     </sql>
     
@@ -188,7 +193,7 @@
     </select>
     
     <!-- 根据id 查询 二维码信息 -->
-	<select id="getCodeInfoById" parameterType="Long" resultMap="codeInfoMap" >
+	<select id="getCodeInfoById" parameterType="String" resultMap="codeInfoMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

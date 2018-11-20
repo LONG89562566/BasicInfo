@@ -282,7 +282,7 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.lcName != null">
+		    <if test=" entity.lcName != null and entity.lcName != ''">
 			    and lc_name =  #{entity.lcName} 
 		    </if>
 		    <if test=" entity.lcAddr != null">

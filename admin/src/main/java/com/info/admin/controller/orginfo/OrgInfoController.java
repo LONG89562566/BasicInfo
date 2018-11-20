@@ -127,6 +127,7 @@ public class OrgInfoController extends BaseController{
             if (StringUtils.isNotEmpty(entity.getOrgId())) {
                 result = service.update(entity);
             } else {
+                entity.setOrgId(com.info.admin.utils.UUIDUtils.getUUid());
                 result = service.insert(entity);
             }
             if (result > 0) {
