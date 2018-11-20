@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.ProportionsDetailetailService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +86,7 @@ public class ProportionsDetailetailController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String detailId,Model model){
         try{
-            if(null != detailId){
+            if(null != detailId && StringUtils.isNotBlank(detailId)){
                 //根据id查询系统用户
                 ProportionsDetailetail proportionsDetailetail = service.getProportionsDetailetailById(detailId);
                 model.addAttribute("proportionsDetailetail", proportionsDetailetail);
@@ -118,7 +119,7 @@ public class ProportionsDetailetailController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getDetailId()) {
+            if (null != entity.getDetailId() && StringUtils.isNotBlank(entity.getDetailId())) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);

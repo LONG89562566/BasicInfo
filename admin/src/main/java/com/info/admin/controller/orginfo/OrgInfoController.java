@@ -9,6 +9,7 @@ import com.info.admin.service.OrgInfoService;
 import com.info.admin.utils.PageUtil;
 import com.info.admin.utils.TreeUtils;
 import com.info.admin.vo.OrgInfoVo;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,7 +124,7 @@ public class OrgInfoController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getOrgId()) {
+            if (StringUtils.isNotEmpty(entity.getOrgId())) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);

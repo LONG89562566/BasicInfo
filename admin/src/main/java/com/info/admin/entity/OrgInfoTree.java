@@ -23,6 +23,11 @@ public class OrgInfoTree implements Serializable {
     private String orgCode;
     /*****项目编号*****/
     private String projectId;
+    /*****排序*****/
+    private Long seq;
+    /*****是否末级*****/
+    private Long isEnd;
+
 
     public Date getCreateTime() {
         return createTime;
@@ -95,5 +100,21 @@ public class OrgInfoTree implements Serializable {
 
     public void setOrgId(String orgId) {
         this.orgId = orgId;
+    }
+
+    public Long getSeq() {
+        return seq;
+    }
+
+    public void setSeq(Long seq) {
+        this.seq = seq;
+    }
+
+    public Long getIsEnd() {
+        return isEnd;
+    }
+
+    public void setIsEnd(Long isEnd) {
+        this.isEnd = isEnd;
     }
 }

@@ -11,7 +11,7 @@
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="materialId" name="materialId" value="${material.materialId}"/>
  			<input  type="hidden" id="projectId" name="projectId" value="${projectId}"/>
-     		<div class="layui-form-item" >
+
 
 			<div class='layui-form-item'>
      			<div class="layui-inline">
@@ -122,13 +122,8 @@
 		        		<span style="color: red" id="s-testState"></span>
 		     		</div>
      			</div>
-	   </div>
+	   		</div>
 
-	 		</div>
-	 		<div class="layui-input-block" style="margin-top:30px;margin-left:324px;">
-	 			<input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
-       			<button class="layui-btn" name="cancleSubmit" >取消</button>
-     		</div>
   		</form>
 	</body>
 
@@ -148,28 +143,28 @@
 			  });		  
 
 		});
-	
-	function saveData() {
-	    var materialId = $("#materialId").val();
-	    var createTime = $("#createTime").val();
-	    var createUser = $("#createUser").val();
-	    var deleteFlag = $("#deleteFlag").val();
-	    var updateTime = $("#updateTime").val();
-	    var seq = $("#seq").val();
-	    var projectId = $("#projectId").val();
-	    var materialName = $("#materialName").val();
-	    var model = $("#model").val();
-	    var unit = $("#unit").val();
-	    var entryNum = $("#entryNum").val();
-	    var manufactrer = $("#manufactrer").val();
-	    var supplyer = $("#supplyer").val();
-	    var certificateQuality = $("#certificateQuality").val();
-	    var inspection = $("#inspection").val();
-	    var usePart = $("#usePart").val();
-	    var storage = $("#storage").val();
-	    var residualNum = $("#residualNum").val();
-	    var testReport = $("#testReport").val();
-	    var testState = $("#testState").val();
+
+    var getData = function () {
+        var materialId = $("#materialId").val();
+        var createTime = $("#createTime").val();
+        var createUser = $("#createUser").val();
+        var deleteFlag = $("#deleteFlag").val();
+        var updateTime = $("#updateTime").val();
+        var seq = $("#seq").val();
+        var projectId = $("#projectId").val();
+        var materialName = $("#materialName").val();
+        var model = $("#model").val();
+        var unit = $("#unit").val();
+        var entryNum = $("#entryNum").val();
+        var manufactrer = $("#manufactrer").val();
+        var supplyer = $("#supplyer").val();
+        var certificateQuality = $("#certificateQuality").val();
+        var inspection = $("#inspection").val();
+        var usePart = $("#usePart").val();
+        var storage = $("#storage").val();
+        var residualNum = $("#residualNum").val();
+        var testReport = $("#testReport").val();
+        var testState = $("#testState").val();
 
         var requestData={
             "materialId":materialId,
@@ -193,8 +188,8 @@
             "testReport":testReport,
             "testState":testState
         };
-        updateAndAdd(requestData);
-    }
+    };
+
 	
 </script>
 </html>				 

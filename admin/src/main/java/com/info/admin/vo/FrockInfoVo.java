@@ -27,6 +27,8 @@ public class FrockInfoVo implements Serializable {
 	 private String type;
 	 /*****管理编号*****/ 
 	 private String mId;
+	 /*****管理编号*****/
+	 private String mid;
 	 /*****名称*****/ 
 	 private String name;
 	 /*****型号规格*****/ 
@@ -115,7 +117,23 @@ public class FrockInfoVo implements Serializable {
 		 this.mId = mId;
 	 }
 
-	 public String getName() {
+	public String getmId() {
+		return mId;
+	}
+
+	public void setmId(String mId) {
+		this.mId = mId;
+	}
+
+	public String getMid() {
+		return mid;
+	}
+
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
+
+	public String getName() {
 		 return name;
 	 }
 

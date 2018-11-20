@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.FrockInfoService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,7 @@ public class FrockInfoController extends BaseController{
     @RequiresPermissions("frockInfo:query")
     public String getFrockInfoList(HttpServletRequest request, @ModelAttribute FrockInfo entity, Model model) {
         logger.info("[FrockInfoController][getFrockInfoList] 查询设备信息列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -65,6 +67,7 @@ public class FrockInfoController extends BaseController{
     @RequiresPermissions("frockInfo:query")
     public String getFrockInfoListDesktop(HttpServletRequest request, @ModelAttribute FrockInfo entity, Model model) {
         logger.info("[FrockInfoController][getFrockInfoListDesktop] 我的桌面查询设备信息列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -85,7 +88,7 @@ public class FrockInfoController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String supplierId,Model model){
         try{
-            if(null != supplierId){
+            if(null != supplierId && StringUtils.isNotBlank(supplierId)){
                 //根据id查询系统用户
                 FrockInfo frockInfo = service.getFrockInfoById(supplierId);
                 model.addAttribute("frockInfo", frockInfo);
@@ -118,9 +121,11 @@ public class FrockInfoController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getSupplierId()) {
+            if (null != entity.getSupplierId() && StringUtils.isNotBlank(entity.getSupplierId())) {
                 result = service.update(entity);
             } else {
+                entity.setDeleteFlag(0L);
+                entity.setCreateUser(getLoginUserId(request));
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -147,6 +152,7 @@ public class FrockInfoController extends BaseController{
     public JsonResult query(FrockInfo entity) {
         logger.info("[FrockInfoController][query] 查询FrockInfo对象:");
         try {
+            entity.setDeleteFlag(0L);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.query(entity));
         } catch (Exception e) {
             logger.error("[FrockInfoController][query] exception", e);
@@ -195,6 +201,7 @@ public class FrockInfoController extends BaseController{
     public JsonResult pageQuery(HttpServletRequest request,FrockInfo entity) {
         logger.info("[FrockInfoController][pageQuery] 查询FrockInfo对象:");
         try {
+            entity.setDeleteFlag(0L);
             // 获取分页当前的页码
             int pageNum = this.getPageNum(request);
             // 获取分页的大小

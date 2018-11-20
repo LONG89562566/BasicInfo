@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author ysh
- * @date 2018-11-15 22:58:50
+ * @date 2018-11-20 17:37:49
  * @describe 设备信息 ServiceImpl
  */
 @Service
@@ -24,7 +24,7 @@ public class EquipmentInfoServiceImpl implements EquipmentInfoService {
      *添加EquipmentInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-15 22:58:50 
+     *@date  2018-11-20 17:37:49 
      *@updater or other
      *@return int
      */
@@ -38,7 +38,7 @@ public class EquipmentInfoServiceImpl implements EquipmentInfoService {
      *修改EquipmentInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-15 22:58:50 
+     *@date  2018-11-20 17:37:49 
      *@updater or other
      *@return int
      */
@@ -53,7 +53,7 @@ public class EquipmentInfoServiceImpl implements EquipmentInfoService {
      *查询EquipmentInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-15 22:58:50 
+     *@date  2018-11-20 17:37:49 
      *@updater or other
      *@return List<EquipmentInfo>
      */
@@ -66,13 +66,13 @@ public class EquipmentInfoServiceImpl implements EquipmentInfoService {
      *删除EquipmentInfo对象
      *@param  entity 明细对象
      *@author  ysh
-     *@date  2018-11-15 22:58:50 
+     *@date  2018-11-20 17:37:49 
      *@updater or other
      *@return int
      */
     @Override
     public int delete(EquipmentInfo entity){
-      entity.setDeleteFlag(1L);
+       entity.setDeleteFlag(1L);
          return dao.update(entity);
 
     }
@@ -83,7 +83,7 @@ public class EquipmentInfoServiceImpl implements EquipmentInfoService {
      * @param pageNum	页数
      * @param pageSize	大小
      * @author  ysh
-     * @date  2018-11-15 22:58:50 
+     * @date  2018-11-20 17:37:49 
      * @updater or other
      * @return   PageUtil
      */
@@ -95,18 +95,14 @@ public class EquipmentInfoServiceImpl implements EquipmentInfoService {
 
         List<EquipmentInfo> result = dao.pageQuery(entity, offset, pageSize);
 
-        PageUtil paginator = new PageUtil(pageSize, size, pageNum);
-
-        paginator.setObject(result);
-
-        return paginator;
+        return new PageUtil(pageSize, size, pageNum, result);
     }
     
     /**
 	 * 根据 id获取 设备信息
 	 *@author   ysh
 	 *@param supplierId 主键id
-	 *@date  2018-11-15 22:58:50
+	 *@date  2018-11-20 17:37:49
 	 *@updater  or other
 	 *@return   EquipmentInfo
 	 */ 
