@@ -39,7 +39,7 @@
 	  <div class="content-wrapper">
 	    <!-- Content Header (Page header) --> 
 	    <section class="content-header">
-	      <h1>材料管理</h1>
+	      <h1>创建材料</h1>
 	    </section>
 	    <!-- Main content -->
 	    <shiro:hasPermission name="material:query">

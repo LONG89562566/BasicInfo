@@ -49,6 +49,7 @@ public class SupplierController extends BaseController{
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("supplier", entity);
@@ -70,6 +71,7 @@ public class SupplierController extends BaseController{
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("supplier", entity);
@@ -86,7 +88,7 @@ public class SupplierController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String supplierId,String projectId,Model model){
         try{
-            if(null != supplierId){
+            if(StringUtils.isNotEmpty(supplierId)){
                 //根据id查询系统用户
                 Supplier supplier = service.getSupplierById(supplierId);
                 model.addAttribute("supplier", supplier);
@@ -123,6 +125,8 @@ public class SupplierController extends BaseController{
             if (StringUtils.isNotEmpty(entity.getSupplierId()) ) {
                 result = service.update(entity);
             } else {
+                entity.setCreateUser(this.getLoginUserId(request));
+                entity.setDeleteFlag(0L);
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -197,6 +201,7 @@ public class SupplierController extends BaseController{
     public JsonResult pageQuery(HttpServletRequest request,Supplier entity) {
         logger.info("[SupplierController][pageQuery] 查询Supplier对象:");
         try {
+            entity.setDeleteFlag(0L);
             // 获取分页当前的页码
             int pageNum = this.getPageNum(request);
             // 获取分页的大小

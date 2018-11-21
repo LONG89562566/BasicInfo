@@ -201,31 +201,31 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.projectId != null">
+		    <if test=" entity.projectId != null and entity.projectId != ''">
 			    and project_id =  #{entity.projectId} 
 		    </if>
-		    <if test=" entity.supperName != null">
+		    <if test=" entity.supperName != null and entity.supperName != ''">
 			    and supper_name =  #{entity.supperName} 
 		    </if>
-		    <if test=" entity.representative != null">
+		    <if test=" entity.representative != null and entity.representative != ''">
 			    and representative =  #{entity.representative} 
 		    </if>
-		    <if test=" entity.address != null">
+		    <if test=" entity.address != null and entity.address != ''">
 			    and address =  #{entity.address} 
 		    </if>
 		    <if test=" entity.nature != null">
 			    and nature =  #{entity.nature} 
 		    </if>
-		    <if test=" entity.license != null">
+		    <if test=" entity.license != null and entity.license != ''">
 			    and license =  #{entity.license} 
 		    </if>
-		    <if test=" entity.registration != null">
+		    <if test=" entity.registration != null  and entity.registration != ''">
 			    and registration =  #{entity.registration} 
 		    </if>
-		    <if test=" entity.contacts != null">
+		    <if test=" entity.contacts != null  and entity.contacts != ''">
 			    and contacts =  #{entity.contacts} 
 		    </if>
-		    <if test=" entity.phone != null">
+		    <if test=" entity.phone != null  and entity.phone != ''">
 			    and phone =  #{entity.phone} 
 		    </if>
 				and delete_flag =  0

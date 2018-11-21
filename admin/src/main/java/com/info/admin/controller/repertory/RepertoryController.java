@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.RepertoryService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,7 @@ public class RepertoryController extends BaseController{
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("repertory", entity);
@@ -69,6 +71,7 @@ public class RepertoryController extends BaseController{
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("repertory", entity);
@@ -83,17 +86,17 @@ public class RepertoryController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String supplierId,Model model){
+    public String addOrEdit(HttpServletRequest request,String repertoryId,Model model){
         try{
-            if(null != supplierId){
+            if(StringUtils.isNotEmpty(repertoryId)){
                 //根据id查询系统用户
-                Repertory repertory = service.getRepertoryById(supplierId);
+                Repertory repertory = service.getRepertoryById(repertoryId);
                 model.addAttribute("repertory", repertory);
             }
-            model.addAttribute("supplierId", supplierId);
+            model.addAttribute("repertoryId", repertoryId);
             return "repertory/addRepertory";
         }catch(Exception e){
-            logger.error("[RepertoryController][addOrEdit]: supplierId="+supplierId, e);
+            logger.error("[RepertoryController][addOrEdit]: repertoryId="+repertoryId, e);
             return "500";
         }
     }
@@ -118,9 +121,11 @@ public class RepertoryController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getSupplierId()) {
+            if (StringUtils.isNotEmpty(entity.getRepertoryId())) {
                 result = service.update(entity);
             } else {
+                entity.setCreateUser(this.getLoginUserId(request));
+                entity.setDeleteFlag(0L);
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -195,6 +200,7 @@ public class RepertoryController extends BaseController{
     public JsonResult pageQuery(HttpServletRequest request,Repertory entity) {
         logger.info("[RepertoryController][pageQuery] 查询Repertory对象:");
         try {
+            entity.setDeleteFlag(0L);
             // 获取分页当前的页码
             int pageNum = this.getPageNum(request);
             // 获取分页的大小
