@@ -12,15 +12,7 @@
  			<input  type="hidden" id="payId" name="payId" value="${d3Pay.payId}"/>
 			<input  type="hidden" id="projectId" name="projectId" value="${d3Pay.projectId}"/>
 
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">排序号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${d3Pay.seq }" class="layui-input"/>
-		        		<span style="color: red" id="s-seq"></span>
-		     		</div>
-     			</div>
-			</div>
+
 			<div class='layui-form-item'>
 		        <label class="layui-form-label">工序</label>
 				<div class="layui-input-block">
@@ -49,6 +41,15 @@
 					<span style="color: red" id="s-qualityControl"></span>
 				</div>
 	 		</div>
+			<div class='layui-form-item'>
+				<div class="layui-inline">
+					<label class="layui-form-label">排序号</label>
+					<div class="layui-input-inline">
+						<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${d3Pay.seq }" class="layui-input"/>
+						<span style="color: red" id="s-seq"></span>
+					</div>
+				</div>
+			</div>
 			<div class='layui-form-item'>
 				<jsp:include page="/WEB-INF/jsp/decorators/imageFile.jsp">
 					<jsp:param name="docUnid" value="${projectSurvey.projectId}" />
