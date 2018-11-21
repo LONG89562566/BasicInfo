@@ -46,6 +46,7 @@ public class MaterialController extends BaseController{
     @RequiresPermissions("material:query")
     public String getMaterialList(HttpServletRequest request, @ModelAttribute Material entity, Model model) {
         logger.info("[MaterialController][getMaterialList] 查询材料列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -67,6 +68,7 @@ public class MaterialController extends BaseController{
     @RequiresPermissions("material:query")
     public String getMaterialListDesktop(HttpServletRequest request, @ModelAttribute Material entity, Model model) {
         logger.info("[MaterialController][getMaterialListDesktop] 我的桌面查询材料列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -124,6 +126,8 @@ public class MaterialController extends BaseController{
             if ( StringUtils.isNotEmpty(entity.getMaterialId())) {
                 result = service.update(entity);
             } else {
+                entity.setDeleteFlag(0L);
+                entity.setCreateUser(getLoginUserId(request));
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -150,6 +154,7 @@ public class MaterialController extends BaseController{
     public JsonResult query(Material entity) {
         logger.info("[MaterialController][query] 查询Material对象:");
         try {
+            entity.setDeleteFlag(0L);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.query(entity));
         } catch (Exception e) {
             logger.error("[MaterialController][query] exception", e);
@@ -198,6 +203,7 @@ public class MaterialController extends BaseController{
     public JsonResult pageQuery(HttpServletRequest request,Material entity) {
         logger.info("[MaterialController][pageQuery] 查询Material对象:");
         try {
+            entity.setDeleteFlag(0L);
             // 获取分页当前的页码
             int pageNum = this.getPageNum(request);
             // 获取分页的大小
