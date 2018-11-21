@@ -190,10 +190,10 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.title != null">
+		    <if test=" entity.title != null and entity.title != '' ">
 			    and title =  #{entity.title} 
 		    </if>
-		    <if test=" entity.content != null">
+		    <if test=" entity.content != null and entity.content != '' ">
 			    and content =  #{entity.content} 
 		    </if>
 		    <if test=" entity.releaseUser != null">
@@ -238,10 +238,10 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq}
 		    </if>
-		    <if test=" entity.title != null">
+		    <if test=" entity.title != null and entity.title != ''">
 			    and title =  #{entity.title}
 		    </if>
-		    <if test=" entity.content != null">
+		    <if test=" entity.content != null and entity.content != ''">
 			    and content =  #{entity.content}
 		    </if>
 		    <if test=" entity.releaseUser != null">

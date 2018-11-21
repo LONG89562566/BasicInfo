@@ -111,7 +111,7 @@
 			                    <th field="structureName"  >结构名称</th>
 			                    <th field="structureType"  >结构类型</th>
                                 <th field="code"  >码值</th>
-                                <th field="code"  >码</th>
+                                <th field="codeUrl"  type="img" imgWidth = '60px' imgHeight="60px">二维码</th>
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
@@ -123,7 +123,7 @@
 					            <td>${r.structureName}</td>
 					            <td>${r.structureType}</td>
                                 <td>${r.code}</td>
-                                <td>${r.code}</td>
+                                <td><div style='width:60px ;height: 60px;'><img onclick='_showImgUtil(this)' width='100%' src='${r.codeUrl }'/></div></td>
 						        <td>
 						         <div class="site-demo-button" >
 								   <button id="updateCodeInfo" data-method="setAddOrEdit" projectId="${r.projectId}" value="${r.codeId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
@@ -269,7 +269,7 @@
 		     layer.open({
 		         type: 2, 
 		         title: '新增/修改 二维码信息',
-		         area: ['100%', '100%'],
+		         area: ['99%', '99%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
 		         content: '<%=request.getContextPath()%>/admin/codeInfo/addOrEdit?codeId='+codeId,
@@ -305,8 +305,8 @@
         //删除
         var delData = function(id){
             //删除的url
-            requestUrl= "<%=request.getContextPath()%>/admin/d3Pay/delete";
-            text = "确定要删除此条数据吗？";
+            requestUrl= "<%=request.getContextPath()%>/admin/codeInfo/delete";
+            text = "确定要删除此条数据吗 ？";
             userOffSet(2,requestUrl, id,text);
         };
 		var userOffSet = function (type ,requestUrl,id,text) {
@@ -323,7 +323,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"id":id},
+						data: {"codeId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){

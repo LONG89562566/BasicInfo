@@ -27,16 +27,12 @@
 				position:relative;
 				left:800px;
 			}
-			table th{
-				background:#ffffff;
-			}
-			table tr:nth-child(odd){
-				background:#F0F0F0;
-			}
 			.col-sm-2 {
 				width: 10%;
 			}
 		</style>
+		<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
 	  <!-- 仓库列表start -->
@@ -49,6 +45,17 @@
 	    <shiro:hasPermission name="repertory:query">
 		    <section class="content">
 		      <div class="row">
+                  <div style="float: left;width: 18%;height: 500px;background-color: white;margin-right: 1%">
+                      <table id="projectSurveyTree" title="所有梁场" style="width:100%;height:500px">
+                          <thead>
+                          <tr>
+                              <th data-options="field:'lcName'" width="220px">梁场名称</th>
+                          </tr>
+                          </thead>
+                      </table>
+                  </div>
+                  <div class="box" style="float: left;width: 80%;height: auto; background-color: white;">
+                      <div class="row">
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
@@ -58,10 +65,18 @@
 			           <!-- form start -->
 			           <form  id="form_submit" class="form-horizontal" action="/admin/repertory/list" method="post">
 			           	  <input type="hidden" name="pageNum" id="pageNum" value="${paginator.currentPage}">
-	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
+	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">
+                          <input type="hidden" name="projectId" id="projectId" value="">
 			              <div class="box-body">
 			                 <div class="form-group">
-
+                                 <label for="materialName" class="col-sm-1 control-label">材料名称:</label>
+                                 <div class="col-sm-3" style="width: 200px">
+                                     <input type="text" name="materialName" id="materialName" value="" class="form-control input-small" placeholder="请输入材料名称！">
+                                 </div>
+                                 <label for="model" class="col-sm-1 control-label">规格型号:</label>
+                                 <div class="col-sm-3" style="width: 200px">
+                                     <input type="text" name="model" id="model" value="" class="form-control input-small" placeholder="请输入规格型号！">
+                                 </div>
 			                 </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
@@ -80,40 +95,29 @@
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
+				                <th field="sys_xh">序号</th>
 			                    <th field="seq"  >排序号</th>
-			                    <th field="projectId"  >项目编号</th>
 			                    <th field="materialName"  >材料名称</th>
 			                    <th field="model"  >规格型号</th>
 			                    <th field="unit"  >计量单位</th>
 			                    <th field="num"  >库存数量</th>
-
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
 					            <td>${r.seq}</td>
-					            <td>${r.projectId}</td>
 					            <td>${r.materialName}</td>
 					            <td>${r.model}</td>
 					            <td>${r.unit}</td>
 					            <td>${r.num}</td>
-
 						        <td>
 						         <div class="site-demo-button" >
-								   <button id="updateRepertory" data-method="setAddOrEdit" value="${r.supplierId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
-								 </div>
+								   <button id="updateRepertory" data-method="setAddOrEdit" projectId="${r.projectId}" value="${r.repertoryId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+                                   <button id="delRepertory" data-method="delIfon" value="${r.repertoryId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
+                                 </div>
 						       </td>
 				             </tr>
 						   </c:forEach>
@@ -129,6 +133,8 @@
 		            </div>
 		          </div>
 		        </div>
+                      </div>
+                  </div>
 		      </div>
 		    </section>
 	    </shiro:hasPermission>
@@ -145,12 +151,13 @@
 	    //数据展示id
 	    var showFieldData = "show-data";
 	    //主键
-	    var primarykey = "supplierId";
+	    var primarykey = "repertoryId";
 	    //分页显示标签id
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal","projectId");
+        tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-warm");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
@@ -170,6 +177,37 @@
 
 	</script>
 	<script>
+        //加载菜单
+        $('#projectSurveyTree').treegrid({
+            url:'<%=request.getContextPath()%>/admin/projectSurvey/projectSurveyTree',
+            method:'get',          //请求方式
+            idField:'projectId',           //定义标识树节点的键名字段
+            treeField:'lcName',       //定义树节点的字段
+            fit:true,               //网格自动撑满
+            fitColumns:true,
+            onLoadSuccess:function(node, data){
+                $(this).treegrid('collapseAll');
+            },
+            onClickRow:function(row){
+                $('#pageNum').val(1);
+                $("#projectId").val(row.projectId);
+                //点击时初始化数据
+                initPaginator(row.projectId);
+
+
+
+            }
+        });
+        //初始化列表
+        var initPaginator = function (projectId) {
+            if (projectId) {
+                loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
+            } else {
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
+
+        }
 		//新增数据弹窗
 		layui.use('layer', function(){ //独立版的layer无需执行这一句
 			var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
@@ -177,9 +215,16 @@
 			var active = {
 				setAddOrEdit: function(data){
 					//获取userId
-					var id = data.val();
-					setAddOrEdit(id);
+                    var id = data.val();
+                    var projectId = $("#projectId").val();
+                    projectId = projectId?projectId:data.attr("projectId");
+                    setAddOrEdit(id,projectId);
 				},
+                delIfon: function(data){
+                    //获取@primarykey
+                    var id = data.val();
+                    delData(id);
+                },
 				//启用和禁用数据弹窗
 				offset: function(othis){
 					var type = othis.data('type');
@@ -205,7 +250,11 @@
 
 		
 		//新增、编辑打开
-		var setAddOrEdit = function(supplierId){
+		var setAddOrEdit = function(repertoryId,projectId){
+            if(!projectId){
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
@@ -213,13 +262,14 @@
 		         area: ['70%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/repertory/addOrEdit?supplierId='+supplierId,
+		         content: '<%=request.getContextPath()%>/admin/repertory/addOrEdit?repertoryId='+repertoryId,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);
 		        	 var body = layer.getChildFrame('body', index);
 		             var iframeWin = window[layero.find('iframe')[0]['name']]; 
-		             body.find('input[name="supplierId"]').val(supplierId);
+		             body.find('input[name="repertoryId"]').val(repertoryId);
+                     body.find('input[name="projectId"]').val(projectId);
 		             //弹窗表单的取消操作时关闭弹窗
 		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
 		            	 layer.closeAll();
@@ -242,7 +292,13 @@
 			text = "确定要启用此条数据吗？";
 			userOffSet(0,requestUrl, id,text);
 		};
-
+        //删除
+        var delData = function(id){
+            //删除的url
+            requestUrl= "<%=request.getContextPath()%>/admin/repertory/delete";
+            text = "确定要删除此条数据吗？";
+            userOffSet(2,requestUrl, id,text);
+        };
 		var userOffSet = function (type ,requestUrl,id,text) {
 			layer.open({
 				type: 1,
@@ -257,7 +313,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"id":id},
+						data: {"repertoryId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){

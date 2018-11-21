@@ -36,6 +36,9 @@
 			<if test=" code != null">
 				code,
 			</if>
+			<if test=" codeUrl != null">
+				code_url,
+			</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="codeId != null ">
@@ -65,6 +68,9 @@
 		    </if>
 			<if test=" code != null">
 				#{code},
+			</if>
+			<if test=" codeUrl != null">
+				#{codeUrl},
 			</if>
         </trim>
 	</insert>
@@ -101,6 +107,9 @@
 				<if test=" code != null and code!=''">
 					code = #{code},
 				</if>
+				<if test=" codeUrl != null and codeUrl!=''">
+					codeUrl = #{codeUrl},
+				</if>
 
             </trim>
         </set>
@@ -127,6 +136,7 @@
 		<result column="structure_type" property="structureType" />
 		<result column="project_id" property="projectId" />
 		<result column="code" property="code" />
+		<result column="code_url" property="codeUrl" />
     </resultMap>
 
     <!-- 分页条件 -->

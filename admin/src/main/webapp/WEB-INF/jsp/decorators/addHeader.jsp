@@ -38,6 +38,10 @@
 <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 
+<script type="text/javascript" src="/js/imagUtil.js"></script>
+<script type="text/javascript" src="/js/fromVal.js"></script>
+<script type="text/javascript" src="/js/date-format.js"></script>
+
 <style type="text/css">
     .layui-input-inline{
         margin-left:30px;
@@ -55,18 +59,6 @@
             $("img").show();
         }
     });
-
-    function _showImage(res , imagLable){
-        var code = res.code;
-        if(code == "200"){
-            layer.msg("上传图片成功", {icon: 1,time: 1200});
-            var imgUrl = res.object[0];
-            var showImgUrl = res.object[0];
-            //将上传图片显示
-            $("#"+imagLable).attr("src",showImgUrl);
-            $("#"+imagLable).show();
-        }
-    }
 
     function updateAndAdd(requestData) {
         $.ajax({

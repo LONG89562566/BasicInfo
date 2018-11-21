@@ -80,13 +80,11 @@
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
+				                <th field="sys_xh">序号</th>
 			                    <th field="createUser"  >创建人编号</th>
 			                    <th field="userId"  >用户主键编号</th>
 			                    <th field="menuId"  >菜单编号</th>
 			                    <th field="customName"  >自定义名称</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
 			                    <th field="seq"  >排序号</th>
 
 				                <th field="sys_opt">操作</th>
@@ -95,13 +93,11 @@
 			               <tbody id="show-data">
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
 					            <td>${r.createUser}</td>
 					            <td>${r.userId}</td>
 					            <td>${r.menuId}</td>
 					            <td>${r.customName}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					            <td>${r.seq}</td>
 
 						        <td>

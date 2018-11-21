@@ -10,7 +10,6 @@
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="projectId" name="projectId" value="${projectSurvey.projectId}"/>
-     		<div class="layui-form-item" >
 
 			<div class='layui-form-item'>
 				<div class="layui-inline">
@@ -20,16 +19,7 @@
 						<span style="color: red" id="s-lcName"></span>
 					</div>
 				</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">排序号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${projectSurvey.seq }" class="layui-input"/>
-		        		<span style="color: red" id="s-seq"></span>
-		     		</div>
-     			</div>
 
-			</div>
-			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">梁场地址</label>
 		        	<div class="layui-input-inline">
@@ -37,6 +27,56 @@
 		        		<span style="color: red" id="s-lcAddr"></span>
 		     		</div>
      			</div>
+			</div>
+			<div class='layui-form-item'>
+				<div class="layui-inline">
+					<label class="layui-form-label">生产能力</label>
+					<div class="layui-input-inline">
+						<input type="text" id="throughput" name="throughput" placeholder="请输入生产能力"  value="${projectSurvey.throughput }" class="layui-input"/>
+						<span style="color: red" id="s-throughput"></span>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">建设单位</label>
+					<div class="layui-input-inline">
+						<input type="text" id="constructionUnit" name="constructionUnit" placeholder="请输入建设单位"  value="${projectSurvey.constructionUnit }" class="layui-input"/>
+						<span style="color: red" id="s-constructionUnit"></span>
+					</div>
+				</div>
+			</div>
+			<div class='layui-form-item'>
+				<div class="layui-inline">
+					<label class="layui-form-label">承建单位</label>
+					<div class="layui-input-inline">
+						<input type="text" id="bearUnit" name="bearUnit" placeholder="请输入承建单位"  value="${projectSurvey.bearUnit }" class="layui-input"/>
+						<span style="color: red" id="s-bearUnit"></span>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">监理单位</label>
+					<div class="layui-input-inline">
+						<input type="text" id="controlUnit" name="controlUnit" placeholder="请输入监理单位"  value="${projectSurvey.controlUnit }" class="layui-input"/>
+						<span style="color: red" id="s-controlUnit"></span>
+					</div>
+				</div>
+			</div>
+
+			<div class='layui-form-item'>
+				<div class="layui-inline">
+					<label class="layui-form-label">设计单位</label>
+					<div class="layui-input-inline">
+						<input type="text" id="designUnit" name="designUnit" placeholder="请输入设计单位"  value="${projectSurvey.designUnit }" class="layui-input"/>
+						<span style="color: red" id="s-designUnit"></span>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">排序号</label>
+					<div class="layui-input-inline">
+						<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${projectSurvey.seq }" class="layui-input"/>
+						<span style="color: red" id="s-seq"></span>
+					</div>
+				</div>
+
 			</div>
 			<div class='layui-form-item'>
 		        <label class="layui-form-label">线路里程</label>
@@ -66,48 +106,17 @@
 					<span style="color: red" id="s-supplyMileage"></span>
 				</div>
 			</div>
+
 			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">生产能力</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="throughput" name="throughput" placeholder="请输入生产能力"  value="${projectSurvey.throughput }" class="layui-input"/>
-		        		<span style="color: red" id="s-throughput"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">建设单位</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="constructionUnit" name="constructionUnit" placeholder="请输入建设单位"  value="${projectSurvey.constructionUnit }" class="layui-input"/>
-		        		<span style="color: red" id="s-constructionUnit"></span>
-		     		</div>
-     			</div>
+				<jsp:include page="/WEB-INF/jsp/decorators/imageFile.jsp">
+					<jsp:param name="docUnid" value="${projectSurvey.projectId}" />
+					<jsp:param name="flowId" value="" />
+					<jsp:param name="type" value=''/>
+					<jsp:param name="imageTitle" value='梁场图片'/>
+					<jsp:param name="imageLable" value='lcImage'/>
+				</jsp:include>
 			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">承建单位</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="bearUnit" name="bearUnit" placeholder="请输入承建单位"  value="${projectSurvey.bearUnit }" class="layui-input"/>
-		        		<span style="color: red" id="s-bearUnit"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">监理单位</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="controlUnit" name="controlUnit" placeholder="请输入监理单位"  value="${projectSurvey.controlUnit }" class="layui-input"/>
-		        		<span style="color: red" id="s-controlUnit"></span>
-		     		</div>
-     			</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">设计单位</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="designUnit" name="designUnit" placeholder="请输入设计单位"  value="${projectSurvey.designUnit }" class="layui-input"/>
-		        		<span style="color: red" id="s-designUnit"></span>
-		     		</div>
-     			</div>
-			</div>
-	 		</div>
+
 	 		<div class="layui-input-block" style="margin-top:30px;margin-left:324px;">
 	 			<input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
        			<button class="layui-btn" name="cancleSubmit" >取消</button>

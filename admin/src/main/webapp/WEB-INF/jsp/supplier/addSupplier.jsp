@@ -46,9 +46,9 @@
 			</div>
 			<div class='layui-form-item'>
      			<div class="layui-inline">
-		        	<label class="layui-form-label">企业性质（全民/集体/三资/个体）</label>
+		        	<label class="layui-form-label">企业性质</label>
 		        	<div class="layui-input-inline">
-		        		<input type="text" id="nature" name="nature" placeholder="请输入企业性质（全民/集体/三资/个体）"  value="${supplier.nature }" class="layui-input"/>
+		        		<input type="text" id="nature" name="nature" placeholder="请输入企业性质"  value="${supplier.nature }" class="layui-input"/>
 		        		<span style="color: red" id="s-nature"></span>
 		     		</div>
      			</div>

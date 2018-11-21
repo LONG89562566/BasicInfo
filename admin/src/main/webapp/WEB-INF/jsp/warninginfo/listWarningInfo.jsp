@@ -61,7 +61,14 @@
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
 			              <div class="box-body">
 			                 <div class="form-group">
-
+								 <label for="title" class="col-sm-2 control-label">标题：</label>
+								 <div class="col-xs-2">
+									 <input type="text" class="form-control" id="title" name="title" value="${warningInfo.title}" placeholder="请输入标题">
+								 </div>
+								 <label for="content" class="col-sm-2 control-label">内容：</label>
+								 <div class="col-xs-2">
+									 <input type="text" class="form-control" id="content" name="content" value="${warningInfo.content}" placeholder="请输入内容"/>
+								 </div>
 			                 </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
@@ -90,8 +97,6 @@
 								  <th field="true_val"  >值</th>
 								  <th field="checkCondition"  >（大/小/等/不大/不小/不等于）</th>
 								  <th field="warn_val"  >预警值</th>
-								  <th field="createTime"  type='date'>创建时间</th>
-								  <th field="updateTime"  type='date'>修改时间</th>
 								  <th field="seq"  >排序号</th>
 				                <th field="sys_opt">操作</th>
 				              </tr>
@@ -109,8 +114,6 @@
 								 <td>${r.true_val}</td>
 								 <td>${r.checkCondition}</td>
 								 <td>${r.warn_val}</td>
-								 <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-								 <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 								 <td>${r.seq}</td>
 								 <td>
 									 <div class="site-demo-button" >

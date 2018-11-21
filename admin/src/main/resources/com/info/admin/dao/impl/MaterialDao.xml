@@ -253,13 +253,13 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.projectId != null and entity.projectId != ''">
+		    <if test=" entity.projectId != null">
 			    and project_id =  #{entity.projectId} 
 		    </if>
-		    <if test=" entity.materialName != null and  entity.materialName != '' ">
+		    <if test=" entity.materialName != null and entity.materialName != ''">
 			    and material_name =  #{entity.materialName}
 		    </if>
-		    <if test=" entity.model != null">
+		    <if test=" entity.model != null and entity.model != ''">
 			    and model =  #{entity.model} 
 		    </if>
 		    <if test=" entity.unit != null">
@@ -386,4 +386,4 @@
 		<include refid="filterConditionTree"></include>
 	</select>
 
-</mapper>	
+</mapper>

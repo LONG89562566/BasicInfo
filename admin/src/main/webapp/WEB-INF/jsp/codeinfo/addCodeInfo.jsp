@@ -4,14 +4,13 @@
 <html>
 	<head>
     	<meta charset="utf-8">
-		<title>新增二维码信息</title>
+		<title>新增二维码</title>
 		<%@include file="/WEB-INF/jsp/decorators/addHeader.jsp" %>
 	</head>
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="codeId" name="codeId" value="${codeInfo.codeId}"/>
             <input  type="hidden" id="projectId" name="projectId" value="${codeInfo.projectId}"/>
-     		<div class="layui-form-item" >
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
@@ -36,7 +35,12 @@
 		        		<span style="color: red" id="s-structureType"></span>
 		     		</div>
      			</div>
-	   </div>
+				<div class="layui-inline">
+		        	<label class="layui-form-label">二维码</label>
+		        	<div class="layui-input-inline">
+						<div style='width:60px ;height: 60px;'><img onclick='_showImgUtil(this)' width='100%' src='${codeInfo.codeUrl }'/></div>
+		     		</div>
+     			</div>
 
 	 		</div>
 	 		<div class="layui-input-block" style="margin-top:30px;margin-left:324px;">

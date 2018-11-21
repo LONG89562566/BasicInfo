@@ -179,19 +179,19 @@
 		    <if test=" entity.createUser != null">
 			    and create_user =  #{entity.createUser} 
 		    </if>
-		    <if test=" entity.deleteFlag != null">
+		    <if test=" entity.deleteFlag  != null">
 			    and delete_flag =  #{entity.deleteFlag} 
 		    </if>
-		    <if test="entity.updateTime!=null">
+		    <if test="entity.updateTime != null">
 		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
 		    </if>
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.title != null">
+		    <if test=" entity.title != null and entity.title != ''">
 			    and title =  #{entity.title} 
 		    </if>
-		    <if test=" entity.content != null">
+		    <if test=" entity.content != null and entity.content != '' ">
 			    and content =  #{entity.content} 
 		    </if>
 		    <if test=" entity.releaseUser != null">

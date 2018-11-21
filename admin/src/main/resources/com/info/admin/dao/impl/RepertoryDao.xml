@@ -5,11 +5,11 @@
 
 	<!-- 新增 仓库 对象 -->
 	<insert id="insert" parameterType="com.info.admin.entity.Repertory"
-			useGeneratedKeys="true" keyProperty="supplierId">
+			useGeneratedKeys="true" keyProperty="repertoryId">
 		insert into repertory
         <trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test=" supplierId != null">
-				supplier_id,
+			<if test=" repertoryId != null">
+				repertory_id,
 			</if>
 			<if test=" createTime != null">
 				create_time,
@@ -44,8 +44,8 @@
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="supplierId != null ">
-		        #{supplierId},
+			<if test="repertoryId != null ">
+		        #{repertoryId},
 		    </if>
 			<if test="createTime != null">
 				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
@@ -119,7 +119,7 @@
 
             </trim>
         </set>
-		where supplier_id = #{supplierId}
+		where repertory_id = #{repertoryId}
 	</update>
 
     <!-- 删除 仓库 对象 -->
@@ -130,7 +130,7 @@
     
     <!-- 返回 仓库 对象 -->
     <resultMap type="com.info.admin.entity.Repertory" id="repertoryMap">
-		<result column="supplier_id" property="supplierId" />
+		<result column="repertory_id" property="repertoryId" />
 		<result column="create_time" property="createTime" />
 		<result column="createTime" property="createTimeStr" />
 		<result column="create_user" property="createUser" />
@@ -149,8 +149,8 @@
     <!-- 分页条件 -->
     <sql id="filterCondition">
         <trim prefix="where " prefixOverrides="and " >
-		    <if test=" entity.supplierId != null">
-			    and supplier_id =  #{entity.supplierId} 
+		    <if test=" entity.repertoryId != null">
+			    and repertory_id =  #{entity.repertoryId} 
 		    </if>
 		    <if test="entity.createTime!=null">
 		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
@@ -167,13 +167,13 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.projectId != null">
+		    <if test=" entity.projectId != null and entity.projectId != ''">
 			    and project_id =  #{entity.projectId} 
 		    </if>
-		    <if test=" entity.materialName != null">
+		    <if test=" entity.materialName != null and entity.materialName != ''">
 			    and material_name =  #{entity.materialName} 
 		    </if>
-		    <if test=" entity.model != null">
+		    <if test=" entity.model != null and entity.model != ''">
 			    and model =  #{entity.model} 
 		    </if>
 		    <if test=" entity.unit != null">
@@ -214,11 +214,11 @@
     </select>
     
     <!-- 根据id 查询 仓库 -->
-	<select id="getRepertoryById" parameterType="Long" resultMap="repertoryMap" >
+	<select id="getRepertoryById" parameterType="String" resultMap="repertoryMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-		 from repertory where supplier_id= #{supplierId}
+		 from repertory where repertory_id= #{repertoryId}
 	</select>
 </mapper>	

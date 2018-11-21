@@ -61,15 +61,15 @@
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
 			              <div class="box-body">
 			                 <div class="form-group">
-								 <label for="userName" class="col-sm-2 control-label">标题：</label>
+								 <label for="title" class="col-sm-2 control-label">标题：</label>
 								 <div class="col-xs-2">
 									 <input type="text" class="form-control" id="title" name="title" value="${problemLibrary.title}" placeholder="请输入标题">
 								 </div>
-								 <label for="phone" class="col-sm-2 control-label">检查内容：</label>
+								 <label for="inspectContent" class="col-sm-2 control-label">检查内容：</label>
 								 <div class="col-xs-2">
 									 <input type="text" class="form-control" id="inspectContent" name="inspectContent" value="${problemLibrary.inspectContent}" placeholder="请输入检查内容"/>
 								 </div>
-								 <label for="status" class="col-sm-2 control-label">问题类型</label>
+								 <label for="type" class="col-sm-2 control-label">问题类型</label>
 								 <div class="col-xs-2">
 									 <input type="text" class="form-control" id="type" name="type" value="${problemLibrary.type}" placeholder="请输入问题类型"/>
 

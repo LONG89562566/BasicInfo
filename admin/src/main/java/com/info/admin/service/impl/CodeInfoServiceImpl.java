@@ -4,6 +4,7 @@ import com.info.admin.dao.CodeInfoDao;
 import com.info.admin.entity.CodeInfo;
 import com.info.admin.service.CodeInfoService;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.utils.QrCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,8 @@ public class CodeInfoServiceImpl implements CodeInfoService {
     @Override
     public int insert(CodeInfo entity){
         entity.setCodeId(com.info.admin.utils.UUIDUtils.getUUid());
-        entity.setCode(com.info.admin.utils.UUIDUtils.getUUid());
+
+
         return dao.insert(entity);
     }
 
@@ -46,7 +48,6 @@ public class CodeInfoServiceImpl implements CodeInfoService {
     @Override
     public int update(CodeInfo entity){
         entity.setUpdateTime(new java.util.Date());
-
         return dao.update(entity);
     }
 
@@ -73,8 +74,8 @@ public class CodeInfoServiceImpl implements CodeInfoService {
      */
     @Override
     public int delete(CodeInfo entity){
-      entity.setDeleteFlag(1L);
-         return dao.update(entity);
+        entity.setDeleteFlag(1L);
+        return dao.update(entity);
 
     }
 

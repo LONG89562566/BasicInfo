@@ -62,7 +62,14 @@
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
 			              <div class="box-body">
 			                 <div class="form-group">
-
+								 <label for="title" class="col-sm-2 control-label">标题：</label>
+								 <div class="col-xs-2">
+									 <input type="text" class="form-control" id="title" name="title" value="${releaseInfo.title}" placeholder="请输入标题">
+								 </div>
+								 <label for="content" class="col-sm-2 control-label">内容：</label>
+								 <div class="col-xs-2">
+									 <input type="text" class="form-control" id="content" name="content" value="${releaseInfo.content}" placeholder="请输入内容"/>
+								 </div>
 			                 </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
