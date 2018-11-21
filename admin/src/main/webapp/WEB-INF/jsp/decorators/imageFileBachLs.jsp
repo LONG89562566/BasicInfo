@@ -20,10 +20,10 @@
         <span style="color: red" id="s-<%=imageLable%>"></span>
     </div>
 </div>
-<div class="layui-inline">
-    <ul>
+<div class="layui-inline" id="div-<%=imageLable%>-img">
+    <ul id="ul-<%=imageLable%>-img">
         <li>
-            <div style='width:160px ;height: 160px;'><img width="100%" id="<%=imageLable%>Img" src="" onclick="_showImgUtil($(this))"/></div>
+            <div style='width:160px ;height: 160px;'><img width="100%" src="" onclick="_showImgUtil($(this))"/></div>
         </li>
     </ul>
 </div>
@@ -36,14 +36,14 @@
             url: '<%=request.getContextPath()%>/admin/uploadImgs?dir=image&docUnid=<%=docUnid%>&flowId=<%=flowId%>&type=<%=type%>',//上传接口
             elem: '#<%=imageLable%>File', //指定原始元素，默认直接查找class="layui-upload-file"
             success: function(res){
-                _showImage(res , "<%=imageLable%>Img");
+                _showImageLs(res , "ul-<%=imageLable%>-img");
             }
         });
     });
 
     $(function () {
         if("edit" == '<%=fn%>'){
-            _loadImgUtil("<%=imageLable%>Img",'<%=docUnid%>','<%=flowId%>','<%=type%>');
+            _loadImgUtilLs("ul-<%=imageLable%>-img",'<%=docUnid%>','<%=flowId%>','<%=type%>');
         }
     });
 

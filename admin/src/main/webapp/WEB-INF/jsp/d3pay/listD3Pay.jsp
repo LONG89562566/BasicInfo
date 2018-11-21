@@ -98,7 +98,7 @@
 				              <tr>
 				                <th field="sys_xh">序号</th>			              	
 			                    <th field="procedures"  >工序</th>
-								<th field="processControl"  >三维工艺</th>
+								<th field="fileUrl"  type="img" imgWidth = '60px' imgHeight="60px">三维工艺</th>
 			                    <th field="processControl"  >关键工艺控制要点</th>
 			                    <th field="safetyControl"  >安全控制要点</th>
 			                    <th field="qualityControl"  >质量控制要点</th>
@@ -110,7 +110,7 @@
 				   			 <tr>
 								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
 					            <td>${r.procedures}</td>
-                                 <td>${r.processControl}</td>
+                                 <td><div style='width:60px ;height: 60px;'><img onclick='_showImgUtil(this)' width='100%' src='${r.fileUrl}'/></div></td>
 					            <td>${r.processControl}</td>
 					            <td>${r.safetyControl}</td>
 					            <td>${r.qualityControl}</td>
@@ -254,6 +254,10 @@
                 layer.msg('请先选择一个梁场！');
                 return;
             }
+            var fn = "edit";
+            if(payId == "" || payId == undefined){
+                fn = "add";
+			}
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
@@ -261,7 +265,7 @@
 		         area: ['100%', '100%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/d3Pay/addOrEdit?payId='+payId,
+		         content: '<%=request.getContextPath()%>/admin/d3Pay/addOrEdit?payId='+payId+"&fn="+fn,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);

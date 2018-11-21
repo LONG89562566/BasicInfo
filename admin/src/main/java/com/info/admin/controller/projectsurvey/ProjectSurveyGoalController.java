@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.ProjectSurveyService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,14 +62,15 @@ public class ProjectSurveyGoalController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String projectId,Model model){
+    public String addOrEdit(HttpServletRequest request,String projectId,Model model,String fn){
         try{
-            if(null != projectId){
+            if(StringUtils.isNotBlank(projectId) && "edit".equals(fn)){
                 //根据id查询系统用户
                 ProjectSurvey projectSurvey = service.getProjectSurveyById(projectId);
                 model.addAttribute("projectSurvey", projectSurvey);
             }
             model.addAttribute("projectId", projectId);
+            model.addAttribute("fn", fn);
             return "projectsurvey/addProjectSurveyGoal";
         }catch(Exception e){
             logger.error("[ProjectSurveyGoalController][addOrEdit]: projectId="+projectId, e);

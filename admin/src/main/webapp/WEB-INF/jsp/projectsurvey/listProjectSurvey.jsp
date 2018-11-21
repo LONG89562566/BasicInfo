@@ -85,7 +85,6 @@
 				              <tr>
 				                <th field="sys_xh">序号</th>
 
-
 			                    <th field="lcName"  >梁场名称</th>
 							    <th field="seq"  >排序号</th>
 			                    <th field="lcAddr"  >梁场地址</th>
@@ -98,9 +97,7 @@
 			                    <th field="bearUnit"  >承建单位</th>
 			                    <th field="controlUnit"  >监理单位</th>
 			                    <th field="designUnit"  >设计单位</th>
-								  <%--<th field="createUser"  >创建人编号</th>--%>
-								  <th field="createTime"  type='date'>创建时间</th>
-								  <th field="updateTime"  type='date'>修改时间</th>
+
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
@@ -120,9 +117,7 @@
 					            <td>${r.bearUnit}</td>
 					            <td>${r.controlUnit}</td>
 					            <td>${r.designUnit}</td>
-								 <%--<td>${r.createUser}</td>--%>
-								 <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-								 <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+
 						        <td>
 						         <div class="site-demo-button" >
 								   <button id="updateProjectSurvey" data-method="setAddOrEdit" value="${r.projectId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
@@ -217,6 +212,10 @@
 		
 		//新增、编辑打开
 		var setAddOrEdit = function(projectId){
+            var fn = "edit";
+            if(projectId == "" || projectId == undefined){
+                fn = "add";
+            }
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
@@ -224,7 +223,7 @@
 		         area: ['70%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/projectSurvey/addOrEdit?projectId='+projectId,
+		         content: '<%=request.getContextPath()%>/admin/projectSurvey/addOrEdit?projectId='+projectId+"&fn="+fn,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);
@@ -239,6 +238,10 @@
 		     });
 		};		//新增、编辑打开
 		var ProjectSurveyDetail = function(projectId){
+            var fn = "edit";
+            if(projectId == "" || projectId == undefined){
+                fn = "add";
+            }
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2,
@@ -246,7 +249,7 @@
 		         area: ['70%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/projectSurvey/ProjectSurveyDetail?projectId='+projectId,
+		         content: '<%=request.getContextPath()%>/admin/projectSurvey/ProjectSurveyDetail?projectId='+projectId+"&fn="+fn,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);

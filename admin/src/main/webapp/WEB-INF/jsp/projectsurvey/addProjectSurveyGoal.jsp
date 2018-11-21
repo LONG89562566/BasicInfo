@@ -99,6 +99,7 @@
 	    var ophGoal = $("#ophGoal").val();
 
         var requestData={
+            fn:'${fn}',
             "projectId":projectId,
             "overallGoal":overallGoal,
             "timeGoal":timeGoal,

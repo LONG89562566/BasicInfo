@@ -30,7 +30,6 @@ public class D3PayServiceImpl implements D3PayService {
      */
     @Override
     public int insert(D3Pay entity){
-        entity.setPayId(com.info.admin.utils.UUIDUtils.getUUid());
         return dao.insert(entity);
     }
 

@@ -86,14 +86,18 @@ public class D3PayController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String payId,Model model){
+    public String addOrEdit(HttpServletRequest request,String payId,Model model,String fn){
         try{
-            if(StringUtils.isNotEmpty(payId)){
+            D3Pay d3Pay = null;
+            if(StringUtils.isNotEmpty(payId) && "edit".equals(fn)){
                 //根据id查询系统用户
-                D3Pay d3Pay = service.getD3PayById(payId);
-                model.addAttribute("d3Pay", d3Pay);
+                d3Pay = service.getD3PayById(payId);
+            }else {
+                model.addAttribute("uuid", com.info.admin.utils.UUIDUtils.getUUid());
             }
+            model.addAttribute("d3Pay", d3Pay);
             model.addAttribute("payId", payId);
+            model.addAttribute("fn", fn);
             return "d3pay/addD3Pay";
         }catch(Exception e){
             logger.error("[D3PayController][addOrEdit]: payId="+payId, e);
@@ -112,7 +116,7 @@ public class D3PayController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "insertAndUpdate", method = { RequestMethod.GET, RequestMethod.POST })
-    public JsonResult insertAndUpdate(HttpServletRequest request,D3Pay entity) {
+    public JsonResult insertAndUpdate(HttpServletRequest request,D3Pay entity,String fn) {
         logger.info("[D3PayController][insertAndUpdate] 新增或者修改D3Pay对象:");
         try {
             int result;
@@ -121,7 +125,7 @@ public class D3PayController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (StringUtils.isNotEmpty(entity.getPayId())) {
+            if (StringUtils.isNotEmpty(entity.getPayId()) && "edit".equals(fn) ) {
                 result = service.update(entity);
             } else {
                 entity.setCreateUser(this.getLoginUserId(request));

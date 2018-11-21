@@ -90,13 +90,17 @@ public class ProjectSurveyController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String projectId,Model model){
+    public String addOrEdit(HttpServletRequest request,String projectId,Model model,String fn){
         try{
-            if(null != projectId){
+            ProjectSurvey projectSurvey = null;
+            if(StringUtils.isNotBlank(projectId) && "edit".equals(fn)){
                 //根据id查询系统用户
-                ProjectSurvey projectSurvey = service.getProjectSurveyById(projectId);
-                model.addAttribute("projectSurvey", projectSurvey);
+                projectSurvey = service.getProjectSurveyById(projectId);
+            }else{
+                model.addAttribute("uuid", com.info.admin.utils.UUIDUtils.getUUid());
             }
+            model.addAttribute("fn", fn);
+            model.addAttribute("projectSurvey", projectSurvey);
             model.addAttribute("projectId", projectId);
             return "projectsurvey/addProjectSurvey";
         }catch(Exception e){
@@ -112,14 +116,19 @@ public class ProjectSurveyController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/ProjectSurveyDetail",method={RequestMethod.GET,RequestMethod.POST})
-    public String ProjectSurveyDetail(HttpServletRequest request,String projectId,Model model){
+    public String ProjectSurveyDetail(HttpServletRequest request,String projectId,Model model,String fn){
         try{
-            if(null != projectId){
+            ProjectSurvey projectSurvey = null;
+            if(StringUtils.isNotBlank(projectId) && "edit".equals(fn)){
                 //根据id查询系统用户
-                ProjectSurvey projectSurvey = service.getProjectSurveyById(projectId);
-                model.addAttribute("projectSurvey", projectSurvey);
+                projectSurvey = service.getProjectSurveyById(projectId);
+            }else {
+                projectSurvey = new ProjectSurvey();
+                projectSurvey.setProjectId(com.info.admin.utils.UUIDUtils.getUUid());
             }
+            model.addAttribute("projectSurvey", projectSurvey);
             model.addAttribute("projectId", projectId);
+            model.addAttribute("fn", fn);
             return "projectsurvey/projectSurveyDetail";
         }catch(Exception e){
             logger.error("[ProjectSurveyController][ProjectSurveyDetail]: projectId="+projectId, e);
@@ -138,7 +147,7 @@ public class ProjectSurveyController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "insertAndUpdate", method = { RequestMethod.GET, RequestMethod.POST })
-    public JsonResult insertAndUpdate(HttpServletRequest request, ProjectSurvey entity ) {
+    public JsonResult insertAndUpdate(HttpServletRequest request, ProjectSurvey entity,String fn ) {
         logger.info("[ProjectSurveyController][insertAndUpdate] 新增或者修改ProjectSurvey对象:");
         try {
             int result;
@@ -147,7 +156,7 @@ public class ProjectSurveyController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (StringUtils.isNotEmpty(entity.getProjectId())) {
+            if (StringUtils.isNotEmpty(entity.getProjectId()) && "edit".equals(fn)) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);

@@ -71,7 +71,23 @@ var _loadImgUtil = function (imgLable,docUnid,flowId,type) {
     });
 };
 
-function _showImage(res , imagLable){
+var _loadImgUtilLs = function (imgLable,docUnid,flowId,type) {
+    var _loadUrlImg = "/admin/fileAttr/query";
+    $.post(_loadUrlImg,{docUnid: docUnid,flowId: flowId ,type: type },function (data) {
+        if(data.code == 200){
+            var obj = data.object;
+            if(obj != null  && obj != undefined){
+                $.each(obj,function (i,item) {
+                    $("#"+imgLable).append("<li>\n" +
+                        "            <div style='width:160px ;height: 160px;'><img width=\"100%\" src='"+item.url+"' onclick=\"_showImgUtil($(this))\"/></div>\n" +
+                        "        </li>");
+                });
+            }
+        }
+    });
+};
+
+var _showImage = function (res , imagLable){
     var code = res.code;
     if(code == "200"){
         layer.msg("上传图片成功", {icon: 1,time: 1200});
@@ -81,4 +97,19 @@ function _showImage(res , imagLable){
         $("#"+imagLable).attr("src",showImgUrl);
         $("#"+imagLable).show();
     }
-}
+};
+
+var _showImageLs = function (res , imagLable){
+    var code = res.code;
+    if(code == "200"){
+        layer.msg("上传图片成功", {icon: 1,time: 1200});
+        var imgUrl = res.object[0];
+        var showImgUrl = res.object[0];
+        //将上传图片显示
+        $("#"+imagLable).append("<li>\n" +
+            "            <div style='width:160px ;height: 160px;'><img width=\"100%\" src='"+showImgUrl+"' onclick=\"_showImgUtil($(this))\"/></div>\n" +
+            "        </li>");
+        // $("#"+imagLable).show();
+    }
+};
+

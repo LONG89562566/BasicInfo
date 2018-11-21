@@ -139,6 +139,7 @@
 		<result column="process_control" property="processControl" />
 		<result column="safety_control" property="safetyControl" />
 		<result column="quality_control" property="qualityControl" />
+		<result column="file_url" property="fileUrl" />
 
     </resultMap>
 
@@ -187,8 +188,9 @@
         select  
           *
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
-           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-          from d3_pay
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+			,(select url from file_attr fa where doc_unid = dp.pay_id ORDER BY fa.seq,fa.create_time desc LIMIT 0,1) as file_url
+          from d3_pay dp
         <include refid="filterCondition"></include>
     </select>
     
@@ -204,8 +206,9 @@
         select
          * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
-           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-         from d3_pay
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+		,(select url from file_attr fa where doc_unid = dp.pay_id ORDER BY fa.seq,fa.create_time desc LIMIT 0,1) as file_url
+         from d3_pay dp
         <include refid="filterCondition"></include>
         LIMIT #{offset},#{pageSize}
     </select>
@@ -215,7 +218,8 @@
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
-           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-		 from d3_pay where pay_id= #{payId}
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+           ,(select url from file_attr fa where doc_unid = dp.pay_id ORDER BY fa.seq,fa.create_time desc LIMIT 0,1) as file_url
+		 from d3_pay dp where pay_id= #{payId}
 	</select>
 </mapper>	
