@@ -5,12 +5,12 @@
 
 	<!-- 新增 设备信息 对象 -->
 	<insert id="insert" parameterType="com.info.admin.entity.FrockInfo"
-			useGeneratedKeys="true" keyProperty="supplierId">
+			useGeneratedKeys="true" keyProperty="frockId">
 		insert into frock_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
 			create_time,
-			<if test=" supplierId != null">
-				supplier_id,
+			<if test=" frockId != null">
+				frock_id,
 			</if>
 			<if test=" createUser != null">
 				create_user,
@@ -58,8 +58,8 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			now(),
-			<if test="supplierId != null ">
-		        #{supplierId},
+			<if test="frockId != null ">
+		        #{frockId},
 		    </if>
 			<if test="createUser != null ">
 		        #{createUser},
@@ -124,16 +124,16 @@
 				<if test=" seq != null">
 					seq = #{seq},
 				</if>
-				<if test=" projectId != null">
+				<if test=" projectId != null and projectId != ''">
 					project_id = #{projectId},
 				</if>
-				<if test=" type != null">
+				<if test=" type != null  and type != ''">
 					type = #{type},
 				</if>
-				<if test=" mId != null">
+				<if test=" mId != null and mId != ''">
 					m_id = #{mId},
 				</if>
-				<if test=" name != null">
+				<if test=" name != null and name != ''">
 					name = #{name},
 				</if>
 				<if test=" model != null">
@@ -156,7 +156,7 @@
 				</if>
             </trim>
         </set>
-		where supplier_id = #{supplierId}
+		where frock_id = #{frockId}
 	</update>
 
     <!-- 删除 设备信息 对象 -->
@@ -167,7 +167,7 @@
     
     <!-- 返回 设备信息 对象 -->
     <resultMap type="com.info.admin.entity.FrockInfo" id="frockInfoMap">
-		<result column="supplier_id" property="supplierId" />
+		<result column="frock_id" property="frockId" />
 		<result column="create_time" property="createTime" />
 		<result column="createTime" property="createTimeStr" />
 		<result column="create_user" property="createUser" />
@@ -192,8 +192,8 @@
     <!-- 分页条件 -->
     <sql id="filterCondition">
         <trim prefix="where " prefixOverrides="and " >
-		    <if test=" entity.supplierId != null and entity.supplierId != '' ">
-			    and supplier_id =  #{entity.supplierId} 
+		    <if test=" entity.frockId != null and entity.frockId != '' ">
+			    and frock_id =  #{entity.frockId} 
 		    </if>
 		    <if test="entity.createTime!=null">
 		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
@@ -210,19 +210,19 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.projectId != null">
+		    <if test=" entity.projectId != null and entity.projectId != ''">
 			    and project_id =  #{entity.projectId} 
 		    </if>
-		    <if test=" entity.type != null">
+		    <if test=" entity.type != null and entity.type != ''">
 			    and type =  #{entity.type} 
 		    </if>
-		    <if test=" entity.mId != null">
+		    <if test=" entity.mId != null and entity.mId != '' ">
 			    and m_id =  #{entity.mId} 
 		    </if>
-		    <if test=" entity.name != null">
+		    <if test=" entity.name != null and entity.name != ''">
 			    and name =  #{entity.name} 
 		    </if>
-		    <if test=" entity.model != null">
+		    <if test=" entity.model != null ">
 			    and model =  #{entity.model} 
 		    </if>
 		    <if test=" entity.manufacturer != null">
@@ -280,6 +280,6 @@
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
            ,date_format(purchase_time,'%Y-%m-%d %H:%i:%s') as purchaseTime 
-		 from frock_info where supplier_id= #{supplierId}
+		 from frock_info where frock_id= #{frockId}
 	</select>
 </mapper>	

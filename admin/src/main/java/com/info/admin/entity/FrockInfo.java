@@ -11,7 +11,7 @@ import java.util.Date;
 public class FrockInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	 /*****主键*****/
-	 private String supplierId;
+	 private String frockId;
 	 /*****创建时间*****/
 	 private Date createTime;
 	 /*****创建时间 日常的字符串*****/
@@ -52,12 +52,12 @@ public class FrockInfo implements Serializable {
 	 private String purchaseTimeStr;
 
 
-	 public String getSupplierId() {
-		 return supplierId;
+	 public String getFrockId() {
+		 return frockId;
 	 }
 
-	 public void setSupplierId(String supplierId) {
-		 this.supplierId = supplierId;
+	 public void setFrockId(String frockId) {
+		 this.frockId = frockId;
 	 }
 
 	 public Date getCreateTime() {

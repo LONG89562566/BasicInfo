@@ -86,17 +86,17 @@ public class FrockInfoController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String supplierId,Model model){
+    public String addOrEdit(HttpServletRequest request,String frockId,Model model){
         try{
-            if(null != supplierId && StringUtils.isNotBlank(supplierId)){
+            if(null != frockId && StringUtils.isNotBlank(frockId)){
                 //根据id查询系统用户
-                FrockInfo frockInfo = service.getFrockInfoById(supplierId);
+                FrockInfo frockInfo = service.getFrockInfoById(frockId);
                 model.addAttribute("frockInfo", frockInfo);
             }
-            model.addAttribute("supplierId", supplierId);
+            model.addAttribute("frockId", frockId);
             return "frockinfo/addFrockInfo";
         }catch(Exception e){
-            logger.error("[FrockInfoController][addOrEdit]: supplierId="+supplierId, e);
+            logger.error("[FrockInfoController][addOrEdit]: frockId="+frockId, e);
             return "500";
         }
     }
@@ -121,7 +121,7 @@ public class FrockInfoController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getSupplierId() && StringUtils.isNotBlank(entity.getSupplierId())) {
+            if (null != entity.getFrockId() && StringUtils.isNotBlank(entity.getFrockId())) {
                 result = service.update(entity);
             } else {
                 entity.setDeleteFlag(0L);

@@ -30,7 +30,7 @@ public class EquipmentInfoServiceImpl implements EquipmentInfoService {
      */
     @Override
     public int insert(EquipmentInfo entity){
-        entity.setSupplierId(com.info.admin.utils.UUIDUtils.getUUid());
+        entity.setEquipmentId(com.info.admin.utils.UUIDUtils.getUUid());
         return dao.insert(entity);
     }
 

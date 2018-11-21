@@ -9,21 +9,14 @@
 	</head>
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
- 			<input  type="hidden" id="supplierId" name="supplierId" value="${frockInfo.supplierId}"/>
-
+ 			<input  type="hidden" id="frockId" name="frockId" value="${frockInfo.frockId}"/>
+			<input  type="hidden" id="projectId" name="projectId" value="${frockInfo.projectId}"/>
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
 		        	<div class="layui-input-inline">
 		        		<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${frockInfo.seq }" class="layui-input"/>
 		        		<span style="color: red" id="s-seq"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">项目编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="projectId" name="projectId" placeholder="请输入项目编号"  value="${frockInfo.projectId }" class="layui-input"/>
-		        		<span style="color: red" id="s-projectId"></span>
 		     		</div>
      			</div>
 			</div>
@@ -125,7 +118,7 @@
 		});
 	
 	function saveData() {
-	    var supplierId = $("#supplierId").val();
+	    var frockId = $("#frockId").val();
 	    var seq = $("#seq").val();
 	    var projectId = $("#projectId").val();
 	    var type = $("#type").val();
@@ -139,7 +132,7 @@
 	    var purchaseTime = $("#purchaseTime").val();
 
         var requestData={
-            "supplierId":supplierId,
+            "frockId":frockId,
             "seq":seq,
             "projectId":projectId,
             "type":type,

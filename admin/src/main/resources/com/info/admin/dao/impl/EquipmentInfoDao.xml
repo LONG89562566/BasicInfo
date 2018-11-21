@@ -5,12 +5,12 @@
 
 	<!-- 新增 设备信息 对象 -->
 	<insert id="insert" parameterType="com.info.admin.entity.EquipmentInfo"
-			useGeneratedKeys="true" keyProperty="supplierId">
+			useGeneratedKeys="true" keyProperty="equipmentId">
 		insert into equipment_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
 			create_time,
-			<if test=" supplierId != null">
-				supplier_id,
+			<if test=" equipmentId != null">
+				equipment_id,
 			</if>
 			<if test=" createUser != null">
 				create_user,
@@ -70,8 +70,8 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			now(),
-			<if test="supplierId != null ">
-		        #{supplierId},
+			<if test="equipmentId != null ">
+		        #{equipmentId},
 		    </if>
 			<if test="createUser != null ">
 		        #{createUser},
@@ -148,13 +148,13 @@
 				<if test=" seq != null">
 					seq = #{seq},
 				</if>
-				<if test=" projectId != null">
+				<if test=" projectId != null and projectId != ''">
 					project_id = #{projectId},
 				</if>
-				<if test=" manageNum != null">
+				<if test=" manageNum != null  and manageNum != ''">
 					manage_num = #{manageNum},
 				</if>
-				<if test=" name != null">
+				<if test=" name != null  and name != ''">
 					name = #{name},
 				</if>
 				<if test=" model != null">
@@ -193,7 +193,7 @@
 
             </trim>
         </set>
-		where supplier_id = #{supplierId}
+		where equipment_id = #{equipmentId}
 	</update>
 
     <!-- 删除 设备信息 对象 -->
@@ -204,7 +204,7 @@
     
     <!-- 返回 设备信息 对象 -->
     <resultMap type="com.info.admin.entity.EquipmentInfo" id="equipmentInfoMap">
-		<result column="supplier_id" property="supplierId" />
+		<result column="equipment_id" property="equipmentId" />
 		<result column="create_time" property="createTime" />
 		<result column="createTime" property="createTimeStr" />
 		<result column="create_user" property="createUser" />
@@ -234,8 +234,8 @@
     <!-- 分页条件 -->
     <sql id="filterCondition">
         <trim prefix="where " prefixOverrides="and " >
-		    <if test=" entity.supplierId != null and entity.supplierId != ''">
-			    and supplier_id =  #{entity.supplierId} 
+		    <if test=" entity.equipmentId != null and entity.equipmentId != ''">
+			    and equipment_id =  #{entity.equipmentId}
 		    </if>
 		    <if test="entity.createTime!=null">
 		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
@@ -252,13 +252,13 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.projectId != null">
+		    <if test=" entity.projectId != null and entity.projectId != ''">
 			    and project_id =  #{entity.projectId} 
 		    </if>
-		    <if test=" entity.manageNum != null">
+		    <if test=" entity.manageNum != null and entity.manageNum != ''">
 			    and manage_num =  #{entity.manageNum} 
 		    </if>
-		    <if test=" entity.name != null">
+		    <if test=" entity.name != null and entity.name != ''">
 			    and name =  #{entity.name} 
 		    </if>
 		    <if test=" entity.model != null">
@@ -337,6 +337,6 @@
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
            ,date_format(produc_time,'%Y-%m-%d %H:%i:%s') as producTime 
            ,date_format(advance_time,'%Y-%m-%d %H:%i:%s') as advanceTime 
-		 from equipment_info where supplier_id= #{supplierId}
+		 from equipment_info where equipment_id= #{equipmentId}
 	</select>
 </mapper>	

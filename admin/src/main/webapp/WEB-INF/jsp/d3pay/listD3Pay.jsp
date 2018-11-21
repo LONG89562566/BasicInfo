@@ -117,7 +117,7 @@
 
 						        <td>
 						         <div class="site-demo-button" >
-								   <button id="updateD3Pay" data-method="setAddOrEdit" value="${r.payId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+								   <button id="updateD3Pay" data-method="setAddOrEdit" projectId="${r.projectId}" value="${r.payId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
                                    <button id="delD3Pay" data-method="delIfon" value="${r.payId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
                                  </div>
 						       </td>
@@ -158,8 +158,8 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
-		tableBtn = addBtn(tableBtn,"delData","删除","","","status","true","1","layui-btn-danger");
+	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal","projectId");
+		tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-warm");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
       <script type="text/javascript" charset="utf-8">
@@ -215,7 +215,9 @@
 				setAddOrEdit: function(data){
 					//获取userId
 					var id = data.val();
-					setAddOrEdit(id);
+                    var projectId = $("#projectId").val();
+                    projectId = projectId?projectId:data.attr("projectId");
+                    setAddOrEdit(id,projectId);
 				},
                 delIfon: function(data){
                     //获取@primarykey
@@ -247,8 +249,7 @@
 
 		
 		//新增、编辑打开
-		var setAddOrEdit = function(payId){
-            var projectId = $("#projectId").val();
+		var setAddOrEdit = function(payId,projectId){
 		    if(!projectId){
                 layer.msg('请先选择一个梁场！');
                 return;
@@ -272,6 +273,8 @@
 		             //弹窗表单的取消操作时关闭弹窗
 		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
 		            	 layer.closeAll();
+                         //刷新页面
+                         refreshTheCurrentPage();
 		             });
 		         }
 		     });

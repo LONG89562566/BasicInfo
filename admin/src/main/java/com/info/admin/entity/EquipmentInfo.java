@@ -12,7 +12,7 @@ import java.util.Date;
 public class EquipmentInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	 /*****主键*****/
-	 private String supplierId;
+	 private String equipmentId;
 	 /*****创建时间*****/
 	 private Date createTime;
 	 /*****创建时间 日常的字符串*****/
@@ -61,12 +61,12 @@ public class EquipmentInfo implements Serializable {
 	 private String sop;
 
 
-	 public String getSupplierId() {
-		 return supplierId;
+	 public String getEquipmentId() {
+		 return equipmentId;
 	 }
 
-	 public void setSupplierId(String supplierId) {
-		 this.supplierId = supplierId;
+	 public void setEquipmentId(String equipmentId) {
+		 this.equipmentId = equipmentId;
 	 }
 
 	 public Date getCreateTime() {

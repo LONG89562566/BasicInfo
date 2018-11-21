@@ -9,20 +9,14 @@
 	</head>
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
- 			<input  type="hidden" id="supplierId" name="supplierId" value="${equipmentInfo.supplierId}"/>
+ 			<input  type="hidden" id="equipmentId" name="equipmentId" value="${equipmentInfo.equipmentId}"/>
+			<input  type="hidden" id="projectId" name="projectId" value="${equipmentInfo.projectId}"/>
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
 		        	<div class="layui-input-inline">
 		        		<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${equipmentInfo.seq }" class="layui-input"/>
 		        		<span style="color: red" id="s-seq"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">项目编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="projectId" name="projectId" placeholder="请输入项目编号"  value="${equipmentInfo.projectId }" class="layui-input"/>
-		        		<span style="color: red" id="s-projectId"></span>
 		     		</div>
      			</div>
 			</div>
@@ -129,10 +123,16 @@
 					<span style="color: red" id="s-sop"></span>
 				</div>
 	 		</div>
-
+            <div class="layui-input-block" style="margin-top:30px;margin-left:324px;">
+                <input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
+                <button class="layui-btn" name="cancleSubmit" >取消</button>
+            </div>
   		</form>
 	</body>
 
+    <script type="text/javascript">
+        var reqUpdateAndAddUrl = "/admin/equipmentInfo/insertAndUpdate";
+    </script>
 	<script type="text/javascript">
 		//提交表单数据
 		layui.use(['form', 'jquery', 'layedit', 'laydate'], function(){
@@ -145,46 +145,44 @@
 			  });		  
 
 		});
-	
-	var getData = function() {
-	    var supplierId = $("#supplierId").val();
-	    var seq = $("#seq").val();
-	    var projectId = $("#projectId").val();
-	    var manageNum = $("#manageNum").val();
-	    var name = $("#name").val();
-	    var model = $("#model").val();
-	    var power = $("#power").val();
-	    var mtp = $("#mtp").val();
-	    var startNum = $("#startNum").val();
-	    var ov = $("#ov").val();
-	    var nv = $("#nv").val();
-	    var producPlant = $("#producPlant").val();
-	    var producTime = $("#producTime").val();
-	    var advanceTime = $("#advanceTime").val();
-	    var source = $("#source").val();
-	    var sop = $("#sop").val();
+        function saveData() {
+            var equipmentId = $("#equipmentId").val();
+            var seq = $("#seq").val();
+            var projectId = $("#projectId").val();
+            var manageNum = $("#manageNum").val();
+            var name = $("#name").val();
+            var model = $("#model").val();
+            var power = $("#power").val();
+            var mtp = $("#mtp").val();
+            var startNum = $("#startNum").val();
+            var ov = $("#ov").val();
+            var nv = $("#nv").val();
+            var producPlant = $("#producPlant").val();
+            var producTime = $("#producTime").val();
+            var advanceTime = $("#advanceTime").val();
+            var source = $("#source").val();
+            var sop = $("#sop").val();
 
-        var requestData={
-            "supplierId":supplierId,
-            "seq":seq,
-            "projectId":projectId,
-            "manageNum":manageNum,
-            "name":name,
-            "model":model,
-            "power":power,
-            "mtp":mtp,
-            "startNum":startNum,
-            "ov":ov,
-            "nv":nv,
-            "producPlant":producPlant,
-            "producTimeStr":producTime,
-            "advanceTimeStr":advanceTime,
-            "source":source,
-            "sop":sop
-        };
-        return requestData;
-    }
-
+            var requestData={
+                "equipmentId":equipmentId,
+                "seq":seq,
+                "projectId":projectId,
+                "manageNum":manageNum,
+                "name":name,
+                "model":model,
+                "power":power,
+                "mtp":mtp,
+                "startNum":startNum,
+                "ov":ov,
+                "nv":nv,
+                "producPlant":producPlant,
+                "producTimeStr":producTime,
+                "advanceTimeStr":advanceTime,
+                "source":source,
+                "sop":sop
+            };
+            updateAndAdd(requestData);
+        }
 
 </script>
 </html>				 

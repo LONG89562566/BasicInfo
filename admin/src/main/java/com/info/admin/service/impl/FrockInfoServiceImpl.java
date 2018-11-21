@@ -30,7 +30,7 @@ public class FrockInfoServiceImpl implements FrockInfoService {
      */
     @Override
     public int insert(FrockInfo entity){
-        entity.setSupplierId(com.info.admin.utils.UUIDUtils.getUUid());
+        entity.setFrockId(com.info.admin.utils.UUIDUtils.getUUid());
         return dao.insert(entity);
     }
 
@@ -105,14 +105,14 @@ public class FrockInfoServiceImpl implements FrockInfoService {
     /**
 	 * 根据 id获取 设备信息
 	 *@author   ysh
-	 *@param supplierId 主键id
+	 *@param frockId 主键id
 	 *@date  2018-11-15 22:58:50
 	 *@updater  or other
 	 *@return   FrockInfo
 	 */ 
 	 @Override
-	 public FrockInfo getFrockInfoById(String supplierId) {
-		 return dao.getFrockInfoById(supplierId);
+	 public FrockInfo getFrockInfoById(String frockId) {
+		 return dao.getFrockInfoById(frockId);
 	 }
 }
 

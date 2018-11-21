@@ -86,17 +86,17 @@ public class EquipmentInfoController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String supplierId,Model model){
+    public String addOrEdit(HttpServletRequest request,String equipmentId,Model model){
         try{
-            if(null != supplierId && StringUtils.isNotBlank(supplierId)){
+            if(null != equipmentId && StringUtils.isNotBlank(equipmentId)){
                 //根据id查询系统用户
-                EquipmentInfo equipmentInfo = service.getEquipmentInfoById(supplierId);
+                EquipmentInfo equipmentInfo = service.getEquipmentInfoById(equipmentId);
                 model.addAttribute("equipmentInfo", equipmentInfo);
             }
-            model.addAttribute("supplierId", supplierId);
+            model.addAttribute("equipmentId", equipmentId);
             return "equipmentinfo/addEquipmentInfo";
         }catch(Exception e){
-            logger.error("[EquipmentInfoController][addOrEdit]: supplierId="+supplierId, e);
+            logger.error("[EquipmentInfoController][addOrEdit]: equipmentId="+equipmentId, e);
             return "500";
         }
     }
@@ -121,7 +121,7 @@ public class EquipmentInfoController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getSupplierId() && StringUtils.isNotBlank(entity.getSupplierId())) {
+            if (null != entity.getEquipmentId() && StringUtils.isNotBlank(entity.getEquipmentId())) {
                 result = service.update(entity);
             } else {
                 entity.setDeleteFlag(0L);

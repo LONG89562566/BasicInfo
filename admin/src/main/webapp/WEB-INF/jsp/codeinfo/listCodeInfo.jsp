@@ -126,7 +126,7 @@
                                 <td>${r.code}</td>
 						        <td>
 						         <div class="site-demo-button" >
-								   <button id="updateCodeInfo" data-method="setAddOrEdit" value="${r.codeId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+								   <button id="updateCodeInfo" data-method="setAddOrEdit" projectId="${r.projectId}" value="${r.codeId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
                                    <button id="delCode" data-method="delIfon" value="${r.codeId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
                                  </div>
 						       </td>
@@ -167,8 +167,8 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
-	    tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-normal");
+	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal","projectId");
+	    tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-warm");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
@@ -226,7 +226,9 @@
 				setAddOrEdit: function(data){
 					//获取userId
 					var id = data.val();
-					setAddOrEdit(id);
+                    var projectId = $("#projectId").val();
+                    projectId = projectId?projectId:data.attr("projectId");
+                    setAddOrEdit(id,projectId);
 				},
                 delIfon: function(data){
                     //获取@primarykey
@@ -258,8 +260,7 @@
 
 		
 		//新增、编辑打开
-		var setAddOrEdit = function(codeId){
-            var projectId = $("#projectId").val();
+		var setAddOrEdit = function(codeId,projectId){
             if(!projectId){
                 layer.msg('请先选择一个梁场！');
                 return;
@@ -268,7 +269,7 @@
 		     layer.open({
 		         type: 2, 
 		         title: '新增/修改 二维码信息',
-		         area: ['70%', '86%'],
+		         area: ['100%', '100%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
 		         content: '<%=request.getContextPath()%>/admin/codeInfo/addOrEdit?codeId='+codeId,

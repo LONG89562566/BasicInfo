@@ -139,7 +139,11 @@ var loadThisPageData = function (currentPage,pageSize,json,parm) {
                                 html += "<shiro:hasPermission name='"+btn.jurisdiction+"'>";
                             }
 
-                            html += "<button id='updatePlantationsMassif' style='margin: 2px 2px 2px 2px;' onclick='"+btn.method+"(\""+ n[primarykey]+"\")' value='"+ n[primarykey]+"' class='layui-btn "+btn.btnClass+" layui-btn-small'>";
+                            if(btn.otherFiled == "" || btn.otherFiled == undefined || btn.otherFiled.length == 0 || !btn.otherFiled){
+                                html += "<button id='updatePlantationsMassif' style='margin: 2px 2px 2px 2px;' onclick='"+btn.method+"(\""+ n[primarykey]+"\")' value='"+ n[primarykey]+"' class='layui-btn "+btn.btnClass+" layui-btn-small'>";
+                            }else{
+                                html += "<button id='updatePlantationsMassif' style='margin: 2px 2px 2px 2px;' onclick='"+btn.method+"(\""+ n[primarykey]+"\",\""+n[btn.otherFiled]+"\")' value='"+ n[primarykey]+"' class='layui-btn "+btn.btnClass+" layui-btn-small'>";
+                            }
                             if(btn.icon != "" && btn.icon != undefined && btn.icon.length > 0){
                                 html += "<i class='"+btn.icon+"'></i>";
                             }
@@ -224,9 +228,10 @@ var tableField = function(tableId){
  * @param isShowMethod 调用方法是否更加 传入字段名称取得值进行显示
  * @param showMethodVal 调用方法根据传入字段名称去的值进行匹配设置的值是否相等
  * @param btnClass 添加button Class 样式名称
+ * @param otherFiled 其他字段
  * @returns {*}
  */
-var addBtn = function (addBtn, method, name , jurisdiction, icon, methodField, isShowMethod, showMethodVal,btnClass) {
+var addBtn = function (addBtn, method, name , jurisdiction, icon, methodField, isShowMethod, showMethodVal,btnClass,otherFiled) {
     if(btnClass == "" || btnClass == undefined || btnClass.length == 0){
         btnClass = "layui-btn-normal";
     }
@@ -239,6 +244,7 @@ var addBtn = function (addBtn, method, name , jurisdiction, icon, methodField, i
     btn.isShowMethod = isShowMethod;
     btn.showMethodVal = showMethodVal;
     btn.btnClass = btnClass;
+    btn.otherFiled = otherFiled;
     addBtn.push(btn);
     return addBtn;
 };

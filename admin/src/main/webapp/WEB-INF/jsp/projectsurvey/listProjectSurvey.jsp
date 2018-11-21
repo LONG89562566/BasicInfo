@@ -266,7 +266,7 @@
         var deletes = function (id) {
             //启用的url
             requestUrl="<%=request.getContextPath()%>/admin/projectSurvey/delete";
-            text = "确定要删除此条数据吗？";
+            text = "删除此数据有极大可能导致数据紊乱，确定删除？";
             deletesUserOffSet(0,requestUrl, id,text);
         };
 
