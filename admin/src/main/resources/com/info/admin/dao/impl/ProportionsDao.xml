@@ -121,22 +121,19 @@
 		    <if test=" entity.createUser != null">
 			    and create_user =  #{entity.createUser} 
 		    </if>
-		    <if test=" entity.deleteFlag != null">
-			    and delete_flag =  #{entity.deleteFlag} 
-		    </if>
 		    <if test="entity.updateTime!=null">
 		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
 		    </if>
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.projectId != null">
+		    <if test=" entity.projectId != null and entity.projectId != ''">
 			    and project_id =  #{entity.projectId} 
 		    </if>
-		    <if test=" entity.name != null">
-			    and name =  #{entity.name} 
+		    <if test=" entity.name != null and  entity.name != ''">
+				and name like concat('%',#{entity.name},'%')
 		    </if>
-
+				and delete_flag =  0
         </trim>
     </sql>
     

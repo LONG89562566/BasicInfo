@@ -19,8 +19,6 @@ public class ConcreteInfoVo implements Serializable {
 	 private Long deleteFlag;
 	 /*****修改时间*****/ 
 	 private Date updateTime;
-	 /*****排序号*****/ 
-	 private Long seq;
 	 /*****项目编号*****/ 
 	 private String projectId;
 	 /*****混泥土别名*****/ 
@@ -75,13 +73,6 @@ public class ConcreteInfoVo implements Serializable {
 		 this.updateTime = updateTime;
 	 }
 
-	 public Long getSeq() {
-		 return seq;
-	 }
-
-	 public void setSeq(Long seq) {
-		 this.seq = seq;
-	 }
 
 	 public String getProjectId() {
 		 return projectId;

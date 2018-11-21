@@ -186,7 +186,7 @@
 			var content = $("#content").val();
 			var releaseUser = $('#releaseUser').val();
 			var receiveUser = $('#receiveUser').combotree('getValues');
-			var receiveUserCn = getVals("receiveUserCn-");
+			var receiveUserCn = getValLetters("receiveUserCn-");
 			var releaseType  = $("#releaseType").val();
 			var requestData={
 				"releaseId":releaseId,
@@ -202,17 +202,6 @@
 			};
 			updateAndAdd(requestData);
 		}
-
-		//id开头的input 标签
-        var getVals = function (lableId) {
-            var input = $("input[id^='"+lableId+"']");
-            var vals = new Array();
-            $(input).each(function (i,n) {
-                vals.push($(n).val());
-            });
-            return vals;
-        };
-
 
 </script>
 </html>				 

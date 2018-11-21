@@ -53,6 +53,7 @@ public class StaffInfoController extends BaseController {
     @RequiresPermissions("staffInfo:query")
     public String getStaffInfoList(HttpServletRequest request, @ModelAttribute StaffInfo entity, Model model) {
         logger.info("[StaffInfoController][getStaffInfoList] 查询员工信息列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -75,6 +76,7 @@ public class StaffInfoController extends BaseController {
     @RequiresPermissions("staffInfo:query")
     public String getStaffInfoListDesktop(HttpServletRequest request, @ModelAttribute StaffInfo entity, Model model) {
         logger.info("[StaffInfoController][getStaffInfoListDesktop] 我的桌面查询员工信息列表:");
+        entity.setDeleteFlag(0L);
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
@@ -96,7 +98,7 @@ public class StaffInfoController extends BaseController {
     @RequestMapping(value = "/addOrEdit", method = {RequestMethod.GET, RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request, String staffId, String orgId, Model model) {
         try {
-            if (null != staffId) {
+            if (null != staffId && StringUtils.isNotBlank(staffId)) {
                 //根据id查询系统用户
                 StaffInfo staffInfo = service.getStaffInfoById(staffId);
                 model.addAttribute("staffInfo", staffInfo);
@@ -153,6 +155,8 @@ public class StaffInfoController extends BaseController {
             if (StringUtils.isNotEmpty(entity.getStaffId())) {
                 result = service.update(entity);
             } else {
+                entity.setDeleteFlag(0L);
+                entity.setCreateUser(getLoginUserId(request));
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -252,6 +256,7 @@ public class StaffInfoController extends BaseController {
     public JsonResult query(StaffInfo entity) {
         logger.info("[StaffInfoController][query] 查询StaffInfo对象:");
         try {
+            entity.setDeleteFlag(0L);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.query(entity));
         } catch (Exception e) {
             logger.error("[StaffInfoController][query] exception", e);
@@ -278,6 +283,11 @@ public class StaffInfoController extends BaseController {
             }
             int result = service.delete(entity);
             if (result > 0) {
+                SysUser user = new SysUser();
+                user.setIsBound("1");
+                user.setStaffId(entity.getStaffId());
+                result = sysUserService.escBoundUser(user);
+
                 return new JsonResult(JsonResultCode.SUCCESS, "操作成功", "");
             } else {
                 return new JsonResult(JsonResultCode.FAILURE, "操作失败", "");
@@ -302,6 +312,7 @@ public class StaffInfoController extends BaseController {
     public JsonResult pageQuery(HttpServletRequest request, StaffInfo entity) {
         logger.info("[StaffInfoController][pageQuery] 查询StaffInfo对象:");
         try {
+            entity.setDeleteFlag(0L);
             // 获取分页当前的页码
             int pageNum = this.getPageNum(request);
             // 获取分页的大小

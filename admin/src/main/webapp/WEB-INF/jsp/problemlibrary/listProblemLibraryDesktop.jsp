@@ -62,7 +62,24 @@
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
 			              <div class="box-body">
 			                 <div class="form-group">
+								 <label for="userName" class="col-sm-2 control-label">标题：</label>
+								 <div class="col-xs-2">
+									 <input type="text" class="form-control" id="title" name="title" value="${problemLibrary.title}" placeholder="请输入标题">
+								 </div>
+								 <label for="phone" class="col-sm-2 control-label">检查内容：</label>
+								 <div class="col-xs-2">
+									 <input type="text" class="form-control" id="inspectContent" name="inspectContent" value="${problemLibrary.inspectContent}" placeholder="请输入检查内容"/>
+								 </div>
+								 <label for="status" class="col-sm-2 control-label">问题类型</label>
+								 <div class="col-xs-2">
+									 <input type="text" class="form-control" id="type" name="type" value="${problemLibrary.type}" placeholder="请输入问题类型"/>
 
+										 <%--<select id="status" name="status" class="form-control" style="width:150px;">
+                                             <option value="" selected>全部</option>
+                                             <option value="1" <c:if test="${problemLibrary.type == 1}">selected</c:if>>启用</option>
+                                             <option value="-1" <c:if test="${problemLibrary.type == -1}">selected</c:if>>禁用</option>
+                                         </select>--%>
+								 </div>
 			                 </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
@@ -86,8 +103,8 @@
 			                    <th field="title"  >标题</th>
 			                    <th field="type"  >问题类型</th>
 			                    <th field="inspectContent"  >检查内容</th>
-			                    <th field="inspectUser"  >检查人编号</th>
-			                    <th field="rectifyUser"  >整改人编号</th>
+			                    <th field="inspectUserCn"  >检查人</th>
+			                    <th field="rectifyUserCn"  >整改人</th>
 			                    <th field="rectifyTime"  type='date'>整改时间</th>
 
 				                <th field="sys_opt">操作</th>
@@ -101,8 +118,8 @@
 					            <td>${r.title}</td>
 					            <td>${r.type}</td>
 					            <td>${r.inspectContent}</td>
-					            <td>${r.inspectUser}</td>
-					            <td>${r.rectifyUser}</td>
+					            <td>${r.inspectUserCn}</td>
+					            <td>${r.rectifyUserCn}</td>
 				                <td><fmt:formatDate value="${r.rectifyTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 
 						        <td>

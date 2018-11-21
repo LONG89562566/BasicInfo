@@ -94,4 +94,14 @@
         });
     }
 
+    //id开头的input 标签
+    var getValLetters = function (lableId) {
+        var input = $("input[id^='"+lableId+"']");
+        var vals = new Array();
+        $(input).each(function (i,n) {
+            vals.push($(n).val());
+        });
+        return vals;
+    };
+
 </script>
