@@ -30,7 +30,7 @@ public class ProportionsServiceImpl implements ProportionsService {
      */
     @Override
     public int insert(Proportions entity){
-        entity.setProportionsId(com.info.admin.utils.UUIDUtils.getUUid());
+
         return dao.insert(entity);
     }
 

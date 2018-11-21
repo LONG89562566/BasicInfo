@@ -72,6 +72,20 @@ public interface ProportionsDetailetailService {
 	 * @return   ProportionsDetailetail
 	 */ 
 	public ProportionsDetailetail getProportionsDetailetailById(String detailId);
+
+    /**
+     *  batchProportionsMaterial批量入库
+     *@author
+     * @param
+     * @param  detailId 详情ID
+     * @param  materialNum 材料数量
+     * @param  materialId 材料ID
+     * @param
+     *@createTime   2
+     *@updater  or other
+     *@return   Integer
+     */
+    public Integer batchProportionsMaterial(String detailId, String[] materialNum, String[] materialId);
 	
 }
 

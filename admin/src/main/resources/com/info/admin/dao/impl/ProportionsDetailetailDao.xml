@@ -188,4 +188,12 @@
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
 		 from proportions_detail where detail_id= #{detailId}
 	</select>
+
+	<!-- 批量添加 -->
+	<insert id="batchProportionsMaterial" parameterType="java.util.List">
+		insert into proportions_material (proportions_material_id,detail_id,material_id,material_num,create_time) values
+		<foreach collection="proportionsMaterialList" item="item" separator=",">
+			(#{item.proportionsMaterialId},#{item.detailId},#{item.materialId},#{item.materialNum},now())
+		</foreach>
+	</insert>
 </mapper>	

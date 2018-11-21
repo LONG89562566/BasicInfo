@@ -1,6 +1,7 @@
 package com.info.admin.dao;
 
 import com.info.admin.entity.ProportionsDetailetail;
+import com.info.admin.entity.ProportionsMaterial;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -82,4 +83,14 @@ public interface ProportionsDetailetailDao {
 	 *@return   ProportionsDetailetail
 	 */
 	public ProportionsDetailetail getProportionsDetailetailById(String detailId);
+
+	 /**
+	  *  ProportionsDetailetail批量入库
+	  *@author
+	  * @param  proportionsMaterialList 入库对象
+	  *@createTime   2
+	  *@updater  or other
+	  *@return   Integer
+	  */
+	 public Integer batchProportionsMaterial(@Param("proportionsMaterialList")List<ProportionsMaterial> proportionsMaterialList);
 }

@@ -266,7 +266,7 @@
 		     layer.open({
 		         type: 2, 
 		         title: '新增/修改 配合比',
-		         area: ['30%', '40%'],
+		         area: ['100%', '100%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
 		         content: '<%=request.getContextPath()%>/admin/proportions/addOrEdit?proportionsId='+proportionsId+"&projectId="+projectId,
