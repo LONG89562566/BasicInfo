@@ -6,7 +6,7 @@
 	<!-- 新增 配合比详情 对象 -->
 	<insert id="insert" parameterType="com.info.admin.entity.ProportionsDetailetail"
 			useGeneratedKeys="true" keyProperty="detailId">
-		insert into proportions_detailetail
+		insert into proportions_detail
         <trim prefix="(" suffix=")" suffixOverrides=",">
 			create_time,
 			<if test=" detailId != null">
@@ -67,7 +67,7 @@
 
 	<!-- 更新 配合比详情 对象 -->
 	<update id="update" parameterType="com.info.admin.entity.ProportionsDetailetail">
-		update proportions_detailetail
+		update proportions_detail
         <set>
             <trim suffixOverrides=",">
 				<if test=" createUser != null">
@@ -99,7 +99,7 @@
 
     <!-- 删除 配合比详情 对象 -->
     <delete id="delete">
-        delete from proportions_detailetail
+        delete from proportions_detail
         <include refid="filterCondition"></include>
     </delete>
     
@@ -159,13 +159,13 @@
           *
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-          from proportions_detailetail
+          from proportions_detail
         <include refid="filterCondition"></include>
     </select>
     
     <!-- 查询 配合比详情 总记录数 -->
     <select id="getPageCount" resultType="int">
-        select count(1) from proportions_detailetail
+        select count(1) from proportions_detail
         <include refid="filterCondition"></include>
     </select>
 
@@ -175,7 +175,7 @@
          * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-         from proportions_detailetail
+         from proportions_detail
         <include refid="filterCondition"></include>
         LIMIT #{offset},#{pageSize}
     </select>
@@ -186,6 +186,6 @@
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-		 from proportions_detailetail where detail_id= #{detailId}
+		 from proportions_detail where detail_id= #{detailId}
 	</select>
 </mapper>	

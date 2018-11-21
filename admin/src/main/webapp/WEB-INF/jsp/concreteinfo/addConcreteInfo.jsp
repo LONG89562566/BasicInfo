@@ -10,55 +10,8 @@
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="concreteId" name="concreteId" value="${concreteInfo.concreteId}"/>
+ 			<input  type="hidden" id="projectId" name="projectId" value="${projectId}"/>
      		<div class="layui-form-item" >
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">创建时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="createTime" id="createTime" value="${concreteInfo.createTimeStr}" class="form-control input-small" placeholder="请选择创建时间"/>
-		            	<span style="color: red" id="s-createTime"></span>
-		        	</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">创建人编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="createUser" name="createUser" placeholder="请输入创建人编号"  value="${concreteInfo.createUser }" class="layui-input"/>
-		        		<span style="color: red" id="s-createUser"></span>
-		     		</div>
-     			</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">删除标记</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="deleteFlag" name="deleteFlag" placeholder="请输入删除标记"  value="${concreteInfo.deleteFlag }" class="layui-input"/>
-		        		<span style="color: red" id="s-deleteFlag"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">修改时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="updateTime" id="updateTime" value="${concreteInfo.updateTimeStr}" class="form-control input-small" placeholder="请选择修改时间"/>
-		            	<span style="color: red" id="s-updateTime"></span>
-		        	</div>
-     			</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">排序号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${concreteInfo.seq }" class="layui-input"/>
-		        		<span style="color: red" id="s-seq"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">项目编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="projectId" name="projectId" placeholder="请输入项目编号"  value="${concreteInfo.projectId }" class="layui-input"/>
-		        		<span style="color: red" id="s-projectId"></span>
-		     		</div>
-     			</div>
-			</div>
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">混泥土别名</label>
@@ -128,11 +81,6 @@
 	
 	function saveData() {
 	    var concreteId = $("#concreteId").val();
-	    var createTime = $("#createTime").val();
-	    var createUser = $("#createUser").val();
-	    var deleteFlag = $("#deleteFlag").val();
-	    var updateTime = $("#updateTime").val();
-	    var seq = $("#seq").val();
 	    var projectId = $("#projectId").val();
 	    var name = $("#name").val();
 	    var level = $("#level").val();
@@ -142,11 +90,6 @@
 
         var requestData={
             "concreteId":concreteId,
-            "createTimeStr":createTime,
-            "createUser":createUser,
-            "deleteFlag":deleteFlag,
-            "updateTimeStr":updateTime,
-            "seq":seq,
             "projectId":projectId,
             "name":name,
             "level":level,

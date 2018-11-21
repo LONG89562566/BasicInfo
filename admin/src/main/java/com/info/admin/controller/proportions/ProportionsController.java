@@ -85,7 +85,7 @@ public class ProportionsController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String proportionsId,Model model){
+    public String addOrEdit(HttpServletRequest request,String proportionsId,String projectId,Model model){
         try{
             if(null != proportionsId && StringUtils.isNotBlank(proportionsId)){
                 //根据id查询系统用户
@@ -97,6 +97,7 @@ public class ProportionsController extends BaseController{
                 model.addAttribute("proportions", proportions);
             }
             model.addAttribute("proportionsId", proportionsId);
+            model.addAttribute("projectId", projectId);
             return "proportions/addProportions";
         }catch(Exception e){
             logger.error("[ProportionsController][addOrEdit]: proportionsId="+proportionsId, e);

@@ -84,13 +84,15 @@ public class ConcreteInfoController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String concreteId,Model model){
+    public String addOrEdit(HttpServletRequest request,String concreteId,String projectId , Model model){
         try{
             if(null != concreteId && StringUtils.isNotBlank(concreteId)){
                 //根据id查询系统用户
                 ConcreteInfo concreteInfo = service.getConcreteInfoById(concreteId);
                 model.addAttribute("concreteInfo", concreteInfo);
+
             }
+            model.addAttribute("projectId", projectId);
             model.addAttribute("concreteId", concreteId);
             return "concreteinfo/addConcreteInfo";
         }catch(Exception e){
