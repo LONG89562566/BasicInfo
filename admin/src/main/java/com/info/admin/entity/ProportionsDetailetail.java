@@ -29,6 +29,8 @@ public class ProportionsDetailetail implements Serializable {
 	 private Long seq;
 	 /*****配合比编号*****/
 	 private String proportionsId;
+	 /*****配合比名字*****/
+	 private String proportionsName;
 	 /*****材料编号*****/
 	 private String materialId;
 	 /*****材料数量*****/
@@ -138,5 +140,13 @@ public class ProportionsDetailetail implements Serializable {
 	 
 	public ProportionsDetailetail() {
 		super();
+	}
+
+	public String getProportionsName() {
+		return proportionsName;
+	}
+
+	public void setProportionsName(String proportionsName) {
+		this.proportionsName = proportionsName;
 	}
 }

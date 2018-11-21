@@ -55,7 +55,14 @@
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
 			              <div class="box-body">
 			                 <div class="form-group">
-
+								 <div class="form-group">
+									 <div class="form-group">
+										 <label for="detailId" class="col-sm-2 control-label">配合比详情编号：</label>
+										 <div class="col-xs-2">
+											 <input type="text" class="form-control" id="detailId" name="detailId" value="" placeholder="请输入配合比详情编号">
+										 </div>
+									 </div>
+								 </div>
 			                 </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
@@ -68,41 +75,23 @@
 					<!-- 表格列表start -->
 		            <div class="box">
 			           <div class="box-body">
-			             <div class="site-demo-button" >
-						   <button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>
-						 </div>
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
-				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
-			                    <th field="seq"  >排序号</th>
-			                    <th field="proportionsId"  >配合比编号</th>
-			                    <th field="materialId"  >材料编号</th>
-			                    <th field="num"  >材料数量</th>
-
+				                <th field="sys_xh">序号</th>
+			                    <th field="proportionsName"  >配合比名字</th>
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.createUser}</td>
-					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					            <td>${r.seq}</td>
-					            <td>${r.proportionsId}</td>
-					            <td>${r.materialId}</td>
-					            <td>${r.num}</td>
-
+								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
+					            <td>${r.proportionsName}</td>
 						        <td>
 						         <div class="site-demo-button" >
-								   <button id="updateProportionsDetailetail" data-method="setAddOrEdit" value="${r.detailId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+								   <button id="updateProportionsDetailetail" data-method="setAddOrEdit" value="${r.detailId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;详情</span></button>
+								   <button id="deletes" data-method="deletes" value="${r.detailId}" class="layui-btn layui-btn-danger layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
 								 </div>
 						       </td>
 				             </tr>
@@ -140,8 +129,8 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
-		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
+	    tableBtn = addBtn(tableBtn,"setAddOrEdit","详情","","","","","","layui-btn-normal");
+		tableBtn = addBtn(tableBtn,"deletes","删除","","","","","","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
 
@@ -169,6 +158,11 @@
 					//获取userId
 					var id = data.val();
 					setAddOrEdit(id);
+				},
+                deletes: function(data){
+					//获取userId
+					var id = data.val();
+                    deletes(id);
 				},
 				//启用和禁用数据弹窗
 				offset: function(othis){
@@ -199,8 +193,8 @@
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
-		         title: '新增/修改 配合比详情',
-		         area: ['70%', '86%'],
+		         title: '配合比详情',
+		         area: ['30%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
 		         content: '<%=request.getContextPath()%>/admin/proportionsDetailetail/addOrEdit?detailId='+detailId,
@@ -269,6 +263,49 @@
 				}
 			});
 		}
+        //删除
+        var deletes = function (id) {
+            //启用的url
+            requestUrl="<%=request.getContextPath()%>/admin/proportionsDetailetail/delete";
+            text = "确定要删除此条数据吗？";
+            deleteProportionsDetailetail(0,requestUrl, id,text);
+        };
+        var deleteProportionsDetailetail = function (type ,requestUrl,id,text) {
+            layer.open({
+                type: 1,
+                offset: type,
+                id: 'LAY_demo'+type, //防止重复弹出
+                content: '<div style="padding: 20px 100px;">'+ text +'</div>',
+                btn: ['确定', '取消'],
+                btnAlign: 'c', //按钮居中
+                shade: 0.5 ,//不显示遮罩
+                yes: function(){
+                    layer.closeAll();
+                    $.ajax({
+                        type: "POST",
+                        url: requestUrl,
+                        data: {"detailId":id},
+                        dataType: "json",
+                        cache:false,
+                        success: function(data){
+                            var code = data.code;
+                            var msg = data.message;
+                            if(code == "200"){
+                                layer.msg(msg, {icon: 1,time: 2000});//2秒关闭
+                                //刷新页面
+                                refreshTheCurrentPage();
+                            }
+                        },
+                        error:function(){
+                            layer.msg("操作失败", {icon: 1,time: 2000});//1.5秒关闭
+                        }
+                    });
+                },
+                btn2: function(){
+                    layer.closeAll();
+                }
+            });
+        }
 	</script>
 </body>
 </html>

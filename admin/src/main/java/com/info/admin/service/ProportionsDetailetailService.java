@@ -1,6 +1,7 @@
 package com.info.admin.service;
 
 import com.info.admin.entity.ProportionsDetailetail;
+import com.info.admin.entity.ProportionsMaterial;
 import com.info.admin.utils.PageUtil;
 
 import java.util.List;
@@ -86,6 +87,27 @@ public interface ProportionsDetailetailService {
      *@return   Integer
      */
     public Integer batchProportionsMaterial(String detailId, String[] materialNum, String[] materialId);
+
+
+    /**
+     * 根据 id获取 配合比材料详情
+     *@author
+     *@param
+     *@date  2018-11-14 23:45:41
+     *@updater  or other
+     *@return   ProportionsDetailetail
+     */
+    public List<ProportionsMaterial> getProportionsMaterialById(String detailId);
+
+    /**
+     *修改ProportionsDetailetail对象
+     *@param  proportionsMaterial 对象
+     *@author  ysh
+     *@date  2018-11-14 23:45:41
+     *@updater or other
+     *@return int
+     */
+    int updateProportionsMaterial(ProportionsMaterial proportionsMaterial);
 	
 }
 

@@ -8,80 +8,37 @@
 		<%@include file="/WEB-INF/jsp/decorators/addHeader.jsp" %>
 	</head>
 	<body>
- 		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="detailId" name="detailId" value="${proportionsDetailetail.detailId}"/>
      		<div class="layui-form-item" >
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">创建时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="createTime" id="createTime" value="${proportionsDetailetail.createTimeStr}" class="form-control input-small" placeholder="请选择创建时间"/>
-		            	<span style="color: red" id="s-createTime"></span>
-		        	</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">创建人编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="createUser" name="createUser" placeholder="请输入创建人编号"  value="${proportionsDetailetail.createUser }" class="layui-input"/>
-		        		<span style="color: red" id="s-createUser"></span>
-		     		</div>
-     			</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">删除标记</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="deleteFlag" name="deleteFlag" placeholder="请输入删除标记"  value="${proportionsDetailetail.deleteFlag }" class="layui-input"/>
-		        		<span style="color: red" id="s-deleteFlag"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label  class="layui-form-label">修改时间:</label>
-	            	<div class="layui-input-inline">
-		            	<input onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"  name="updateTime" id="updateTime" value="${proportionsDetailetail.updateTimeStr}" class="form-control input-small" placeholder="请选择修改时间"/>
-		            	<span style="color: red" id="s-updateTime"></span>
-		        	</div>
-     			</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">排序号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${proportionsDetailetail.seq }" class="layui-input"/>
-		        		<span style="color: red" id="s-seq"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">配合比编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="proportionsId" name="proportionsId" placeholder="请输入配合比编号"  value="${proportionsDetailetail.proportionsId }" class="layui-input"/>
-		        		<span style="color: red" id="s-proportionsId"></span>
-		     		</div>
-     			</div>
-			</div>
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">材料编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="materialId" name="materialId" placeholder="请输入材料编号"  value="${proportionsDetailetail.materialId }" class="layui-input"/>
-		        		<span style="color: red" id="s-materialId"></span>
-		     		</div>
-     			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">材料数量</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="num" name="num" placeholder="请输入材料数量"  value="${proportionsDetailetail.num }" class="layui-input"/>
-		        		<span style="color: red" id="s-num"></span>
-		     		</div>
-     			</div>
-	   </div>
+				<div class="box" style="margin-left: auto;margin-right: auto">
 
-	 		</div>
-	 		<div class="layui-input-block" style="margin-top:30px;margin-left:324px;">
-	 			<input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
-       			<button class="layui-btn" name="cancleSubmit" >取消</button>
-     		</div>
-  		</form>
+								<table id="example1" class="table table-bordered table-striped" style="text-align: center">
+									<thead>
+									<tr>
+										<th style="width: 30% ;text-align: center" >材料名称 </th>
+										<th  style="width: 30% ;text-align: center"  >材料数量</th>
+										<th  style="width: 30% ;text-align: center">操作</th>
+									</tr>
+									</thead>
+									<tbody id="show-data">
+									<c:forEach items="${proportionsMaterial}" var="r" varStatus="st">
+										<tr>
+
+											<td>${r.materialName }</td>
+											<td><input  style="text-align: center" type="text" id="materialNum" name="materialNum" placeholder="请输入材料数量"  value="${r.materialNum }" class="layui-input"/></td>
+
+											<td>
+												<div class="site-demo-button" >
+													<button id="updateProportions" onclick="updateProportions('${r.proportionsMaterialId}')"  class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+												</div>
+											</td>
+										</tr>
+									</c:forEach>
+									</tbody>
+								</table>
+				</div>
+
+				</div>
 	</body>
 
 	<script type="text/javascript">
@@ -97,34 +54,38 @@
 			  var layedit = layui.layedit;
 			  var laydate = layui.laydate;
 			  form.verify({
-			  });		  
-
+			  });
 		});
 	
-	function saveData() {
-	    var detailId = $("#detailId").val();
-	    var createTime = $("#createTime").val();
-	    var createUser = $("#createUser").val();
-	    var deleteFlag = $("#deleteFlag").val();
-	    var updateTime = $("#updateTime").val();
-	    var seq = $("#seq").val();
-	    var proportionsId = $("#proportionsId").val();
-	    var materialId = $("#materialId").val();
-	    var num = $("#num").val();
+	 var updateProportions = function(id){
+	 var materialNum = $('#materialNum').val();
+        $.ajax({
+            type: "POST",
+            url: '/admin/proportionsDetailetail/updateProportionsMaterial',
+            data: {
+                "proportionsMaterialId":id,
+				"materialNum":materialNum,
+			},
+            dataType: "json",
+            cache:false,
+            success: function(data){
+                var code = data.code;
+                var msg = data.message;
+                if(code == "200"){
+                    layer.msg(msg, {icon: 1,time: 2000});//2秒关闭
+                    //刷新页面
+                    parent.location.reload();
+                }
+            },
+            error:function(){
+                layer.msg("操作失败！", {icon: 1,time: 2000});//1.5秒关闭
+            }
+        });
 
-        var requestData={
-            "detailId":detailId,
-            "createTimeStr":createTime,
-            "createUser":createUser,
-            "deleteFlag":deleteFlag,
-            "updateTimeStr":updateTime,
-            "seq":seq,
-            "proportionsId":proportionsId,
-            "materialId":materialId,
-            "num":num
-        };
-        updateAndAdd(requestData);
+        layer.closeAll();
     }
+
+
 	
 </script>
 </html>				 

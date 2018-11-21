@@ -95,7 +95,7 @@
         $('#materialTree').treegrid({
             url:'<%=request.getContextPath()%>/admin/material/materialTree?projectId=${projectId}',
             method:'get',          //请求方式
-            idField:'materialId',           //定义标识树节点的键名字段
+            idField:'repertoryId',           //定义标识树节点的键名字段
             treeField:'materialName',       //定义树节点的字段
             fit:true,               //网格自动撑满
             fitColumns:true,
@@ -104,11 +104,11 @@
             },
             onClickRow:function(row){
                 console.log("----------------------------------------------");
-                console.log("row.materialId : "+row.materialId);
+                console.log("row.repertoryId : "+row.repertoryId);
                 console.log("row.materialName : "+row.materialName);
                 console.log("----------------------------------------------");
 
-                addMaterial(row.materialId,row.materialName);
+                addMaterial(row.repertoryId,row.materialName);
             }
 
         });
@@ -173,7 +173,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: '/admin/proportions/insertProportionsDetail?proportionsName='+proportionsName+'&seq='+seq,
+                    url: '/admin/proportions/insertProportionsDetail?projectId=${projectId}'+'&proportionsName='+proportionsName+'&seq='+seq,
                     data: requestData,
                     dataType: "json",
                     cache:false,
@@ -183,7 +183,7 @@
                         if(code == "200"){
                             layer.msg(msg, {icon: 1,time: 2000});//2秒关闭
                             //刷新页面
-                            window.location();
+                            parent.location.reload();
                         }
                     },
                     error:function(){
@@ -206,19 +206,6 @@
         });
 
 
-    //     var proportionsId = $("#proportionsId").val();
-	 //    var seq = $("#seq").val();
-	 //    var projectId = $("#projectId").val();
-	 //    var name = $("#name").val();
-    //
-    //     var requestData={
-    //         "proportionsId":proportionsId,
-    //         "seq":seq,
-    //         "projectId":projectId,
-    //         "name":name
-    //     };
-    //     updateAndAdd(requestData);
-    // }
 	
 </script>
 </html>				 
