@@ -268,7 +268,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"id":id},
+						data: {"supplierId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){

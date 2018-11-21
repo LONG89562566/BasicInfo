@@ -4,7 +4,7 @@
 <html>
 	<head>
     	<meta charset="utf-8">
-		<title>新增二维码信息</title>
+		<title>新增二维码</title>
 		<%@include file="/WEB-INF/jsp/decorators/addHeader.jsp" %>
 	</head>
 	<body>

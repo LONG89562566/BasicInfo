@@ -11,16 +11,7 @@
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="staffId" name="staffId" value="${staffInfo.staffId}"/>
  			<input  type="hidden" id="orgId" name="orgId" value="${orgId}"/>
-     		<div class="layui-form-item" >
-			<div class='layui-form-item'>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">排序号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${staffInfo.seq }" class="layui-input"/>
-		        		<span style="color: red" id="s-seq"></span>
-		     		</div>
-     			</div>
-			</div>
+
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">姓名</label>
@@ -61,6 +52,13 @@
 		        		<span style="color: red" id="s-idCard"></span>
 		     		</div>
      			</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">排序号</label>
+					<div class="layui-input-inline">
+						<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${staffInfo.seq }" class="layui-input"/>
+						<span style="color: red" id="s-seq"></span>
+					</div>
+				</div>
 			</div>
 			<div class='layui-form-item'>
 		        <label class="layui-form-label">家庭住址</label>
@@ -84,7 +82,6 @@
 		        		<span style="color: red" id="s-position"></span>
 		     		</div>
      			</div>
-	   </div>
 
 	 		</div>
 	 		<div class="layui-input-block" style="margin-top:30px;margin-left:324px;">

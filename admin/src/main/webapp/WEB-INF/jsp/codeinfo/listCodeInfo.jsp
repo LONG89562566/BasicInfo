@@ -305,8 +305,8 @@
         //删除
         var delData = function(id){
             //删除的url
-            requestUrl= "<%=request.getContextPath()%>/admin/d3Pay/delete";
-            text = "确定要删除此条数据吗？";
+            requestUrl= "<%=request.getContextPath()%>/admin/codeInfo/delete";
+            text = "确定要删除此条数据吗 ？";
             userOffSet(2,requestUrl, id,text);
         };
 		var userOffSet = function (type ,requestUrl,id,text) {
@@ -323,7 +323,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"id":id},
+						data: {"codeId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){
