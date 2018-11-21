@@ -81,11 +81,11 @@
 			               <thead>
 				              <tr>
 				                <th field="sys_xh">序号</th>
-			                    <th field="seq"  >排序号</th>
-			                    <th field="structureName"  >结构名称</th>
-			                    <th field="structureType"  >结构类型</th>
-			                    <th field="projectId"  >项目编号</th>
-
+								  <th field="seq"  >排序号</th>
+								  <th field="structureName"  >结构名称</th>
+								  <th field="structureType"  >结构类型</th>
+								  <th field="code"  >码值</th>
+								  <th field="codeUrl"  type="img" imgWidth = '60px' imgHeight="60px">二维码</th>
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
@@ -93,10 +93,11 @@
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
 								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
-					            <td>${r.seq}</td>
-					            <td>${r.structureName}</td>
-					            <td>${r.structureType}</td>
-					            <td>${r.projectId}</td>
+								 <td>${r.seq}</td>
+								 <td>${r.structureName}</td>
+								 <td>${r.structureType}</td>
+								 <td>${r.code}</td>
+								 <td><div style='width:60px ;height: 60px;'><img onclick='_showImgUtil(this)' width='100%' src='${r.codeUrl }'/></div></td>
 
 						        <td>
 						         <div class="site-demo-button" >

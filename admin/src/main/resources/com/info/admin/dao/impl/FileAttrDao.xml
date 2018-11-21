@@ -194,13 +194,13 @@
 		    <if test=" entity.url != null">
 			    and url =  #{entity.url} 
 		    </if>
-		    <if test=" entity.docUnid != null">
+		    <if test=" entity.docUnid != null and entity.docUnid !=  '' ">
 			    and doc_unid =  #{entity.docUnid} 
 		    </if>
-		    <if test=" entity.flowId != null">
+		    <if test=" entity.flowId != null and entity.flowId != '' ">
 			    and flow_id =  #{entity.flowId} 
 		    </if>
-		    <if test=" entity.type != null">
+		    <if test=" entity.type != null and entity.type != ''">
 			    and type =  #{entity.type} 
 		    </if>
 
@@ -215,6 +215,7 @@
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
           from file_attr
         <include refid="filterCondition"></include>
+		order by seq,create_time desc
     </select>
     
     <!-- 查询 文件 总记录数 -->
@@ -231,7 +232,7 @@
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
          from file_attr
         <include refid="filterCondition"></include>
-        LIMIT #{offset},#{pageSize}
+        order by seq,create_time desc LIMIT #{offset},#{pageSize}
     </select>
     
     <!-- 根据id 查询 文件 -->

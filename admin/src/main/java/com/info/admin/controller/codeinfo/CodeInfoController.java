@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.CodeInfoService;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.utils.QrCodeUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -124,7 +125,10 @@ public class CodeInfoController extends BaseController{
             if (StringUtils.isNotEmpty(entity.getCodeId())) {
                 result = service.update(entity);
             } else {
+                entity.setCode(com.info.admin.utils.UUIDUtils.getUUid());
+                String codeUrl = QrCodeUtil.encode( request,entity.getCode(),entity.getCode(),"",false);
                 entity.setCreateUser(this.getLoginUserId(request));
+                entity.setCodeUrl(codeUrl);
                 result = service.insert(entity);
             }
             if (result > 0) {

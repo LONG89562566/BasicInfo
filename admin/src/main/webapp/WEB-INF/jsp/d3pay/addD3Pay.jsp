@@ -11,7 +11,6 @@
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="payId" name="payId" value="${d3Pay.payId}"/>
 			<input  type="hidden" id="projectId" name="projectId" value="${d3Pay.projectId}"/>
-     		<div class="layui-form-item" >
 
 			<div class='layui-form-item'>
      			<div class="layui-inline">
@@ -49,9 +48,16 @@
 					<textarea placeholder="请输入质量控制要点" style="width: 90%;" class="layui-textarea"  id="qualityControl" name = "qualityControl" lay-verify="content">${d3Pay.qualityControl}</textarea>
 					<span style="color: red" id="s-qualityControl"></span>
 				</div>
-	   </div>
-
 	 		</div>
+			<div class='layui-form-item'>
+				<jsp:include page="/WEB-INF/jsp/decorators/imageFile.jsp">
+					<jsp:param name="docUnid" value="${projectSurvey.projectId}" />
+					<jsp:param name="flowId" value="" />
+					<jsp:param name="type" value=''/>
+					<jsp:param name="imageTitle" value='三维交底图片'/>
+					<jsp:param name="imageLable" value='lcImage'/>
+				</jsp:include>
+			</div>
 	 		<div class="layui-input-block" style="margin-top:30px;margin-left:324px;">
 	 			<input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
        			<button class="layui-btn" name="cancleSubmit" >取消</button>

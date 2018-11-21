@@ -34,6 +34,8 @@ public class CodeInfo implements Serializable {
 	 private String projectId;
 	/*****码值*****/
 	private String code;
+	/*****二维码地址*****/
+	private String codeUrl;
 
 	 public String getCodeId() {
 		 return codeId;
@@ -141,6 +143,14 @@ public class CodeInfo implements Serializable {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getCodeUrl() {
+		return codeUrl;
+	}
+
+	public void setCodeUrl(String codeUrl) {
+		this.codeUrl = codeUrl;
 	}
 
 	public CodeInfo() {

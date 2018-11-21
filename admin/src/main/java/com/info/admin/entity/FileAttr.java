@@ -37,7 +37,7 @@ public class FileAttr implements Serializable {
 	 /*****流程节点主键*****/
 	 private String flowId;
 	 /*****类型*****/
-	 private Long type;
+	 private String type;
 
 
 	 public String getFileId() {
@@ -156,11 +156,11 @@ public class FileAttr implements Serializable {
 		 this.flowId = flowId;
 	 }
 
-	 public Long getType() {
+	 public String getType() {
 		 return type;
 	 }
 
-	 public void setType(Long type) {
+	 public void setType(String type) {
 		 this.type = type;
 	 }
 

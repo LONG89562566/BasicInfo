@@ -123,7 +123,7 @@
 
 						        <td>
 						         <div class="site-demo-button" >
-								   <button id="updateEquipmentInfo" data-method="setAddOrEdit" value="${r.supplierId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+								   <button id="updateEquipmentInfo" data-method="setAddOrEdit" value="${r.equipmentId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
 								 </div>
 						       </td>
 				             </tr>
@@ -156,7 +156,7 @@
 	    //数据展示id
 	    var showFieldData = "show-data";
 	    //主键
-	    var primarykey = "supplierId";
+	    var primarykey = "equipmentId";
 	    //分页显示标签id
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
@@ -224,13 +224,13 @@
 		         area: ['70%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/equipmentInfo/addOrEdit?supplierId='+supplierId,
+		         content: '<%=request.getContextPath()%>/admin/equipmentInfo/addOrEdit?equipmentId='+equipmentId,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);
 		        	 var body = layer.getChildFrame('body', index);
 		             var iframeWin = window[layero.find('iframe')[0]['name']]; 
-		             body.find('input[name="supplierId"]').val(supplierId);
+		             body.find('input[name="equipmentId"]').val(equipmentId);
 		             //弹窗表单的取消操作时关闭弹窗
 		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
 		            	 layer.closeAll();
@@ -268,7 +268,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"supplierId":id},
+						data: {"equipmentId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){
