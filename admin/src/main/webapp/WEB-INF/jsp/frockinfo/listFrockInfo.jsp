@@ -45,7 +45,7 @@
 	    <shiro:hasPermission name="frockInfo:query">
 		    <section class="content">
 		      <div class="row">
-				<div style="float: left;width: 18%;height: 500px;background-color: white;">
+                  <div style="float: left;width: 18%;height: 500px;background-color: white;margin-right: 1%">
 					  <table id="lcTree" title="所有梁场" style="width:100%;height:500px">
 						  <thead>
 						  <tr>
@@ -54,7 +54,7 @@
 						  </thead>
 					  </table>
 				  </div>
-				  <div class="box" style="float: right;width: 81%;height: auto; background-color: white;">
+                  <div class="box" style="float: left;width: 80%;height: auto; background-color: white;">
 					  <div class="row">
 		        <div class="col-xs-12">
 		          <div class="box">
