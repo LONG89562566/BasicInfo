@@ -12,7 +12,7 @@ import java.util.Date;
 public class Repertory implements Serializable {
 	private static final long serialVersionUID = 1L;
 	 /*****主键*****/
-	 private String supplierId;
+	 private String repertoryId;
 	 /*****创建时间*****/
 	 private Date createTime;
 	 /*****创建时间 日常的字符串*****/
@@ -39,12 +39,12 @@ public class Repertory implements Serializable {
 	 private BigDecimal num;
 
 
-	 public String getSupplierId() {
-		 return supplierId;
+	 public String getRepertoryId() {
+		 return repertoryId;
 	 }
 
-	 public void setSupplierId(String supplierId) {
-		 this.supplierId = supplierId;
+	 public void setRepertoryId(String repertoryId) {
+		 this.repertoryId = repertoryId;
 	 }
 
 	 public Date getCreateTime() {

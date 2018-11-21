@@ -30,7 +30,7 @@ public class RepertoryServiceImpl implements RepertoryService {
      */
     @Override
     public int insert(Repertory entity){
-        entity.setSupplierId(com.info.admin.utils.UUIDUtils.getUUid());
+        entity.setRepertoryId(com.info.admin.utils.UUIDUtils.getUUid());
         return dao.insert(entity);
     }
 

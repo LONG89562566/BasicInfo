@@ -31,12 +31,10 @@
 				width: 10%;
 			}
 		</style>
+		<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
-	<script src="/js/jquery.form.js"></script>
-	<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
-	<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
-
 	  <!-- 供应商列表start -->
 	  <div class="content-wrapper">
 	    <!-- Content Header (Page header) --> 
@@ -47,7 +45,7 @@
 	    <shiro:hasPermission name="supplier:query">
 		    <section class="content">
 				<div class="row">
-					<div style="float: left;width: 18%;height: 500px;background-color: white;">
+                    <div style="float: left;width: 18%;height: 500px;background-color: white;margin-right: 1%">
 						<table id="projectSurveyTree" title="所有梁场" style="width:100%;height:500px">
 							<thead>
 							<tr>
@@ -56,7 +54,7 @@
 							</thead>
 						</table>
 					</div>
-					<div class="box" style="float: right;width: 81%;height: auto; background-color: white;">
+                    <div class="box" style="float: left;width: 80%;height: auto; background-color: white;">
 		      <div class="row">
 		        <div class="col-xs-12">
 		          <div class="box">
@@ -70,9 +68,34 @@
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
 	                      <input type="hidden" name="projectId" id="projectId" value="">
 			              <div class="box-body">
-			                 <div class="form-group">
-
-			                 </div>
+                              <div class="form-group">
+                                  <label for="supperName" class="col-sm-1 control-label">供方全称:</label>
+                                  <div class="col-sm-3" style="width: 200px">
+                                      <input type="text" name="supperName" id="supperName" value="" class="form-control input-small" placeholder="请输入供方全称！">
+                                  </div>
+                                  <label for="representative" class="col-sm-1 control-label">法人代表:</label>
+                                  <div class="col-sm-3" style="width: 200px">
+                                      <input type="text" name="representative" id="representative" value="" class="form-control input-small" placeholder="请输入法人代表！">
+                                  </div>
+                                  <label for="license" class="col-sm-1 control-label">营业执照号:</label>
+                                  <div class="col-sm-3" style="width: 200px">
+                                      <input type="text" name="license" id="license" value="" class="form-control input-small" placeholder="请输入营业执照号！">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label for="registration" class="col-sm-1 control-label">税务登记编号:</label>
+                                  <div class="col-sm-3" style="width: 200px">
+                                      <input type="text" name="registration" id="registration" value="" class="form-control input-small" placeholder="请输入税务登记编号！">
+                                  </div>
+                                  <label for="contacts" class="col-sm-1 control-label">联系人:</label>
+                                  <div class="col-sm-3" style="width: 200px">
+                                      <input type="text" name="contacts" id="contacts" value="" class="form-control input-small" placeholder="请输入联系人！">
+                                  </div>
+                                  <label for="phone" class="col-sm-1 control-label">联系电话:</label>
+                                  <div class="col-sm-3" style="width: 200px">
+                                      <input type="text" name="phone" id="phone" value="" class="form-control input-small" placeholder="请输入联系电话！">
+                                  </div>
+                              </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
 			                 	<button type="reset" onclick='resetRefreshTheCurrentPage()' id="reset" class="btn btn-info ">重置</button>
@@ -91,12 +114,11 @@
 			               <thead>
 				              <tr>
 				                <th field="sys_xh">序号</th>
-			                    <th field="projectId"  >项目编号</th>
 							    <th field="seq"  >排序号</th>
 			                    <th field="supperName"  >供方全称</th>
 			                    <th field="representative"  >法人代表</th>
 			                    <th field="address"  >地址</th>
-			                    <th field="nature"  >企业性质（全民/集体/三资/个体）</th>
+			                    <th field="nature"  >企业性质</th>
 			                    <th field="license"  >营业执照号</th>
 			                    <th field="registration"  >税务登记编号</th>
 			                    <th field="contacts"  >联系人</th>
@@ -105,6 +127,31 @@
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
+                           <c:forEach items="${paginator.object}" var="r" varStatus="st">
+                               <tr>
+                                   <td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
+                                   <td>${r.seq}</td>
+                                   <td>${r.supperName}</td>
+                                   <td>${r.representative}</td>
+                                   <td>${r.address}</td>
+                                   <td>
+                                       <c:if test="${r.nature == 0 }">全民</c:if>
+                                       <c:if test="${r.nature == 1 }">集体</c:if>
+                                       <c:if test="${r.nature == 2 }">三资</c:if>
+                                       <c:if test="${r.nature == 3 }">个体</c:if>
+                                   </td>
+                                   <td>${r.license}</td>
+                                   <td>${r.registration}</td>
+                                   <td>${r.contacts}</td>
+                                   <td>${r.phone}</td>
+                                   <td>
+                                       <div class="site-demo-button" >
+                                           <button id="updateD3Pay" data-method="setAddOrEdit" projectId="${r.projectId}" value="${r.supplierId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+                                           <button id="delD3Pay" data-method="delIfon" value="${r.supplierId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
+                                       </div>
+                                   </td>
+                               </tr>
+                           </c:forEach>
 		                  </tbody>
 			             </table>
 			           </div>
@@ -140,7 +187,8 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+        tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal","projectId");
+        tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-warm");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
@@ -173,14 +221,8 @@
                 $(this).treegrid('collapseAll');
             },
             onClickRow:function(row){
-                console.log("----------------------------------------------");
-                console.log("row.projectId : "+row.projectId);
-                console.log("row.lcName : "+row.lcName);
-                console.log("----------------------------------------------");
                 $('#pageNum').val(1);
                 $("#projectId").val(row.projectId);
-                $("#lcName").val(row.lcName);
-                $("#lcName").html(row.lcName);
                 //点击时初始化数据
                 initPaginator(row.projectId);
 
@@ -190,14 +232,13 @@
         });
         //初始化列表
         var initPaginator = function (projectId) {
-            var selectRow = $('#projectSurveyTree').datagrid('getSelected');
-            if (selectRow) {
-                projectId = selectRow.projectId;
+            if (projectId) {
+                loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
             } else {
                 layer.msg('请先选择一个梁场！');
                 return;
             }
-            loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
+
         }
 
 
@@ -208,10 +249,17 @@
 			//触发事件
 			var active = {
 				setAddOrEdit: function(data){
-					//获取userId
-					var id = data.val();
-					setAddOrEdit(id);
+                    //获取userId
+                    var id = data.val();
+                    var projectId = $("#projectId").val();
+                    projectId = projectId?projectId:data.attr("projectId");
+                    setAddOrEdit(id,projectId);
 				},
+                delIfon: function(data){
+                //获取@primarykey
+                var id = data.val();
+                delData(id);
+                },
 				//启用和禁用数据弹窗
 				offset: function(othis){
 					var type = othis.data('type');
@@ -237,40 +285,34 @@
 
 		
 		//新增、编辑打开
-		var setAddOrEdit = function(supplierId){
-
-            var selectRow = $('#projectSurveyTree').datagrid('getSelected');
-            if (selectRow) {
-                var projectId = selectRow.projectId;
-            } else {
+		var setAddOrEdit = function(supplierId,projectId){
+            if(!projectId){
                 layer.msg('请先选择一个梁场！');
                 return;
             }
-		    if(selectRow || projectId != null  ){
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
 		         title: '新增/修改 供应商',
-		         area: ['70%', '86%'],
+		         area: ['100%', '100%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/supplier/addOrEdit?supplierId='+supplierId+"&projectId="+projectId,
+		         content: '<%=request.getContextPath()%>/admin/supplier/addOrEdit?supplierId='+supplierId,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);
 		        	 var body = layer.getChildFrame('body', index);
 		             var iframeWin = window[layero.find('iframe')[0]['name']]; 
 		             body.find('input[name="supplierId"]').val(supplierId);
+                     body.find('input[name="projectId"]').val(projectId);
 		             //弹窗表单的取消操作时关闭弹窗
 		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
 		            	 layer.closeAll();
+                         //刷新页面
+                         refreshTheCurrentPage();
 		             });
 		         }
 		     });
-            } else {
-                layer.msg('请先选择一个梁场！');
-                return;
-            }
 		};
 		
 		//禁用
@@ -287,7 +329,13 @@
 			text = "确定要启用此条数据吗？";
 			userOffSet(0,requestUrl, id,text);
 		};
-
+        //删除
+        var delData = function(id){
+            //删除的url
+            requestUrl= "<%=request.getContextPath()%>/admin/supplier/delete";
+            text = "确定要删除此条数据吗？";
+            userOffSet(2,requestUrl, id,text);
+        };
 		var userOffSet = function (type ,requestUrl,id,text) {
 			layer.open({
 				type: 1,
@@ -302,7 +350,7 @@
 					$.ajax({
 						type: "POST",
 						url: requestUrl,
-						data: {"id":id},
+						data: {"supplierId":id},
 						dataType: "json",
 						cache:false,
 						success: function(data){
