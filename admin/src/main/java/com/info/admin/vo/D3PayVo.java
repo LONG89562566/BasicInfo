@@ -31,7 +31,8 @@ public class D3PayVo implements Serializable {
 	 private String safetyControl;
 	 /*****质量控制要点*****/ 
 	 private String qualityControl;
-
+	/*****三维交底图片*****/
+	private String fileUrl;
 
 	 public String getPayId() {
 		 return payId;
@@ -120,6 +121,14 @@ public class D3PayVo implements Serializable {
 	 public void setQualityControl(String qualityControl) {
 		 this.qualityControl = qualityControl;
 	 }
+
+	public String getFileUrl() {
+		return fileUrl;
+	}
+
+	public void setFileUrl(String fileUrl) {
+		this.fileUrl = fileUrl;
+	}
 
 	public D3PayVo() {
 		super();

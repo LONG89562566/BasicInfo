@@ -9,7 +9,7 @@
 	</head>
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
- 			<input  type="hidden" id="projectId" name="projectId" value="${projectSurvey.projectId}"/>
+ 			<input  type="hidden" id="projectId" name="projectId" value="${projectSurvey.projectId}${uuid}"/>
 
 			<div class='layui-form-item'>
 				<div class="layui-inline">
@@ -108,12 +108,13 @@
 			</div>
 
 			<div class='layui-form-item'>
-				<jsp:include page="/WEB-INF/jsp/decorators/imageFile.jsp">
-					<jsp:param name="docUnid" value="${projectSurvey.projectId}" />
+				<jsp:include page="/WEB-INF/jsp/decorators/imageFileBachLs.jsp">
+					<jsp:param name="docUnid" value="${projectSurvey.projectId}${uuid}" />
 					<jsp:param name="flowId" value="" />
 					<jsp:param name="type" value=''/>
 					<jsp:param name="imageTitle" value='梁场图片'/>
 					<jsp:param name="imageLable" value='lcImage'/>
+					<jsp:param name="fn" value='${fn}'/>
 				</jsp:include>
 			</div>
 
@@ -143,6 +144,7 @@
 	
 	function saveData() {
 	    var projectId = $("#projectId").val();
+        projectId = projectId == '' ? '${uuid}' : projectId;
 	    var createTime = $("#createTime").val();
 	    var createUser = $("#createUser").val();
 	    var deleteFlag = $("#deleteFlag").val();
@@ -161,6 +163,7 @@
 	    var designUnit = $("#designUnit").val();
 
         var requestData={
+            fn : '${fn}',
             "projectId":projectId,
             "createTimeStr":createTime,
             "createUser":createUser,

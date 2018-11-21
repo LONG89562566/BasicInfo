@@ -38,16 +38,17 @@ public class ProjectSurveyServiceImpl implements ProjectSurveyService {
      */
     @Override
     public int insert(ProjectSurvey entity){
-        entity.setProjectId(com.info.admin.utils.UUIDUtils.getUUid());
+
         if(entity != null){
-        OrgInfo orgInfo = new OrgInfo();
-        orgInfo.setProjectId(entity.getProjectId());
-        orgInfo.setOrgId(entity.getProjectId());
-        orgInfo.setLevel(Long.valueOf(0));
-        orgInfo.setParentId("0");
-        orgInfo.setIsEnd(Long.valueOf(2));
-        orgInfo.setOrgName(entity.getLcName());
-        orgInfoService.insert(orgInfo);}
+            OrgInfo orgInfo = new OrgInfo();
+            orgInfo.setProjectId(entity.getProjectId());
+            orgInfo.setOrgId(entity.getProjectId());
+            orgInfo.setLevel(Long.valueOf(0));
+            orgInfo.setParentId("0");
+            orgInfo.setIsEnd(Long.valueOf(2));
+            orgInfo.setOrgName(entity.getLcName());
+            orgInfoService.insert(orgInfo);
+        }
         return dao.insert(entity);
     }
 

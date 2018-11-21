@@ -80,12 +80,11 @@
 			               <thead>
 				              <tr>
 				                <th field="sys_xh">序号</th>
-			                    <th field="seq"  >排序号</th>
-			                    <th field="projectId"  >项目编号</th>
-			                    <th field="procedure"  >工序</th>
-			                    <th field="processControl"  >关键工艺控制要点</th>
-			                    <th field="safetyControl"  >安全控制要点</th>
-			                    <th field="qualityControl"  >质量控制要点</th>
+								  <th field="procedures"  >工序</th>
+								  <th field="fileUrl"  type="img" imgWidth = '60px' imgHeight="60px">三维工艺</th>
+								  <th field="processControl"  >关键工艺控制要点</th>
+								  <th field="safetyControl"  >安全控制要点</th>
+								  <th field="qualityControl"  >质量控制要点</th>
 
 				                <th field="sys_opt">操作</th>
 				              </tr>
@@ -93,13 +92,12 @@
 			               <tbody id="show-data">
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
-					            <td>${r.seq}</td>
-					            <td>${r.projectId}</td>
-					            <td>${r.procedure}</td>
-					            <td>${r.processControl}</td>
-					            <td>${r.safetyControl}</td>
-					            <td>${r.qualityControl}</td>
+								 <td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
+								 <td>${r.procedures}</td>
+								 <td><div style='width:60px ;height: 60px;'><img onclick='_showImgUtil(this)' width='100%' src='${r.fileUrl}'/></div></td>
+								 <td>${r.processControl}</td>
+								 <td>${r.safetyControl}</td>
+								 <td>${r.qualityControl}</td>
 
 						        <td>
 						         <div class="site-demo-button" >

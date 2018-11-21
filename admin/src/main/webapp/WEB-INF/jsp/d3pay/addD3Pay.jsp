@@ -9,7 +9,7 @@
 	</head>
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
- 			<input  type="hidden" id="payId" name="payId" value="${d3Pay.payId}"/>
+ 			<input  type="hidden" id="payId" name="payId" value="${d3Pay.payId}${uuid}"/>
 			<input  type="hidden" id="projectId" name="projectId" value="${d3Pay.projectId}"/>
 
 
@@ -52,11 +52,12 @@
 			</div>
 			<div class='layui-form-item'>
 				<jsp:include page="/WEB-INF/jsp/decorators/imageFile.jsp">
-					<jsp:param name="docUnid" value="${projectSurvey.projectId}" />
+					<jsp:param name="docUnid" value="${d3Pay.payId}${uuid}" />
 					<jsp:param name="flowId" value="" />
 					<jsp:param name="type" value=''/>
 					<jsp:param name="imageTitle" value='三维交底图片'/>
 					<jsp:param name="imageLable" value='lcImage'/>
+					<jsp:param name="fn" value='${fn}'/>
 				</jsp:include>
 			</div>
 	 		<div class="layui-input-block" style="margin-top:30px;margin-left:324px;">
@@ -85,6 +86,7 @@
 	
 	function saveData() {
 	    var payId = $("#payId").val();
+	    payId = payId == '' ? '${uuid}' : payId;
 	    var seq = $("#seq").val();
 	    var projectId = $("#projectId").val();
 	    var procedures = $("#procedures").val();
@@ -93,6 +95,7 @@
 	    var qualityControl = $("#qualityControl").val();
 
         var requestData={
+            fn : '${fn}',
             "payId":payId,
             "seq":seq,
             "projectId":projectId,

@@ -201,6 +201,10 @@
 		
 		//新增、编辑打开
 		var setAddOrEdit = function(projectId){
+            var fn = "edit";
+            if(projectId == "" || projectId == undefined){
+                fn = "add";
+            }
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
@@ -208,7 +212,7 @@
 		         area: ['70%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/projectSurveyGoal/addOrEdit?projectId='+projectId,
+		         content: '<%=request.getContextPath()%>/admin/projectSurveyGoal/addOrEdit?projectId='+projectId+"&fn="+fn,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);
