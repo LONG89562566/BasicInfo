@@ -31,11 +31,10 @@
 				width: 10%;
 			}
 		</style>
+		<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
-	<script src="/js/jquery.form.js"></script>
-	<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
-	<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 	  <!-- 材料列表start -->
 	  <div class="content-wrapper">
 	    <!-- Content Header (Page header) --> 
@@ -69,9 +68,16 @@
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
 	                      <input type="hidden" name="projectId" id="projectId" value="">
 			              <div class="box-body">
-			                 <div class="form-group">
-
-			                 </div>
+                              <div class="form-group" >
+                                  <label for="materialName" class="col-sm-1 control-label">材料名称:</label>
+                                  <div class="col-sm-3" style="width: 200px">
+                                      <input type="text" name="materialName" id="materialName" value="" class="form-control input-small">
+                                  </div>
+                                  <label for="model" class="col-sm-1 control-label">规格型号:</label>
+                                  <div class="col-sm-3" style="width: 200px">
+                                      <input type="text" name="model" id="model" value="" class="form-control input-small">
+                                  </div>
+                              </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
 			                 	<button type="reset" onclick='resetRefreshTheCurrentPage()' id="reset" class="btn btn-info ">重置</button>
@@ -90,26 +96,43 @@
 			               <thead>
 				              <tr>
 				                <th field="sys_xh">序号</th>
-			                    <th field="projectId"  >项目编号</th>
-								  <th field="seq"  >排序号</th>
+								<th field="seq"  >排序号</th>
 			                    <th field="materialName"  >材料名称</th>
 			                    <th field="model"  >规格型号</th>
 			                    <th field="unit"  >计量单位</th>
 			                    <th field="entryNum"  >进场数量</th>
 			                    <th field="manufactrer"  >生产厂家</th>
 			                    <th field="supplyer"  >供货单位</th>
-			                    <th field="certificateQuality"  >质量证明书</th>
-			                    <th field="inspection"  >报验委托单</th>
 			                    <th field="usePart"  >使用部位</th>
 			                    <th field="storage"  >存放地点</th>
 			                    <th field="residualNum"  >剩余数量</th>
-			                    <th field="testReport"  >试验报告单</th>
 			                    <th field="testState"  >检验状态</th>
-							    <th field="createTime"  type='date'>创建时间</th>
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
+                           <c:forEach items="${paginator.object}" var="r" varStatus="st">
+                               <tr>
+                                   <td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
+                                   <td>${r.seq}</td>
+                                   <td>${r.materialName}</td>
+                                   <td>${r.model}</td>
+                                   <td>${r.unit}</td>
+                                   <td>${r.entryNum}</td>
+                                   <td>${r.manufactrer}</td>
+                                   <td>${r.supplyer}</td>
+                                   <td>${r.usePart}</td>
+                                   <td>${r.storage}</td>
+                                   <td>${r.residualNum}</td>
+                                   <td>${r.testState}</td>
+                                   <td>
+                                       <div class="site-demo-button" >
+                                           <button id="updateFrockInfo" data-method="setAddOrEdit" value="${r.materialId}" projectId="${r.projectId}"  class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+                                           <button id="delReleaseInfo" data-method="deletes" value="${r.materialId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
+                                       </div>
+                                   </td>
+                               </tr>
+                           </c:forEach>
 		                  </tbody>
 			             </table>
 			           </div>
@@ -145,8 +168,8 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
-	    tableBtn = addBtn(tableBtn,"deletes","删除","","","","","","layui-btn-danger");
+	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal","projectId");
+	    tableBtn = addBtn(tableBtn,"deletes","删除","","","","","","layui-btn-warm");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
@@ -166,14 +189,8 @@
                 $(this).treegrid('collapseAll');
             },
             onClickRow:function(row){
-                console.log("----------------------------------------------");
-                console.log("row.projectId : "+row.projectId);
-                console.log("row.lcName : "+row.lcName);
-                console.log("----------------------------------------------");
                 $('#pageNum').val(1);
                 $("#projectId").val(row.projectId);
-                $("#lcName").val(row.lcName);
-                $("#lcName").html(row.lcName);
                 //点击时初始化数据
                 initPaginator(row.projectId);
 
@@ -181,18 +198,15 @@
 
             }
         });
-        //初始化列表
         var initPaginator = function (projectId) {
-            var selectRow = $('#projectSurveyTree').datagrid('getSelected');
-            if (selectRow) {
-                projectId = selectRow.projectId;
+            if (projectId) {
+                loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
             } else {
                 layer.msg('请先选择一个梁场！');
                 return;
             }
-            loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
-        }
 
+        }
 
 		var methodStatus = function (val , obj) {
 			var retVal = "";
@@ -213,8 +227,10 @@
 			var active = {
 				setAddOrEdit: function(data){
 					//获取userId
-					var id = data.val();
-					setAddOrEdit(id);
+                    var id = data.val();
+                    var projectId = $("#projectId").val();
+                    projectId = projectId?projectId:data.attr("projectId");
+                    setAddOrEdit(id,projectId);
 				},
                 deletes: function(data){
 					//获取userId
@@ -230,30 +246,27 @@
 
 		
 		//新增、编辑打开
-		var setAddOrEdit = function(materialId){
-            var selectRow = $('#projectSurveyTree').datagrid('getSelected');
-            if (selectRow) {
-                var projectId = selectRow.projectId;
-            } else {
+		var setAddOrEdit = function(materialId,projectId){
+            if(!projectId){
                 layer.msg('请先选择一个梁场！');
                 return;
             }
-            if (selectRow || projectId != "" || projectId != null ) {
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
 		         title: '新增/修改 材料',
-		         area: ['70%', '86%'],
+		         area: ['100%', '100%'],
                  btn: ['确定', '取消'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/material/addOrEdit?materialId='+materialId+"&projectId="+projectId,
+		         content: '<%=request.getContextPath()%>/admin/material/addOrEdit?materialId='+materialId,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);
 		        	 var body = layer.getChildFrame('body', index);
 		             var iframeWin = window[layero.find('iframe')[0]['name']]; 
 		             body.find('input[name="materialId"]').val(materialId);
+                     body.find('input[name="projectId"]').val(projectId);
 		             //弹窗表单的取消操作时关闭弹窗
 		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
 		            	 layer.closeAll();
@@ -292,10 +305,6 @@
                      // alert(4);
                  }
 		     });
-            } else {
-                layer.msg('请先选择一个梁场！');
-                return;
-            }
 		};
 
 		//删除

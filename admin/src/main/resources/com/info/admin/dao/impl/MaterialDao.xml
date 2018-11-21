@@ -216,7 +216,7 @@
 		<result column="updateTime" property="updateTimeStr" />
 		<result column="seq" property="seq" />
 		<result column="project_id" property="projectId" />
-		<result column="materialName" property="materialName" />
+		<result column="material_name" property="materialName" />
 		<result column="model" property="model" />
 		<result column="unit" property="unit" />
 		<result column="entry_num" property="entryNum" />
@@ -253,13 +253,13 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.projectId != null">
+		    <if test=" entity.projectId != null and entity.projectId != ''">
 			    and project_id =  #{entity.projectId} 
 		    </if>
-		    <if test=" entity.materialname != null">
-			    and materialname =  #{entity.materialname} 
+		    <if test=" entity.materialName != null and entity.materialName != ''">
+			    and material_name =  #{entity.materialName}
 		    </if>
-		    <if test=" entity.model != null">
+		    <if test=" entity.model != null and entity.model != ''">
 			    and model =  #{entity.model} 
 		    </if>
 		    <if test=" entity.unit != null">

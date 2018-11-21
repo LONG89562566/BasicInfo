@@ -188,6 +188,7 @@
             "testReport":testReport,
             "testState":testState
         };
+        return requestData;
     };
 
 	
