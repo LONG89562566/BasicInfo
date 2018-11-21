@@ -88,7 +88,7 @@ public class ProblemLibraryController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String supplierId,Model model){
         try{
-            if(null != supplierId && StringUtils.isNotBlank(supplierId)){
+            if(StringUtils.isNotBlank(supplierId)){
                 //根据id查询系统用户
                 ProblemLibrary problemLibrary = service.getProblemLibraryById(supplierId);
                 model.addAttribute("problemLibrary", problemLibrary);
@@ -119,9 +119,16 @@ public class ProblemLibraryController extends BaseController{
             if (null == entity) {
                 return new JsonResult(JsonResultCode.FAILURE, "请输入数据", "");
             }
-
+            String[] inspectUsers = request.getParameterValues("inspectUsers[]");
+            if(inspectUsers != null && inspectUsers.length > 0){
+                entity.setInspectUser(StringUtils.join(inspectUsers,","));
+            }
+            String[] rectifyUsers = request.getParameterValues("rectifyUsers[]");
+            if(rectifyUsers != null && rectifyUsers.length> 0){
+                entity.setRectifyUser(StringUtils.join(rectifyUsers,","));
+            }
             // 通过id来判断是新增还是修改
-            if (null != entity.getSupplierId() && StringUtils.isNotBlank(entity.getSupplierId())) {
+            if (StringUtils.isNotBlank(entity.getSupplierId())) {
                 result = service.update(entity);
             } else {
                 entity.setDeleteFlag(0L);

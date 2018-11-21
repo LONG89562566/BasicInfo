@@ -206,7 +206,7 @@ public class ReleaseInfoController extends BaseController{
     @RequestMapping(value="/addOrEditUser",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEditUser(HttpServletRequest request,String releaseId,Model model){
         try{
-            if(null != releaseId && StringUtils.isNotBlank(releaseId)){
+            if(StringUtils.isNotBlank(releaseId)){
                 //根据id查询系统用户
                 ReleaseInfo releaseInfo = service.getReleaseInfoById(releaseId);
                 model.addAttribute("releaseInfo", releaseInfo);
@@ -271,7 +271,7 @@ public class ReleaseInfoController extends BaseController{
                 entity.setReceiveUserCn(StringUtils.join(receiveUserCns,","));
             }
             // 通过id来判断是新增还是修改
-            if (null != entity.getReleaseId() && StringUtils.isNotBlank(entity.getReleaseId())) {
+            if ( StringUtils.isNotBlank(entity.getReleaseId())) {
                 result = service.update(entity);
             } else {
                 entity.setDeleteFlag(0L);

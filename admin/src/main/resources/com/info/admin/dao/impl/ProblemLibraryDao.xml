@@ -142,6 +142,8 @@
 		<result column="inspect_content" property="inspectContent" />
 		<result column="inspect_user" property="inspectUser" />
 		<result column="rectify_user" property="rectifyUser" />
+		<result column="inspect_user_cn" property="inspectUserCn" />
+		<result column="rectify_user_cn" property="rectifyUserCn" />
 		<result column="rectify_time" property="rectifyTime" />
 		<result column="rectifyTime" property="rectifyTimeStr" />
     </resultMap>
@@ -168,13 +170,13 @@
 			    and seq =  #{entity.seq} 
 		    </if>
 		    <if test=" entity.title != null">
-			    and title =  #{entity.title} 
+				and title like concat('%',#{entity.title},'%')
 		    </if>
 		    <if test=" entity.type != null">
 			    and type =  #{entity.type} 
 		    </if>
 		    <if test=" entity.inspectContent != null">
-			    and inspect_content =  #{entity.inspectContent} 
+				and inspect_content like concat('%',#{entity.inspectContent},'%')
 		    </if>
 		    <if test=" entity.inspectUser != null">
 			    and inspect_user =  #{entity.inspectUser} 
@@ -194,7 +196,9 @@
           *
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-           ,date_format(rectify_time,'%Y-%m-%d %H:%i:%s') as rectifyTime 
+           ,date_format(rectify_time,'%Y-%m-%d %H:%i:%s') as rectifyTime
+			,(select name from staff_info where staff_info.staff_id = inspect_user ) as inspect_user_cn
+			,(select name from staff_info where staff_info.staff_id = rectify_user ) as rectify_user_cn
           from problem_library
         <include refid="filterCondition"></include>
 		order by seq
@@ -212,7 +216,9 @@
          * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-           ,date_format(rectify_time,'%Y-%m-%d %H:%i:%s') as rectifyTime 
+           ,date_format(rectify_time,'%Y-%m-%d %H:%i:%s') as rectifyTime
+			,(select name from staff_info where staff_info.staff_id = inspect_user ) as inspect_user_cn
+			,(select name from staff_info where staff_info.staff_id = rectify_user ) as rectify_user_cn
          from problem_library
         <include refid="filterCondition"></include>
         order by seq LIMIT #{offset},#{pageSize}
@@ -224,7 +230,9 @@
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-           ,date_format(rectify_time,'%Y-%m-%d %H:%i:%s') as rectifyTime 
+           ,date_format(rectify_time,'%Y-%m-%d %H:%i:%s') as rectifyTime
+			,(select name from staff_info where staff_info.staff_id = inspect_user ) as inspect_user_cn
+			,(select name from staff_info where staff_info.staff_id = rectify_user ) as rectify_user_cn
 		 from problem_library where supplier_id= #{supplierId}
 	</select>
 </mapper>	
