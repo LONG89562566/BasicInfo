@@ -2,11 +2,13 @@ package com.info.admin.service.impl;
 
 import com.info.admin.dao.ProportionsDetailetailDao;
 import com.info.admin.entity.ProportionsDetailetail;
+import com.info.admin.entity.ProportionsMaterial;
 import com.info.admin.service.ProportionsDetailetailService;
 import com.info.admin.utils.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +32,6 @@ public class ProportionsDetailetailServiceImpl implements ProportionsDetailetail
      */
     @Override
     public int insert(ProportionsDetailetail entity){
-        entity.setDetailId(com.info.admin.utils.UUIDUtils.getUUid());
         return dao.insert(entity);
     }
 
@@ -114,6 +115,32 @@ public class ProportionsDetailetailServiceImpl implements ProportionsDetailetail
 	 public ProportionsDetailetail getProportionsDetailetailById(String detailId) {
 		 return dao.getProportionsDetailetailById(detailId);
 	 }
+
+    /**
+     *  批量ProportionsMaterial入库管理
+     *@author
+     * @param
+     * @param
+     *@createTime
+     *@updater  or other
+     *@return   Integer
+     */
+    @Override
+    public Integer batchProportionsMaterial(  String detailId, String[] materialNum, String[] materialId){
+        if(materialNum == null || materialId == null ){
+            return  0;
+        }
+        List<ProportionsMaterial> proportionsMaterialsList = new ArrayList<>();
+        for (int i=0;i<materialNum.length;i++) {
+            ProportionsMaterial proportionsMaterials = new ProportionsMaterial();
+            proportionsMaterials.setProportionsMaterialId(com.info.admin.utils.UUIDUtils.getUUid());
+            proportionsMaterials.setDetailId(detailId);
+            proportionsMaterials.setMaterialNum(Long.parseLong(materialNum[i].trim()));
+            proportionsMaterials.setMaterialId(materialId[i]);
+            proportionsMaterialsList.add(proportionsMaterials);
+        }
+        return dao.batchProportionsMaterial(proportionsMaterialsList);
+    }
 }
 
 	

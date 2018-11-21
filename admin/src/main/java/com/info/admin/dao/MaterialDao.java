@@ -1,6 +1,7 @@
 package com.info.admin.dao;
 
 import com.info.admin.entity.Material;
+import com.info.admin.entity.MaterialTree;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -82,4 +83,14 @@ public interface MaterialDao {
 	 *@return   Material
 	 */
 	public Material getMaterialById(String materialId);
+
+	 /**
+	  *  材料信息List
+	  * @author
+	  * @param
+	  * @date  2018-11-14 23:45:42
+	  * @updater  or other
+	  * @return   OrgInfo
+	  */
+	 public List<MaterialTree>  getMaterialTree(@Param("entity")MaterialTree entity, String projectId);
 }

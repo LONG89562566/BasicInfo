@@ -253,7 +253,7 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.projectId != null and entity.projectId != ''">
+		    <if test=" entity.projectId != null">
 			    and project_id =  #{entity.projectId} 
 		    </if>
 		    <if test=" entity.materialName != null and entity.materialName != ''">
@@ -334,4 +334,56 @@
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
 		 from material where material_id= #{materialId}
 	</select>
-</mapper>	
+
+	<!-- 返回 材料树 对象 -->
+	<resultMap type="com.info.admin.entity.MaterialTree" id="materialTreeMap">
+		<result column="material_id" property="materialId" />
+		<result column="create_time" property="createTime" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="project_id" property="projectId" />
+		<result column="material_name" property="materialName" />
+		<result column="model" property="model" />
+		<result column="unit" property="unit" />
+		<result column="entry_num" property="entryNum" />
+		<result column="residual_num" property="residualNum" />
+
+
+	</resultMap>
+
+	<!-- 分页条件 -->
+	<sql id="filterConditionTree">
+		<trim prefix="where " prefixOverrides="and " >
+			<if test=" entity.materialId != null">
+				and material_id =  #{entity.materialId}
+			</if>
+
+			<if test=" entity.projectId != null and entity.projectId != '' ">
+				and project_id =  #{entity.projectId}
+			</if>
+			<if test=" entity.materialName != null and  entity.materialName != ''">
+				and material_name =  #{entity.materialName}
+			</if>
+			<if test=" entity.model != null">
+				and model =  #{entity.model}
+			</if>
+			<if test=" entity.unit != null">
+				and unit =  #{entity.unit}
+			</if>
+			<if test=" entity.entryNum != null">
+				and entry_num =  #{entity.entryNum}
+			</if>
+			<if test=" entity.residualNum != null">
+				and residual_num =  #{entity.residualNum}
+			</if>
+				and delete_flag =  0
+		</trim>
+	</sql>
+	<!-- 根据梁场ID 查询材料-->
+	<select id="getMaterialTree"  resultMap="materialTreeMap" >
+		select
+		*
+		from material
+		<include refid="filterConditionTree"></include>
+	</select>
+
+</mapper>

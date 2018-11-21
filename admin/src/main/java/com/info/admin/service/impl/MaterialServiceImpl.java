@@ -2,8 +2,11 @@ package com.info.admin.service.impl;
 
 import com.info.admin.dao.MaterialDao;
 import com.info.admin.entity.Material;
+import com.info.admin.entity.MaterialTree;
 import com.info.admin.service.MaterialService;
 import com.info.admin.utils.PageUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -114,6 +117,31 @@ public class MaterialServiceImpl implements MaterialService {
 	 public Material getMaterialById(String materialId) {
 		 return dao.getMaterialById(materialId);
 	 }
+
+    /**
+     *  材料信息List
+     * @author
+     * @param
+     * @date  2018-11-14 23:45:42
+     * @updater  or other
+     * @return   OrgInfo
+     */
+    @Override
+    public List<MaterialTree>  getMaterialTree(MaterialTree materialTree, String projectId){
+        return dao.getMaterialTree(materialTree,projectId);
+    }
+    /**
+     * 材料名称树
+     */
+    @Override
+    public JSONArray materialTree(List<MaterialTree> materialTreeList, int parentId) {
+        JSONArray all = new JSONArray();
+        for (MaterialTree materialTree : materialTreeList) {
+            JSONObject main = JSONObject.fromObject(materialTree);
+            all.add(main);
+        }
+        return all;
+    }
 }
 
 	

@@ -2,8 +2,10 @@ package com.info.admin.controller.proportions;
 
 import com.info.admin.controller.base.BaseController;
 import com.info.admin.entity.Proportions;
+import com.info.admin.entity.ProportionsDetailetail;
 import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
+import com.info.admin.service.ProportionsDetailetailService;
 import com.info.admin.service.ProportionsService;
 import com.info.admin.utils.PageUtil;
 import com.info.admin.utils.UUIDUtils;
@@ -34,6 +36,8 @@ public class ProportionsController extends BaseController{
 
     @Autowired
     private ProportionsService service;
+    @Autowired
+    private ProportionsDetailetailService proportionsDetailetailService;
     
      /**
      *查询配合比列表
@@ -140,6 +144,56 @@ public class ProportionsController extends BaseController{
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
     }
+
+    /**
+     * 新增Proportions对象和批量新增加ProportionsDetail
+     * @param    request  请求
+     * @param
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "insertProportionsDetail", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult insertProportionsDetail(HttpServletRequest request,String proportionsName ,Long seq) {
+        logger.info("[ProportionsController][insertProportionsDetail] 新增或者修改Proportions对象:");
+        try {
+            int result;
+            int resultTwo;
+            String[] materialNum =  request.getParameterValues("materialNum[]");
+            String[] materialId =  request.getParameterValues("materialId[]");
+            if (StringUtils.isNotEmpty(proportionsName) || materialNum != null || materialId != null) {
+                Proportions entity = new Proportions();
+                entity.setProportionsId(com.info.admin.utils.UUIDUtils.getUUid());
+                entity.setName(proportionsName);
+                entity.setSeq(seq);
+                result = service.insert(entity);
+                if (result > 0) {
+                    ProportionsDetailetail proportionsDetail = new ProportionsDetailetail();
+                    proportionsDetail.setDetailId(com.info.admin.utils.UUIDUtils.getUUid());
+                    proportionsDetail.setProportionsId(entity.getProportionsId());
+                    resultTwo = proportionsDetailetailService.insert(proportionsDetail);
+                    if(resultTwo > 0){
+                        String detailId = proportionsDetail.getDetailId();
+                         proportionsDetailetailService.batchProportionsMaterial(detailId,materialNum,materialId);
+                    } else {
+                        return new JsonResult(JsonResultCode.FAILURE, "操作失败", "");
+                    }
+                } else {
+                    return new JsonResult(JsonResultCode.FAILURE, "操作失败", "");
+                }
+                return new JsonResult(JsonResultCode.SUCCESS, "操作成功", "");
+            }else {
+                return new JsonResult(JsonResultCode.FAILURE, "请输入数据", "");
+            }
+
+        } catch (Exception e) {
+            logger.error("[ProportionsController][insertProportionsDetail] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
 
     /**
      * 查询Proportions对象
