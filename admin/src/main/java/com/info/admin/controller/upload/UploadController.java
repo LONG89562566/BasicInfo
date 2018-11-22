@@ -4,6 +4,7 @@ import com.info.admin.controller.base.BaseController;
 import com.info.admin.entity.FileAttr;
 import com.info.admin.result.*;
 import com.info.admin.service.FileAttrService;
+import com.info.admin.utils.DateUtil;
 import com.info.admin.utils.ImgTools;
 import com.info.admin.utils.MultipartFileUtils;
 import net.sf.json.JSONObject;
@@ -34,10 +35,6 @@ import java.util.*;
 @RequestMapping("/admin")
 public class UploadController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
-    // windows
-    private String PATH = "/webser/storage/";
-
-    private String PATH_LINE = "/";
 
     @Autowired
     private FileAttrService fileAttrService;
@@ -54,19 +51,48 @@ public class UploadController extends BaseController {
     public JsonResult uploadImgs(HttpServletRequest request, HttpServletResponse response,
                                  @RequestParam("imgFiles") MultipartFile[] imgFiles, @ModelAttribute FileAttr fileAttr) {
         try {
-            if (imgFiles != null) {
-                List<String> pathList = MultipartFileUtils.getImgPath(request, response, imgFiles);
-                if (CollectionUtils.isNotEmpty(pathList)) {
-                    //保存文件到文件表
-                    fileAttr.setCreateUser(getLoginUserId(request));
-                    fileAttrService.insertBatchFileAttr(fileAttr, pathList);
-                    // 返回图片的路径
-                    return new JsonResult(JsonResultCode.SUCCESS, "上传成功", pathList);
-                } else {
-                    return new JsonResult(JsonResultCode.FAILURE, "上传失败", "");
-                }
+            if (imgFiles == null || imgFiles.length == 0) {
+                return new JsonResult(JsonResultCode.FAILURE, "参数有误", "");
             }
-            return new JsonResult(JsonResultCode.FAILURE, "参数有误", "");
+            List<String> pathList = MultipartFileUtils.getImgPath(request, response, imgFiles);
+            if (CollectionUtils.isNotEmpty(pathList)) {
+                //保存文件到文件表
+                fileAttr.setCreateUser(getLoginUserId(request));
+                fileAttrService.insertBatchFileAttr(fileAttr, pathList);
+                // 返回图片的路径
+                return new JsonResult(JsonResultCode.SUCCESS, "上传成功", pathList);
+            }
+            return new JsonResult(JsonResultCode.FAILURE, "上传失败", "");
+        } catch (Exception e) {
+            logger.error("[UploadController][uploadImg] exception:", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统故障，请联系管理员", "");
+        }
+    }
+
+    /**
+     * 上传图片
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/uploadImgsFileAttr", method = {RequestMethod.GET, RequestMethod.POST})
+    public JsonResult uploadImgsFileAttr(HttpServletRequest request, HttpServletResponse response,
+                                         @RequestParam("imgFiles") MultipartFile[] imgFiles, @ModelAttribute FileAttr fileAttr) {
+        try {
+            if (imgFiles == null || imgFiles.length == 0) {
+                return new JsonResult(JsonResultCode.FAILURE, "参数有误", "");
+            }
+            //保存文件到文件表
+            fileAttr.setCreateUser(getLoginUserId(request));
+            List<FileAttr> fileAttrs = MultipartFileUtils.getSaveFile(request, response, imgFiles, fileAttr);
+            if (CollectionUtils.isNotEmpty(fileAttrs)) {
+                fileAttrService.insertBatchFileAttr(fileAttrs);
+                // 返回图片的路径
+                return new JsonResult(JsonResultCode.SUCCESS, "上传成功", fileAttrs);
+            }
+            return new JsonResult(JsonResultCode.FAILURE, "上传失败", "");
         } catch (Exception e) {
             logger.error("[UploadController][uploadImgs] exception:", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统故障，请联系管理员", "");
@@ -80,19 +106,18 @@ public class UploadController extends BaseController {
     @RequestMapping(value = "/uploadImgsByLayedit", method = {RequestMethod.GET, RequestMethod.POST})
     public LayuiResult uploadImgsByLayedit(HttpServletRequest request, HttpServletResponse response, MultipartFile[] file) {
         try {
-            if (file != null) {
-                List<String> logoPathList = MultipartFileUtils.getImgPath(request, response, file);
-                Data data = new Data();
-                data.setSrc(logoPathList.get(0));
-                data.setTitle("图片");
-                if (CollectionUtils.isNotEmpty(logoPathList)) {
-                    // 返回图片的路径
-                    return new LayuiResult(LayuiResultCode.SUCCESS, "上传成功", data);
-                }
-                return new LayuiResult(LayuiResultCode.FAILURE, "上传失败", data);
-
+            if (file == null || file.length == 0) {
+                return new LayuiResult(LayuiResultCode.FAILURE, "参数有误", null);
             }
-            return new LayuiResult(LayuiResultCode.FAILURE, "参数有误", null);
+            List<String> logoPathList = MultipartFileUtils.getImgPath(request, response, file);
+            Data data = new Data();
+            data.setSrc(logoPathList.get(0));
+            data.setTitle("图片");
+            if (CollectionUtils.isNotEmpty(logoPathList)) {
+                // 返回图片的路径
+                return new LayuiResult(LayuiResultCode.SUCCESS, "上传成功", data);
+            }
+            return new LayuiResult(LayuiResultCode.FAILURE, "上传失败", data);
         } catch (Exception e) {
             logger.error("[UploadController][uploadImgsByLayedit] exception:", e);
             return new LayuiResult(LayuiResultCode.FAILURE, "系统故障，请联系管理员", null);
@@ -109,23 +134,16 @@ public class UploadController extends BaseController {
         try {
             response.setCharacterEncoding("utf-8");
             PrintWriter out = response.getWriter();
-            //文件保存本地目录路径  
-            String savePath = "";
-            String os = System.getProperty("os.name");
-            if (os.toLowerCase().startsWith("win")) {
-                //windows 下路径
-                savePath = request.getSession().getServletContext().getRealPath("/") + PATH;
-            } else {
-                //linux 下路径
-                savePath = PATH;
-            }
+
             //文件保存目录URL 
-            String saveUrl = request.getContextPath() + PATH;
+            String saveUrl = request.getContextPath() + MultipartFileUtils.PATH;
             if (!ServletFileUpload.isMultipartContent(request)) {
                 out.print(getError("请选择文件。"));
                 out.close();
                 return;
             }
+            //文件保存本地目录路径
+            String savePath = MultipartFileUtils.getSavePath(request);
             //检查目录  
             File uploadDir = new File(savePath);
             if (!uploadDir.isDirectory()) {
@@ -144,41 +162,35 @@ public class UploadController extends BaseController {
             }
 
             //定义允许上传的文件扩展名  
-            Map<String, String> extMap = new HashMap<String, String>();
-            extMap.put("image", "gif,jpg,jpeg,png,bmp");
-            extMap.put("flash", "swf,flv");
-            extMap.put("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
-            extMap.put("file", "doc,docx,xls,xlsx,ppt,htm,html,xml,txt,zip,rar,gz,bz2");
+            Map<String, String> extMap = MultipartFileUtils.getExtMap();
 
             if (!extMap.containsKey(dirName)) {
                 out.print(getError("目录名不正确。"));
                 out.close();
                 return;
             }
+
             //创建文件夹  
-            savePath += dirName + PATH_LINE;
-            saveUrl += dirName + PATH_LINE;
+            savePath += dirName + MultipartFileUtils.PATH_LINE;
+            saveUrl += dirName + MultipartFileUtils.PATH_LINE;
             File saveDirFile = new File(savePath);
             if (!saveDirFile.exists()) {
                 saveDirFile.mkdirs();
             }
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-            String ymd = sdf.format(new Date());
-            savePath += ymd + PATH_LINE;
-            saveUrl += ymd + PATH_LINE;
+            String ymd = DateUtil.getCurrentDateTimeStr(DateUtil.FMT_DATE_COMPACT);
+            savePath += ymd + MultipartFileUtils.PATH_LINE;
+            saveUrl += ymd + MultipartFileUtils.PATH_LINE;
             File dirFile = new File(savePath);
             if (!dirFile.exists()) {
                 dirFile.mkdirs();
             }
-            //最大文件大小  
-            long maxSize = 1000000;
             // 保存文件  
             for (MultipartFile iFile : files) {
                 String fileName = iFile.getOriginalFilename();
 
                 //检查文件大小  
-                if (iFile.getSize() > maxSize) {
+                if (iFile.getSize() > MultipartFileUtils.maxSize) {
                     out.print(getError("上传文件大小超过限制。"));
                     out.close();
                     return;
@@ -191,8 +203,7 @@ public class UploadController extends BaseController {
                     return;
                 }
 
-                SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-                String newFileName = df.format(new Date()) + "_" + new Random().nextInt(1000) + "." + fileExt;
+                String newFileName = DateUtil.getCurrentDateTimeStr(DateUtil.FMT_DATETIME_COMPACT) + "_" + new Random().nextInt(1000) + "." + fileExt;
                 try {
                     File uploadedFile = new File(savePath, newFileName);
                     // 写入文件  
@@ -241,9 +252,9 @@ public class UploadController extends BaseController {
     public void fileManager(HttpServletRequest request, HttpServletResponse response) {
         try {
             //根目录路径，可以指定绝对路径  
-            String rootPath = request.getSession().getServletContext().getRealPath(PATH_LINE) + "upload" + PATH_LINE + "goods" + PATH_LINE;
+            String rootPath = request.getSession().getServletContext().getRealPath(MultipartFileUtils.PATH_LINE) + "upload" + MultipartFileUtils.PATH_LINE + "goods" + MultipartFileUtils.PATH_LINE;
             //根目录URL，可以指定绝对路径，比如 http://www.yoursite.com/attached/  
-            String rootUrl = request.getContextPath() + PATH_LINE + "upload" + PATH_LINE + "goods" + PATH_LINE;
+            String rootUrl = request.getContextPath() + MultipartFileUtils.PATH_LINE + "upload" + MultipartFileUtils.PATH_LINE + "goods" + MultipartFileUtils.PATH_LINE;
 
             response.setContentType("application/json; charset=UTF-8");
             PrintWriter out = response.getWriter();
@@ -258,8 +269,8 @@ public class UploadController extends BaseController {
                     out.close();
                     return;
                 }
-                rootPath += dirName + PATH_LINE;
-                rootUrl += dirName + PATH_LINE;
+                rootPath += dirName + MultipartFileUtils.PATH_LINE;
+                rootUrl += dirName + MultipartFileUtils.PATH_LINE;
                 File saveDirFile = new File(rootPath);
                 if (!saveDirFile.exists()) {
                     saveDirFile.mkdirs();
@@ -273,7 +284,7 @@ public class UploadController extends BaseController {
             String moveupDirPath = "";
             if (!"".equals(path)) {
                 String str = currentDirPath.substring(0, currentDirPath.length() - 1);
-                moveupDirPath = str.lastIndexOf(PATH_LINE) >= 0 ? str.substring(0, str.lastIndexOf(PATH_LINE) + 1) : "";
+                moveupDirPath = str.lastIndexOf(MultipartFileUtils.PATH_LINE) >= 0 ? str.substring(0, str.lastIndexOf(MultipartFileUtils.PATH_LINE) + 1) : "";
             }
 
             //排序形式，name or size or type  
@@ -286,7 +297,7 @@ public class UploadController extends BaseController {
                 return;
             }
             //最后一个字符不是/  
-            if (!"".equals(path) && !path.endsWith(PATH_LINE)) {
+            if (!"".equals(path) && !path.endsWith(MultipartFileUtils.PATH_LINE)) {
                 out.print("无效的访问参数验证。");
                 out.close();
                 return;
@@ -348,6 +359,7 @@ public class UploadController extends BaseController {
     }
 
     private class NameComparator implements Comparator<Map<String, Object>> {
+        @Override
         public int compare(Map<String, Object> hashA, Map<String, Object> hashB) {
             if (((Boolean) hashA.get("is_dir")) && !((Boolean) hashB.get("is_dir"))) {
                 return -1;
@@ -360,6 +372,7 @@ public class UploadController extends BaseController {
     }
 
     private class SizeComparator implements Comparator<Map<String, Object>> {
+        @Override
         public int compare(Map<String, Object> hashA, Map<String, Object> hashB) {
             if (((Boolean) hashA.get("is_dir")) && !((Boolean) hashB.get("is_dir"))) {
                 return -1;
@@ -378,6 +391,7 @@ public class UploadController extends BaseController {
     }
 
     private class TypeComparator implements Comparator<Map<String, Object>> {
+        @Override
         public int compare(Map<String, Object> hashA, Map<String, Object> hashB) {
             if (((Boolean) hashA.get("is_dir")) && !((Boolean) hashB.get("is_dir"))) {
                 return -1;

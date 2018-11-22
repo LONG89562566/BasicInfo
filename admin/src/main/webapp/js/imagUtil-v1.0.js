@@ -78,9 +78,9 @@ var _loadImgUtilLs = function (imgLable,docUnid,flowId,type) {
             var obj = data.object;
             if(obj != null  && obj != undefined){
                 $.each(obj,function (i,item) {
-                    $("#"+imgLable).append("<li>\n" +
-                        "            <div style='width:160px ;height: 160px;'><img width=\"100%\" src='"+item.url+"' onclick=\"_showImgUtil($(this))\"/></div>\n" +
-                        "        </li>");
+                    $("#"+imgLable).append(
+                        "            <div style='margin-left:10px;margin-bottom:10px;width:160px ;height: 160px;float: left;'><img width=\"100%\" src='"+item.url+"' onclick=\"_showImgUtil($(this))\"/></div>\n"
+                        );
                 });
             }
         }

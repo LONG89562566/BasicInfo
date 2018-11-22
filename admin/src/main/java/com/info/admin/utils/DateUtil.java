@@ -402,7 +402,6 @@ public class DateUtil {
 	 * 
 	 * @param date
 	 *            日期
-	 * @param dayAmount
 	 *            增加数量。可为负数
 	 * @return 增加分钟后的日期
 	 */
@@ -415,7 +414,6 @@ public class DateUtil {
 	 * 
 	 * @param date
 	 *            日期
-	 * @param dayAmount
 	 *            增加数量。可为负数
 	 * @return 增加秒钟后的日期
 	 */

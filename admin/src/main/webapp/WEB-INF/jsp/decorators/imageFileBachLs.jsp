@@ -21,11 +21,10 @@
     </div>
 </div>
 <div class="layui-inline" id="div-<%=imageLable%>-img">
-    <ul id="ul-<%=imageLable%>-img">
-        <li>
-            <div style='width:160px ;height: 160px;'><img width="100%" src="" onclick="_showImgUtil($(this))"/></div>
-        </li>
-    </ul>
+    <div id="ul-<%=imageLable%>-img" style="width:96%;margin-left: 2%;min-height: 200px;height: 200px;overflow: scroll;">
+
+    </div>
+
 </div>
 <script type="text/javascript">
     //提交表单数据

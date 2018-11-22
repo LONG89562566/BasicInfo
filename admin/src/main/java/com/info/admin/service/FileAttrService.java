@@ -32,6 +32,16 @@ public interface FileAttrService {
     int insertBatchFileAttr(FileAttr entity,List<String> pathList);
 
     /**
+     *批量添加FileAttr对象
+     *@param  fileAttrs 文件数组
+     *@author  ysh
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return int
+     */
+    int insertBatchFileAttr(List<FileAttr> fileAttrs);
+
+    /**
      *修改FileAttr对象
      *@param  entity 对象
      *@author  ysh

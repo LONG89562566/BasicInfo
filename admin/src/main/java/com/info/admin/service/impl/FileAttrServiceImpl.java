@@ -65,6 +65,22 @@ public class FileAttrServiceImpl implements FileAttrService {
         }
         return dao.insertBatchFileAttr(fileAttrs);
     }
+    /**
+     *批量添加FileAttr对象
+     *@param  fileAttrs 文件数组
+     *@author  ysh
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return int
+     */
+    @Override
+    public int insertBatchFileAttr(List<FileAttr> fileAttrs){
+        if(fileAttrs == null || fileAttrs.size() == 0){
+            return 0;
+        }
+        return dao.insertBatchFileAttr(fileAttrs);
+    }
+
 
     /**
      *修改FileAttr对象

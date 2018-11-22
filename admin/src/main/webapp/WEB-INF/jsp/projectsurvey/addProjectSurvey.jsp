@@ -108,7 +108,7 @@
 			</div>
 
 			<div class='layui-form-item'>
-				<jsp:include page="/WEB-INF/jsp/decorators/imageFileBachLs.jsp">
+				<jsp:include page="/WEB-INF/jsp/decorators/imageFileLs.jsp">
 					<jsp:param name="docUnid" value="${projectSurvey.projectId}${uuid}" />
 					<jsp:param name="flowId" value="" />
 					<jsp:param name="type" value=''/>
