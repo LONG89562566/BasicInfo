@@ -25,7 +25,7 @@
 										<tr>
 
 											<td>${r.materialName }</td>
-											<td><input  style="text-align: center" type="text" id="materialNum" name="materialNum" placeholder="请输入材料数量"  value="${r.materialNum }" class="layui-input"/></td>
+											<td><input  style="text-align: center" type="text" id="materialNum_${r.proportionsMaterialId}" name="materialNum" placeholder="请输入材料数量"  value="${r.materialNum }" class="layui-input"/></td>
 
 											<td>
 												<div class="site-demo-button" >
@@ -58,7 +58,7 @@
 		});
 	
 	 var updateProportions = function(id){
-	 var materialNum = $('#materialNum').val();
+	 var materialNum = $('#materialNum_'+id).val();
         $.ajax({
             type: "POST",
             url: '/admin/proportionsDetailetail/updateProportionsMaterial',
