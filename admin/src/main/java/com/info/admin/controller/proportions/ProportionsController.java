@@ -167,7 +167,6 @@ public class ProportionsController extends BaseController{
                 Proportions entity = new Proportions();
                 entity.setProportionsId(com.info.admin.utils.UUIDUtils.getUUid());
                 entity.setName(proportionsName);
-                entity.setProjectId(projectId);
                 entity.setSeq(seq);
                 result = service.insert(entity);
                 if (result > 0) {

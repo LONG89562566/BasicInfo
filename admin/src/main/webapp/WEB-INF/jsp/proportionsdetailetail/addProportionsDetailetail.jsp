@@ -7,9 +7,9 @@
 		<title>新增配合比详情</title>
 		<%@include file="/WEB-INF/jsp/decorators/addHeader.jsp" %>
 	</head>
-	<body>
+	<body style="width: 80%">
  			<input  type="hidden" id="detailId" name="detailId" value="${proportionsDetailetail.detailId}"/>
-     		<div class="layui-form-item" >
+     		<div class="layui-form-item"  >
 				<div class="box" style="margin-left: auto;margin-right: auto">
 
 								<table id="example1" class="table table-bordered table-striped" style="text-align: center">

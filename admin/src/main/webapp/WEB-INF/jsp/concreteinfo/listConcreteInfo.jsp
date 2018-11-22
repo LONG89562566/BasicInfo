@@ -93,7 +93,7 @@
 				                <th field="sys_xh">序号</th>
 			                    <th field="name"  >混泥土别名</th>
 			                    <th field="level"  >混泥土等级</th>
-			                    <th field="proportionId"  >配合比编号</th>
+			                    <th field="proportionName"  >配合比</th>
 			                    <th field="square"  >混泥土方量</th>
 			                    <th field="totalUse"  >总材料用量</th>
 
@@ -106,7 +106,7 @@
 								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
 					            <td>${r.name}</td>
 					            <td>${r.level}</td>
-					            <td>${r.proportionId}</td>
+					            <td>${r.proportionName}</td>
 					            <td>${r.square}</td>
 					            <td>${r.totalUse}</td>
 

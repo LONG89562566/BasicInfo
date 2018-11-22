@@ -2,9 +2,11 @@ package com.info.admin.controller.concreteinfo;
 
 import com.info.admin.controller.base.BaseController;
 import com.info.admin.entity.ConcreteInfo;
+import com.info.admin.entity.Proportions;
 import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.ConcreteInfoService;
+import com.info.admin.service.ProportionsService;
 import com.info.admin.utils.PageUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author administrator  
@@ -33,6 +36,8 @@ public class ConcreteInfoController extends BaseController{
 
     @Autowired
     private ConcreteInfoService service;
+    @Autowired
+    private ProportionsService proportionsService;
     
      /**
      *查询混泥土信息列表
@@ -92,6 +97,8 @@ public class ConcreteInfoController extends BaseController{
                 model.addAttribute("concreteInfo", concreteInfo);
 
             }
+            List<Proportions> proportionsList = proportionsService.getProportionsByProjectId(projectId);
+            model.addAttribute("proportionsList", proportionsList);
             model.addAttribute("projectId", projectId);
             model.addAttribute("concreteId", concreteId);
             return "concreteinfo/addConcreteInfo";
