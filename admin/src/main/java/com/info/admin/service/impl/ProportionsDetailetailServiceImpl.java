@@ -141,6 +141,36 @@ public class ProportionsDetailetailServiceImpl implements ProportionsDetailetail
         }
         return dao.batchProportionsMaterial(proportionsMaterialsList);
     }
+
+
+    /**
+     * 根据 id获取 配合比材料详情
+     *@author
+     *@param
+     *@date  2018-11-14 23:45:41
+     *@updater  or other
+     *@return   ProportionsDetailetail
+     */
+    @Override
+    public List<ProportionsMaterial> getProportionsMaterialById(String detailId){
+        return dao.getProportionsMaterialById(detailId);
+    };
+
+
+    /**
+     *修改ProportionsDetailetail对象
+     *@param  proportionsMaterial 对象
+     *@author  ysh
+     *@date  2018-11-14 23:45:41
+     *@updater or other
+     *@return int
+     */
+    @Override
+    public int updateProportionsMaterial(ProportionsMaterial proportionsMaterial){
+
+        proportionsMaterial.setUpdateTime(new java.util.Date());
+        return dao.updateProportionsMaterial(proportionsMaterial);
+    };
 }
 
 	

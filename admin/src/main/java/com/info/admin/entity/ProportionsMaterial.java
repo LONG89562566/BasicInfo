@@ -22,6 +22,8 @@ public class ProportionsMaterial implements Serializable {
     private String detailId;
     /*****材料编号*****/
     private String materialId;
+    /*****材料名称*****/
+    private String materialName;
     /*****材料编号*****/
     private Long materialNum;
 
@@ -95,5 +97,13 @@ public class ProportionsMaterial implements Serializable {
 
     public void setMaterialNum(Long materialNum) {
         this.materialNum = materialNum;
+    }
+
+    public String getMaterialName() {
+        return materialName;
+    }
+
+    public void setMaterialName(String materialName) {
+        this.materialName = materialName;
     }
 }

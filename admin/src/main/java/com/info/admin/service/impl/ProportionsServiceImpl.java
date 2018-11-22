@@ -114,6 +114,19 @@ public class ProportionsServiceImpl implements ProportionsService {
 	 public Proportions getProportionsById(String proportionsId) {
 		 return dao.getProportionsById(proportionsId);
 	 }
+
+    /**
+     * 根据 梁场编号查询 配合比
+     *@author
+     *@param
+     *@date  2018-11-14 23:45:41
+     *@updater  or other
+     *@return   Proportions
+     */
+    @Override
+    public List<Proportions> getProportionsByProjectId(String projectId){
+        return dao.getProportionsByProjectId(projectId);
+    }
 }
 
 	

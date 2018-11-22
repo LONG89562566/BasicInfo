@@ -156,14 +156,14 @@ public class ProportionsController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "insertProportionsDetail", method = { RequestMethod.GET, RequestMethod.POST })
-    public JsonResult insertProportionsDetail(HttpServletRequest request,String proportionsName ,Long seq) {
+    public JsonResult insertProportionsDetail(HttpServletRequest request,String projectId,String proportionsName ,Long seq) {
         logger.info("[ProportionsController][insertProportionsDetail] 新增或者修改Proportions对象:");
         try {
             int result;
             int resultTwo;
             String[] materialNum =  request.getParameterValues("materialNum[]");
             String[] materialId =  request.getParameterValues("materialId[]");
-            if (StringUtils.isNotEmpty(proportionsName) || materialNum != null || materialId != null) {
+            if (StringUtils.isNotEmpty(proportionsName) || materialNum != null || materialId != null || StringUtils.isNotEmpty(projectId)) {
                 Proportions entity = new Proportions();
                 entity.setProportionsId(com.info.admin.utils.UUIDUtils.getUUid());
                 entity.setName(proportionsName);

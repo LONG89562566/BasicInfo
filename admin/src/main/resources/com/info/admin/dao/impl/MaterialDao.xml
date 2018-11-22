@@ -337,15 +337,13 @@
 
 	<!-- 返回 材料树 对象 -->
 	<resultMap type="com.info.admin.entity.MaterialTree" id="materialTreeMap">
-		<result column="material_id" property="materialId" />
-		<result column="create_time" property="createTime" />
+		<result column="repertory_id" property="repertoryId" />
 		<result column="delete_flag" property="deleteFlag" />
 		<result column="project_id" property="projectId" />
 		<result column="material_name" property="materialName" />
 		<result column="model" property="model" />
 		<result column="unit" property="unit" />
-		<result column="entry_num" property="entryNum" />
-		<result column="residual_num" property="residualNum" />
+		<result column="num" property="num" />
 
 
 	</resultMap>
@@ -353,8 +351,8 @@
 	<!-- 分页条件 -->
 	<sql id="filterConditionTree">
 		<trim prefix="where " prefixOverrides="and " >
-			<if test=" entity.materialId != null">
-				and material_id =  #{entity.materialId}
+			<if test=" entity.repertoryId != null">
+				and repertory_id =  #{entity.repertoryId}
 			</if>
 
 			<if test=" entity.projectId != null and entity.projectId != '' ">
@@ -369,11 +367,8 @@
 			<if test=" entity.unit != null">
 				and unit =  #{entity.unit}
 			</if>
-			<if test=" entity.entryNum != null">
-				and entry_num =  #{entity.entryNum}
-			</if>
-			<if test=" entity.residualNum != null">
-				and residual_num =  #{entity.residualNum}
+			<if test=" entity.Num != null">
+				and num =  #{entity.num}
 			</if>
 				and delete_flag =  0
 		</trim>
@@ -382,7 +377,7 @@
 	<select id="getMaterialTree"  resultMap="materialTreeMap" >
 		select
 		*
-		from material
+		from repertory
 		<include refid="filterConditionTree"></include>
 	</select>
 

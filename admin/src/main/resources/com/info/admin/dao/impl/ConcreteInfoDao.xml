@@ -134,6 +134,7 @@
 		<result column="name" property="name" />
 		<result column="level" property="level" />
 		<result column="proportion_id" property="proportionId" />
+		<result column="proportionName" property="proportionName" />
 		<result column="square" property="square" />
 		<result column="total_use" property="totalUse" />
 
@@ -163,7 +164,7 @@
 		    <if test=" entity.level != null">
 			    and level =  #{entity.level} 
 		    </if>
-		    <if test=" entity.proportionId != null">
+		    <if test=" entity.proportionId != null and entity.proportionId != '' ">
 			    and proportion_id =  #{entity.proportionId} 
 		    </if>
 		    <if test=" entity.square != null">
@@ -197,7 +198,8 @@
     <!-- 分页查询 混泥土信息 对象列表  -->
     <select id="pageQuery" resultMap="concreteInfoMap">
         select
-         * 
+         *
+        ,(SELECT proportions.name FROM proportions  WHERE proportions.proportions_id = concrete_info.proportion_id ) as proportionName
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
          from concrete_info

@@ -31,10 +31,14 @@
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">配合比编号</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="proportionId" name="proportionId" placeholder="请输入配合比编号"  value="${concreteInfo.proportionId }" class="layui-input"/>
-		        		<span style="color: red" id="s-proportionId"></span>
-		     		</div>
+					<div class="layui-input-inline">
+						<select id="proportionId" name="proportionId"  lay-filter="proportionId">
+							<option value="">请选择配合比</option>
+							<c:forEach items="${proportionsList}" var="r">
+								<option value="${r.proportionsId }" <c:if test="${r.proportionsId==concreteInfo.proportiond }">selected</c:if> >${r.name }</option>
+							</c:forEach>
+						</select>
+					</div>
      			</div>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">混泥土方量</label>

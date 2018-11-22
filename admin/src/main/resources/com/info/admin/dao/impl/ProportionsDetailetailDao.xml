@@ -116,6 +116,7 @@
 		<result column="proportions_id" property="proportionsId" />
 		<result column="material_id" property="materialId" />
 		<result column="num" property="num" />
+		<result column="proportionsName" property="proportionsName" />
 
     </resultMap>
 
@@ -129,18 +130,16 @@
 		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
 		    </if>
 		    <if test=" entity.createUser != null">
-			    and create_user =  #{entity.createUser} 
+			    and create_user =  #{entity.createUser}
 		    </if>
-		    <if test=" entity.deleteFlag != null">
-			    and delete_flag =  #{entity.deleteFlag} 
-		    </if>
+
 		    <if test="entity.updateTime!=null">
 		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
 		    </if>
 		    <if test=" entity.seq != null">
-			    and seq =  #{entity.seq} 
+			    and seq =  #{entity.seq}
 		    </if>
-		    <if test=" entity.proportionsId != null">
+		    <if test=" entity.proportionsId != null  and entity.proportionsId != ''">
 			    and proportions_id =  #{entity.proportionsId} 
 		    </if>
 		    <if test=" entity.materialId != null">
@@ -149,7 +148,7 @@
 		    <if test=" entity.num != null">
 			    and num =  #{entity.num} 
 		    </if>
-
+				and proportions_detail.delete_flag =  0
         </trim>
     </sql>
     
@@ -172,10 +171,12 @@
     <!-- 分页查询 配合比详情 对象列表  -->
     <select id="pageQuery" resultMap="proportionsDetailetailMap">
         select
-         * 
-           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
-           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+		proportions_detail.*
+           ,date_format(proportions_detail.create_time,'%Y-%m-%d %H:%i:%s') as createTime
+           ,date_format(proportions_detail.update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+		   ,proportions.name as proportionsName
          from proportions_detail
+			left join proportions on proportions_detail.proportions_id = proportions.proportions_id
         <include refid="filterCondition"></include>
         LIMIT #{offset},#{pageSize}
     </select>
@@ -196,4 +197,50 @@
 			(#{item.proportionsMaterialId},#{item.detailId},#{item.materialId},#{item.materialNum},now())
 		</foreach>
 	</insert>
+
+	<!-- 返回 配合比详情 对象 -->
+	<resultMap type="com.info.admin.entity.ProportionsMaterial" id="proportionsMaterialMap">
+		<result column="proportions_material_id" property="proportionsMaterialId" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="detail_id" property="detailId" />
+		<result column="material_id" property="materialId" />
+		<result column="materialName" property="materialName" />
+		<result column="material_num" property="materialNum" />
+	</resultMap>
+
+	<!-- 查询 配合比详情 对象列表 -->
+	<select id="getProportionsMaterialById"  resultMap="proportionsMaterialMap" >
+		select
+		*,
+		repertory.material_name as materialName
+		from proportions_material
+		LEFT JOIN repertory on proportions_material.material_id = repertory.repertory_id
+        WHERE proportions_material.detail_id = #{detailId}
+        and proportions_material.delete_flag = 0
+	</select>
+
+	<!-- 更新 配合比详情材料 对象 -->
+	<update id="updateProportionsMaterial" parameterType="com.info.admin.entity.ProportionsMaterial">
+		update proportions_material
+		<set>
+			<trim suffixOverrides=",">
+
+				<if test=" deleteFlag != null">
+					delete_flag = #{deleteFlag},
+				</if>
+				<if test=" updateTime != null">
+					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" materialNum != null">
+					material_num = #{materialNum},
+				</if>
+				<if test=" materialId != null">
+					material_id = #{materialId},
+				</if>
+
+			</trim>
+		</set>
+		where proportions_material_id = #{proportionsMaterialId}
+	</update>
 </mapper>	

@@ -12,9 +12,7 @@ import java.util.Date;
 public class MaterialTree implements Serializable {
 	private static final long serialVersionUID = 1L;
 	 /*****主键*****/
-	 private String materialId;
-	 /*****创建时间*****/
-	 private Date createTime;
+	 private String repertoryId;
 	 /*****删除标记*****/
 	 private Long deleteFlag;
 	 /*****项目编号*****/
@@ -25,25 +23,15 @@ public class MaterialTree implements Serializable {
 	 private String model;
 	 /*****计量单位*****/
 	 private String unit;
-	 /*****进场数量*****/
-	 private BigDecimal entryNum;
-	 /*****剩余数量*****/
-	 private BigDecimal residualNum;
+	 /*****库存数量*****/
+	 private BigDecimal num;
 
-	public String getMaterialId() {
-		return materialId;
+	public String getRepertoryId() {
+		return repertoryId;
 	}
 
-	public void setMaterialId(String materialId) {
-		this.materialId = materialId;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setRepertoryId(String repertoryId) {
+		this.repertoryId = repertoryId;
 	}
 
 	public Long getDeleteFlag() {
@@ -86,19 +74,11 @@ public class MaterialTree implements Serializable {
 		this.unit = unit;
 	}
 
-	public BigDecimal getEntryNum() {
-		return entryNum;
+	public BigDecimal getNum() {
+		return num;
 	}
 
-	public void setEntryNum(BigDecimal entryNum) {
-		this.entryNum = entryNum;
-	}
-
-	public BigDecimal getResidualNum() {
-		return residualNum;
-	}
-
-	public void setResidualNum(BigDecimal residualNum) {
-		this.residualNum = residualNum;
+	public void setNum(BigDecimal num) {
+		this.num = num;
 	}
 }

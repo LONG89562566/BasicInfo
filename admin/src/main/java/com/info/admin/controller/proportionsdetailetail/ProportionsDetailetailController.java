@@ -2,6 +2,7 @@ package com.info.admin.controller.proportionsdetailetail;
 
 import com.info.admin.controller.base.BaseController;
 import com.info.admin.entity.ProportionsDetailetail;
+import com.info.admin.entity.ProportionsMaterial;
 import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.ProportionsDetailetailService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author administrator  
@@ -91,7 +93,9 @@ public class ProportionsDetailetailController extends BaseController{
                 ProportionsDetailetail proportionsDetailetail = service.getProportionsDetailetailById(detailId);
                 model.addAttribute("proportionsDetailetail", proportionsDetailetail);
             }
+            List<ProportionsMaterial> proportionsMaterial = service.getProportionsMaterialById(detailId);
             model.addAttribute("detailId", detailId);
+            model.addAttribute("proportionsMaterial", proportionsMaterial);
             return "proportionsdetailetail/addProportionsDetailetail";
         }catch(Exception e){
             logger.error("[ProportionsDetailetailController][addOrEdit]: detailId="+detailId, e);
@@ -207,5 +211,41 @@ public class ProportionsDetailetailController extends BaseController{
             logger.error("[ProportionsDetailetailController][pageQuery] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
-    }	
+    }
+
+    /**
+     * 新增或者修改ProportionsDetailetail对象
+     * @param    request  请求
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "updateProportionsMaterial", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult updateProportionsMaterial(HttpServletRequest request,ProportionsMaterial entity) {
+        logger.info("[ProportionsDetailetailController][updateProportionsMaterial] 新增或者修改ProportionsDetailetail对象:");
+        try {
+            int result;
+            if (null == entity) {
+                return new JsonResult(JsonResultCode.FAILURE, "请输入数据", "");
+            }
+
+            // 通过id来判断是新增还是修改
+            if (null != entity.getProportionsMaterialId() && StringUtils.isNotBlank(entity.getProportionsMaterialId())) {
+                result = service.updateProportionsMaterial(entity);
+            }else {
+                return new JsonResult(JsonResultCode.FAILURE, "操作失败", "");
+                    }
+            if (result > 0) {
+                return new JsonResult(JsonResultCode.SUCCESS, "操作成功", "");
+            } else {
+                return new JsonResult(JsonResultCode.FAILURE, "操作失败", "");
+            }
+        } catch (Exception e) {
+            logger.error("[updateProportionsMaterial][insertAndUpdate] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
 }	

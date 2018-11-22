@@ -107,7 +107,7 @@
 
 						        <td>
 						         <div class="site-demo-button" >
-									 <button id="updateProportions" data-method="setAddOrEdit" value="${r.proportionsId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+									 <button id="updateProportions" data-method="updateProportions" value="${r.proportionsId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
 									 <button id="deletes" data-method="deletes" value="${r.proportionsId}" class="layui-btn layui-btn-danger layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
 
 								 </div>
@@ -136,7 +136,6 @@
 	  <script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 	
 	<script type="text/javascript">
-
 		//查询数据Url
 		var pageQueryUrl = "<%=request.getContextPath()%>/admin/proportions/pageQuery";
 		//查询条件表单Id
@@ -151,7 +150,7 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+	    tableBtn = addBtn(tableBtn,"updateProportions","修改","","","","","","layui-btn-normal");
 	    tableBtn = addBtn(tableBtn,"deletes","删除","","","","","","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
@@ -228,6 +227,11 @@
 					var id = data.val();
                     deletes(id);
 				},
+                updateProportions: function(data){
+					//获取userId
+					var id = data.val();
+                    updateProportions(id);
+				},
 				//启用和禁用数据弹窗
 				offset: function(othis){
 					var type = othis.data('type');
@@ -287,7 +291,47 @@
                 return;
             }
 		};
-		
+        //新增、编辑打开
+        var updateProportions = function(proportionsId){
+		var html = "<div class='layui-inline'>"
+              	 +" <label class='layui-form-label'>配合比名称</label>"
+                +"<div class='layui-input-inline'>"
+                +"<input type='text' id='proportionsName' name='name' placeholder='请输入配合比名称'  value='' class='layui-input'/>"
+                +"</div>"
+                //多窗口模式，层叠置顶
+                    layer.open({
+                    type: 1,
+                    content: '<div style="padding: 20px 100px;">'+ html +'</div>',
+                    btn: ['确定', '取消'],
+                    btnAlign: 'c', //按钮居中
+                    shade: 0.5 ,//不显示遮罩
+                    yes: function(){
+                        var proportionsName = $('#proportionsName').val();
+                        layer.closeAll();
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/proportions/insertAndUpdate",
+                            data: {"proportionsId":proportionsId,
+                                "name":proportionsName,
+							},
+                            dataType: "json",
+                            cache:false,
+                            success: function(data){
+                                var code = data.code;
+                                var msg = data.message;
+                                if(code == "200"){
+                                    layer.msg(msg, {icon: 1,time: 2000});//2秒关闭
+                                    //刷新页面
+                                    refreshTheCurrentPage();
+                                }
+                            },
+                            error:function(){
+                                layer.msg("操作失败", {icon: 1,time: 2000});//1.5秒关闭
+                            }
+                        });
+                    }
+                });
+        };
 		//禁用
 		var enabled = function (id) {
 			//禁用的url

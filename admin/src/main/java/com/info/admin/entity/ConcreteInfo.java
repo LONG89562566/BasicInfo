@@ -32,6 +32,8 @@ public class ConcreteInfo implements Serializable {
 	 private Long level;
 	 /*****配合比编号*****/
 	 private String proportionId;
+	/*****配合比名称*****/
+	private String proportionName;
 	 /*****混泥土方量*****/
 	 private Float square;
 	 /*****总材料用量*****/
@@ -158,5 +160,13 @@ public class ConcreteInfo implements Serializable {
 	 
 	public ConcreteInfo() {
 		super();
+	}
+
+	public String getProportionName() {
+		return proportionName;
+	}
+
+	public void setProportionName(String proportionName) {
+		this.proportionName = proportionName;
 	}
 }

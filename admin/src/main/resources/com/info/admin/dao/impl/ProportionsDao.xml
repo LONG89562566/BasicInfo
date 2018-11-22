@@ -172,4 +172,12 @@
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
 		 from proportions where proportions_id= #{proportionsId}
 	</select>
+	<!-- 根据id 查询 配合比 -->
+	<select id="getProportionsByProjectId" parameterType="String" resultMap="proportionsMap" >
+		select
+		*
+		,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
+		,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+		from proportions where project_id= #{projectId}
+	</select>
 </mapper>	
