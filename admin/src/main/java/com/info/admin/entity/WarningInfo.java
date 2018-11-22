@@ -38,7 +38,7 @@ public class WarningInfo implements Serializable {
 	 private Long options;
 	 /*****值*****/
 	 private String true_val;
-	 /*****（大/小/等/不大/不小/不等于）*****/
+	 /*****（1.大/2.小/3.等/4.不大/5.不小/6.不等于）*****/
 	 private Long checkCondition;
 	 /*****预警值*****/
 	 private String warn_val;
