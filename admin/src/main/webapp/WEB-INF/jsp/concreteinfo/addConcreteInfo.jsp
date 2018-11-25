@@ -35,7 +35,7 @@
 						<select id="proportionId" name="proportionId"  lay-filter="proportionId">
 							<option value="">请选择配合比</option>
 							<c:forEach items="${proportionsList}" var="r">
-								<option value="${r.proportionsId }" <c:if test="${r.proportionsId==concreteInfo.proportiond }">selected</c:if> >${r.name }</option>
+								<option value="${r.proportionsId }" <c:if test="${r.proportionsId==concreteInfo.proportionId }">selected</c:if> >${r.name }</option>
 							</c:forEach>
 						</select>
 					</div>
