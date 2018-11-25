@@ -145,6 +145,56 @@
         </trim>
 	</insert>
 
+
+	<!-- 批量	添加 -->
+	<insert id="batchFlow" parameterType="java.util.List">
+		insert into flow(
+				flow_id,
+				create_time,
+				create_user,
+				create_user_cn,
+				delete_flag,
+				update_time,
+				seq,
+				name,
+				last_node,
+				next_node,
+				org_id,
+				role_id,
+				user_id,
+                is_done,
+				msg,
+				show_title,
+				doc_url,
+				doc_unid,
+				operator,
+				operator_cn)
+		values
+		<foreach collection="list" item="item" separator=",">
+                    (#{item.flowId},
+                    date_format(#{item.createTime},'%Y-%m-%d %H:%i:%s'),
+                    #{item.createUser},
+                    #{item.createUserCn},
+                    #{item.deleteFlag},
+                    date_format(#{item.updateTime},'%Y-%m-%d %H:%i:%s'),
+                    #{item.seq},
+                    #{item.name},
+                    #{item.lastNode},
+                    #{item.nextNode},
+                    #{item.orgId},
+                    #{item.roleId},
+                    #{item.userId},
+                    #{item.isDone},
+                    #{item.msg},
+                    #{item.showTitle},
+                    #{item.docUrl},
+                    #{item.docUnid},
+                    #{item.operator},
+                    #{item.operatorCn})
+		</foreach>
+	</insert>
+
+
 	<!-- 更新 流程 对象 -->
 	<update id="update" parameterType="com.info.admin.entity.Flow">
 		update flow
@@ -322,7 +372,21 @@
           from flow
         <include refid="filterCondition"></include>
     </select>
-    
+
+    <!-- 查询 流程 对象列表 -->
+    <select id="getFlowByDocUnid"  resultMap="flowMap" >
+        select
+        *
+        ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
+        ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+        from flow
+        where delete_flag = 0
+        <if test=" entity.isDone != null">
+        and is_done= #{entity.isDone}
+        </if>
+        and doc_unid= #{entity.docUnid}
+    </select>
+
     <!-- 查询 流程 总记录数 -->
     <select id="getPageCount" resultType="int">
         select count(1) from flow
