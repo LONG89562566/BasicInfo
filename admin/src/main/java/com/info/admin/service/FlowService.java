@@ -130,7 +130,9 @@ public interface FlowService {
      */
     int batchFlow(List<Flow> list);
 
+    List<Flow> getFlowByDocUnid(Flow entity);
 
+    void setId(List<Flow> list);
 }
 
 	

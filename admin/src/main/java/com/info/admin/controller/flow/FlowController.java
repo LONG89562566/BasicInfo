@@ -5,6 +5,7 @@ import com.info.admin.entity.Flow;
 import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.FlowService;
+import com.info.admin.utils.CloneUtils;
 import com.info.admin.utils.PageUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author administrator  
@@ -50,7 +53,7 @@ public class FlowController extends BaseController{
         int currentPageSize = this.getPageSize(request);
         //TODO
         //用户所属部门、角色还未处理
-        entity.setUserId(String.valueOf(this.getLoginUserId(request)));
+        entity.setUserId(this.getStaffId(request));
         PageUtil paginator = service.pageDbQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("flow", entity);
@@ -73,7 +76,7 @@ public class FlowController extends BaseController{
         int currentPageSize = this.getPageSize(request);
         //TODO
         //用户所属部门、角色还未处理
-        entity.setUserId(String.valueOf(this.getLoginUserId(request)));
+        entity.setUserId(this.getStaffId(request));
         PageUtil paginator = service.pageZbQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("flow", entity);
@@ -96,7 +99,7 @@ public class FlowController extends BaseController{
         int currentPageSize = this.getPageSize(request);
         //TODO
         //用户所属部门、角色还未处理
-        entity.setUserId(String.valueOf(this.getLoginUserId(request)));
+        entity.setUserId(this.getStaffId(request));
         PageUtil paginator = service.pageBjQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("flow", entity);
@@ -179,6 +182,175 @@ public class FlowController extends BaseController{
             }
         } catch (Exception e) {
             logger.error("[FlowController][insertAndUpdate] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
+     * 发送Flow对象
+     * @param    request  请求
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "sendFlow", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult sendFlow(HttpServletRequest request,Flow entity) {
+        logger.info("[FlowController][sendFlow] 发送Flow对象:");
+        try {
+            int result=0;
+            String[] user = request.getParameterValues("user[]");
+            if (StringUtils.isBlank(entity.getDocUnid())) {
+                return new JsonResult(JsonResultCode.FAILURE, "参数异常，页面编号不能为空", "");
+            }
+
+            //设置entity特殊参数
+            entity.setDeleteFlag(0L);
+            entity.setUserId(this.getStaffId(request));
+            entity.setCreateTime(new java.util.Date());
+            entity.setCreateUser(this.getLoginUserId(request));
+            entity.setCreateUserCn(this.getLoginUser(request).getName());
+            entity.setIsDone(1L);
+
+            /**
+             * 根据docid获取流程节点，如果无节点则为初次发起
+             */
+            Flow flow = new Flow();
+            flow.setDocUnid(entity.getDocUnid());
+            flow.setIsDone(0L);
+            //查询是否有当前页面的未完成节点
+            List<Flow> list = service.getFlowByDocUnid(flow);
+            if (list!=null&&list.size()>0){
+                //非初次发起
+                /**
+                 * 1、未完成节点超过1条则为，则上节点为多人节点，此时应将多节点都改为完成状态
+                 * 2、未完成节点只有1条，则上节点为单人节点，此时应将该节点改为完成状态
+                 */
+                for (Flow f:list){
+                    Flow f1 = new Flow();
+                    f1.setIsDone(1L);
+                    f1.setFlowId(f.getFlowId());
+                    if (f.getUserId().equals(this.getStaffId(request))){
+                        f1.setOperator(this.getStaffId(request));
+                        f1.setOperatorCn(this.getLoginUser(request).getName());
+                    }
+                    service.update(f1);
+                }
+                if (user==null||user.length==0){
+                    return new JsonResult(JsonResultCode.FAILURE, "参数异常，发送的用户不能为空", "");
+                }else if (user.length==1) {
+                    /**
+                     * 1、发送单人
+                     */
+                    //上个节点的id，默认以第一个人的
+                    entity.setLastNode(list.get(0).getFlowId());
+                    entity.setIsDone(0L);
+                    result = service.insert(entity);
+                }else if (user.length>1){
+                    /**
+                     * 2、发送多人
+                     */
+                    List<Flow> batchList = new ArrayList<>();
+                    for (String userId:user){
+                        Flow f = CloneUtils.clone(entity);
+                        f.setIsDone(0L);
+                        f.setUserId(userId);
+                        f.setLastNode(list.get(0).getFlowId());
+                        f.setFlowId(com.info.admin.utils.UUIDUtils.getUUid());
+                        batchList.add(f);
+                    }
+                    result = service.startFlow(batchList);
+                }
+
+            }else{
+                //初次发起
+                entity.setOperator(this.getStaffId(request));
+                entity.setOperatorCn(this.getLoginUser(request).getName());
+                if (user==null||user.length==0){
+                    return new JsonResult(JsonResultCode.FAILURE, "参数异常，发送的用户不能为空", "");
+                }else if (user.length==1){
+                    /**
+                     * 1、发送单人
+                     */
+                    List<Flow> startList = new ArrayList<>();
+                    startList.add(entity);
+                    Flow f = CloneUtils.clone(entity);
+                    f.setFlowId(com.info.admin.utils.UUIDUtils.getUUid());
+                    f.setOperator(null);
+                    f.setOperatorCn(null);
+                    f.setIsDone(0L);
+                    startList.add(f);
+
+                    //处理数据关联
+                    service.setId(startList);
+                    result = service.startFlow(startList);
+                }else if (user.length>1){
+                    /**
+                     * 2、发送多人
+                     */
+                    List<Flow> startList = new ArrayList<>();
+                    entity.setFlowId(com.info.admin.utils.UUIDUtils.getUUid());
+                    startList.add(entity);
+                    for (String userId:user){
+                        Flow f = CloneUtils.clone(entity);
+                        f.setOperator(null);
+                        f.setIsDone(0L);
+                        f.setOperatorCn(null);
+                        f.setUserId(userId);
+                        f.setLastNode(entity.getFlowId());
+                        f.setFlowId(com.info.admin.utils.UUIDUtils.getUUid());
+                        startList.add(f);
+                    }
+                    result = service.startFlow(startList);
+                }
+            }
+
+            if (result > 0) {
+                return new JsonResult(JsonResultCode.SUCCESS, "操作成功", "");
+            } else {
+                return new JsonResult(JsonResultCode.FAILURE, "操作失败", "");
+            }
+        } catch (Exception e) {
+            logger.error("[FlowController][insertAndUpdate] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+    /**
+     * 结束Flow
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "endFlow", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult endFlow(HttpServletRequest request,Flow entity) {
+        logger.info("[FlowController][endFlow] 结束Flow:");
+        try {
+            /**
+             * 根据docid获取流程节点，如果无节点则为初次发起
+             */
+            Flow flow = new Flow();
+            flow.setDocUnid(entity.getDocUnid());
+            //查询是否有当前页面的未完成节点
+            List<Flow> list = service.getFlowByDocUnid(flow);
+            for (Flow f:list){
+                Flow f1 = new Flow();
+                f1.setIsDone(1L);
+                f1.setIsEnd(1L);
+                f1.setFlowId(f.getFlowId());
+                if (f.getUserId().equals(this.getStaffId(request))){
+                    f1.setOperator(this.getStaffId(request));
+                    f1.setOperatorCn(this.getLoginUser(request).getName());
+                }
+                service.update(f1);
+            }
+            return new JsonResult(JsonResultCode.SUCCESS, "操作成功", "");
+        } catch (Exception e) {
+            logger.error("[FlowController][query] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
     }
@@ -276,7 +448,7 @@ public class FlowController extends BaseController{
             int pageSize = this.getPageSize(request);
             //TODO
             //用户所属部门、角色还未处理
-            entity.setUserId(String.valueOf(this.getLoginUserId(request)));
+            entity.setUserId(this.getStaffId(request));
             PageUtil paginator = service.pageDbQuery(entity , pageNum, pageSize);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
         } catch (Exception e) {
@@ -304,7 +476,7 @@ public class FlowController extends BaseController{
             int pageSize = this.getPageSize(request);
             //TODO
             //用户所属部门、角色还未处理
-            entity.setUserId(String.valueOf(this.getLoginUserId(request)));
+            entity.setUserId(this.getStaffId(request));
             PageUtil paginator = service.pageZbQuery(entity , pageNum, pageSize);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
         } catch (Exception e) {
@@ -332,7 +504,7 @@ public class FlowController extends BaseController{
             int pageSize = this.getPageSize(request);
             //TODO
             //用户所属部门、角色还未处理
-            entity.setUserId(String.valueOf(this.getLoginUserId(request)));
+            entity.setUserId(this.getStaffId(request));
             PageUtil paginator = service.pageBjQuery(entity , pageNum, pageSize);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
         } catch (Exception e) {

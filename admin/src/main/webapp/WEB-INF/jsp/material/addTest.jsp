@@ -4,14 +4,34 @@
 <html>
 	<head>
     	<meta charset="utf-8">
-		<title>新增材料</title>
+		<title>检验流程</title>
 		<%@include file="/WEB-INF/jsp/decorators/addHeader.jsp" %>
 	</head>
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="materialId" name="materialId" value="${material.materialId}"/>
  			<input  type="hidden" id="projectId" name="projectId" value="${projectId}"/>
-
+            <div class="layui-input-block" style="margin:30px;">
+                <input type="button" class="layui-btn" onclick="addFlow()" value="发送"/>
+                <input type="button" class="layui-btn" onclick="endFlow()" value="结束流程"/>
+                <input type="button" class="layui-btn" onclick="queryFlow()" value="查看流程"/>
+            </div>
+			<div class='layui-form-item'>
+				<label class="layui-form-label">试验报告单</label>
+				<div class="layui-input-block">
+					<textarea placeholder="请输入试验报告单" style="width: 90%;" class="layui-textarea"  id="testReport" name = "testReport" lay-verify="content">${material.testReport}</textarea>
+					<span style="color: red" id="s-testReport"></span>
+				</div>
+			</div>
+			<div class='layui-form-item'>
+				<div class="layui-inline">
+					<label class="layui-form-label">检验状态</label>
+					<div class="layui-input-inline">
+						<input type="text" id="testState" name="testState" placeholder="请输入检验状态"  value="${material.testState }" class="layui-input"/>
+						<span style="color: red" id="s-testState"></span>
+					</div>
+				</div>
+			</div>
 
 			<div class='layui-form-item'>
      			<div class="layui-inline">
@@ -107,6 +127,8 @@
 		     		</div>
      			</div>
 			</div>
+
+
   		</form>
 	</body>
 
@@ -146,6 +168,8 @@
         var usePart = $("#usePart").val();
         var storage = $("#storage").val();
         var residualNum = $("#residualNum").val();
+        var testReport = $("#testReport").val();
+        var testState = $("#testState").val();
 
         var requestData={
             "materialId":materialId,
@@ -166,10 +190,54 @@
             "usePart":usePart,
             "storage":storage,
             "residualNum":residualNum,
+            "testReport":testReport,
+            "testState":testState
         };
         return requestData;
     };
 
-	
+    var addFlow = function () {
+        var materialId = $("#materialId").val();
+        //多窗口模式，层叠置顶
+        layer.open({
+            type: 2,
+            title: '流程信息',
+            area: ['60%', '70%'],
+            shade: 0.5,
+            anim: 3,//0-6的动画形式，-1不开启
+            content: '<%=request.getContextPath()%>/admin/flow/addOrEdit',
+            zIndex: layer.zIndex, //重点1
+            success: function(layero, index){
+                //layer.setAddOrEdit(layero);
+                var body = layer.getChildFrame('body', index);
+
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                body.find('input[name="docUnid"]').val(materialId);
+                body.find('input[name="docUrl"]').val(window.location.href);
+                //弹窗表单的取消操作时关闭弹窗
+                var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
+                    layer.closeAll();
+                    //刷新页面
+                    refreshTheCurrentPage();
+                });
+            }
+        });
+    }
+
+    var endFlow = function () {
+        var docUnid = $("#materialId").val();
+        $.ajax({
+            type: 'post',
+            url: '/admin/flow/endFlow?docUnid='+docUnid,
+            dataType: 'json',
+            success: function (data) {
+                if(data.code==200){
+                    $.messager.alert('提示','结束成功!');
+                }else{
+                    $.messager.alert('错误','结束失败!','error');
+                }
+            }
+        });
+    }
 </script>
 </html>				 

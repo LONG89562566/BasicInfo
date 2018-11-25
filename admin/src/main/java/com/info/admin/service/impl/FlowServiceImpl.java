@@ -199,7 +199,6 @@ public class FlowServiceImpl implements FlowService {
      */
     @Override
     public int startFlow(List<Flow> list) {
-        setId(list);
         return dao.batchFlow(list);
     }
     /**
@@ -212,18 +211,27 @@ public class FlowServiceImpl implements FlowService {
      */
     @Override
     public int batchFlow(List<Flow> list) {
-        setId(list);
         return dao.batchFlow(list);
+    }
+
+    @Override
+    public List<Flow> getFlowByDocUnid(Flow entity){
+        return dao.getFlowByDocUnid(entity);
     }
 
     /**
      * 设置id
      * @param list
      */
+    @Override
     public void setId(List<Flow> list){
+            String uuid = "";
             for (Flow flow: list) {
                 if (flow.getFlowId()==null){
-                    flow.setFlowId(com.info.admin.utils.UUIDUtils.getUUid());
+                    flow.setLastNode(uuid);
+                    uuid = com.info.admin.utils.UUIDUtils.getUUid();
+                    flow.setFlowId(uuid);
+
                 }
             }
         }

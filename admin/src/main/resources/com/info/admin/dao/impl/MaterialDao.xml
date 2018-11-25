@@ -253,7 +253,7 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.projectId != null">
+		    <if test=" entity.projectId != null and  entity.projectId != ''">
 			    and project_id =  #{entity.projectId} 
 		    </if>
 		    <if test=" entity.materialName != null and entity.materialName != ''">

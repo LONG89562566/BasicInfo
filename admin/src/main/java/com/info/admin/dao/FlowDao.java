@@ -158,4 +158,11 @@ public interface FlowDao {
 	  * @return   Flow
 	  */
 	 int batchFlow(@Param("list") List<Flow> list);
+
+	 /**
+	  * 根据docunid获取flow对象
+	  * @param entity
+	  * @return
+	  */
+	 List<Flow> getFlowByDocUnid(@Param("entity") Flow entity);
 }

@@ -59,6 +59,30 @@ public class MaterialController extends BaseController{
         return "material/listMaterial";
     }
 
+
+    /**
+     *查询检验列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/test", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequiresPermissions("test:query")
+    public String getTestList(HttpServletRequest request, @ModelAttribute Material entity, Model model) {
+        logger.info("[MaterialController][getTestList] 查询检验列表:");
+        entity.setDeleteFlag(0L);
+        // 获取分页当前的页码
+        int currentPageNum = this.getPageNum(request);
+        // 获取分页的大小
+        int currentPageSize = this.getPageSize(request);
+        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        model.addAttribute("paginator", paginator);
+        model.addAttribute("material", entity);
+        return "material/listTest";
+    }
+
+
      /**
      *我的桌面查询材料列表
      *@author   ysh
@@ -104,6 +128,29 @@ public class MaterialController extends BaseController{
             return "500";
         }
     }
+    /**
+     *跳转到检验页面
+     *@author
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value="/testContent",method={RequestMethod.GET,RequestMethod.POST})
+    public String testContent(HttpServletRequest request,String materialId,String projectId,Model model){
+        try{
+            if(null != materialId){
+                Material material = service.getMaterialById(materialId);
+                model.addAttribute("material", material);
+            }
+            model.addAttribute("materialId", materialId);
+            model.addAttribute("projectId", projectId);
+            return "material/addTest";
+        }catch(Exception e){
+            logger.error("[MaterialController][testContent]: materialId="+materialId, e);
+            return "500";
+        }
+    }
+
 
     /**
      * 新增或者修改Material对象

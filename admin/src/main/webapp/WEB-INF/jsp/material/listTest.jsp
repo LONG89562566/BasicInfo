@@ -39,10 +39,10 @@
 	  <div class="content-wrapper">
 	    <!-- Content Header (Page header) --> 
 	    <section class="content-header">
-	      <h1>创建材料</h1>
+	      <h1>检验管理</h1>
 	    </section>
 	    <!-- Main content -->
-	    <shiro:hasPermission name="material:query">
+	    <shiro:hasPermission name="test:query">
 		    <section class="content">
 				<div class="row">
 					<div style="float: left;width: 18%;height: 500px;background-color: white;margin-right: 1%">
@@ -89,9 +89,6 @@
 					<!-- 表格列表start -->
 		            <div class="box">
 			           <div class="box-body">
-			             <div class="site-demo-button" >
-						   <button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>
-						 </div>
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
@@ -106,6 +103,7 @@
 			                    <th field="usePart"  >使用部位</th>
 			                    <th field="storage"  >存放地点</th>
 			                    <th field="residualNum"  >剩余数量</th>
+			                    <th field="testState"  >检验状态</th>
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
@@ -123,10 +121,10 @@
                                    <td>${r.usePart}</td>
                                    <td>${r.storage}</td>
                                    <td>${r.residualNum}</td>
+                                   <td>${r.testState}</td>
                                    <td>
                                        <div class="site-demo-button" >
-                                           <button id="updateMaterialInfo" data-method="setAddOrEdit" projectId="${r.projectId}" value="${r.materialId}"   class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
-                                           <button id="delMaterialInfo" data-method="deletes" value="${r.materialId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
+                                           <button id="updateMaterialInfo" data-method="setAddOrEdit" value="${r.materialId}" projectId="${r.projectId}"  class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;检验</span></button>
                                        </div>
                                    </td>
                                </tr>
@@ -166,8 +164,7 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal","projectId");
-	    tableBtn = addBtn(tableBtn,"deletes","删除","","","","","","layui-btn-warm");
+	    tableBtn = addBtn(tableBtn,"setAddOrEdit","检验","","","","","","layui-btn-normal","projectId");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
@@ -252,18 +249,17 @@
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
-		         title: '新增/修改 材料',
+		         title: '检验材料',
 		         area: ['100%', '100%'],
                  btn: ['确定', '取消'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/material/addOrEdit?materialId='+materialId,
+		         content: '<%=request.getContextPath()%>/admin/material/testContent?materialId='+materialId,
 		         zIndex: layer.zIndex, //重点1
 		         success: function(layero, index){
 		        	 //layer.setAddOrEdit(layero);
 		        	 var body = layer.getChildFrame('body', index);
 		             var iframeWin = window[layero.find('iframe')[0]['name']]; 
-		             body.find('input[name="materialId"]').val(materialId);
                      body.find('input[name="projectId"]').val(projectId);
 		             //弹窗表单的取消操作时关闭弹窗
 		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
