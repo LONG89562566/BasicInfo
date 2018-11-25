@@ -113,7 +113,7 @@ var loadThisPageData = function (currentPage,pageSize,json,parm) {
             $.each(object,function (i,n) {
                 var html = "";
                 $.each(showField,function (j, f) {
-                    if(f.isShow == false){
+                    if(f.isShow == "false"){
                         return true;
                     }
 
