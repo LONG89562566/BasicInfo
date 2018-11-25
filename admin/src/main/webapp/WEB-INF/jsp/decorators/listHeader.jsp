@@ -17,7 +17,7 @@
     <script type="text/javascript" src="/layer/layer.js"></script>
     <script type="text/javascript" src="/layui/layui.js" charset="utf-8"></script>
 
-    <script type="text/javascript" src="/js/pageVoUtil.js"></script>
+    <script type="text/javascript" src="/js/pageVoUtil-v.1.0.js"></script>
     <script type="text/javascript" src="/js/tab-menu.js"></script>
 
     <script type="text/javascript" src="/js/imagUtil-v1.0.js"></script>

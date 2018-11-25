@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -68,11 +69,18 @@
 			</div>
 			<div class='layui-form-item'>
      			<div class="layui-inline">
-		        	<label class="layui-form-label">（大/小/等/不大/不小/不等于）</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="checkCondition" name="checkCondition" placeholder="请输入（大/小/等/不大/不小/不等于）"  value="${warningInfo.checkCondition }" class="layui-input"/>
-		        		<span style="color: red" id="s-checkCondition"></span>
-		     		</div>
+		        	<label class="layui-form-label">条件</label>
+					<div class="layui-input-inline">
+					<select name="checkCondition" id="checkCondition">
+					<option value="">请选择</option>
+					<option value="1" <c:if test="${warningInfo.checkCondition== 1 }">selected</c:if> >大</option>
+					<option value="2" <c:if test="${warningInfo.checkCondition== 2 }">selected</c:if>>小</option>
+					<option value="3" <c:if test="${warningInfo.checkCondition== 3 }">selected</c:if>>等</option>
+					<option value="4" <c:if test="${warningInfo.checkCondition== 4 }">selected</c:if>>不大</option>
+					<option value="5" <c:if test="${warningInfo.checkCondition== 5 }">selected</c:if>>不小</option>
+					<option value="6" <c:if test="${warningInfo.checkCondition== 6 }">selected</c:if>>不等于</option>
+					</select>
+					</div>
      			</div>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">预警值</label>

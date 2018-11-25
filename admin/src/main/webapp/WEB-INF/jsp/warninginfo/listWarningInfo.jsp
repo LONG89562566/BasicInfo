@@ -95,7 +95,7 @@
 								  <th field="receiveUser"  >接收人编号</th>
 								  <th field="options"  >对象属性</th>
 								  <th field="true_val"  >值</th>
-								  <th field="checkCondition"  >（大/小/等/不大/不小/不等于）</th>
+								  <th field="checkCondition" method="checkConditionStatus" >条件</th>
 								  <th field="warn_val"  >预警值</th>
 								  <th field="seq"  >排序号</th>
 				                <th field="sys_opt">操作</th>
@@ -105,14 +105,20 @@
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
 								 <td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
-
 								 <td>${r.title}</td>
 								 <td>${r.content}</td>
 								 <td>${r.releaseUser}</td>
 								 <td>${r.receiveUser}</td>
 								 <td>${r.options}</td>
 								 <td>${r.true_val}</td>
-								 <td>${r.checkCondition}</td>
+								 <td>
+									 <c:if test="${r.checkCondition == 1}">大</c:if>
+									 <c:if test="${r.checkCondition == 2}">小</c:if>
+									 <c:if test="${r.checkCondition == 3}">等</c:if>
+									 <c:if test="${r.checkCondition == 4}">不大</c:if>
+									 <c:if test="${r.checkCondition == 5}">不小</c:if>
+									 <c:if test="${r.checkCondition == 6}">不等于</c:if>
+										 </td>
 								 <td>${r.warn_val}</td>
 								 <td>${r.seq}</td>
 								 <td>
@@ -173,6 +179,20 @@
 				retVal = "禁用";
 			}
 			return retVal;
+		};
+		var checkConditionStatus = function (checkCondition) {
+            if(checkCondition=='1'){
+                return"大";
+			if(checkCondition=='2'){
+				return"小";
+			if(checkCondition=='3'){
+				return"等";
+			if(checkCondition=='4'){
+				return"不大";
+			if(checkCondition=='5'){
+				return"不小";
+			if(checkCondition=='6'){
+				return"不等于";
 		};
 
 	</script>

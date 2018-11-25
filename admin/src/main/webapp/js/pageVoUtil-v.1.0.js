@@ -113,6 +113,10 @@ var loadThisPageData = function (currentPage,pageSize,json,parm) {
             $.each(object,function (i,n) {
                 var html = "";
                 $.each(showField,function (j, f) {
+                    if(f.isShow == false){
+                        return true;
+                    }
+
                     if(f.name == "sys_xh" && f.describe == "序号"){
                         html += "<td> "+ ((i + 1)  + (currentPage - 1) * pageRecord  )+"</td>";
                     }else if(f.name == "sys_opt" && f.describe == "操作"){
@@ -212,6 +216,7 @@ var tableField = function(tableId){
             filed.getIdVal = $(this).attr("getIdVal");  //是否需要设置id在td上
             filed.imgWidth = $(this).attr("imgWidth");  //图片的宽度
             filed.imgHeight = $(this).attr("imgHeight"); //图片的高度
+            filed.isShow = $(this).attr("isShow"); //图片的高度
             filedObj.push(filed);
         });
     });
