@@ -27,6 +27,8 @@ public class FlowVo implements Serializable {
 	 private String name;
 	 /*****上一节点*****/ 
 	 private String lastNode;
+	 /*****上一节点名称*****/
+	 private String lastName;
 	 /*****下一节点*****/ 
 	 private String nextNode;
 	 /*****参与部门编号*****/ 
@@ -35,16 +37,33 @@ public class FlowVo implements Serializable {
 	 private String roleId;
 	 /*****参与人编号*****/ 
 	 private String userId;
+	 /*****参与人名称*****/
+	 private String userName;
+	 /*****上一节点参与人名称*****/
+	 private String lastUserName;
 	 /*****意见*****/ 
 	 private String msg;
+	 /*****上一节点意见*****/
+	 private String lastMsg;
 	 /*****是否完成*****/ 
 	 private Long isDone;
 	 /*****业务内容*****/ 
 	 private String showTitle;
+	 /*****上一节点业务内容*****/
+	 private String lastShowTitle;
 	 /*****业务详情页面*****/ 
 	 private String docUrl;
 	 /*****业务表主键*****/ 
 	 private String docUnid;
+	/*****经办人编号*****/
+	private String operator;
+	/*****经办人名称*****/
+	private String operatorCn;
+	/*****是否提交*****/
+	private Long isSubmit;
+	/*****是否结束*****/
+	private Long isEnd;
+
 
 
 	 public String getFlowId() {
@@ -190,6 +209,78 @@ public class FlowVo implements Serializable {
 	 public void setDocUnid(String docUnid) {
 		 this.docUnid = docUnid;
 	 }
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getLastMsg() {
+		return lastMsg;
+	}
+
+	public void setLastMsg(String lastMsg) {
+		this.lastMsg = lastMsg;
+	}
+
+	public String getLastShowTitle() {
+		return lastShowTitle;
+	}
+
+	public void setLastShowTitle(String lastShowTitle) {
+		this.lastShowTitle = lastShowTitle;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getLastUserName() {
+		return lastUserName;
+	}
+
+	public void setLastUserName(String lastUserName) {
+		this.lastUserName = lastUserName;
+	}
+
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	public String getOperatorCn() {
+		return operatorCn;
+	}
+
+	public void setOperatorCn(String operatorCn) {
+		this.operatorCn = operatorCn;
+	}
+
+	public Long getIsSubmit() {
+		return isSubmit;
+	}
+
+	public void setIsSubmit(Long isSubmit) {
+		this.isSubmit = isSubmit;
+	}
+
+	public Long getIsEnd() {
+		return isEnd;
+	}
+
+	public void setIsEnd(Long isEnd) {
+		this.isEnd = isEnd;
+	}
 
 	public FlowVo() {
 		super();

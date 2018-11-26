@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%
+	//业务主键id
+	String docUnid = request.getParameter("docUnid");
+%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -39,11 +42,11 @@
 		</style>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
-	  <!-- 流程列表start -->
+	  <!-- 意见列表start -->
 	  <div class="content-wrapper">
 	    <!-- Content Header (Page header) --> 
 	    <section class="content-header">
-	      <h1>流程管理</h1>
+	      <h1>意见列表</h1>
 	    </section>
 	    <!-- Main content -->
 	    <shiro:hasPermission name="flow:query">
@@ -52,85 +55,55 @@
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
-		              <h3 class="box-title">流程列表 :${sessionScope.login_session_admin.userName}</h3>
+		              <%--<h3 class="box-title">流程列表 :${sessionScope.login_session_admin.userName}</h3>--%>
 		            </div>
-			        <div class="box box-info">
-			           <!-- form start -->
-			           <form  id="form_submit" class="form-horizontal" action="/admin/flow/list" method="post">
-			           	  <input type="hidden" name="pageNum" id="pageNum" value="${paginator.currentPage}">
-	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
-			              <div class="box-body">
-			                 <div class="form-group">
 
-			                 </div>
-			                 <div class="box-footer">
-			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
-			                 	<button type="reset" onclick='resetRefreshTheCurrentPage()' id="reset" class="btn btn-info ">重置</button>
-			               	 </div>
-			             </div>
-			           </form>
-			           <!-- form end -->
-			        </div>
 					<!-- 表格列表start -->
 		            <div class="box">
 			           <div class="box-body">
 			             <div class="site-demo-button" >
-						   <button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>
 						 </div>
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
 				                <th field="sys_xh">序号</th>
-			                    <th field="seq"  >排序号</th>
-			                    <th field="name"  >节点名称</th>
-			                    <th field="lastNode"  >上一节点</th>
-			                    <th field="nextNode"  >下一节点</th>
-			                    <th field="orgId"  >参与部门编号</th>
-			                    <th field="roleId"  >参与角色编号</th>
-			                    <th field="userId"  >参与人编号</th>
-			                    <th field="msg"  >意见</th>
-			                    <th field="isDone"  >是否完成</th>
-			                    <th field="showTitle"  >业务内容</th>
-			                    <th field="docUrl"  >业务详情页面</th>
-			                    <th field="docUnid"  >业务表主键</th>
 
-				                <th field="sys_opt">操作</th>
+			                    <th field="lastUserName"  >上一节点参与人</th>
+			                    <th field="lastShowTitle"  >上一节点业务名称</th>
+			                    <th field="lastMsg"  >上一节点意见</th>
+
+								<th field="userName"  >当前节点参与人</th>
+			                    <th field="showTitle"  >当前节点业务名称</th>
+			                    <th field="msg"  >当前节点意见</th>
+
+				                <%--<th field="sys_opt">操作</th>--%>
 				              </tr>
 			               </thead>
 			               <tbody id="show-data">
-			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
+			               <c:forEach items="${paginator}" var="r" varStatus="st">
 				   			 <tr>
-								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
-					            <td>${r.seq}</td>
-					            <td>${r.name}</td>
-					            <td>${r.lastNode}</td>
-					            <td>${r.nextNode}</td>
-					            <td>${r.orgId}</td>
-					            <td>${r.roleId}</td>
-					            <td>${r.userId}</td>
-					            <td>${r.msg}</td>
-					            <td>${r.isDone}</td>
-					            <td>${r.showTitle}</td>
-					            <td>${r.docUrl}</td>
-					            <td>${r.docUnid}</td>
+								<td>${(st.index + 1)} </td>
 
-						        <td>
+					            <td>${r.lastUserName}</td>
+					            <td>${r.lastShowTitle}</td>
+					            <td>${r.lastMsg}</td>
+
+								<td>${r.userName}</td>
+					            <td>${r.showTitle}</td>
+					            <td>${r.msg}</td>
+
+						        <%--<td>
 						         <div class="site-demo-button" >
-								   <button id="updateFlow" data-method="setAddOrEdit" value="${r.flowId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+
 								 </div>
-						       </td>
+						       </td>--%>
 				             </tr>
 						   </c:forEach>
 		                  </tbody>
 			             </table>
 			           </div>
 			        </div>
-		            <!-- 表格列表end -->
-		            <div class="box-footer clearfix">
-		              <ul id="show-page" class="pagination pagination-sm no-margin pull-left">
-		              	 <pv:showPaging pageVo="${paginator}" />
-		              </ul>
-		            </div>
+
 		          </div>
 		        </div>
 		      </div>
@@ -141,7 +114,7 @@
 	<script type="text/javascript">
 
 		//查询数据Url
-		var pageQueryUrl = "<%=request.getContextPath()%>/admin/flow/pageQuery";
+		var pageQueryUrl = "<%=request.getContextPath()%>/admin/flow/pageQueryFlow";
 		//查询条件表单Id
 	    var _queryConditionForrId = "form_submit";
 		//显示数据表格id
@@ -154,7 +127,7 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+	    // tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>

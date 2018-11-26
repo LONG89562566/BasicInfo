@@ -7,6 +7,8 @@ import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.FlowService;
 import com.info.admin.utils.CloneUtils;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.utils.UUIDUtils;
+import com.info.admin.vo.FlowVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -128,6 +130,21 @@ public class FlowController extends BaseController{
     }
 
     /**
+     *我的桌面查询流程列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/queryFlow", method = { RequestMethod.GET, RequestMethod.POST })
+    public String queryFlow(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
+        logger.info("[FlowController][queryFlow] 我的桌面查询流程列表:");
+        model.addAttribute("paginator", service.queryFlow(entity));
+        model.addAttribute("flow", entity);
+        return "flow/queryFlow";
+    }
+
+    /**
      *跳转到新增页面
      *@author
      *@date  2018-07-12 10:50:32
@@ -137,13 +154,38 @@ public class FlowController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String flowId,Model model){
         try{
-            if(StringUtils.isNotEmpty(flowId)){
+            if(StringUtils.isNotEmpty(flowId) && !"null".equals(flowId)
+                    && !"undefined".equals(flowId)){
                 //根据id查询系统用户
-                Flow flow = service.getFlowById(flowId);
+                FlowVo flow = service.getFlowByIdVo(flowId);
                 model.addAttribute("flow", flow);
             }
             model.addAttribute("flowId", flowId);
             return "flow/addFlow";
+        }catch(Exception e){
+            logger.error("[FlowController][addOrEdit]: flowId="+flowId, e);
+            return "500";
+        }
+    }
+
+    /**
+     *跳转到新增页面
+     *@author
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value="/submitPage",method={RequestMethod.GET,RequestMethod.POST})
+    public String submitPage(HttpServletRequest request,String flowId,Model model){
+        try{
+            if(StringUtils.isNotEmpty(flowId) && !"null".equals(flowId)
+                    && !"undefined".equals(flowId)){
+                //根据id查询系统用户
+                FlowVo flow = service.getFlowByIdVo(flowId);
+                model.addAttribute("flow", flow);
+            }
+            model.addAttribute("flowId", flowId);
+            return "flow/submitFlow";
         }catch(Exception e){
             logger.error("[FlowController][addOrEdit]: flowId="+flowId, e);
             return "500";
@@ -170,7 +212,7 @@ public class FlowController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getFlowId()) {
+            if (StringUtils.isNotBlank(entity.getFlowId())) {
                 result = service.update(entity);
             } else {
                 result = service.insert(entity);
@@ -206,6 +248,17 @@ public class FlowController extends BaseController{
                 return new JsonResult(JsonResultCode.FAILURE, "参数异常，页面编号不能为空", "");
             }
 
+            if (StringUtils.isNotBlank(entity.getFlowId())) {
+                Flow flow = new Flow();
+                flow.setFlowId(entity.getFlowId());
+                flow.setShowTitle(entity.getShowTitle());
+                flow.setMsg(entity.getMsg());
+                flow.setOperator(this.getStaffId(request));
+                flow.setOperatorCn(this.getLoginUser(request).getName());
+                flow.setIsDone(1L);
+                result = service.update(flow);
+            }
+
             //设置entity特殊参数
             entity.setDeleteFlag(0L);
             entity.setUserId(this.getStaffId(request));
@@ -217,12 +270,16 @@ public class FlowController extends BaseController{
             /**
              * 根据docid获取流程节点，如果无节点则为初次发起
              */
+            if(StringUtils.isNotBlank(entity.getDocUrl()) && entity.getDocUrl().indexOf("&flowId=") > -1){
+                entity.setDocUrl(entity.getDocUrl().split("&flowId=")[0]);
+            }
             Flow flow = new Flow();
             flow.setDocUnid(entity.getDocUnid());
             flow.setIsDone(0L);
             //查询是否有当前页面的未完成节点
             List<Flow> list = service.getFlowByDocUnid(flow);
             if (list!=null&&list.size()>0){
+                String  docUrl = entity.getDocUrl();
                 //非初次发起
                 /**
                  * 1、未完成节点超过1条则为，则上节点为多人节点，此时应将多节点都改为完成状态
@@ -241,24 +298,34 @@ public class FlowController extends BaseController{
                 if (user==null||user.length==0){
                     return new JsonResult(JsonResultCode.FAILURE, "参数异常，发送的用户不能为空", "");
                 }else if (user.length==1) {
-                    /**
-                     * 1、发送单人
-                     */
-                    //上个节点的id，默认以第一个人的
-                    entity.setLastNode(list.get(0).getFlowId());
-                    entity.setIsDone(0L);
-                    result = service.insert(entity);
+
+                    Flow f = CloneUtils.clone(entity);
+                    f.setIsDone(0L);
+                    f.setUserId(user[0]);
+                    f.setLastNode(list.get(0).getFlowId());
+                    f.setFlowId(UUIDUtils.getUUid());
+                    f.setDocUrl(StringUtils.isNotBlank(docUrl) ? docUrl : "");
+                    f.setLastNode(entity.getFlowId());
+                    f.setMsg("");
+                    f.setShowTitle("");
+
+                    result = service.insert(f);
                 }else if (user.length>1){
                     /**
                      * 2、发送多人
                      */
                     List<Flow> batchList = new ArrayList<>();
+
                     for (String userId:user){
                         Flow f = CloneUtils.clone(entity);
                         f.setIsDone(0L);
                         f.setUserId(userId);
                         f.setLastNode(list.get(0).getFlowId());
-                        f.setFlowId(com.info.admin.utils.UUIDUtils.getUUid());
+                        f.setFlowId(UUIDUtils.getUUid());
+                        f.setDocUrl(StringUtils.isNotBlank(docUrl) ? docUrl : "");
+                        f.setLastNode(entity.getFlowId());
+                        f.setMsg("");
+                        f.setShowTitle("");
                         batchList.add(f);
                     }
                     result = service.startFlow(batchList);
@@ -277,9 +344,14 @@ public class FlowController extends BaseController{
                     List<Flow> startList = new ArrayList<>();
                     startList.add(entity);
                     Flow f = CloneUtils.clone(entity);
-                    f.setFlowId(com.info.admin.utils.UUIDUtils.getUUid());
+                    f.setFlowId(UUIDUtils.getUUid());
+                    String  docUrl = entity.getDocUrl();
+                    f.setDocUrl(StringUtils.isNotBlank(docUrl) ? docUrl : "");
                     f.setOperator(null);
                     f.setOperatorCn(null);
+                    f.setMsg("");
+                    f.setShowTitle("");
+                    f.setLastNode(entity.getFlowId());
                     f.setIsDone(0L);
                     startList.add(f);
 
@@ -291,7 +363,9 @@ public class FlowController extends BaseController{
                      * 2、发送多人
                      */
                     List<Flow> startList = new ArrayList<>();
-                    entity.setFlowId(com.info.admin.utils.UUIDUtils.getUUid());
+                    entity.setFlowId(UUIDUtils.getUUid());
+                    String  docUrl = entity.getDocUrl();
+                    entity.setDocUrl(StringUtils.isNotBlank(docUrl) ? docUrl : "");
                     startList.add(entity);
                     for (String userId:user){
                         Flow f = CloneUtils.clone(entity);
@@ -300,7 +374,10 @@ public class FlowController extends BaseController{
                         f.setOperatorCn(null);
                         f.setUserId(userId);
                         f.setLastNode(entity.getFlowId());
-                        f.setFlowId(com.info.admin.utils.UUIDUtils.getUUid());
+                        f.setFlowId(UUIDUtils.getUUid());
+                        f.setMsg("");
+                        f.setShowTitle("");
+                        f.setDocUrl(StringUtils.isNotBlank(docUrl) ? docUrl : "");
                         startList.add(f);
                     }
                     result = service.startFlow(startList);
@@ -314,6 +391,86 @@ public class FlowController extends BaseController{
             }
         } catch (Exception e) {
             logger.error("[FlowController][insertAndUpdate] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
+     * 发送Flow对象
+     * @param    request  请求
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "submitFlow", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult submitFlow(HttpServletRequest request,Flow entity) {
+        logger.info("[FlowController][submitFlow] 发送Flow对象:");
+        try {
+            int result=0;
+            String[] user = request.getParameterValues("user[]");
+            if (StringUtils.isBlank(entity.getDocUnid())) {
+                return new JsonResult(JsonResultCode.FAILURE, "参数异常，页面编号不能为空", "");
+            }
+
+            Flow flow = new Flow();
+            flow.setDocUnid(entity.getDocUnid());
+            flow.setIsDone(0L);
+            //查询是否有当前页面的未完成节点
+            List<Flow> list = service.getFlowByDocUnid(flow);
+            if(list == null || list.size() == 0){
+                return new JsonResult(JsonResultCode.FAILURE, "提交异常，无上一节点。", "");
+            }
+
+            if (StringUtils.isBlank(entity.getFlowId())) {
+                return new JsonResult(JsonResultCode.FAILURE, "提交异常，无上一节点。", "");
+            }
+
+            Flow flow1 = new Flow();
+            flow1.setFlowId(entity.getFlowId());
+            flow1.setShowTitle(entity.getShowTitle());
+            flow1.setMsg(entity.getMsg());
+            flow1.setOperator(this.getStaffId(request));
+            flow1.setOperatorCn(this.getLoginUser(request).getName());
+            flow1.setIsDone(1L);
+            flow1.setIsSubmit(1L);
+            result = service.update(flow1);
+
+
+            if (result > 0) {
+                return new JsonResult(JsonResultCode.SUCCESS, "操作成功", "");
+            } else {
+                return new JsonResult(JsonResultCode.FAILURE, "操作失败", "");
+            }
+        } catch (Exception e) {
+            logger.error("[FlowController][submitFlow] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
+     * 发送Flow对象
+     * @param    request  请求
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "isSubmit", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult isSubmit(HttpServletRequest request,Flow entity) {
+        logger.info("[FlowController][submitFlow] 发送Flow对象:");
+        try {
+            if (StringUtils.isBlank(entity.getFlowId())) {
+                return new JsonResult(JsonResultCode.FAILURE, "参数异常，页面编号不能为空", "");
+            }
+            entity.setIsDone(0L);
+            return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.getSubmitByDocUnid(entity));
+        } catch (Exception e) {
+            logger.error("[FlowController][submitFlow] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
     }
@@ -430,6 +587,32 @@ public class FlowController extends BaseController{
     }
 
     /**
+     * 分页查询Flow对象
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "pageQueryFlow", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult pageQueryFlow(HttpServletRequest request,Flow entity) {
+        logger.info("[FlowController][pageQueryFlow] 查询Flow对象:");
+        try {
+            // 获取分页当前的页码
+            int pageNum = this.getPageNum(request);
+            // 获取分页的大小
+            int pageSize = this.getPageSize(request);
+
+            PageUtil paginator = service.queryPageFlow(entity , pageNum, pageSize);
+            return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
+        } catch (Exception e) {
+            logger.error("[FlowController][pageQueryFlow] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
      * 分页查询待办Flow对象
      * @param    entity  对象
      * @author   ysh
@@ -509,6 +692,27 @@ public class FlowController extends BaseController{
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
         } catch (Exception e) {
             logger.error("[FlowController][pageBjQuery] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
+     * 查询StaffInfo对象
+     *
+     * @param flowId 对象
+     * @return com.netcai.admin.result.JsonResult
+     * @author ysh
+     * @date 2018-11-14 23:45:42
+     * @updater or other
+     */
+    @ResponseBody
+    @RequestMapping(value = "getStaffInfoByFlowId", method = {RequestMethod.GET, RequestMethod.POST})
+    public JsonResult getStaffInfoByFlowId(String flowId ) {
+        logger.info("[FlowController][getStaffInfoByFlowId] 查询StaffInfo对象:");
+        try {
+            return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.getFlowByIdVo(flowId));
+        } catch (Exception e) {
+            logger.error("[FlowController][getStaffInfoByFlowId] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
     }

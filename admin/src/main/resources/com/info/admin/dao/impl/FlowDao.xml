@@ -3,389 +3,486 @@
 <!-- 流程 xml anthor ysh -->
 <mapper namespace="com.info.admin.dao.FlowDao">
 
-	<!-- 新增 流程 对象 -->
-	<insert id="insert" parameterType="com.info.admin.entity.Flow"
-			useGeneratedKeys="true" keyProperty="flowId">
-		insert into flow
+    <!-- 新增 流程 对象 -->
+    <insert id="insert" parameterType="com.info.admin.entity.Flow"
+            useGeneratedKeys="true" keyProperty="flowId">
+        insert into flow
         <trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test=" flowId != null">
-				flow_id,
-			</if>
-			<if test=" createTime != null">
-				create_time,
-			</if>
-			<if test=" createUser != null">
-				create_user,
-			</if>
-			<if test=" createUserCn != null">
-				create_user_cn,
-			</if>
-			<if test=" deleteFlag != null">
-				delete_flag,
-			</if>
-			<if test=" updateTime != null">
-				update_time,
-			</if>
-			<if test=" seq != null">
-				seq,
-			</if>
-			<if test=" name != null">
-				name,
-			</if>
-			<if test=" lastNode != null">
-				last_node,
-			</if>
-			<if test=" nextNode != null">
-				next_node,
-			</if>
-			<if test=" orgId != null">
-				org_id,
-			</if>
-			<if test=" roleId != null">
-				role_id,
-			</if>
-			<if test=" userId != null">
-				user_id,
-			</if>
-			<if test=" msg != null">
-				msg,
-			</if>
-			<if test=" isDone != null">
-				is_done,
-			</if>
-			<if test=" showTitle != null">
-				show_title,
-			</if>
-			<if test=" docUrl != null">
-				doc_url,
-			</if>
-			<if test=" docUnid != null">
-				doc_unid,
-			</if>
-			<if test=" operator != null">
-				operator,
-			</if>
-			<if test=" operatorCn != null">
-				operator_cn,
-			</if>
-			<if test=" isSubmit != null">
-				is_submit,
-			</if>
+            <if test=" flowId != null">
+                flow_id,
+            </if>
+            <if test=" createTime != null">
+                create_time,
+            </if>
+            <if test=" createUser != null">
+                create_user,
+            </if>
+            <if test=" createUserCn != null">
+                create_user_cn,
+            </if>
+            <if test=" deleteFlag != null">
+                delete_flag,
+            </if>
+            <if test=" updateTime != null">
+                update_time,
+            </if>
+            <if test=" seq != null">
+                seq,
+            </if>
+            <if test=" name != null">
+                name,
+            </if>
+            <if test=" lastNode != null">
+                last_node,
+            </if>
+            <if test=" nextNode != null">
+                next_node,
+            </if>
+            <if test=" orgId != null">
+                org_id,
+            </if>
+            <if test=" roleId != null">
+                role_id,
+            </if>
+            <if test=" userId != null">
+                user_id,
+            </if>
+            <if test=" msg != null">
+                msg,
+            </if>
+            <if test=" isDone != null">
+                is_done,
+            </if>
+            <if test=" showTitle != null">
+                show_title,
+            </if>
+            <if test=" docUrl != null">
+                doc_url,
+            </if>
+            <if test=" docUnid != null">
+                doc_unid,
+            </if>
+            <if test=" operator != null">
+                operator,
+            </if>
+            <if test=" operatorCn != null">
+                operator_cn,
+            </if>
+            <if test=" isSubmit != null">
+                is_submit,
+            </if>
             <if test=" isEnd != null">
                 is_end,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="flowId != null ">
-		        #{flowId},
-		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
-			<if test="createUser != null ">
-		        #{createUser},
-		    </if>
-			<if test="createUserCn != null ">
-		        #{createUserCn},
-		    </if>
-			<if test="deleteFlag != null ">
-		        #{deleteFlag},
-		    </if>
-			<if test="updateTime != null">
-				date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
-			<if test="seq != null ">
-		        #{seq},
-		    </if>
-			<if test="name != null ">
-		        #{name},
-		    </if>
-			<if test="lastNode != null ">
-		        #{lastNode},
-		    </if>
-			<if test="nextNode != null ">
-		        #{nextNode},
-		    </if>
-			<if test="orgId != null ">
-		        #{orgId},
-		    </if>
-			<if test="roleId != null ">
-		        #{roleId},
-		    </if>
-			<if test="userId != null ">
-		        #{userId},
-		    </if>
-			<if test="msg != null ">
-		        #{msg},
-		    </if>
-			<if test="isDone != null ">
-		        #{isDone},
-		    </if>
-			<if test="showTitle != null ">
-		        #{showTitle},
-		    </if>
-			<if test="docUrl != null ">
-		        #{docUrl},
-		    </if>
-			<if test="docUnid != null ">
-		        #{docUnid},
-		    </if>
-			<if test=" operator != null">
-				#{operator},
-			</if>
-			<if test=" operatorCn != null">
-				#{operatorCn},
-			</if>
-			<if test=" isSubmit != null">
-				#{isSubmit},
-			</if>
+            <if test="flowId != null ">
+                #{flowId},
+            </if>
+            <if test="createTime != null">
+                date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+            </if>
+            <if test="createUser != null ">
+                #{createUser},
+            </if>
+            <if test="createUserCn != null ">
+                #{createUserCn},
+            </if>
+            <if test="deleteFlag != null ">
+                #{deleteFlag},
+            </if>
+            <if test="updateTime != null">
+                date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+            </if>
+            <if test="seq != null ">
+                #{seq},
+            </if>
+            <if test="name != null ">
+                #{name},
+            </if>
+            <if test="lastNode != null ">
+                #{lastNode},
+            </if>
+            <if test="nextNode != null ">
+                #{nextNode},
+            </if>
+            <if test="orgId != null ">
+                #{orgId},
+            </if>
+            <if test="roleId != null ">
+                #{roleId},
+            </if>
+            <if test="userId != null ">
+                #{userId},
+            </if>
+            <if test="msg != null ">
+                #{msg},
+            </if>
+            <if test="isDone != null ">
+                #{isDone},
+            </if>
+            <if test="showTitle != null ">
+                #{showTitle},
+            </if>
+            <if test="docUrl != null ">
+                #{docUrl},
+            </if>
+            <if test="docUnid != null ">
+                #{docUnid},
+            </if>
+            <if test=" operator != null">
+                #{operator},
+            </if>
+            <if test=" operatorCn != null">
+                #{operatorCn},
+            </if>
+            <if test=" isSubmit != null">
+                #{isSubmit},
+            </if>
             <if test=" isEnd != null">
                 #{isEnd},
             </if>
         </trim>
-	</insert>
+    </insert>
 
 
-	<!-- 批量	添加 -->
-	<insert id="batchFlow" parameterType="java.util.List">
-		insert into flow(
-				flow_id,
-				create_time,
-				create_user,
-				create_user_cn,
-				delete_flag,
-				update_time,
-				seq,
-				name,
-				last_node,
-				next_node,
-				org_id,
-				role_id,
-				user_id,
-                is_done,
-				msg,
-				show_title,
-				doc_url,
-				doc_unid,
-				operator,
-				operator_cn)
-		values
-		<foreach collection="list" item="item" separator=",">
-                    (#{item.flowId},
-                    date_format(#{item.createTime},'%Y-%m-%d %H:%i:%s'),
-                    #{item.createUser},
-                    #{item.createUserCn},
-                    #{item.deleteFlag},
-                    date_format(#{item.updateTime},'%Y-%m-%d %H:%i:%s'),
-                    #{item.seq},
-                    #{item.name},
-                    #{item.lastNode},
-                    #{item.nextNode},
-                    #{item.orgId},
-                    #{item.roleId},
-                    #{item.userId},
-                    #{item.isDone},
-                    #{item.msg},
-                    #{item.showTitle},
-                    #{item.docUrl},
-                    #{item.docUnid},
-                    #{item.operator},
-                    #{item.operatorCn})
-		</foreach>
-	</insert>
+    <!-- 批量	添加 -->
+    <insert id="batchFlow" parameterType="java.util.List">
+        insert into flow(
+        flow_id,
+        create_time,
+        create_user,
+        create_user_cn,
+        delete_flag,
+        update_time,
+        seq,
+        name,
+        last_node,
+        next_node,
+        org_id,
+        role_id,
+        user_id,
+        is_done,
+        msg,
+        show_title,
+        doc_url,
+        doc_unid,
+        operator,
+        operator_cn)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.flowId},
+            date_format(#{item.createTime},'%Y-%m-%d %H:%i:%s'),
+            #{item.createUser},
+            #{item.createUserCn},
+            #{item.deleteFlag},
+            date_format(#{item.updateTime},'%Y-%m-%d %H:%i:%s'),
+            #{item.seq},
+            #{item.name},
+            #{item.lastNode},
+            #{item.nextNode},
+            #{item.orgId},
+            #{item.roleId},
+            #{item.userId},
+            #{item.isDone},
+            #{item.msg},
+            #{item.showTitle},
+            #{item.docUrl},
+            #{item.docUnid},
+            #{item.operator},
+            #{item.operatorCn})
+        </foreach>
+    </insert>
 
 
-	<!-- 更新 流程 对象 -->
-	<update id="update" parameterType="com.info.admin.entity.Flow">
-		update flow
+    <!-- 更新 流程 对象 -->
+    <update id="update" parameterType="com.info.admin.entity.Flow">
+        update flow
         <set>
             <trim suffixOverrides=",">
-				<if test=" createTime != null">
-					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-				</if>
-				<if test=" createUser != null">
-					create_user = #{createUser},
-				</if>
-				<if test=" createUserCn != null">
-					create_user_cn = #{createUserCn},
-				</if>
-				<if test=" deleteFlag != null">
-					delete_flag = #{deleteFlag},
-				</if>
-				<if test=" updateTime != null">
-					update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
-				</if>
-				<if test=" seq != null">
-					seq = #{seq},
-				</if>
-				<if test=" name != null">
-					name = #{name},
-				</if>
-				<if test=" lastNode != null">
-					last_node = #{lastNode},
-				</if>
-				<if test=" nextNode != null">
-					next_node = #{nextNode},
-				</if>
-				<if test=" orgId != null">
-					org_id = #{orgId},
-				</if>
-				<if test=" roleId != null">
-					role_id = #{roleId},
-				</if>
-				<if test=" userId != null">
-					user_id = #{userId},
-				</if>
-				<if test=" msg != null">
-					msg = #{msg},
-				</if>
-				<if test=" isDone != null">
-					is_done = #{isDone},
-				</if>
-				<if test=" showTitle != null">
-					show_title = #{showTitle},
-				</if>
-				<if test=" docUrl != null">
-					doc_url = #{docUrl},
-				</if>
-				<if test=" docUnid != null">
-					doc_unid = #{docUnid},
-				</if>
-				<if test=" operator != null">
-					operator = #{operator},
-				</if>
-				<if test=" operatorCn != null">
-					operator_cn = #{operatorCn},
-				</if>
-				<if test=" isSubmit != null">
-					is_submit = #{isSubmit},
-				</if>
+                <if test=" createTime != null">
+                    create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+                </if>
+                <if test=" createUser != null">
+                    create_user = #{createUser},
+                </if>
+                <if test=" createUserCn != null">
+                    create_user_cn = #{createUserCn},
+                </if>
+                <if test=" deleteFlag != null">
+                    delete_flag = #{deleteFlag},
+                </if>
+                <if test=" updateTime != null">
+                    update_time = date_format(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+                </if>
+                <if test=" seq != null">
+                    seq = #{seq},
+                </if>
+                <if test=" name != null">
+                    name = #{name},
+                </if>
+                <if test=" lastNode != null">
+                    last_node = #{lastNode},
+                </if>
+                <if test=" nextNode != null">
+                    next_node = #{nextNode},
+                </if>
+                <if test=" orgId != null">
+                    org_id = #{orgId},
+                </if>
+                <if test=" roleId != null">
+                    role_id = #{roleId},
+                </if>
+                <if test=" userId != null">
+                    user_id = #{userId},
+                </if>
+                <if test=" msg != null">
+                    msg = #{msg},
+                </if>
+                <if test=" isDone != null">
+                    is_done = #{isDone},
+                </if>
+                <if test=" showTitle != null">
+                    show_title = #{showTitle},
+                </if>
+                <if test=" docUrl != null">
+                    doc_url = #{docUrl},
+                </if>
+                <if test=" docUnid != null">
+                    doc_unid = #{docUnid},
+                </if>
+                <if test=" operator != null">
+                    operator = #{operator},
+                </if>
+                <if test=" operatorCn != null">
+                    operator_cn = #{operatorCn},
+                </if>
+                <if test=" isSubmit != null">
+                    is_submit = #{isSubmit},
+                </if>
                 <if test=" isEnd != null">
                     is_end = #{isEnd},
                 </if>
             </trim>
         </set>
-		where flow_id = #{flowId}
-	</update>
+        where flow_id = #{flowId}
+    </update>
 
     <!-- 删除 流程 对象 -->
     <delete id="delete">
         delete from flow
         <include refid="filterCondition"></include>
     </delete>
-    
+
     <!-- 返回 流程 对象 -->
     <resultMap type="com.info.admin.entity.Flow" id="flowMap">
-		<result column="flow_id" property="flowId" />
-		<result column="create_time" property="createTime" />
-		<result column="createTime" property="createTimeStr" />
-		<result column="create_user" property="createUser" />
-		<result column="create_user_cn" property="createUserCn" />
-		<result column="delete_flag" property="deleteFlag" />
-		<result column="update_time" property="updateTime" />
-		<result column="updateTime" property="updateTimeStr" />
-		<result column="seq" property="seq" />
-		<result column="name" property="name" />
-		<result column="last_node" property="lastNode" />
-		<result column="next_node" property="nextNode" />
-		<result column="org_id" property="orgId" />
-		<result column="role_id" property="roleId" />
-		<result column="user_id" property="userId" />
-		<result column="msg" property="msg" />
-		<result column="is_done" property="isDone" />
-		<result column="show_title" property="showTitle" />
-		<result column="doc_url" property="docUrl" />
-		<result column="doc_unid" property="docUnid" />
-		<result column="operator" property="operator" />
-		<result column="operator_cn" property="operatorCn" />
-		<result column="is_submit" property="isSubmit" />
-        <result column="is_end" property="isEnd" />
+        <result column="flow_id" property="flowId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="createTime" property="createTimeStr"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_user_cn" property="createUserCn"/>
+        <result column="delete_flag" property="deleteFlag"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="updateTime" property="updateTimeStr"/>
+        <result column="seq" property="seq"/>
+        <result column="name" property="name"/>
+        <result column="last_node" property="lastNode"/>
+        <result column="next_node" property="nextNode"/>
+        <result column="org_id" property="orgId"/>
+        <result column="role_id" property="roleId"/>
+        <result column="user_id" property="userId"/>
+        <result column="msg" property="msg"/>
+        <result column="is_done" property="isDone"/>
+        <result column="show_title" property="showTitle"/>
+        <result column="docUrl" property="docUrl"/>
+        <result column="doc_unid" property="docUnid"/>
+        <result column="operator" property="operator"/>
+        <result column="operator_cn" property="operatorCn"/>
+        <result column="is_submit" property="isSubmit"/>
+        <result column="is_end" property="isEnd"/>
+    </resultMap>
+
+    <!-- 返回 流程 对象 -->
+    <resultMap type="com.info.admin.vo.FlowVo" id="flowVoMap">
+        <result column="flow_id" property="flowId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_user_cn" property="createUserCn"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="seq" property="seq"/>
+        <result column="name" property="name"/>
+        <result column="last_node" property="lastNode"/>
+        <result column="next_node" property="nextNode"/>
+        <result column="org_id" property="orgId"/>
+        <result column="role_id" property="roleId"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="msg" property="msg"/>
+        <result column="is_done" property="isDone"/>
+        <result column="show_title" property="showTitle"/>
+        <result column="docUrl" property="docUrl"/>
+        <result column="doc_unid" property="docUnid"/>
+        <result column="operator" property="operator"/>
+        <result column="operator_cn" property="operatorCn"/>
+        <result column="is_submit" property="isSubmit"/>
+        <result column="is_end" property="isEnd"/>
+
+        <result column="lastName" property="lastName"/>
+        <result column="lastMsg" property="lastMsg"/>
+        <result column="lastShowTitle" property="lastShowTitle"/>
+        <result column="last_user_name" property="lastUserName"/>
     </resultMap>
 
     <!-- 分页条件 -->
     <sql id="filterCondition">
-        <trim prefix="where " prefixOverrides="and " >
-		    <if test=" entity.flowId != null">
-			    and flow_id =  #{entity.flowId} 
-		    </if>
-		    <if test="entity.createTime!=null">
-		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
-		    </if>
-		    <if test=" entity.createUser != null">
-			    and create_user =  #{entity.createUser} 
-		    </if>
-		    <if test=" entity.createUserCn != null">
-			    and create_user_cn =  #{entity.createUserCn} 
-		    </if>
-		    <if test=" entity.deleteFlag != null">
-			    and delete_flag =  #{entity.deleteFlag} 
-		    </if>
-		    <if test="entity.updateTime!=null">
-		        and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
-		    </if>
-		    <if test=" entity.seq != null">
-			    and seq =  #{entity.seq} 
-		    </if>
-		    <if test=" entity.name != null">
-			    and name =  #{entity.name} 
-		    </if>
-		    <if test=" entity.lastNode != null">
-			    and last_node =  #{entity.lastNode} 
-		    </if>
-		    <if test=" entity.nextNode != null">
-			    and next_node =  #{entity.nextNode} 
-		    </if>
-		    <if test=" entity.msg != null">
-			    and msg =  #{entity.msg} 
-		    </if>
-		    <if test=" entity.isDone != null">
-			    and is_done =  #{entity.isDone} 
-		    </if>
-		    <if test=" entity.showTitle != null">
-			    and show_title =  #{entity.showTitle} 
-		    </if>
-		    <if test=" entity.docUrl != null">
-			    and doc_url =  #{entity.docUrl} 
-		    </if>
-		    <if test=" entity.docUnid != null">
-			    and doc_unid =  #{entity.docUnid} 
-		    </if>
-			<if test=" entity.operator != null">
-				and operator =  #{entity.operator}
-			</if>
-			<if test=" entity.operatorCn != null">
-				and operator_cn =  #{entity.operatorCn}
-			</if>
-			<if test=" entity.isSubmit != null">
-				and is_submit =  #{entity.isSubmit}
-			</if>
-			and (org_id =  #{entity.orgId} or role_id =  #{entity.roleId} or user_id =  #{entity.userId}) and delete_flag=0
+        <trim prefix="where " prefixOverrides="and ">
+            <if test=" entity.flowId != null">
+                and flow_id = #{entity.flowId}
+            </if>
+            <if test="entity.createTime!=null">
+                and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+            </if>
+            <if test=" entity.createUser != null">
+                and create_user = #{entity.createUser}
+            </if>
+            <if test=" entity.createUserCn != null">
+                and create_user_cn = #{entity.createUserCn}
+            </if>
+            <if test=" entity.deleteFlag != null">
+                and delete_flag = #{entity.deleteFlag}
+            </if>
+            <if test="entity.updateTime!=null">
+                and update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+            </if>
+            <if test=" entity.seq != null">
+                and seq = #{entity.seq}
+            </if>
+            <if test=" entity.name != null">
+                and name = #{entity.name}
+            </if>
+            <if test=" entity.lastNode != null">
+                and last_node = #{entity.lastNode}
+            </if>
+            <if test=" entity.nextNode != null">
+                and next_node = #{entity.nextNode}
+            </if>
+            <if test=" entity.msg != null">
+                and msg = #{entity.msg}
+            </if>
+            <if test=" entity.isDone != null">
+                and is_done = #{entity.isDone}
+            </if>
+            <if test=" entity.showTitle != null">
+                and show_title = #{entity.showTitle}
+            </if>
+            <if test=" entity.docUrl != null">
+                and doc_url = #{entity.docUrl}
+            </if>
+            <if test=" entity.docUnid != null">
+                and doc_unid = #{entity.docUnid}
+            </if>
+            <if test=" entity.operator != null">
+                and operator = #{entity.operator}
+            </if>
+            <if test=" entity.operatorCn != null">
+                and operator_cn = #{entity.operatorCn}
+            </if>
+            <if test=" entity.isSubmit != null">
+                and is_submit = #{entity.isSubmit}
+            </if>
+            and (org_id = #{entity.orgId} or role_id = #{entity.roleId} or user_id = #{entity.userId})
+            and delete_flag=0
         </trim>
     </sql>
-    
-    <!-- 查询 流程 对象列表 -->
-    <select id="query"  resultMap="flowMap" >
-        select  
-          *
-           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
-           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-          from flow
-        <include refid="filterCondition"></include>
-    </select>
+
+    <!-- 分页条件 -->
+    <sql id="filterConditionQueryFlow">
+        <trim prefix="where " prefixOverrides="and ">
+            <if test=" entity.flowId != null">
+                and f1.flow_id = #{entity.flowId}
+            </if>
+            <if test="entity.createTime!=null">
+                and f1.create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+            </if>
+            <if test=" entity.createUser != null">
+                and f1.create_user = #{entity.createUser}
+            </if>
+            <if test=" entity.createUserCn != null">
+                and f1.create_user_cn = #{entity.createUserCn}
+            </if>
+            <if test=" entity.deleteFlag != null">
+                and f1.delete_flag = #{entity.deleteFlag}
+            </if>
+            <if test="entity.updateTime!=null">
+                and f1.update_time = STR_TO_DATE(#{entity.updateTime},"%Y-%m-%d %T")
+            </if>
+            <if test=" entity.seq != null">
+                and f1.seq = #{entity.seq}
+            </if>
+            <if test=" entity.name != null">
+                and f1.name = #{entity.name}
+            </if>
+            <if test=" entity.lastNode != null">
+                and f1.last_node = #{entity.lastNode}
+            </if>
+            <if test=" entity.nextNode != null">
+                and f1.next_node = #{entity.nextNode}
+            </if>
+            <if test=" entity.msg != null">
+                and f1.msg = #{entity.msg}
+            </if>
+            <if test=" entity.isDone != null">
+                and f1.is_done = #{entity.isDone}
+            </if>
+            <if test=" entity.showTitle != null">
+                and f1.show_title = #{entity.showTitle}
+            </if>
+            <if test=" entity.docUrl != null">
+                and f1.doc_url = #{entity.docUrl}
+            </if>
+            <if test=" entity.docUnid != null">
+                and f1.doc_unid = #{entity.docUnid}
+            </if>
+            <if test=" entity.operator != null">
+                and f1.operator = #{entity.operator}
+            </if>
+            <if test=" entity.operatorCn != null">
+                and f1.operator_cn = #{entity.operatorCn}
+            </if>
+            <if test=" entity.isSubmit != null">
+                and f1.is_submit = #{entity.isSubmit}
+            </if>
+            and f1.delete_flag=0
+        </trim>
+    </sql>
 
     <!-- 查询 流程 对象列表 -->
-    <select id="getFlowByDocUnid"  resultMap="flowMap" >
+    <select id="query" resultMap="flowMap">
         select
         *
         ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
         ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+        ,concat(doc_url, '&amp;flowId=',flow_id) as docUrl
+        from flow
+        <include refid="filterCondition"></include>
+        order by create_time
+    </select>
+
+    <!-- 查询 流程 对象列表 -->
+    <select id="getFlowByDocUnid" resultMap="flowMap">
+        select
+        *
+        ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
+        ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+        ,concat(doc_url, '&amp;flowId=',flow_id) as docUrl
         from flow
         where delete_flag = 0
         <if test=" entity.isDone != null">
-        and is_done= #{entity.isDone}
+            and is_done= #{entity.isDone}
         </if>
         and doc_unid= #{entity.docUnid}
     </select>
+
 
     <!-- 查询 流程 总记录数 -->
     <select id="getPageCount" resultType="int">
@@ -393,25 +490,78 @@
         <include refid="filterCondition"></include>
     </select>
 
+    <!-- 查询 流程 总记录数 -->
+    <select id="queryFlowCount" resultType="int">
+        select count(1) from flow f1
+        <include refid="filterConditionQueryFlow"></include>
+    </select>
+
     <!-- 分页查询 流程 对象列表  -->
     <select id="pageQuery" resultMap="flowMap">
         select
-         * 
-           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
-           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
-         from flow
+        *
+        ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
+        ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+        ,concat(doc_url, '&amp;flowId=',flow_id) as docUrl
+        from flow
         <include refid="filterCondition"></include>
         order by create_time
         LIMIT #{offset},#{pageSize}
     </select>
-    
+
+    <!-- 查询 流程 对象列表 -->
+    <select id="queryFlow" resultMap="flowVoMap">
+        select
+        f1.*
+        ,date_format(f1.create_time,'%Y-%m-%d %H:%i:%s') as createTime
+        ,date_format(f1.update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+        ,f2.name as lastName,f2.msg as lastMsg, f2.show_title as lastShowTitle
+        ,(select name from staff_info where staff_info.staff_id = f1.user_id) as user_name
+        ,(select name from staff_info where staff_info.staff_id = f2.user_id) as last_user_name
+        ,concat(f1.doc_url, '&amp;flowId=',f1.flow_id) as docUrl
+        from flow f1 left join flow f2 on f1.last_node = f2.flow_id
+        <include refid="filterConditionQueryFlow"></include>
+        order by f1.create_time
+    </select>
+
+    <!-- 分页查询 流程 对象列表 -->
+    <select id="queryPageFlow" resultMap="flowVoMap">
+        select
+        f1.*
+        ,date_format(f1.create_time,'%Y-%m-%d %H:%i:%s') as createTime
+        ,date_format(f1.update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+        ,f2.name as lastName,f2.msg as lastMsg, f2.show_title as lastShowTitle
+        ,(select name from staff_info where staff_info.staff_id = f1.user_id) as user_name
+        ,(select name from staff_info where staff_info.staff_id = f2.user_id) as last_user_name
+        ,concat(f1.doc_url, '&amp;flowId=',f1.flow_id) as docUrl
+        from flow f1 left join flow f2 on f1.last_node = f2.flow_id
+        <include refid="filterConditionQueryFlow"></include>
+        order by f1.create_time
+        LIMIT #{offset},#{pageSize}
+    </select>
+
     <!-- 根据id 查询 流程 -->
-	<select id="getFlowById" parameterType="Long" resultMap="flowMap" >
+    <select id="getFlowById" parameterType="String" resultMap="flowMap">
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
-           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+           ,concat(doc_url, '&amp;flowId=',flow_id) as docUrl
 		 from flow where flow_id= #{flowId}
+	</select>
+
+    <!-- 根据id 查询 流程 -->
+    <select id="getFlowByIdVo" parameterType="String" resultMap="flowVoMap">
+        select
+        f1.*
+        ,date_format(f1.create_time,'%Y-%m-%d %H:%i:%s') as createTime
+        ,date_format(f1.update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+        ,f2.name as lastName,f2.msg as lastMsg, f2.show_title as lastShowTitle
+        ,(select name from staff_info where staff_info.staff_id = f1.user_id) as user_name
+        ,(select name from staff_info where staff_info.staff_id = f2.user_id) as last_user_name
+        ,concat(f1.doc_url, '&amp;flowId=',f1.flow_id) as docUrl
+        from flow f1 left join flow f2 on f1.last_node = f2.flow_id
+		 where f1.flow_id= #{flowId}
 	</select>
 
 
@@ -426,6 +576,7 @@
         *
         ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
         ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+        ,concat(doc_url, '&amp;flowId=',flow_id) as docUrl
         from flow
         where delete_flag=0 and (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=0
         LIMIT #{offset},#{pageSize}
@@ -442,6 +593,7 @@
         *
         ,date_format(MAX(create_time),'%Y-%m-%d %H:%i:%s') as createTime
         ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+        ,concat(doc_url, '&amp;flowId=',flow_id) as docUrl
         from flow
         where delete_flag=0 and doc_unid in (select distinct (doc_unid) from flow where (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=1) group by doc_unid
         LIMIT #{offset},#{pageSize}
@@ -458,9 +610,11 @@
         *
         ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
         ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+        ,concat(doc_url, '&amp;flowId=',flow_id) as docUrl
         from flow
         where delete_flag=0 and (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_end=1
         LIMIT #{offset},#{pageSize}
     </select>
+
 
 </mapper>	

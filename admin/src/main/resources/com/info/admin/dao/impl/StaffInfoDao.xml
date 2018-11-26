@@ -277,4 +277,17 @@
 		 LEFT JOIN (select id as su_id,is_bound,staff_id as sy_staff_id from sys_user ) as su  on staff_info.staff_id = su.sy_staff_id
 		 where staff_id= #{staffId}
 	</select>
+
+	<!-- 根据id 查询 员工信息 -->
+	<select id="getStaffInfoByFlowId" parameterType="String" resultMap="staffInfoMap" >
+		select
+		 si.*
+           ,date_format(si.create_time,'%Y-%m-%d %H:%i:%s') as createTime
+           ,date_format(si.update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+           ,IFNULL(is_bound,'0') isBound
+		 from staff_info si
+		 LEFT JOIN (select id as su_id,is_bound,staff_id as sy_staff_id from sys_user ) as su  on si.staff_id = su.sy_staff_id
+		 left join  flow f on si.staff_id = f.operator
+		 where flow_id= #{flowId}
+	</select>
 </mapper>	

@@ -77,9 +77,6 @@
     <script type="text/javascript">
 
         $(function () {
-            if("${flow.lastNode }" == '' || "${flow.lastNode }" == undefined){
-                $(".lastNode").hide();
-            }
             // _loadSaffInfo();
             /*         $("#releaseUser").combotree({
                          url: '/admin/staffInfo/staffInfoTree',
@@ -149,7 +146,7 @@
         }
     </script>
 	<script type="text/javascript">
-		var reqUpdateAndAddUrl = "/admin/flow/sendFlow";
+		var reqUpdateAndAddUrl = "/admin/flow/submitFlow";
 	</script>
 
 	<script type="text/javascript">
