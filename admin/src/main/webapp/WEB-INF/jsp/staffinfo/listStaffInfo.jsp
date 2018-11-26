@@ -39,7 +39,7 @@
 	<script src="/bootstrap/js/fileinput.js"></script>
 	<script src="/js/jquery-ui.min.js"></script>
 	<script src="/js/jquery.form.js"></script>
-	<script src="/js/fromVal.js"></script>
+	<script src="/js/fromVal-v.1.0.js"></script>
 	<script src="/js/date-format.js"></script>
 	<script src="/layui/layui.js"></script>
 	<script src="/dist/js/app.min.js"></script>

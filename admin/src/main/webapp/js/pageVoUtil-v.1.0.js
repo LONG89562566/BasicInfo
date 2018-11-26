@@ -93,16 +93,19 @@ var loadSelectPageDat = function (currentPage,pageSize) {
     var json = serializeFormPost(_queryConditionForrId);
     var parm = serializeFormGet(_queryConditionForrId);
 
-    loadThisPageData(currentPage,pageSize,json,parm);
+    loadThisPageData(currentPage,pageSize,json,"");
 };
 
 //局部刷新页面
 var loadThisPageData = function (currentPage,pageSize,json,parm) {
     $('#pageNum').val(currentPage);
     $('#pageSize').val(pageSize);
+    var _pageQueryUrl = pageQueryUrl;
+    if(parm != null && parm.length > 0 && parm != ''){
+        _pageQueryUrl += "?"+parm;
+    }
 
-
-    $.post(pageQueryUrl+"?"+parm,json,function (data) {
+    $.post(_pageQueryUrl,json,function (data) {
         if(data.code=="200" || data.code=="201"){
             var object = data.object.object;
             var currentPage = data.object.currentPage;

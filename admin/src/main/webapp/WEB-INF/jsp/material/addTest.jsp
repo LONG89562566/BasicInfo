@@ -11,7 +11,7 @@
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="materialId" name="materialId" value="${material.materialId}"/>
  			<input  type="hidden" id="projectId" name="projectId" value="${projectId}"/>
-            <div class="layui-input-block" style="margin:30px;">
+            <div class="layui-input-block" style="margin:30px;" id="flow-btn">
                 <input type="button" class="layui-btn" onclick="addFlow()" value="发送"/>
                 <input type="button" class="layui-btn" onclick="endFlow()" value="结束流程"/>
                 <input type="button" class="layui-btn" onclick="queryFlow()" value="查看流程"/>
@@ -31,9 +31,7 @@
 						<span style="color: red" id="s-testState"></span>
 					</div>
 				</div>
-			</div>
 
-			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
 		        	<div class="layui-input-inline">
@@ -222,7 +220,35 @@
                 });
             }
         });
-    }
+    };
+
+    var queryFlow = function () {
+        var materialId = $("#materialId").val();
+        //多窗口模式，层叠置顶
+        layer.open({
+            type: 2,
+            title: '流程信息',
+            area: ['60%', '70%'],
+            shade: 0.5,
+            anim: 3,//0-6的动画形式，-1不开启
+            content: '<%=request.getContextPath()%>/admin/flow/addOrEdit',
+            zIndex: layer.zIndex, //重点1
+            success: function(layero, index){
+                //layer.setAddOrEdit(layero);
+                var body = layer.getChildFrame('body', index);
+
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                body.find('input[name="docUnid"]').val(materialId);
+                body.find('input[name="docUrl"]').val(window.location.href);
+                //弹窗表单的取消操作时关闭弹窗
+                var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
+                    layer.closeAll();
+                    //刷新页面
+                    refreshTheCurrentPage();
+                });
+            }
+        });
+    };
 
     var endFlow = function () {
         var docUnid = $("#materialId").val();
@@ -238,6 +264,6 @@
                 }
             }
         });
-    }
+    };
 </script>
 </html>				 

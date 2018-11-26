@@ -32,14 +32,14 @@
 <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/layui/layui.js"></script>
 <script type="text/javascript" src="/dist/js/app.min.js"></script>
-<script type="text/javascript" src="/js/fromVal.js"></script>
+<script type="text/javascript" src="/js/fromVal-v.1.0.js"></script>
 <script type="text/javascript" src="/My97DatePicker/WdatePicker.js" charset="utf-8" ></script>
 
 <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 
 <script type="text/javascript" src="/js/imagUtil-v1.0.js"></script>
-<script type="text/javascript" src="/js/fromVal.js"></script>
+<script type="text/javascript" src="/js/fromVal-v.1.0.js"></script>
 <script type="text/javascript" src="/js/date-format.js"></script>
 
 <style type="text/css">

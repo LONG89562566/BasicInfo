@@ -21,7 +21,7 @@
     <script type="text/javascript" src="/js/tab-menu.js"></script>
 
     <script type="text/javascript" src="/js/imagUtil-v1.0.js"></script>
-    <script type="text/javascript" src="/js/fromVal.js"></script>
+    <script type="text/javascript" src="/js/fromVal-v.1.0.js"></script>
     <script type="text/javascript" src="/js/date-format.js"></script>
 
     <!--[if lt IE 9]>
