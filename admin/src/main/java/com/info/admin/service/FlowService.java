@@ -2,6 +2,7 @@ package com.info.admin.service;
 
 import com.info.admin.entity.Flow;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.vo.FlowVo;
 
 import java.util.List;
 
@@ -46,6 +47,7 @@ public interface FlowService {
      *@param  entity 对象
      *@author  ysh
      *@date  2018-11-14 23:45:42 
+     *@date  2018-11-14 23:45:42
      *@updater or other
      *@return int
      */
@@ -62,6 +64,38 @@ public interface FlowService {
      * @return   PageUtil
      */
     PageUtil pageQuery(Flow entity, int pageNum, int pageSize);
+
+    /**
+     * 查询Flow对象
+     * @param entity 对象
+     * @author  ysh
+     * @date  2018-11-14 23:45:42
+     * @updater or other
+     * @return   PageUtil
+     */
+    List<FlowVo> queryFlow(Flow entity);
+
+    /**
+     * 查询Flow对象
+     * @param entity 对象
+     * @author  ysh
+     * @date  2018-11-14 23:45:42
+     * @updater or other
+     * @return   PageUtil
+     */
+    int getSubmitByDocUnid(Flow entity);
+
+    /**
+     * 分页查询Flow对象
+     * @param entity 对象
+     * @param pageNum	页数
+     * @param pageSize	大小
+     * @author  ysh
+     * @date  2018-11-14 23:45:42
+     * @updater or other
+     * @return   PageUtil
+     */
+    PageUtil queryPageFlow(Flow entity, int pageNum, int pageSize);
 
     /**
      * 分页查询待办Flow对象
@@ -108,7 +142,15 @@ public interface FlowService {
 	 */ 
 	 Flow getFlowById(String flowId);
 
-
+    /**
+     * 根据 id获取 流程
+     *@author   ysh
+     *@param flowId 主键id
+     *@date  2018-11-14 23:45:41
+     *@updater  or other
+     *@return   Flow
+     */
+    FlowVo getFlowByIdVo(String flowId);
 
     /**
      * 初次发起流程(应创建至少2条数据)
@@ -130,7 +172,9 @@ public interface FlowService {
      */
     int batchFlow(List<Flow> list);
 
+    List<Flow> getFlowByDocUnid(Flow entity);
 
+    void setId(List<Flow> list);
 }
 
 	

@@ -245,6 +245,28 @@ public class StaffInfoController extends BaseController {
     /**
      * 查询StaffInfo对象
      *
+     * @param flowId 对象
+     * @return com.netcai.admin.result.JsonResult
+     * @author ysh
+     * @date 2018-11-14 23:45:42
+     * @updater or other
+     */
+    @ResponseBody
+    @RequestMapping(value = "getStaffInfoByFlowId", method = {RequestMethod.GET, RequestMethod.POST})
+    public JsonResult getStaffInfoByFlowId(String flowId ) {
+        logger.info("[StaffInfoController][getStaffInfoByFlowId] 查询StaffInfo对象:");
+        try {
+
+            return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.getStaffInfoByFlowId(flowId));
+        } catch (Exception e) {
+            logger.error("[StaffInfoController][getStaffInfoByFlowId] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
+     * 查询StaffInfo对象
+     *
      * @param entity 对象
      * @return com.netcai.admin.result.JsonResult
      * @author ysh

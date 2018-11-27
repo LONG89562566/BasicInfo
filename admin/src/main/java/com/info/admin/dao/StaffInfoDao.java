@@ -81,7 +81,18 @@ public interface StaffInfoDao {
 	 *@updater  or other
 	 *@return   StaffInfo
 	 */
-	public StaffInfo getStaffInfoById(String staffId);
+	 StaffInfo getStaffInfoById(String staffId);
+
+	/**
+	 * 根据 流程id获取 员工信息
+	 *@author   ysh
+	 *@param flowId 主键id
+	 *@date  2018-11-14 23:45:41
+	 *@updater  or other
+	 *@return   StaffInfo
+	 */
+	 StaffInfo getStaffInfoByFlowId(String flowId);
+
 
 	 /**
 	  *查询StaffInfo对象

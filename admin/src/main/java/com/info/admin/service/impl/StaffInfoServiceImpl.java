@@ -119,6 +119,19 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 	 }
 
     /**
+     * 根据 流程id获取 员工信息
+     *@author   ysh
+     *@param flowId 主键id
+     *@date  2018-11-14 23:45:41
+     *@updater  or other
+     *@return   StaffInfo
+     */
+    @Override
+    public StaffInfo getStaffInfoByFlowId(String flowId){
+        return dao.getStaffInfoByFlowId(flowId);
+    }
+
+    /**
      * 返回树形结构json数据
      * @param list 数据，因读大于写
      * @return JSONArray

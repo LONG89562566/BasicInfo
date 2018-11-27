@@ -39,7 +39,7 @@
 	<script src="/bootstrap/js/fileinput.js"></script>
 	<script src="/js/jquery-ui.min.js"></script>
 	<script src="/js/jquery.form.js"></script>
-	<script src="/js/fromVal.js"></script>
+	<script src="/js/fromVal-v.1.0.js"></script>
 	<script src="/js/date-format.js"></script>
 	<script src="/layui/layui.js"></script>
 	<script src="/dist/js/app.min.js"></script>
@@ -66,15 +66,14 @@
 								</div>
 							</div>
 							<table id="orgInfoTree" title="所有组织" style="width:100%;height:500px">
-
-
 								<thead>
-								<tr>
-									<th data-options="field:'orgName'" width="220px">梁场名称</th>
-								</tr>
+									<tr>
+										<th data-options="field:'orgName'" width="220px">梁场名称</th>
+									</tr>
 								</thead>
 							</table>
 						</div>
+
 						<div class="box" style="float: left;width: 80%;height: auto; background-color: white;">
 							<div class="row">
 								<div class="col-xs-12">
@@ -83,6 +82,53 @@
 										<div class="box-header">
 											<h3 class="box-title">组织信息 :${sessionScope.login_session_admin.userName}</h3>
 										</div>
+			              	<div class="box-body">
+							  	<div class='layui-form-item'>
+			               		  	<div class="layui-inline">
+									  	<label for="orgName" class="layui-form-label">机构名称：</label>
+								 	  	<div class="layui-input-inline">
+										  	<input type="text"  name="orgName" class="layui-input" id="orgName" placeholder="请输入机构名称" >
+										  	<input type="hidden"  name="parentId" class="layui-input" id="parentId" value="">
+										  	<input type="hidden"  name="level" class="layui-input" id="level" value="" >
+										  	<input type="hidden"  name="orgIds" class="layui-input" id="orgIds" value="" >
+										  	<input type="hidden"  name="projectId" class="layui-input" id="projectId" value="" >
+								 	  	</div>
+								  	</div>
+								  	<div class="layui-inline">
+									  	<label for="otName" class="layui-form-label">机构别名：</label>
+									  	<div class="layui-input-inline">
+										  	<input type="text"  name="otName" class="layui-input" id="otName" placeholder="请输入机构别名">
+									  	</div>
+								  	</div>
+								  	<div class="layui-inline">
+									  	<label for="orgCode" class="layui-form-label">机构编码：</label>
+									  	<div class="layui-input-inline">
+										  	<input type="text"  name="orgCode" class="form-control" id="orgCode" placeholder="请输入机构编码">
+									  	</div>
+								  	</div>
+							  	</div>
+							  	<div class='layui-form-item'>
+								  	<div class="layui-inline">
+									  	<label for="seq" class="layui-form-label">排序号：</label>
+									  	<div class="layui-input-inline">
+										  	<input type="text"  name="seq" class="form-control" id="seq" placeholder="请输入排序号">
+									  	</div>
+								  	</div>
+								  	<div class="layui-inline">
+									  	<label for="isEnd" class="layui-form-label">是否末级:</label>
+									  	<div class="layui-input-inline">
+										  	<select name="isEnd" id="isEnd"   class="form-control select2" style="width: 100%;">
+											  	<option value="1">是</option>
+											  	<option value="2">否</option>
+										  	</select>
+									  	</div>
+								  	</div>
+							  	</div>
+							</div>
+			            </div>
+						<div  style="margin-top:10px;margin-left:150px;">
+							<button class="layui-btn" name="commit" onclick="saveOrUp()">提交</button>
+						</div>
 			              <div class="box-body">
 
 
@@ -145,11 +191,11 @@
 			           <!-- form end -->
 			        </div>
 					<!-- 表格列表start -->
-		            <div class="box">
+		            <div class="box" style="min-height: 400px;height: 400px;overflow: scroll;">
 						<section class="content-header">
 							<h1>人员信息：${sessionScope.login_session_admin.userName}</h1>
 						</section>
-			           <div class="box-body">
+			            <div class="box-body">
 			             <div class="site-demo-button" >
 						   <button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>
 						 </div>
@@ -157,10 +203,9 @@
 			               <thead>
 				              <tr>
 				                <th field="sys_xh">序号</th>
-			                    <%--<th field="createUser"  >创建人编号</th>--%>
 			                    <th field="seq"  >排序号</th>
 			                    <th field="name"  >姓名</th>
-			                    <th field="sex"  >性别</th>
+			                    <th field="sex"  method = "getSex">性别</th>
 			                    <th field="natives"  >籍贯</th>
 			                    <th field="nation"  >民族</th>
 			                    <th field="idCard"  >身份证号</th>
@@ -176,24 +221,26 @@
 		                  </tbody>
 			             </table>
 			           </div>
+
+						<!-- 表格列表end -->
+						<div class="box-footer clearfix">
+							<ul id="show-page" class="pagination pagination-sm no-margin pull-left">
+								<pv:showPaging pageVo="${paginator}" />
+							</ul>
+						</div>
+
 			        </div>
-		            <!-- 表格列表end -->
-		            <div class="box-footer clearfix">
-		              <ul id="show-page" class="pagination pagination-sm no-margin pull-left">
-		              	 <pv:showPaging pageVo="${paginator}" />
-		              </ul>
-		            </div>
+
 		          </div>
 		        </div>
 		      </div>
-			  </div>
-
+		    </div>
 		    </section>
 	    </shiro:hasPermission>
 	  </div>
 	
 	<script type="text/javascript">
-
+        var reqUpdateAndAddUrl = "/admin/staffInfo/insertAndUpdate";
 		//查询数据Url
 		var pageQueryUrl = "<%=request.getContextPath()%>/admin/staffInfo/pageQuery";
 		//查询条件表单Id
@@ -243,9 +290,6 @@
                 $('#orgShow').show();
                 //点击时初始化数据
                 initPaginator(row.orgId);
-
-
-
             }
         });
         //初始化列表
@@ -321,7 +365,6 @@
 
                 },
                 success: function (data) {
-
                     if(data == null){
                         $.messager.alert('错误','系统错误，请联系管理员!','error');
                         return ;
@@ -331,12 +374,9 @@
             });
         }
 
-
-
 	</script>
 	<script type="text/javascript" charset="utf-8" >
-        layui.use(['layer','jquery','form','element'], function(){ })
-
+        layui.use(['layer','jquery','form','element'], function(){ });
 
 		//新增人员数据弹窗
 		layui.use('layer', function(){ //独立版的layer无需执行这一句
@@ -404,6 +444,35 @@
                         //弹窗表单的取消操作时关闭弹窗
                         var canclebtn = body.find('button[name="cancleSubmit"]').click(function cancleSubmit() {
                             layer.closeAll();
+                        });
+
+                        //弹窗表单的取消操作时关闭弹窗
+                        var savebtn = body.find('button[name="saveSubmit"]').click(function saveSubmit() {
+                            var requestData = iframeWin.getData();
+                            $.ajax({
+                                type:"POST",
+                                url: reqUpdateAndAddUrl,
+                                data: requestData,
+                                dataType:"json",
+                                success:function(result){
+                                    var code = result.code;
+                                    var msg = result.message;
+                                    if(code=="200" || code=="201"){
+                                        layer.msg(msg,{icon : 1,time:1200});
+
+                                        //刷新页面
+                                        refreshTheCurrentPage();
+                                        layer.close(index);
+                                    }
+                                },
+                                error:function(){
+                                    layer.msg("更新数据异常", {icon: 1,time: 1200},function(){
+                                        // var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                                        // parent.layer.close(index);//关闭父页面的弹窗
+                                    });
+                                }
+                            });
+
                         });
                     }
                 });
@@ -544,6 +613,15 @@
 				}
 			});
 		}
+	</script>
+	<script type="text/javascript">
+		var getSex = function (val) {
+		    if(val == 1){
+		        return "男";
+			}else{
+		        return "女";
+			}
+        };
 	</script>
 </body>
 </html>

@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+
 <!DOCTYPE html>
 <html>
 	<head>
     	<meta charset="utf-8">
-		<title>新增材料</title>
+		<title>检验流程</title>
 		<%@include file="/WEB-INF/jsp/decorators/addHeader.jsp" %>
 	</head>
 	<body>
@@ -12,8 +13,26 @@
  			<input  type="hidden" id="materialId" name="materialId" value="${material.materialId}"/>
  			<input  type="hidden" id="projectId" name="projectId" value="${projectId}"/>
 
+			<jsp:include page="/WEB-INF/jsp/flow/flowPage.jsp">
+				<jsp:param name="docUnid" value="${material.materialId}" />
+			</jsp:include>
 
 			<div class='layui-form-item'>
+				<label class="layui-form-label">试验报告单</label>
+				<div class="layui-input-block">
+					<textarea placeholder="请输入试验报告单" style="width: 90%;" class="layui-textarea"  id="testReport" name = "testReport" lay-verify="content">${material.testReport}</textarea>
+					<span style="color: red" id="s-testReport"></span>
+				</div>
+			</div>
+			<div class='layui-form-item'>
+				<div class="layui-inline">
+					<label class="layui-form-label">检验状态</label>
+					<div class="layui-input-inline">
+						<input type="text" id="testState" name="testState" placeholder="请输入检验状态"  value="${material.testState }" class="layui-input"/>
+						<span style="color: red" id="s-testState"></span>
+					</div>
+				</div>
+
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
 		        	<div class="layui-input-inline">
@@ -107,6 +126,8 @@
 		     		</div>
      			</div>
 			</div>
+
+
   		</form>
 	</body>
 
@@ -146,6 +167,8 @@
         var usePart = $("#usePart").val();
         var storage = $("#storage").val();
         var residualNum = $("#residualNum").val();
+        var testReport = $("#testReport").val();
+        var testState = $("#testState").val();
 
         var requestData={
             "materialId":materialId,
@@ -166,10 +189,10 @@
             "usePart":usePart,
             "storage":storage,
             "residualNum":residualNum,
+            "testReport":testReport,
+            "testState":testState
         };
         return requestData;
     };
-
-	
 </script>
 </html>				 

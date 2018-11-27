@@ -2,8 +2,8 @@
 function getElements(formId) {
     var form = document.getElementById(formId);
     var elements = new Array();
-    var tagElements = form.getElementsByTagName('input');
 
+    var tagElements = form.getElementsByTagName('input');
     if(tagElements.length > 0){
         for (var j = 0; j < tagElements.length; j++){
             elements.push(tagElements[j]);
@@ -79,20 +79,26 @@ function serializeElement(element) {
 
 //调用方法
 function serializeFormGet(formId) {
-    var elements = getElements(formId);
-    var queryComponents = new Array();
-
-    for (var i = 0; i < elements.length; i++) {
-        var queryComponent = serializeElement(elements[i]);
-        if (queryComponent){
-            queryComponents.push(queryComponent);
-        }
-    }
-    return queryComponents.join('&');
+    return _queryComponents(formId).join('&');
 }
 
 //调用方法
 function serializeFormPost(formId) {
+
+    var queryComponents = _queryComponents(formId);
+
+    var json = {};
+    for (var i = 0; i < queryComponents.length; i++) {
+        var vals = queryComponents[i].split("=");
+        if (vals.length != 2 || vals[1] == '') {
+            continue;
+        }
+        json[vals[0]] = vals[1];
+    }
+    return json ;
+}
+
+function _queryComponents(formId) {
     var elements = getElements(formId);
     var queryComponents = new Array();
 
@@ -102,12 +108,5 @@ function serializeFormPost(formId) {
             queryComponents.push(queryComponent);
         }
     }
-    var fields = new Array();
-    for (var i = 0; i < queryComponents.length; i++) {
-        var vals = queryComponents[i].split("=");
-        if (vals.length != 2) {
-            continue;
-        }
-        var field = new Object();
-    }
+    return queryComponents;
 }

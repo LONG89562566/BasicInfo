@@ -23,7 +23,10 @@
      			<div class="layui-inline">
 		        	<label class="layui-form-label">性别</label>
 		        	<div class="layui-input-inline">
-		        		<input type="text" id="sex" name="sex" placeholder="请输入性别"  value="${staffInfo.sex }" class="layui-input"/>
+						<select id="sex" name="sex">
+							<option value="1" <c:if test="${staffInfo.sex == 1}"> selected </c:if> >男</option>
+							<option value="2" <c:if test="${staffInfo.sex == 2}"> selected </c:if>>女</option>
+						</select>
 		        		<span style="color: red" id="s-sex"></span>
 		     		</div>
      			</div>
@@ -85,7 +88,8 @@
 
 	 		</div>
 	 		<div class="layui-input-block" style="margin-top:30px;margin-left:324px;">
-	 			<input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
+	 			<%--<input class="layui-btn" type="button"  onclick="saveData()" value="确定"/>--%>
+				<button class="layui-btn" name="saveSubmit">保存</button>
        			<button class="layui-btn" name="cancleSubmit" >取消</button>
      		</div>
   		</form>
@@ -109,6 +113,13 @@
 		});
 	
 	function saveData() {
+	    var requestData = getData();
+	    if(requestData != false){
+            updateAndAdd(requestData);
+		}
+    }
+
+    function getData() {
 	    var staffId = $("#staffId").val();
 	    var createUser = $("#createUser").val();
 	    var deleteFlag = $("#deleteFlag").val();
@@ -140,8 +151,9 @@
             "phone":phone,
             "position":position
         };
-        updateAndAdd(requestData);
+
+        return  requestData;
     }
-	
+
 </script>
 </html>				 
