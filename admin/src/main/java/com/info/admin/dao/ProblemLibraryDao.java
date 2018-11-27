@@ -82,4 +82,14 @@ public interface ProblemLibraryDao {
 	 *@return   ProblemLibrary
 	 */
 	public ProblemLibrary getProblemLibraryById(String supplierId);
+
+	 /**
+	  *查询ProblemLibrary对象
+	  *@param  entity 对象
+	  *@author
+	  *@date  2018-11-14 23:45:42
+	  *@updater or other
+	  *@return List<ProblemLibrary>
+	  */
+	 List<ProblemLibrary> queryProblemLibraryRepertoryTree(ProblemLibrary entity);
 }

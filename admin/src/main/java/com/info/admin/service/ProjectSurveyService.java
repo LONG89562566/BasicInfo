@@ -93,6 +93,16 @@ public interface ProjectSurveyService {
      *@createTime
      */
     public JSONArray projectSurveyTree(List<ProjectSurveyTree> projectSurveyTreeList, int parentId);
+
+    /**
+     * 所有梁场信息List
+     * @author
+     * @param
+     * @date  2018-11-14 23:45:42
+     * @updater  or other
+     * @return   OrgInfo
+     */
+    List<ProjectSurvey> getAll();
 	
 }
 

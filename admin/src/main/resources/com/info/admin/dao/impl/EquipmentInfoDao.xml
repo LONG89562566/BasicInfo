@@ -228,6 +228,9 @@
 		<result column="advanceTime" property="advanceTimeStr" />
 		<result column="source" property="source" />
 		<result column="sop" property="sop" />
+		<result column="projectName" property="projectName" />
+		<result column="columnName" property="columnName" />
+		<result column="columnComment" property="columnComment" />
 
     </resultMap>
 
@@ -319,7 +322,8 @@
     <!-- 分页查询 设备信息 对象列表  -->
     <select id="pageQuery" resultMap="equipmentInfoMap">
         select
-         * 
+         *
+		,(SELECT project_survey.lc_name FROM project_survey WHERE project_survey.project_id = equipment_info.project_id) as projectName
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
            ,date_format(produc_time,'%Y-%m-%d %H:%i:%s') as producTime 
@@ -338,5 +342,18 @@
            ,date_format(produc_time,'%Y-%m-%d %H:%i:%s') as producTime 
            ,date_format(advance_time,'%Y-%m-%d %H:%i:%s') as advanceTime 
 		 from equipment_info where equipment_id= #{equipmentId}
+	</select>
+
+
+	<!--  查询 设备信息 -->
+	<select id="queryEquipmentInfoRepertoryTree"  resultMap="equipmentInfoMap" >
+		SELECT
+		COLUMN_NAME as columnName,
+		column_comment as columnComment
+		FROM
+		INFORMATION_SCHEMA.COLUMNS
+		WHERE
+		table_name = 'equipment_info'
+		GROUP BY COLUMN_NAME
 	</select>
 </mapper>	

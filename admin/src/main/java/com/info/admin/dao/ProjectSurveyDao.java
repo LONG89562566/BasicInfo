@@ -94,4 +94,14 @@ public interface ProjectSurveyDao {
 	  * @return   OrgInfo
 	  */
 	 public List<ProjectSurveyTree>  getProjectSurveyTree(@Param("entity")ProjectSurveyTree entity);
+
+	 /**
+	  * 所有梁场信息List
+	  * @author
+	  * @param
+	  * @date  2018-11-14 23:45:42
+	  * @updater  or other
+	  * @return   OrgInfo
+	  */
+	 List<ProjectSurvey> getAll();
 }

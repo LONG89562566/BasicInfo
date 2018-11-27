@@ -11,9 +11,7 @@
 			<if test=" repertoryId != null">
 				repertory_id,
 			</if>
-			<if test=" createTime != null">
 				create_time,
-			</if>
 			<if test=" createUser != null">
 				create_user,
 			</if>
@@ -47,9 +45,7 @@
 			<if test="repertoryId != null ">
 		        #{repertoryId},
 		    </if>
-			<if test="createTime != null">
-				date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
-			</if>			
+				now(),
 			<if test="createUser != null ">
 		        #{createUser},
 		    </if>
@@ -139,10 +135,13 @@
 		<result column="updateTime" property="updateTimeStr" />
 		<result column="seq" property="seq" />
 		<result column="project_id" property="projectId" />
+		<result column="projectName" property="projectName" />
 		<result column="material_name" property="materialName" />
 		<result column="model" property="model" />
 		<result column="unit" property="unit" />
 		<result column="num" property="num" />
+		<result column="columnName" property="columnName" />
+		<result column="columnComment" property="columnComment" />
 
     </resultMap>
 
@@ -153,7 +152,7 @@
 			    and repertory_id =  #{entity.repertoryId} 
 		    </if>
 		    <if test="entity.createTime!=null">
-		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		        and  = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
 		    </if>
 		    <if test=" entity.createUser != null">
 			    and create_user =  #{entity.createUser} 
@@ -205,7 +204,8 @@
     <!-- 分页查询 仓库 对象列表  -->
     <select id="pageQuery" resultMap="repertoryMap">
         select
-         * 
+         *
+		,(SELECT project_survey.lc_name FROM project_survey WHERE project_survey.project_id = repertory.project_id) as projectName
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
          from repertory
@@ -220,5 +220,18 @@
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
 		 from repertory where repertory_id= #{repertoryId}
+	</select>
+
+
+	<!--  查询 材料信息 -->
+	<select id="queryRepertoryRepertoryTree"  resultMap="repertoryMap" >
+		SELECT
+		COLUMN_NAME as columnName,
+		column_comment as columnComment
+		FROM
+		INFORMATION_SCHEMA.COLUMNS
+		WHERE
+		table_name = 'repertory'
+		GROUP BY COLUMN_NAME
 	</select>
 </mapper>	

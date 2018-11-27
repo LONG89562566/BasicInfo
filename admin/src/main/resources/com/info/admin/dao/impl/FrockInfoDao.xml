@@ -186,6 +186,9 @@
 		<result column="liabler" property="liabler" />
 		<result column="purchase_time" property="purchaseTime" />
 		<result column="purchaseTime" property="purchaseTimeStr" />
+		<result column="projectName" property="projectName" />
+		<result column="columnName" property="columnName" />
+		<result column="columnComment" property="columnComment" />
 
     </resultMap>
 
@@ -264,7 +267,8 @@
     <!-- 分页查询 设备信息 对象列表  -->
     <select id="pageQuery" resultMap="frockInfoMap">
         select
-         * 
+         *
+		,(SELECT project_survey.lc_name FROM project_survey WHERE project_survey.project_id = frock_info.project_id) as projectName
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
            ,date_format(purchase_time,'%Y-%m-%d %H:%i:%s') as purchaseTime 
@@ -281,5 +285,17 @@
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
            ,date_format(purchase_time,'%Y-%m-%d %H:%i:%s') as purchaseTime 
 		 from frock_info where frock_id= #{frockId}
+	</select>
+
+	<!--  查询 设备信息 -->
+	<select id="queryFrockInfoRepertoryTree"  resultMap="frockInfoMap" >
+		SELECT
+		COLUMN_NAME as columnName,
+		column_comment as columnComment
+		FROM
+		INFORMATION_SCHEMA.COLUMNS
+		WHERE
+		table_name = 'frock_info'
+		GROUP BY COLUMN_NAME
 	</select>
 </mapper>	

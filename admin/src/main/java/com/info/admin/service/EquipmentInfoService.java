@@ -2,8 +2,10 @@ package com.info.admin.service;
 
 import com.info.admin.entity.EquipmentInfo;
 import com.info.admin.utils.PageUtil;
+import net.sf.json.JSONArray;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author ysh
@@ -72,6 +74,25 @@ public interface EquipmentInfoService {
 	 * @return   EquipmentInfo
 	 */ 
 	public EquipmentInfo getEquipmentInfoById(String supplierId);
+
+
+    /**
+     *查询EquipmentInfo对象
+     *@param  entity 对象
+     *@author
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return List<EquipmentInfo>
+     */
+
+    List<EquipmentInfo> queryEquipmentInfoRepertoryTree(EquipmentInfo entity);
+
+    /**
+     * 返回人员报表树形结构json数据
+     * @param equipmentInfoList 数据，因读大于写
+     * @return JSONArray
+     */
+    JSONArray getEquipmentInfoRepertoryTreeJson(CopyOnWriteArrayList<EquipmentInfo> equipmentInfoList);
 	
 }
 

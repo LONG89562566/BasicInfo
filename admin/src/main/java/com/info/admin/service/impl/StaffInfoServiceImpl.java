@@ -135,6 +135,41 @@ public class StaffInfoServiceImpl implements StaffInfoService {
         }
         return all;
     }
-}
 
+    /**
+     *查询StaffInfo对象
+     *@param  entity 对象
+     *@author
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return List<StaffInfo>
+     */
+    @Override
+    public  List<StaffInfo> queryStaffInfoRepertoryTree(StaffInfo entity){
+        return dao.queryStaffInfoRepertoryTree(entity);
+    }
+    /**
+     * 返回树形结构json数据
+     * @param StaffInfoList 数据，因读大于写
+     * @return JSONArray
+     */
+    @Override
+    public JSONArray getStaffInfoRepertoryTreeJson(CopyOnWriteArrayList<StaffInfo> StaffInfoList) {
+        JSONArray all = new JSONArray();
+        for (StaffInfo staffInfo : StaffInfoList){
+            JSONObject main = new JSONObject();
+            if(staffInfo.getColumnName() .equals("delete_flag") || staffInfo.getColumnName() .equals("staff_id") ||staffInfo.getColumnName() .equals("update_time")
+                || staffInfo.getColumnName() .equals("org_id")){
+                }
+                else {
+                main.put("id", staffInfo.getColumnName());
+                main.put("text", staffInfo.getColumnComment());
+                all.add(main);
+            }
+
+        }
+        return all;
+    }
+
+}
 	

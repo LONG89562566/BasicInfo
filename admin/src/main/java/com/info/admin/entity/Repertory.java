@@ -29,6 +29,8 @@ public class Repertory implements Serializable {
 	 private Long seq;
 	 /*****项目编号*****/
 	 private String projectId;
+	 /*****项目名字*****/
+	 private String projectName;
 	 /*****材料名称*****/
 	 private String materialName;
 	 /*****规格型号*****/
@@ -37,6 +39,11 @@ public class Repertory implements Serializable {
 	 private String unit;
 	 /*****库存数量*****/
 	 private BigDecimal num;
+
+	/*****键名*****/
+	private String columnName;
+	/*****注释*****/
+	private String columnComment;
 
 
 	 public String getRepertoryId() {
@@ -158,5 +165,29 @@ public class Repertory implements Serializable {
 	 
 	public Repertory() {
 		super();
+	}
+
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public String getColumnComment() {
+		return columnComment;
+	}
+
+	public void setColumnComment(String columnComment) {
+		this.columnComment = columnComment;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 }

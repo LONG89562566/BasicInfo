@@ -82,4 +82,13 @@ public interface RepertoryDao {
 	 *@return   Repertory
 	 */
 	public Repertory getRepertoryById(String supplierId);
+	 /**
+	  *查询Repertory对象
+	  *@param  entity 对象
+	  *@author
+	  *@date  2018-11-14 23:45:42
+	  *@updater or other
+	  *@return List<StaffInfo>
+	  */
+	 List<Repertory> queryRepertoryRepertoryTree(Repertory entity);
 }

@@ -82,4 +82,15 @@ public interface FrockInfoDao {
 	 *@return   FrockInfo
 	 */
 	public FrockInfo getFrockInfoById(String supplierId);
+
+	 /**
+	  *查询FrockInfo对象
+	  *@param  entity 对象
+	  *@author
+	  *@date  2018-11-14 23:45:42
+	  *@updater or other
+	  *@return List<EquipmentInfo>
+	  */
+
+	 List<FrockInfo> queryFrockInfoRepertoryTree(FrockInfo entity);
 }

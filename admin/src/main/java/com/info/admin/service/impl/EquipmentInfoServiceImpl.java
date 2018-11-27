@@ -4,10 +4,13 @@ import com.info.admin.dao.EquipmentInfoDao;
 import com.info.admin.entity.EquipmentInfo;
 import com.info.admin.service.EquipmentInfoService;
 import com.info.admin.utils.PageUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author ysh
@@ -110,6 +113,42 @@ public class EquipmentInfoServiceImpl implements EquipmentInfoService {
 	 public EquipmentInfo getEquipmentInfoById(String supplierId) {
 		 return dao.getEquipmentInfoById(supplierId);
 	 }
+
+    /**
+     *查询EquipmentInfo对象
+     *@param  entity 对象
+     *@author
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return List<Repertory>
+     */
+    @Override
+    public  List<EquipmentInfo> queryEquipmentInfoRepertoryTree(EquipmentInfo entity){
+        return dao.queryEquipmentInfoRepertoryTree(entity);
+    }
+    /**
+     * 返回树形结构json数据
+     * @param equipmentInfoList 数据，因读大于写
+     * @return JSONArray
+     */
+    @Override
+    public JSONArray getEquipmentInfoRepertoryTreeJson(CopyOnWriteArrayList<EquipmentInfo> equipmentInfoList) {
+        JSONArray all = new JSONArray();
+        for (EquipmentInfo equipmentInfo : equipmentInfoList){
+            JSONObject main = new JSONObject();
+            if(equipmentInfo.getColumnName() .equals("delete_flag") || equipmentInfo.getColumnName() .equals("equipment_id") ||equipmentInfo.getColumnName() .equals("update_time")
+            || equipmentInfo.getColumnName() .equals("create_time")|| equipmentInfo.getColumnName() .equals("create_user")|| equipmentInfo.getColumnName() .equals("sop")){
+
+            } else {
+                main.put("id", equipmentInfo.getColumnName());
+                main.put("text", equipmentInfo.getColumnComment());
+                all.add(main);
+            }
+
+        }
+        return all;
+    }
+
 }
 
 	

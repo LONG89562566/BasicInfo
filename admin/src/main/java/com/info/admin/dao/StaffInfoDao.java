@@ -82,4 +82,14 @@ public interface StaffInfoDao {
 	 *@return   StaffInfo
 	 */
 	public StaffInfo getStaffInfoById(String staffId);
+
+	 /**
+	  *查询StaffInfo对象
+	  *@param  entity 对象
+	  *@author
+	  *@date  2018-11-14 23:45:42
+	  *@updater or other
+	  *@return List<StaffInfo>
+	  */
+	 List<StaffInfo> queryStaffInfoRepertoryTree(StaffInfo entity);
 }

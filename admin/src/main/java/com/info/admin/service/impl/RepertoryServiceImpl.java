@@ -4,10 +4,13 @@ import com.info.admin.dao.RepertoryDao;
 import com.info.admin.entity.Repertory;
 import com.info.admin.service.RepertoryService;
 import com.info.admin.utils.PageUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author ysh
@@ -114,6 +117,40 @@ public class RepertoryServiceImpl implements RepertoryService {
 	 public Repertory getRepertoryById(String supplierId) {
 		 return dao.getRepertoryById(supplierId);
 	 }
+
+    /**
+     *查询Repertory对象
+     *@param  entity 对象
+     *@author
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return List<Repertory>
+     */
+    @Override
+    public  List<Repertory> queryRepertoryRepertoryTree(Repertory entity){
+        return dao.queryRepertoryRepertoryTree(entity);
+    }
+    /**
+     * 返回树形结构json数据
+     * @param repertoryList 数据，因读大于写
+     * @return JSONArray
+     */
+    @Override
+    public JSONArray getRepertoryRepertoryTreeJson(CopyOnWriteArrayList<Repertory> repertoryList) {
+        JSONArray all = new JSONArray();
+        for (Repertory repertory : repertoryList){
+            JSONObject main = new JSONObject();
+            if(repertory.getColumnName() .equals("delete_flag") || repertory.getColumnName() .equals("repertory_id") ||repertory.getColumnName() .equals("update_time")){
+            }
+            else {
+                main.put("id", repertory.getColumnName());
+                main.put("text", repertory.getColumnComment());
+                all.add(main);
+            }
+
+        }
+        return all;
+    }
 }
 
 	

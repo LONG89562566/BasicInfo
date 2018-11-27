@@ -181,6 +181,8 @@
 		<result column="position" property="position" />
 		<result column="isBound" property="isBound" />
 		<result column="su_id" property="boundUserId" />
+		<result column="columnName" property="columnName" />
+		<result column="columnComment" property="columnComment" />
     </resultMap>
 
     <!-- 分页条件 -->
@@ -204,7 +206,7 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.orgId != null">
+		    <if test=" entity.orgId != null and entity.orgId != ''"  >
 			    and org_id =  #{entity.orgId} 
 		    </if>
 		    <if test=" entity.name != null">
@@ -276,5 +278,17 @@
 		 from staff_info
 		 LEFT JOIN (select id as su_id,is_bound,staff_id as sy_staff_id from sys_user ) as su  on staff_info.staff_id = su.sy_staff_id
 		 where staff_id= #{staffId}
+	</select>
+
+	<!-- 根据id 查询 员工信息 -->
+	<select id="queryStaffInfoRepertoryTree"  resultMap="staffInfoMap" >
+		SELECT
+			COLUMN_NAME as columnName,
+			column_comment as columnComment
+		FROM
+			INFORMATION_SCHEMA.COLUMNS
+		WHERE
+			table_name = 'staff_info'
+        GROUP BY COLUMN_NAME
 	</select>
 </mapper>	

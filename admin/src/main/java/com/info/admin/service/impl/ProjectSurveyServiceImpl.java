@@ -155,6 +155,19 @@ public class ProjectSurveyServiceImpl implements ProjectSurveyService {
         }
         return all;
     }
+
+    /**
+     * 所有梁场信息List
+     * @author
+     * @param
+     * @date  2018-11-14 23:45:42
+     * @updater  or other
+     * @return   OrgInfo
+     */
+    @Override
+    public  List<ProjectSurvey> getAll(){
+        return dao.getAll();
+    }
 }
 
 	

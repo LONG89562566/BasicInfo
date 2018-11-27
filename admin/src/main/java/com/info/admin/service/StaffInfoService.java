@@ -81,6 +81,23 @@ public interface StaffInfoService {
      * @return JSONArray
      */
     JSONArray getTreeJson(CopyOnWriteArrayList<StaffInfo> list);
+
+    /**
+     *查询StaffInfo对象
+     *@param  entity 对象
+     *@author
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return List<StaffInfo>
+     */
+    List<StaffInfo> queryStaffInfoRepertoryTree(StaffInfo entity);
+
+    /**
+     * 返回人员报表树形结构json数据
+     * @param StaffInfoList 数据，因读大于写
+     * @return JSONArray
+     */
+    JSONArray getStaffInfoRepertoryTreeJson(CopyOnWriteArrayList<StaffInfo> StaffInfoList);
 	
 }
 

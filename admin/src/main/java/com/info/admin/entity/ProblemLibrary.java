@@ -45,6 +45,10 @@ public class ProblemLibrary implements Serializable {
     private Date rectifyTime;
     /*****整改时间 日常的字符串*****/
     private String rectifyTimeStr;
+    /*****键名*****/
+    private String columnName;
+    /*****注释*****/
+    private String columnComment;
 
 
     public String getSupplierId() {
@@ -203,5 +207,21 @@ public class ProblemLibrary implements Serializable {
 
     public ProblemLibrary() {
         super();
+    }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
+
+    public String getColumnComment() {
+        return columnComment;
+    }
+
+    public void setColumnComment(String columnComment) {
+        this.columnComment = columnComment;
     }
 }

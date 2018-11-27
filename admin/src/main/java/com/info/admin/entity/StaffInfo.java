@@ -50,6 +50,10 @@ public class StaffInfo implements Serializable {
 	 * 是否绑定 0：未绑定 1 ：绑定
 	 */
 	private String isBound;
+	/*****键名*****/
+	private String columnName;
+	/*****注释*****/
+	private String columnComment;
 
 
 
@@ -219,5 +223,21 @@ public class StaffInfo implements Serializable {
 
 	public StaffInfo() {
 		super();
+	}
+
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public String getColumnComment() {
+		return columnComment;
+	}
+
+	public void setColumnComment(String columnComment) {
+		this.columnComment = columnComment;
 	}
 }

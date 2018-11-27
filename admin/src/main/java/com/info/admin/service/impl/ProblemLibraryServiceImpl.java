@@ -4,10 +4,13 @@ import com.info.admin.dao.ProblemLibraryDao;
 import com.info.admin.entity.ProblemLibrary;
 import com.info.admin.service.ProblemLibraryService;
 import com.info.admin.utils.PageUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author ysh
@@ -109,6 +112,41 @@ public class ProblemLibraryServiceImpl implements ProblemLibraryService {
 	 public ProblemLibrary getProblemLibraryById(String supplierId) {
 		 return dao.getProblemLibraryById(supplierId);
 	 }
+
+
+    /**
+     *查询ProblemLibrary对象
+     *@param  entity 对象
+     *@author
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return List<StaffInfo>
+     */
+    @Override
+    public  List<ProblemLibrary> queryProblemLibraryRepertoryTree(ProblemLibrary entity){
+        return dao.queryProblemLibraryRepertoryTree(entity);
+    }
+    /**
+     * 返回树形结构json数据
+     * @param problemLibraryList 数据，因读大于写
+     * @return JSONArray
+     */
+    @Override
+    public JSONArray getProblemLibraryTreeJson(CopyOnWriteArrayList<ProblemLibrary> problemLibraryList) {
+        JSONArray all = new JSONArray();
+        for (ProblemLibrary problemLibrary : problemLibraryList){
+            JSONObject main = new JSONObject();
+            if(problemLibrary.getColumnName() .equals("delete_flag") || problemLibrary.getColumnName() .equals("supplier_id") ||problemLibrary.getColumnName() .equals("update_time")){
+            }
+            else {
+                main.put("id", problemLibrary.getColumnName());
+                main.put("text", problemLibrary.getColumnComment());
+                all.add(main);
+            }
+
+        }
+        return all;
+    }
 }
 
 	

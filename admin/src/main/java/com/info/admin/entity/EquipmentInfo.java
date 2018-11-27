@@ -29,6 +29,7 @@ public class EquipmentInfo implements Serializable {
 	 private Long seq;
 	 /*****项目编号*****/
 	 private String projectId;
+
 	 /*****管理编号*****/
 	 private Long manageNum;
 	 /*****名称*****/
@@ -59,7 +60,12 @@ public class EquipmentInfo implements Serializable {
 	 private String source;
 	 /*****安全操作规程*****/
 	 private String sop;
-
+	/*****项目名称*****/
+	private String projectName;
+	/*****键名*****/
+	private String columnName;
+	/*****注释*****/
+	private String columnComment;
 
 	 public String getEquipmentId() {
 		 return equipmentId;
@@ -280,5 +286,29 @@ public class EquipmentInfo implements Serializable {
 	 
 	public EquipmentInfo() {
 		super();
+	}
+
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public String getColumnComment() {
+		return columnComment;
+	}
+
+	public void setColumnComment(String columnComment) {
+		this.columnComment = columnComment;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 }

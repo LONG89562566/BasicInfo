@@ -146,6 +146,8 @@
 		<result column="rectify_user_cn" property="rectifyUserCn" />
 		<result column="rectify_time" property="rectifyTime" />
 		<result column="rectifyTime" property="rectifyTimeStr" />
+		<result column="columnName" property="columnName" />
+		<result column="columnComment" property="columnComment" />
     </resultMap>
 
     <!-- 分页条件 -->
@@ -234,5 +236,17 @@
 			,(select name from staff_info where staff_info.staff_id = inspect_user ) as inspect_user_cn
 			,(select name from staff_info where staff_info.staff_id = rectify_user ) as rectify_user_cn
 		 from problem_library where supplier_id= #{supplierId}
+	</select>
+
+	<!--  查询 问题信息 -->
+	<select id="queryProblemLibraryRepertoryTree"  resultMap="problemLibraryMap" >
+		SELECT
+		COLUMN_NAME as columnName,
+		column_comment as columnComment
+		FROM
+		INFORMATION_SCHEMA.COLUMNS
+		WHERE
+		table_name = 'problem_library'
+		GROUP BY COLUMN_NAME
 	</select>
 </mapper>	

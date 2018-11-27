@@ -131,10 +131,11 @@
 									  </div>
 								  </div>
 			             		</div>
-			             </div>
 							<div  style="margin-top:10px;margin-left:150px;">
 								<button class="layui-btn" name="commit" onclick="saveOrUp()">提交</button>
 							</div>
+			             </div>
+
 						<!-- form start -->
 						<form  id="form_submit"  method="post"  class="form-horizontal" enctype="multipart/form-data">
 							<input type="hidden" name="pageNum" id="pageNum" value="${paginator.currentPage}">

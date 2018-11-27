@@ -2,8 +2,10 @@ package com.info.admin.service;
 
 import com.info.admin.entity.Repertory;
 import com.info.admin.utils.PageUtil;
+import net.sf.json.JSONArray;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author ysh
@@ -72,6 +74,24 @@ public interface RepertoryService {
 	 * @return   Repertory
 	 */ 
 	public Repertory getRepertoryById(String supplierId);
+
+    /**
+     *查询Repertory对象
+     *@param  entity 对象
+     *@author
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return List<StaffInfo>
+     */
+
+    List<Repertory> queryRepertoryRepertoryTree(Repertory entity);
+
+    /**
+     * 返回人员报表树形结构json数据
+     * @param repertoryList 数据，因读大于写
+     * @return JSONArray
+     */
+    JSONArray getRepertoryRepertoryTreeJson(CopyOnWriteArrayList<Repertory> repertoryList);
 	
 }
 

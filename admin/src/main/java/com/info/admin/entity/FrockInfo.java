@@ -50,6 +50,12 @@ public class FrockInfo implements Serializable {
 	 private Date purchaseTime;
 	 /*****购置日期 日常的字符串*****/
 	 private String purchaseTimeStr;
+	/*****项目名称*****/
+	private String projectName;
+	/*****键名*****/
+	private String columnName;
+	/*****注释*****/
+	private String columnComment;
 
 
 	 public String getFrockId() {
@@ -230,8 +236,32 @@ public class FrockInfo implements Serializable {
 		 }
 	 }
 
-	 
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public String getColumnComment() {
+		return columnComment;
+	}
+
+	public void setColumnComment(String columnComment) {
+		this.columnComment = columnComment;
+	}
+
 	public FrockInfo() {
 		super();
 	}
+
 }

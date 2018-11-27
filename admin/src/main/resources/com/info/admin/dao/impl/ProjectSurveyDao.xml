@@ -347,6 +347,16 @@
           from project_survey
         <include refid="filterCondition"></include>
     </select>
+
+	<!-- 查询 工程概况 对象列表 -->
+	<select id="getAll"  resultMap="projectSurveyMap" >
+		select
+		*
+		,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
+		,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+		from project_survey
+         where delete_flag = 0
+	</select>
     
     <!-- 查询 工程概况 总记录数 -->
     <select id="getPageCount" resultType="int">
