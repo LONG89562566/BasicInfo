@@ -82,53 +82,6 @@
 										<div class="box-header">
 											<h3 class="box-title">组织信息 :${sessionScope.login_session_admin.userName}</h3>
 										</div>
-			              	<div class="box-body">
-							  	<div class='layui-form-item'>
-			               		  	<div class="layui-inline">
-									  	<label for="orgName" class="layui-form-label">机构名称：</label>
-								 	  	<div class="layui-input-inline">
-										  	<input type="text"  name="orgName" class="layui-input" id="orgName" placeholder="请输入机构名称" >
-										  	<input type="hidden"  name="parentId" class="layui-input" id="parentId" value="">
-										  	<input type="hidden"  name="level" class="layui-input" id="level" value="" >
-										  	<input type="hidden"  name="orgIds" class="layui-input" id="orgIds" value="" >
-										  	<input type="hidden"  name="projectId" class="layui-input" id="projectId" value="" >
-								 	  	</div>
-								  	</div>
-								  	<div class="layui-inline">
-									  	<label for="otName" class="layui-form-label">机构别名：</label>
-									  	<div class="layui-input-inline">
-										  	<input type="text"  name="otName" class="layui-input" id="otName" placeholder="请输入机构别名">
-									  	</div>
-								  	</div>
-								  	<div class="layui-inline">
-									  	<label for="orgCode" class="layui-form-label">机构编码：</label>
-									  	<div class="layui-input-inline">
-										  	<input type="text"  name="orgCode" class="form-control" id="orgCode" placeholder="请输入机构编码">
-									  	</div>
-								  	</div>
-							  	</div>
-							  	<div class='layui-form-item'>
-								  	<div class="layui-inline">
-									  	<label for="seq" class="layui-form-label">排序号：</label>
-									  	<div class="layui-input-inline">
-										  	<input type="text"  name="seq" class="form-control" id="seq" placeholder="请输入排序号">
-									  	</div>
-								  	</div>
-								  	<div class="layui-inline">
-									  	<label for="isEnd" class="layui-form-label">是否末级:</label>
-									  	<div class="layui-input-inline">
-										  	<select name="isEnd" id="isEnd"   class="form-control select2" style="width: 100%;">
-											  	<option value="1">是</option>
-											  	<option value="2">否</option>
-										  	</select>
-									  	</div>
-								  	</div>
-							  	</div>
-							</div>
-			            </div>
-						<div  style="margin-top:10px;margin-left:150px;">
-							<button class="layui-btn" name="commit" onclick="saveOrUp()">提交</button>
-						</div>
 			              <div class="box-body">
 
 
