@@ -35,7 +35,7 @@
 <script src="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <script src="/plugins/fastclick/fastclick.js"></script>
-<script src="/dist/js/app.min.js"></script>
+<script src="/dist/js/app.js"></script>
 <script src="/dist/js/demo.js"></script>
 <script src="/js/jquery-ui.min.js"></script>
 <script src="/layer/layer.js"></script>
@@ -51,6 +51,24 @@
         $("#frame").css("min-height",$("#content").height());
         $("#frame").attr("src",newUrl);
     }
+    $(function(){
+/*        $('.sidebar-menu li:not(.treeview) > a').on('click', function(){
+            var $parent = $(this).parent();
+            $parent.parent().siblings('ul').children().removeClass('active');
+            $parent.addClass('active');
+        });*/
+        $('.sidebar-menu a').each(function(){
+            var currenturl = window.location.href;
+            var newUrl = (currenturl.split("#"))[1];
+            if(this.href.indexOf(newUrl) != -1){
+                $(this).parent().addClass('active')
+                    .closest('.treeview-menu').addClass('.menu-open')
+                    .closest('.treeview').addClass('active');
+            }
+        });
+
+
+    });
 
     var addHist = function (e) {
         var currenturl = window.location.href;
@@ -77,7 +95,9 @@
         ifr.style.height = height + 'px';
         ifr.style.width = width + 'px';
     }
-	
+
+
+
 </script>
 
 </body>

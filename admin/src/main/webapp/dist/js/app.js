@@ -411,6 +411,7 @@ function _init() {
                         //Fix the layout in case the sidebar stretches over the height of the window
                         //_this.layout.fix();
                     });
+                    checkElement.siblings('ul').css("display","none");
                     checkElement.parent("li").removeClass("active");
                 }
                 //If the menu is not visible
@@ -423,7 +424,6 @@ function _init() {
                     ul.removeClass('menu-open');
                     //Get the parent li
                     var parent_li = $this.parent("li");
-
                     //Open the target menu and add the menu-open class
                     checkElement.slideDown(animationSpeed, function () {
                         //Add the class active to the parent li
@@ -433,6 +433,14 @@ function _init() {
                         //Fix the layout in case the sidebar stretches over the height of the window
                         _this.layout.fix();
                     });
+                    checkElement.siblings('ul').css("display","block");
+                }else{
+                    //ljuenan  限3级
+                    var $parent = $this.parent();
+                    $parent.parent().parent().parent().siblings('ul').children().removeClass('active');
+                    $parent.parent().siblings('ul').children().removeClass('active');
+                    $parent.parent().siblings('ul').children().children('ul').children().removeClass('active');
+                    $parent.addClass('active');
                 }
                 //if this isn't a link, prevent the page from being redirected
                 if (checkElement.is('.treeview-menu')) {
