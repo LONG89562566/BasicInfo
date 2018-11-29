@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author administrator  
@@ -212,5 +214,20 @@ public class RepertoryController extends BaseController{
             logger.error("[RepertoryController][pageQuery] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
-    }	
+    }
+
+    /**
+     *人员结构 树
+     *@return   java.lang.String
+     *@author
+     *@createTime   2018/11/17
+     *@updater  or other
+     */
+    @ResponseBody
+    @RequestMapping(value = "/repertoryTree", method = { RequestMethod.GET, RequestMethod.POST })
+    public Object repertoryTree( Repertory entity ) {
+        List<Repertory> repertoryList = service.query(entity);
+        CopyOnWriteArrayList<Repertory> cowList = new CopyOnWriteArrayList<>(repertoryList);
+        return service.getRepertoryTreeJson(cowList);
+    }
 }	

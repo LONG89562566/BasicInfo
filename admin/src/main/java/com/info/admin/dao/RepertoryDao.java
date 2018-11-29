@@ -1,8 +1,10 @@
 package com.info.admin.dao;
 
+import com.info.admin.entity.MaterialDetail;
 import com.info.admin.entity.Repertory;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
  /**
@@ -91,4 +93,31 @@ public interface RepertoryDao {
 	  *@return List<StaffInfo>
 	  */
 	 List<Repertory> queryRepertoryRepertoryTree(Repertory entity);
+
+	 /**
+	  * 查询Repertory记录数
+	  * @author
+	  * @date  2018-11-14 23:45:41
+	  * @updater or other
+	  * @return   int
+	  */
+	 Repertory getRepertoryPage(@Param("materialName") String materialName,@Param("projectId") String projectId);
+
+	 /**
+	  * 入库
+	  * @author
+	  * @date  2018-11-14 23:45:41
+	  * @updater or other
+	  * @return   int
+	  */
+	 int updateNum(@Param("num")BigDecimal num, @Param("repertoryId") String repertoryId);
+
+	 /**
+	  * 批量出库
+	  * @author
+	  * @date  2018-11-14 23:45:41
+	  * @updater or other
+	  * @return   int
+	  */
+	 public int outTestMaterial(@Param("materialDetailList")List<MaterialDetail> materialDetailList);
 }

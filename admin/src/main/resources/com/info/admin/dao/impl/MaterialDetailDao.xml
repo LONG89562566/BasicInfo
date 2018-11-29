@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 材料出入库 xml anthor ysh -->
+<mapper namespace="com.info.admin.dao.MaterialDetailDao">
+
+	<!-- 新增 材料出入库 对象 -->
+	<insert id="insert" parameterType="com.info.admin.entity.MaterialDetail"
+			useGeneratedKeys="true" keyProperty="materialDetailId">
+		insert into material_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test=" materialDetailId != null">
+				material_detail_id,
+			</if>
+				create_time,
+			<if test=" materialType != null">
+				material_type,
+			</if>
+			<if test=" num != null">
+				num,
+			</if>
+			<if test=" testState != null">
+				test_state,
+			</if>
+			<if test=" projectId != null">
+				project_id,
+			</if>
+			<if test=" testReport != null">
+				test_report,
+			</if>
+			<if test=" materialName != null">
+				material_name,
+			</if>
+			<if test=" outId != null">
+				out_id,
+			</if>
+			<if test=" outName != null">
+				out_name,
+			</if>
+			<if test=" outState != null">
+				out_state,
+			</if>
+			<if test=" repertoryId != null">
+				repertory_id,
+			</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="materialDetailId != null ">
+		        #{materialDetailId},
+		    </if>
+				now(),
+			<if test="materialType != null ">
+		        #{materialType},
+		    </if>
+			<if test="num != null ">
+		        #{num},
+		    </if>
+			<if test="testState != null ">
+		        #{testState},
+		    </if>
+			<if test="projectId != null ">
+		        #{projectId},
+		    </if>
+			<if test="testReport != null ">
+		        #{testReport},
+		    </if>
+			<if test="materialName != null ">
+		        #{materialName},
+		    </if>
+			<if test="outId != null ">
+		        #{outId},
+		    </if>
+			<if test="outName != null ">
+		        #{outName},
+		    </if>
+			<if test="outState != null ">
+				#{outState},
+		</if>
+			<if test="repertoryId != null ">
+				#{repertoryId},
+			</if>
+        </trim>
+	</insert>
+
+	<!-- 更新 材料出入库 对象 -->
+	<update id="update" parameterType="com.info.admin.entity.MaterialDetail">
+		update material_detail
+        <set>
+            <trim suffixOverrides=",">
+				<if test=" createTime != null">
+					create_time = date_format(#{createTime},'%Y-%m-%d %H:%i:%s'),
+				</if>
+				<if test=" materialType != null">
+					material_type = #{materialType},
+				</if>
+				<if test=" num != null">
+					num = #{num},
+				</if>
+				<if test=" testState != null">
+					test_state = #{testState},
+				</if>
+				<if test=" projectId != null">
+					project_id = #{projectId},
+				</if>
+				<if test=" testReport != null">
+					test_report = #{testReport},
+				</if>
+				<if test=" outId != null">
+					out_id = #{outId},
+				</if>
+				<if test=" outName != null">
+					out_name = #{outName},
+				</if>
+				<if test=" outState != null">
+					out_state = #{outState},
+				</if>
+				<if test=" repertoryId != null">
+					repertory_id = #{repertoryId},
+				</if>
+            </trim>
+        </set>
+		where material_detail_id = #{materialDetailId}
+	</update>
+
+    <!-- 删除 材料出入库 对象 -->
+    <delete id="delete">
+        delete from material_detail
+        <include refid="filterCondition"></include>
+    </delete>
+    
+    <!-- 返回 材料出入库 对象 -->
+    <resultMap type="com.info.admin.entity.MaterialDetail" id="materialDetailMap">
+		<result column="material_detail_id" property="materialDetailId" />
+		<result column="create_time" property="createTime" />
+		<result column="createTime" property="createTimeStr" />
+		<result column="material_type" property="materialType" />
+		<result column="material_name" property="materialName" />
+		<result column="num" property="num" />
+		<result column="test_state" property="testState" />
+		<result column="project_id" property="projectId" />
+		<result column="test_report" property="testReport" />
+		<result column="out_id" property="outId" />
+		<result column="out_name" property="outName" />
+		<result column="out_state" property="outState" />
+		<result column="repertory_id" property="repertoryId" />
+
+    </resultMap>
+
+    <!-- 分页条件 -->
+    <sql id="filterCondition">
+        <trim prefix="where " prefixOverrides="and " >
+		    <if test=" entity.materialDetailId != null and  entity.materialDetailId != ''">
+			    and material_detail_id =  #{entity.materialDetailId} 
+		    </if>
+		    <if test="entity.createTime!=null">
+		        and create_time = STR_TO_DATE(#{entity.createTime},"%Y-%m-%d %T")
+		    </if>
+		    <if test=" entity.materialType != null ">
+			    and material_type =  #{entity.materialType} 
+		    </if>
+		    <if test=" entity.num != null">
+			    and num =  #{entity.num} 
+		    </if>
+		    <if test=" entity.testState != null">
+			    and test_state =  #{entity.testState} 
+		    </if>
+			<if test=" entity.materialName != null and entity.materialName != ''">
+			    and material_name like '%${entity.materialName}%'
+		    </if>
+			<if test=" entity.outName != null and entity.outName != ''">
+				and out_name like '%${entity.outName}%'
+			</if>
+			<if test=" entity.projectId != null and entity.projectId != ''">
+				and project_id =  #{entity.projectId}
+			</if>
+        </trim>
+    </sql>
+    
+    <!-- 查询 材料出入库 对象列表 -->
+    <select id="query"  resultMap="materialDetailMap" >
+        select  
+          *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+          from material_detail
+        <include refid="filterCondition"></include>
+    </select>
+    
+    <!-- 查询 材料出入库 总记录数 -->
+    <select id="getPageCount" resultType="int">
+        select count(1) from material_detail
+        <include refid="filterCondition"></include>
+    </select>
+
+    <!-- 分页查询 材料出入库 对象列表  -->
+    <select id="pageQuery" resultMap="materialDetailMap">
+        select
+         * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+         from material_detail
+        <include refid="filterCondition"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    
+    <!-- 根据id 查询 材料出入库 -->
+	<select id="getMaterialDetailById" parameterType="String" resultMap="materialDetailMap" >
+		select 
+		 * 
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 
+		 from material_detail where material_detail_id= #{materialDetailId}
+	</select>
+
+	<!-- 批量添加 -->
+	<insert id="batchMaterialDetail" parameterType="java.util.List">
+		insert into material_detail (material_detail_id,material_type,num,project_id,material_name,out_id,out_name,create_time) values
+		<foreach collection="materialDetailList" item="item" separator=",">
+			(#{item.materialDetailId},#{item.materialType},#{item.num},#{item.projectId},#{item.materialName},#{item.outId},#{item.outName},now())
+		</foreach>
+	</insert>
+
+	<!-- 查询 材料出入库 总记录数 -->
+	<select id="getOutPageCount" resultType="int">
+		select count(1) from material_detail
+		<include refid="filterCondition"></include>
+		GROUP BY material_detail.out_id
+		LIMIT 1
+	</select>
+
+	<!-- 分页查询 材料出库 对象列表  -->
+	<select id="outPageQuery" resultMap="materialDetailMap">
+		select
+		material_detail.out_id,
+		material_detail.out_name,
+		material_detail.out_state,
+		material_detail.test_state,
+		material_detail.material_type
+		from material_detail
+		<include refid="filterCondition"></include>
+		GROUP BY material_detail.out_id
+		LIMIT #{offset},#{pageSize}
+	</select>
+
+	<!-- 更新 材料出入库 对象 -->
+	<update id="updateTestMaterialDetail" parameterType="com.info.admin.entity.MaterialDetail">
+		update material_detail
+		<set>
+			<trim suffixOverrides=",">
+
+				<if test=" testState != null and testState != ''">
+					test_state = #{testState},
+				</if>
+
+				<if test=" testReport != null and  testReport != '' ">
+					test_report = #{testReport},
+				</if>
+				<if test=" outState != null and outState != ''">
+					out_state = #{outState},
+				</if>
+			</trim>
+		</set>
+		where out_id = #{outId}
+	</update>
+
+	<!-- 查询 材料出入库 总记录数 -->
+	<select id="getMaterialByOutId" resultMap="materialDetailMap">
+		select * from material_detail
+          where out_id = #{outId}
+          and out_state = 0
+	</select>
+	<!-- 查询 材料出入库 总记录数 -->
+	<select id="getMaterialDetailByOutId" resultMap="materialDetailMap">
+		select * from material_detail
+		where out_id = #{outId}
+		GROUP By out_id
+	</select>
+</mapper>	

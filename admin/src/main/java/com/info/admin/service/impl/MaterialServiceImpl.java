@@ -142,6 +142,19 @@ public class MaterialServiceImpl implements MaterialService {
         }
         return all;
     }
+
+    /**
+     *  材料信息List
+     * @author
+     * @param
+     * @date  2018-11-14 23:45:42
+     * @updater  or other
+     * @return   OrgInfo
+     */
+    @Override
+    public List<Material>  getMaterial( String projectId){
+        return dao.getMaterial(projectId);
+    }
 }
 
 	

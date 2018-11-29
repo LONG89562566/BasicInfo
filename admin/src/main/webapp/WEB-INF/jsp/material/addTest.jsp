@@ -28,7 +28,12 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">检验状态</label>
 					<div class="layui-input-inline">
-						<input type="text" id="testState" name="testState" placeholder="请输入检验状态"  value="${material.testState }" class="layui-input"/>
+						<select name="testState" id="testState">
+							<option value="">请选择</option>
+							<option value="0"  <c:if test="${material.testState == 0}">selected</c:if>>检验未通过</option>
+							<option value="1"  <c:if test="${material.testState == 1}">selected</c:if>>检验通过</option>
+							<option value="2"  <c:if test="${material.testState == 2}">selected</c:if>>检验中</option>
+						</select>
 						<span style="color: red" id="s-testState"></span>
 					</div>
 				</div>

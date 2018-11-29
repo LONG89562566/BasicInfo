@@ -335,6 +335,15 @@
 		 from material where material_id= #{materialId}
 	</select>
 
+	<!--  查询 材料 -->
+	<select id="getMaterial"  resultMap="materialMap" >
+		select
+		*
+		from material
+		where project_id= #{projectId}
+		and test_state = 1
+	</select>
+
 	<!-- 返回 材料树 对象 -->
 	<resultMap type="com.info.admin.entity.MaterialTree" id="materialTreeMap">
 		<result column="repertory_id" property="repertoryId" />
