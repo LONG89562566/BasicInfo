@@ -108,7 +108,7 @@
     var showPageNumber = "show-page";
     //列表操作按钮
     var tableBtn = new Array();
-    tableBtn = addBtn(tableBtn,"readFlow","查看","","","","","","layui-btn-normal");
+    tableBtn = addBtn(tableBtn,"readFlow","查看","","","","","","layui-btn-normal","docUrl");
 </script>
 
 <script>
@@ -120,7 +120,7 @@
             readFlow: function(data){
                 //获取userId
                 var url = data.val();
-                readFlow(url);
+                readFlow("",url);
             }
         };
         $('.site-demo-button .layui-btn').on('click', function(){
@@ -131,7 +131,7 @@
 
 
     //查看
-    var readFlow = function(url){
+    var readFlow = function(id,url){
         //多窗口模式，层叠置顶
         layer.open({
             type: 2,

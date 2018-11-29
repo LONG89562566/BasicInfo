@@ -5,255 +5,260 @@ import java.util.Date;
 
 /**
  * 流程 实体类
- * @author ysh  
+ *
+ * @author ysh
  * @date 2018-11-14 23:45:41
  */
-public class 	Flow implements Serializable {
-	private static final long serialVersionUID = 1L;
-	 /*****主键*****/
-	 private String flowId;
-	 /*****创建时间*****/
-	 private Date createTime;
-	 /*****创建时间 日常的字符串*****/
-	 private String createTimeStr;
-	 /*****创建人编号*****/
-	 private Long createUser;
-	 /*****创建人名称*****/
-	 private String createUserCn;
-	 /*****删除标记*****/
-	 private Long deleteFlag;
-	 /*****修改时间*****/
-	 private Date updateTime;
-	 /*****修改时间 日常的字符串*****/
-	 private String updateTimeStr;
-	 /*****排序号*****/
-	 private Long seq;
-	 /*****节点名称*****/
-	 private String name;
-	 /*****上一节点*****/
-	 private String lastNode;
-	 /*****下一节点*****/
-	 private String nextNode;
-	 /*****参与部门编号*****/
-	 private String orgId;
-	 /*****参与角色编号*****/
-	 private String roleId;
-	 /*****参与人编号*****/
-	 private String userId;
-	 /*****意见*****/
-	 private String msg;
-	 /*****是否完成*****/
-	 private Long isDone;
-	 /*****业务内容*****/
-	 private String showTitle;
-	 /*****业务详情页面*****/
-	 private String docUrl;
-	 /*****业务表主键*****/
-	 private String docUnid;
-	 /*****经办人编号*****/
-	 private String operator;
-	 /*****经办人名称*****/
-	 private String operatorCn;
-	 /*****是否提交*****/
-	 private Long isSubmit;
-     /*****是否结束*****/
-     private Long isEnd;
+public class Flow implements Serializable {
+    private static final long serialVersionUID = 1L;
+    /*****主键*****/
+    private String flowId;
+    /*****创建时间*****/
+    private Date createTime;
+    /*****创建时间 日常的字符串*****/
+    private String createTimeStr;
+    /*****创建人编号*****/
+    private Long createUser;
+    /*****创建人名称*****/
+    private String createUserCn;
+    /*****删除标记*****/
+    private Long deleteFlag;
+    /*****修改时间*****/
+    private Date updateTime;
+    /*****修改时间 日常的字符串*****/
+    private String updateTimeStr;
+    /*****排序号*****/
+    private Long seq;
+    /*****节点名称*****/
+    private String name;
+    /*****上一节点*****/
+    private String lastNode;
+    /*****下一节点*****/
+    private String nextNode;
+    /*****参与部门编号*****/
+    private String orgId;
+    /*****参与角色编号*****/
+    private String roleId;
+    /*****参与人编号*****/
+    private String userId;
+    /*****意见*****/
+    private String msg;
+    /*****是否完成*****/
+    private Long isDone;
+    /*****业务内容*****/
+    private String showTitle;
+    /*****业务详情页面*****/
+    private String docUrl;
+    /*****业务表主键*****/
+    private String docUnid;
+    /*****经办人编号*****/
+    private String operator;
+    /*****经办人名称*****/
+    private String operatorCn;
+    /*****是否提交*****/
+    private Long isSubmit;
+    /*****是否结束*****/
+    private Long isEnd;
+    /******间隔天数*****/
+    private Integer dayNum;
+    /******（1.大/2.小/3.等/4.不大/5.不小/6.不等于）*****/
+    private String checkCondition;
 
-	 public String getFlowId() {
-		 return flowId;
-	 }
+    public String getFlowId() {
+        return flowId;
+    }
 
-	 public void setFlowId(String flowId) {
-		 this.flowId = flowId;
-	 }
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
+    }
 
-	 public Date getCreateTime() {
-	 	 if(org.apache.commons.lang.StringUtils.isNotBlank(createTimeStr) && createTime == null){
-			 createTime = com.info.admin.utils.DateUtil.stringToDate(createTimeStr);
-		 }
-		 return createTime;
-	 }
+    public Date getCreateTime() {
+        if (org.apache.commons.lang.StringUtils.isNotBlank(createTimeStr) && createTime == null) {
+            createTime = com.info.admin.utils.DateUtil.stringToDate(createTimeStr);
+        }
+        return createTime;
+    }
 
-	 public void setCreateTime(Date createTime) {
-		 this.createTime = createTime;
-	 }
-	 
-	 public String getCreateTimeStr() {
-		 return createTimeStr;
-	 }
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	 public void setCreateTimeStr(String createTimeStr) {
-		 this.createTimeStr = createTimeStr;
-		 if(org.apache.commons.lang.StringUtils.isNotBlank(createTimeStr) && createTime == null){
-			this.createTime = com.info.admin.utils.DateUtil.stringToDate(createTimeStr);
-		 }
-	 }
+    public String getCreateTimeStr() {
+        return createTimeStr;
+    }
 
-	 public Long getCreateUser() {
-		 return createUser;
-	 }
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
+        if (org.apache.commons.lang.StringUtils.isNotBlank(createTimeStr) && createTime == null) {
+            this.createTime = com.info.admin.utils.DateUtil.stringToDate(createTimeStr);
+        }
+    }
 
-	 public void setCreateUser(Long createUser) {
-		 this.createUser = createUser;
-	 }
+    public Long getCreateUser() {
+        return createUser;
+    }
 
-	 public String getCreateUserCn() {
-		 return createUserCn;
-	 }
+    public void setCreateUser(Long createUser) {
+        this.createUser = createUser;
+    }
 
-	 public void setCreateUserCn(String createUserCn) {
-		 this.createUserCn = createUserCn;
-	 }
+    public String getCreateUserCn() {
+        return createUserCn;
+    }
 
-	 public Long getDeleteFlag() {
-		 return deleteFlag;
-	 }
+    public void setCreateUserCn(String createUserCn) {
+        this.createUserCn = createUserCn;
+    }
 
-	 public void setDeleteFlag(Long deleteFlag) {
-		 this.deleteFlag = deleteFlag;
-	 }
+    public Long getDeleteFlag() {
+        return deleteFlag;
+    }
 
-	 public Date getUpdateTime() {
-	 	 if(org.apache.commons.lang.StringUtils.isNotBlank(updateTimeStr) && updateTime == null){
-			 updateTime = com.info.admin.utils.DateUtil.stringToDate(updateTimeStr);
-		 }
-		 return updateTime;
-	 }
+    public void setDeleteFlag(Long deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
 
-	 public void setUpdateTime(Date updateTime) {
-		 this.updateTime = updateTime;
-	 }
-	 
-	 public String getUpdateTimeStr() {
-		 return updateTimeStr;
-	 }
+    public Date getUpdateTime() {
+        if (org.apache.commons.lang.StringUtils.isNotBlank(updateTimeStr) && updateTime == null) {
+            updateTime = com.info.admin.utils.DateUtil.stringToDate(updateTimeStr);
+        }
+        return updateTime;
+    }
 
-	 public void setUpdateTimeStr(String updateTimeStr) {
-		 this.updateTimeStr = updateTimeStr;
-		 if(org.apache.commons.lang.StringUtils.isNotBlank(updateTimeStr) && updateTime == null){
-			this.updateTime = com.info.admin.utils.DateUtil.stringToDate(updateTimeStr);
-		 }
-	 }
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
-	 public Long getSeq() {
-		 return seq;
-	 }
+    public String getUpdateTimeStr() {
+        return updateTimeStr;
+    }
 
-	 public void setSeq(Long seq) {
-		 this.seq = seq;
-	 }
+    public void setUpdateTimeStr(String updateTimeStr) {
+        this.updateTimeStr = updateTimeStr;
+        if (org.apache.commons.lang.StringUtils.isNotBlank(updateTimeStr) && updateTime == null) {
+            this.updateTime = com.info.admin.utils.DateUtil.stringToDate(updateTimeStr);
+        }
+    }
 
-	 public String getName() {
-		 return name;
-	 }
+    public Long getSeq() {
+        return seq;
+    }
 
-	 public void setName(String name) {
-		 this.name = name;
-	 }
+    public void setSeq(Long seq) {
+        this.seq = seq;
+    }
 
-	 public String getLastNode() {
-		 return lastNode;
-	 }
+    public String getName() {
+        return name;
+    }
 
-	 public void setLastNode(String lastNode) {
-		 this.lastNode = lastNode;
-	 }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	 public String getNextNode() {
-		 return nextNode;
-	 }
+    public String getLastNode() {
+        return lastNode;
+    }
 
-	 public void setNextNode(String nextNode) {
-		 this.nextNode = nextNode;
-	 }
+    public void setLastNode(String lastNode) {
+        this.lastNode = lastNode;
+    }
 
-	 public String getOrgId() {
-		 return orgId;
-	 }
+    public String getNextNode() {
+        return nextNode;
+    }
 
-	 public void setOrgId(String orgId) {
-		 this.orgId = orgId;
-	 }
+    public void setNextNode(String nextNode) {
+        this.nextNode = nextNode;
+    }
 
-	 public String getRoleId() {
-		 return roleId;
-	 }
+    public String getOrgId() {
+        return orgId;
+    }
 
-	 public void setRoleId(String roleId) {
-		 this.roleId = roleId;
-	 }
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
 
-	 public String getUserId() {
-		 return userId;
-	 }
+    public String getRoleId() {
+        return roleId;
+    }
 
-	 public void setUserId(String userId) {
-		 this.userId = userId;
-	 }
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
 
-	 public String getMsg() {
-		 return msg;
-	 }
+    public String getUserId() {
+        return userId;
+    }
 
-	 public void setMsg(String msg) {
-		 this.msg = msg;
-	 }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	 public Long getIsDone() {
-		 return isDone;
-	 }
+    public String getMsg() {
+        return msg;
+    }
 
-	 public void setIsDone(Long isDone) {
-		 this.isDone = isDone;
-	 }
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
-	 public String getShowTitle() {
-		 return showTitle;
-	 }
+    public Long getIsDone() {
+        return isDone;
+    }
 
-	 public void setShowTitle(String showTitle) {
-		 this.showTitle = showTitle;
-	 }
+    public void setIsDone(Long isDone) {
+        this.isDone = isDone;
+    }
 
-	 public String getDocUrl() {
-		 return docUrl;
-	 }
+    public String getShowTitle() {
+        return showTitle;
+    }
 
-	 public void setDocUrl(String docUrl) {
-		 this.docUrl = docUrl;
-	 }
+    public void setShowTitle(String showTitle) {
+        this.showTitle = showTitle;
+    }
 
-	 public String getDocUnid() {
-		 return docUnid;
-	 }
+    public String getDocUrl() {
+        return docUrl;
+    }
 
-	 public void setDocUnid(String docUnid) {
-		 this.docUnid = docUnid;
-	 }
+    public void setDocUrl(String docUrl) {
+        this.docUrl = docUrl;
+    }
 
-	public String getOperator() {
-		return operator;
-	}
+    public String getDocUnid() {
+        return docUnid;
+    }
 
-	public void setOperator(String operator) {
-		this.operator = operator;
-	}
+    public void setDocUnid(String docUnid) {
+        this.docUnid = docUnid;
+    }
 
-	public String getOperatorCn() {
-		return operatorCn;
-	}
+    public String getOperator() {
+        return operator;
+    }
 
-	public void setOperatorCn(String operatorCn) {
-		this.operatorCn = operatorCn;
-	}
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
 
-	public Long getIsSubmit() {
-		return isSubmit;
-	}
+    public String getOperatorCn() {
+        return operatorCn;
+    }
 
-	public void setIsSubmit(Long isSubmit) {
-		this.isSubmit = isSubmit;
-	}
+    public void setOperatorCn(String operatorCn) {
+        this.operatorCn = operatorCn;
+    }
+
+    public Long getIsSubmit() {
+        return isSubmit;
+    }
+
+    public void setIsSubmit(Long isSubmit) {
+        this.isSubmit = isSubmit;
+    }
 
     public Long getIsEnd() {
         return isEnd;
@@ -263,7 +268,23 @@ public class 	Flow implements Serializable {
         this.isEnd = isEnd;
     }
 
+    public Integer getDayNum() {
+        return dayNum;
+    }
+
+    public void setDayNum(Integer dayNum) {
+        this.dayNum = dayNum;
+    }
+
+    public String getCheckCondition() {
+        return checkCondition;
+    }
+
+    public void setCheckCondition(String checkCondition) {
+        this.checkCondition = checkCondition;
+    }
+
     public Flow() {
-		super();
-	}
+        super();
+    }
 }

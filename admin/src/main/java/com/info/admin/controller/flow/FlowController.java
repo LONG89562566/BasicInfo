@@ -2,9 +2,11 @@ package com.info.admin.controller.flow;
 
 import com.info.admin.controller.base.BaseController;
 import com.info.admin.entity.Flow;
+import com.info.admin.entity.WarningInfo;
 import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.FlowService;
+import com.info.admin.service.WarningInfoService;
 import com.info.admin.utils.CloneUtils;
 import com.info.admin.utils.PageUtil;
 import com.info.admin.utils.UUIDUtils;
@@ -38,6 +40,8 @@ public class FlowController extends BaseController{
 
     @Autowired
     private FlowService service;
+    @Autowired
+    private WarningInfoService warningInfoService;
     
      /**
      *待办流程列表
@@ -60,6 +64,21 @@ public class FlowController extends BaseController{
         model.addAttribute("paginator", paginator);
         model.addAttribute("flow", entity);
         return "flow/dbListFlow";
+    }
+
+    /**
+     *预警待办流程列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/yjDbFlow", method = { RequestMethod.GET, RequestMethod.POST })
+    public String getYjDbFlowList(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
+        logger.info("[FlowController][getYjDbFlowList] 查询待办流程列表:");
+        model.addAttribute("paginator", yjDbQuery(request,entity));
+        model.addAttribute("flow", entity);
+        return "flow/yjdbListFlow";
     }
 
     /**
@@ -257,6 +276,8 @@ public class FlowController extends BaseController{
                 flow.setOperatorCn(this.getLoginUser(request).getName());
                 flow.setIsDone(1L);
                 result = service.update(flow);
+            }else{
+                entity.setFlowId(UUIDUtils.getUUid());
             }
 
             //设置entity特殊参数
@@ -639,6 +660,56 @@ public class FlowController extends BaseController{
     }
 
     /**
+     * 分页查询预警待办Flow对象
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   com.netcai.admin.result.JsonResult
+     */
+    @ResponseBody
+    @RequestMapping(value = "pageYjDbQuery", method = { RequestMethod.GET, RequestMethod.POST })
+    public JsonResult pageYjDbQuery(HttpServletRequest request,Flow entity) {
+        logger.info("[FlowController][pageYjDbQuery] 查询Flow对象:");
+        try {
+            return new JsonResult(JsonResultCode.SUCCESS, "操作成功", yjDbQuery(request,entity));
+        } catch (Exception e) {
+            logger.error("[FlowController][pageYjDbQuery] exception", e);
+            return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
+        }
+    }
+
+    /**
+     * 分页查询预警待办Flow对象
+     * @param    entity  对象
+     * @author   ysh
+     * @date   2018-11-14 23:45:42
+     * @updater  or other
+     * @return   PageUtil
+     */
+    private PageUtil yjDbQuery(HttpServletRequest request,Flow entity){
+        // 获取分页当前的页码
+        int pageNum = this.getPageNum(request);
+        // 获取分页的大小
+        int pageSize = this.getPageSize(request);
+        //TODO
+        //用户所属部门、角色还未处理
+        entity.setUserId(this.getStaffId(request));
+        WarningInfo warningInfo = new WarningInfo();
+        warningInfo.setReceiveUser(getStaffId(request));
+        List<WarningInfo> warningInfos =  warningInfoService.query(warningInfo);
+        if(warningInfos != null && warningInfos.size() > 0){
+            entity.setDayNum(Integer.parseInt(warningInfos.get(0).getWarn_val()));
+            long checkCondition = warningInfos.get(0).getCheckCondition();
+            entity.setCheckCondition(checkCondition+"");
+        }else {
+            entity.setDayNum(1);
+            entity.setCheckCondition("1");
+        }
+        return service.pageYjDbQuery(entity , pageNum, pageSize);
+    }
+
+    /**
      * 分页查询在办Flow对象
      * @param    entity  对象
      * @author   ysh
@@ -704,13 +775,13 @@ public class FlowController extends BaseController{
      * @updater or other
      */
     @ResponseBody
-    @RequestMapping(value = "getStaffInfoByFlowId", method = {RequestMethod.GET, RequestMethod.POST})
-    public JsonResult getStaffInfoByFlowId(String flowId ) {
-        logger.info("[FlowController][getStaffInfoByFlowId] 查询StaffInfo对象:");
+    @RequestMapping(value = "getFlowVoById", method = {RequestMethod.GET, RequestMethod.POST})
+    public JsonResult getFlowVoById(String flowId ) {
+        logger.info("[FlowController][getFlowVoById] 查询StaffInfo对象:");
         try {
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.getFlowByIdVo(flowId));
         } catch (Exception e) {
-            logger.error("[FlowController][getStaffInfoByFlowId] exception", e);
+            logger.error("[FlowController][getFlowVoById] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
     }

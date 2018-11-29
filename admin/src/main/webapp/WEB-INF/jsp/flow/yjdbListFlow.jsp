@@ -43,7 +43,7 @@
 	  <div class="content-wrapper">
 	    <!-- Content Header (Page header) --> 
 	    <section class="content-header">
-	      <h1>待办流程</h1>
+	      <h1>待办流程超期预警</h1>
 	    </section>
 	    <!-- Main content -->
 		    <section class="content">
@@ -51,7 +51,7 @@
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
-		              <h3 class="box-title">流程列表 :${sessionScope.login_session_admin.userName}</h3>
+		              <%--<h3 class="box-title">流程列表 :${sessionScope.login_session_admin.userName}</h3>--%>
 		            </div>
 					<!-- 表格列表start -->
 		            <div class="box">
@@ -63,6 +63,7 @@
 			                    <th field="showTitle"  >业务内容</th>
                                 <th field="createTime"  type='date'>时间</th>
                                 <th field="createUserCn"  >上一节点操作人</th>
+                                <th field="dayNum"  >超期天数</th>
 				                <th field="sys_opt">操作</th>
 				              </tr>
 			               </thead>
@@ -73,6 +74,7 @@
                                 <td>${r.showTitle}</td>
 				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					            <td>${r.createUserCn}</td>
+					            <td>${r.dayNum}</td>
 						        <td>
 						         <div class="site-demo-button" >
 								   <button id="readFlow" data-method="readFlow" value="${r.docUrl}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;查看</span></button>
@@ -99,7 +101,7 @@
 	<script type="text/javascript">
 
 		//查询数据Url
-		var pageQueryUrl = "<%=request.getContextPath()%>/admin/flow/pageDbQuery";
+		var pageQueryUrl = "<%=request.getContextPath()%>/admin/flow/pageYjDbQuery";
 		//查询条件表单Id
 	    var _queryConditionForrId = "form_submit";
 		//显示数据表格id

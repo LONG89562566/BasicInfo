@@ -184,7 +184,6 @@ public class WarningInfo implements Serializable {
 		 this.warn_val = warn_val;
 	 }
 
-	 
 	public WarningInfo() {
 		super();
 	}

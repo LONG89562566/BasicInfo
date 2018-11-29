@@ -1,6 +1,7 @@
 package com.info.admin.dao;
 
 import com.info.admin.entity.WarningInfo;
+import com.info.admin.vo.WarningInfoVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -64,6 +65,18 @@ public interface WarningInfoDao {
     List<WarningInfo> pageQuery(@Param("entity") WarningInfo entity, @Param("offset") int offset, @Param("pageSize") int pageSize);
 
     /**
+     * 分页查询WarningInfo对象
+     * @param entity  对象
+     * @param offset	页数
+     * @param pageSize	大小
+     * @author  ysh
+     * @date  2018-11-14 23:45:41
+     * @updater or other
+     * @return   List<WarningInfo>
+     */
+    List<WarningInfoVo> pageQueryVo(@Param("entity") WarningInfo entity, @Param("offset") int offset, @Param("pageSize") int pageSize);
+
+    /**
      * 查询WarningInfo总记录数
      * @param entity  对象
      * @author  ysh
@@ -81,5 +94,15 @@ public interface WarningInfoDao {
 	 *@updater  or other
 	 *@return   WarningInfo
 	 */
-	public WarningInfo getWarningInfoById(String warningId);
+	WarningInfo getWarningInfoById(String warningId);
+
+	/**
+	 * 根据 id获取 预警设置
+	 *@author   ysh
+	 *@param warningId 主键id
+	 *@date  2018-11-14 23:45:41
+	 *@updater  or other
+	 *@return   WarningInfo
+	 */
+	WarningInfoVo getWarningInfoVoById(String warningId);
 }
