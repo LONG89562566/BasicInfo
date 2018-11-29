@@ -39,7 +39,7 @@
 	  <div class="content-wrapper">
 	    <!-- Content Header (Page header) --> 
 	    <section class="content-header">
-	      <h1>梁段信息管理</h1>
+	      <h1>复杂工艺管理</h1>
 	    </section>
 	    <!-- Main content -->
 	    <shiro:hasPermission name="beamSection:query">
