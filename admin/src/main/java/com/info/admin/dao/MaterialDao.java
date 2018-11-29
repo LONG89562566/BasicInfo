@@ -93,4 +93,13 @@ public interface MaterialDao {
 	  * @return   OrgInfo
 	  */
 	 public List<MaterialTree>  getMaterialTree(@Param("entity")MaterialTree entity, String projectId);
+	 /**
+	  *  材料信息List
+	  * @author
+	  * @param
+	  * @date  2018-11-14 23:45:42
+	  * @updater  or other
+	  * @return   OrgInfo
+	  */
+	 public List<Material>  getMaterial( String projectId);
 }

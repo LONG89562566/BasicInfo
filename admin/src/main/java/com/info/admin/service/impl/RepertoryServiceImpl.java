@@ -1,6 +1,7 @@
 package com.info.admin.service.impl;
 
 import com.info.admin.dao.RepertoryDao;
+import com.info.admin.entity.MaterialDetail;
 import com.info.admin.entity.Repertory;
 import com.info.admin.service.RepertoryService;
 import com.info.admin.utils.PageUtil;
@@ -9,6 +10,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -33,7 +35,7 @@ public class RepertoryServiceImpl implements RepertoryService {
      */
     @Override
     public int insert(Repertory entity){
-        entity.setRepertoryId(com.info.admin.utils.UUIDUtils.getUUid());
+
         return dao.insert(entity);
     }
 
@@ -151,6 +153,61 @@ public class RepertoryServiceImpl implements RepertoryService {
         }
         return all;
     }
+
+    /**
+     * 查询Repertory记录数
+     * @author
+     * @date  2018-11-14 23:45:41
+     * @updater or other
+     * @return   int
+     */
+    @Override
+    public Repertory getRepertoryPage( String materialName, String projectId){
+        return dao.getRepertoryPage(materialName,projectId);
+    }
+    /**
+     * 入库
+     * @author
+     * @date  2018-11-14 23:45:41
+     * @updater or other
+     * @return   int
+     */
+    @Override
+    public int updateNum(BigDecimal num , String repertoryId){
+        return dao.updateNum(num,repertoryId);
+    }
+
+
+    /**
+     * 返回树形结构json数据
+     * @param list 数据，因读大于写
+     * @return JSONArray
+     */
+    @Override
+    public JSONArray getRepertoryTreeJson(CopyOnWriteArrayList<Repertory> list) {
+        JSONArray all = new JSONArray();
+        for (Repertory repertory : list){
+            JSONObject main = new JSONObject();
+            main.put("id",repertory.getRepertoryId());
+            main.put("text",repertory.getMaterialName());
+            main.put("num",repertory.getNum());
+            all.add(main);
+        }
+        return all;
+    }
+
+    /**
+     * 批量出库
+     * @author
+     * @date  2018-11-14 23:45:41
+     * @updater or other
+     * @return   int
+     */
+    @Override
+    public int outTestMaterial(List<MaterialDetail> materialDetailList){
+        return dao.outTestMaterial(materialDetailList);
+    }
+
 }
 
 	

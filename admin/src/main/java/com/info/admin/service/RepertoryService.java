@@ -1,9 +1,11 @@
 package com.info.admin.service;
 
+import com.info.admin.entity.MaterialDetail;
 import com.info.admin.entity.Repertory;
 import com.info.admin.utils.PageUtil;
 import net.sf.json.JSONArray;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -92,6 +94,39 @@ public interface RepertoryService {
      * @return JSONArray
      */
     JSONArray getRepertoryRepertoryTreeJson(CopyOnWriteArrayList<Repertory> repertoryList);
+
+    /**
+     * 查询Repertory记录数
+     * @author
+     * @date  2018-11-14 23:45:41
+     * @updater or other
+     * @return   int
+     */
+    Repertory getRepertoryPage( String materialName, String projectId);
+    /**
+     * 入库
+     * @author
+     * @date  2018-11-14 23:45:41
+     * @updater or other
+     * @return   int
+     */
+    int updateNum(BigDecimal num, String repertoryId);
+
+    /**
+     * 返回人员报表树形结构json数据
+     * @param repertoryList 数据，因读大于写
+     * @return JSONArray
+     */
+    JSONArray getRepertoryTreeJson(CopyOnWriteArrayList<Repertory> repertoryList);
+
+    /**
+     * 批量出库
+     * @author
+     * @date  2018-11-14 23:45:41
+     * @updater or other
+     * @return   int
+     */
+    public int outTestMaterial(List<MaterialDetail> materialDetailList);
 	
 }
 

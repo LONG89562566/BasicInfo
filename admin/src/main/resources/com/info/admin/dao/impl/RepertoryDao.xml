@@ -234,4 +234,34 @@
 		table_name = 'repertory'
 		GROUP BY COLUMN_NAME
 	</select>
+
+	<!-- 查询 仓库 总记录数 -->
+	<select id="getRepertoryPage" resultMap="repertoryMap">
+		select
+		*
+		from repertory
+         WHERE material_name = #{materialName}
+         and project_id = #{projectId}
+	</select>
+	<!-- 入库  -->
+	<update id="updateNum"  >
+		update repertory set num= num + #{num} where repertory_id= #{repertoryId}
+	</update>
+
+
+	<!--根据库存编号批量出库存数据-->
+	<update id="outTestMaterial" parameterType="java.util.List">
+		<foreach collection="materialDetailList" item="item" index="index" separator=";">
+			update repertory
+			<set>
+				<trim suffixOverrides=",">
+					<if test=" item.num != null and item.num != 0">
+						num = num - (${item.num}),
+					</if>
+				</trim>
+			</set>
+			where repertory.repertory_id = #{item.repertoryId}
+		</foreach>
+
+	</update>
 </mapper>	
