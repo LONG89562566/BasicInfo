@@ -13,7 +13,7 @@
 			<input  type="hidden" id="projectId" name="projectId" value="${equipmentInfo.projectId}"/>
 
 			<jsp:include page="/WEB-INF/jsp/flow/flowPage.jsp">
-				<jsp:param name="docUnid" value="${beamSection.sectionId}" />
+				<jsp:param name="docUnid" value="${equipmentInfo.equipmentId}" />
 			</jsp:include>
 			<div class='layui-form-item'>
      			<div class="layui-inline">
@@ -127,6 +127,7 @@
 					<span style="color: red" id="s-sop"></span>
 				</div>
 	 		</div>
+
             <div class="layui-input-block" style="margin-top:30px;margin-left:324px;">
                 <input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
                 <button class="layui-btn" name="cancleSubmit" >取消</button>

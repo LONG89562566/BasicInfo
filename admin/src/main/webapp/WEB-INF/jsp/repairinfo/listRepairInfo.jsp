@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="pv" uri="/pageTaglib"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -39,34 +40,32 @@
 		</style>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
-	  <!-- 操作人员列表start -->
+	  <!-- 维修信息列表start -->
 	  <div class="content-wrapper">
-	    <!-- Content Header (Page header) --> 
+	    <!-- Content Header (Page header) -->
 	    <section class="content-header">
-	      <h1>操作人员管理</h1>
+	      <h1>维修信息管理</h1>
 	    </section>
 	    <!-- Main content -->
-	    <shiro:hasPermission name="repairInfo:query">
 		    <section class="content">
 		      <div class="row">
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
-		              <h3 class="box-title">操作人员列表 :${sessionScope.login_session_admin.userName}</h3>
+		              <h3 class="box-title">维修信息列表 :${sessionScope.login_session_admin.userName}</h3>
 		            </div>
 			        <div class="box box-info">
 			           <!-- form start -->
 			           <form  id="form_submit" class="form-horizontal" action="/admin/repairInfo/list" method="post">
 			           	  <input type="hidden" name="pageNum" id="pageNum" value="${paginator.currentPage}">
-	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
+	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">
 			              <div class="box-body">
-			                 <div class="form-group">
-
-			                 </div>
-			                 <div class="box-footer">
-			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
-			                 	<button type="reset" onclick='resetRefreshTheCurrentPage()' id="reset" class="btn btn-info ">重置</button>
-			               	 </div>
+                              <div class="form-group" hidden="hidden">
+                                  <label for="equipmentId" class="col-sm-1 control-label">设备编号:</label>
+                                  <div class="col-sm-3" style="width: 200px">
+                                      <input type="text" name="equipmentId" id="equipmentId" value="" class="form-control input-small">
+                                  </div>
+                              </div>
 			             </div>
 			           </form>
 			           <!-- form end -->
@@ -82,7 +81,7 @@
 				              <tr>
 				                <th field="sys_xh">序号</th>
 			                    <th field="seq"  >排序号</th>
-			                    <th field="repairUser"  >维修人员编号</th>
+			                    <th field="repairUserCn"  >维修人员</th>
 			                    <th field="repairTime"  type='date'>维修时间</th>
 			                    <th field="amount"  >维修费用</th>
 			                    <th field="remark"  >备注</th>
@@ -95,7 +94,7 @@
 				   			 <tr>
 								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
 					            <td>${r.seq}</td>
-					            <td>${r.repairUser}</td>
+					            <td>${r.repairUserCn}</td>
 				                <td><fmt:formatDate value="${r.repairTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					            <td>${r.amount}</td>
 					            <td>${r.remark}</td>
@@ -121,7 +120,6 @@
 		        </div>
 		      </div>
 		    </section>
-	    </shiro:hasPermission>
 	  </div>
 	
 	<script type="text/javascript">
@@ -196,10 +194,12 @@
 		
 		//新增、编辑打开
 		var setAddOrEdit = function(repairId){
+		    var equipmentId = $("#equipmentId").val();
+
 		     //多窗口模式，层叠置顶
 		     layer.open({
 		         type: 2, 
-		         title: '新增/修改 操作人员',
+		         title: '新增/修改 维修信息',
 		         area: ['70%', '86%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
@@ -210,6 +210,7 @@
 		        	 var body = layer.getChildFrame('body', index);
 		             var iframeWin = window[layero.find('iframe')[0]['name']]; 
 		             body.find('input[name="repairId"]').val(repairId);
+                     body.find('input[name="equipmentId"]').val(equipmentId);
 		             //弹窗表单的取消操作时关闭弹窗
 		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
 		            	 layer.closeAll();

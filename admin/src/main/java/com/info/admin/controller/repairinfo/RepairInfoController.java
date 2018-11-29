@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.RepairInfoService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author administrator  
  * @date 2018-11-14 23:45:42 
- * @describe 操作人员 Controller
+ * @describe 维修信息 Controller
  */
 @Controller
 @RequestMapping("/admin/repairInfo")
@@ -34,20 +35,20 @@ public class RepairInfoController extends BaseController{
     private RepairInfoService service;
     
      /**
-     *查询操作人员列表
+     *查询维修信息列表
      *@author   ysh
      *@date  2018-07-12 10:50:32
      *@updater  or other
      *@return   String
      */
     @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
-    @RequiresPermissions("repairInfo:query")
     public String getRepairInfoList(HttpServletRequest request, @ModelAttribute RepairInfo entity, Model model) {
-        logger.info("[RepairInfoController][getRepairInfoList] 查询操作人员列表:");
+        logger.info("[RepairInfoController][getRepairInfoList] 查询维修信息列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("repairInfo", entity);
@@ -55,20 +56,20 @@ public class RepairInfoController extends BaseController{
     }
 
      /**
-     *我的桌面查询操作人员列表
+     *我的桌面查询维修信息列表
      *@author   ysh
      *@date  2018-07-12 10:50:32
      *@updater  or other
      *@return   String
      */
     @RequestMapping(value = "/list/desktop", method = { RequestMethod.GET, RequestMethod.POST })
-    @RequiresPermissions("repairInfo:query")
     public String getRepairInfoListDesktop(HttpServletRequest request, @ModelAttribute RepairInfo entity, Model model) {
-        logger.info("[RepairInfoController][getRepairInfoListDesktop] 我的桌面查询操作人员列表:");
+        logger.info("[RepairInfoController][getRepairInfoListDesktop] 我的桌面查询维修信息列表:");
         // 获取分页当前的页码
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("repairInfo", entity);
@@ -85,7 +86,7 @@ public class RepairInfoController extends BaseController{
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
     public String addOrEdit(HttpServletRequest request,String repairId,Model model){
         try{
-            if(null != repairId){
+            if(StringUtils.isNotBlank(repairId)){
                 //根据id查询系统用户
                 RepairInfo repairInfo = service.getRepairInfoById(repairId);
                 model.addAttribute("repairInfo", repairInfo);
@@ -117,10 +118,18 @@ public class RepairInfoController extends BaseController{
                 return new JsonResult(JsonResultCode.FAILURE, "请输入数据", "");
             }
 
+            String[] repairUsers = request.getParameterValues("repairUsers[]");
+            String[] repairUserCns = request.getParameterValues("repairUserCns[]");
+            if(repairUsers != null && repairUsers.length> 0){
+                entity.setRepairUser(StringUtils.join(repairUsers,","));
+                entity.setRepairUserCn(StringUtils.join(repairUserCns,","));
+            }
             // 通过id来判断是新增还是修改
-            if (null != entity.getRepairId()) {
+            if (StringUtils.isNotBlank(entity.getRepairId())) {
                 result = service.update(entity);
             } else {
+                entity.setDeleteFlag(0L);
+                entity.setCreateUser(getLoginUserId(request));
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -147,6 +156,7 @@ public class RepairInfoController extends BaseController{
     public JsonResult query(RepairInfo entity) {
         logger.info("[RepairInfoController][query] 查询RepairInfo对象:");
         try {
+            entity.setDeleteFlag(0L);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", service.query(entity));
         } catch (Exception e) {
             logger.error("[RepairInfoController][query] exception", e);
@@ -199,7 +209,7 @@ public class RepairInfoController extends BaseController{
             int pageNum = this.getPageNum(request);
             // 获取分页的大小
             int pageSize = this.getPageSize(request);
-
+            entity.setDeleteFlag(0L);
             PageUtil paginator = service.pageQuery(entity , pageNum, pageSize);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
         } catch (Exception e) {
