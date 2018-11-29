@@ -30,7 +30,7 @@ public class ProblemLibrary implements Serializable {
     /*****标题*****/
     private String title;
     /*****问题类型*****/
-    private Long type;
+    private String type;
     /*****检查内容*****/
     private String inspectContent;
     /*****检查人编号*****/
@@ -135,11 +135,11 @@ public class ProblemLibrary implements Serializable {
         this.title = title;
     }
 
-    public Long getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Long type) {
+    public void setType(String type) {
         this.type = type;
     }
 
