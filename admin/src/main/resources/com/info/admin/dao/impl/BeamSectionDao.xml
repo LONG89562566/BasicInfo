@@ -26,13 +26,18 @@
 			<if test=" seq != null">
 				seq,
 			</if>
-			<if test=" type != null">
+			<if test=" type != null and type != ''">
 				type,
 			</if>
-			<if test=" frame != null">
+			<if test=" frame != null and frame != ''">
 				frame,
 			</if>
-
+			<if test=" name != null and name != ''">
+				name,
+			</if>
+			<if test=" projectId != null and projectId != ''">
+				project_id,
+			</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="sectionId != null ">
@@ -53,13 +58,18 @@
 			<if test="seq != null ">
 		        #{seq},
 		    </if>
-			<if test="type != null ">
+			<if test="type != null and type != '' ">
 		        #{type},
 		    </if>
-			<if test="frame != null ">
+			<if test="frame != null and frame != '' ">
 		        #{frame},
 		    </if>
-
+			<if test="name != null and name != '' ">
+				#{name},
+			</if>
+			<if test="projectId != null and projectId != '' ">
+				#{projectId},
+			</if>
         </trim>
 	</insert>
 
@@ -83,13 +93,18 @@
 				<if test=" seq != null">
 					seq = #{seq},
 				</if>
-				<if test=" type != null">
+				<if test=" type != null and type != ''">
 					type = #{type},
 				</if>
-				<if test=" frame != null">
+				<if test=" frame != null and frame != ''">
 					frame = #{frame},
 				</if>
-
+				<if test=" name != null and name != ''">
+					name = #{name},
+				</if>
+				<if test=" projectId != null and projectId != ''">
+					project_id = #{projectId},
+				</if>
             </trim>
         </set>
 		where section_id = #{sectionId}
@@ -113,7 +128,8 @@
 		<result column="seq" property="seq" />
 		<result column="type" property="type" />
 		<result column="frame" property="frame" />
-
+		<result column="name" property="name" />
+		<result column="project_id" property="projectId" />
     </resultMap>
 
     <!-- 分页条件 -->
@@ -137,13 +153,18 @@
 		    <if test=" entity.seq != null">
 			    and seq =  #{entity.seq} 
 		    </if>
-		    <if test=" entity.type != null">
+		    <if test=" entity.type != null and entity.type != ''">
 			    and type =  #{entity.type} 
 		    </if>
-		    <if test=" entity.frame != null">
+		    <if test=" entity.frame != null and entity.frame != ''">
 			    and frame =  #{entity.frame} 
 		    </if>
-
+			<if test=" entity.name != null and entity.name != ''">
+				and name =  #{entity.name}
+			</if>
+			<if test=" entity.projectId != null and entity.projectId != ''">
+				and project_id =  #{entity.projectId}
+			</if>
         </trim>
     </sql>
     
@@ -175,7 +196,7 @@
     </select>
     
     <!-- 根据id 查询 梁段信息 -->
-	<select id="getBeamSectionById" parameterType="Long" resultMap="beamSectionMap" >
+	<select id="getBeamSectionById" parameterType="String" resultMap="beamSectionMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

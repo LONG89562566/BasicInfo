@@ -365,14 +365,12 @@ public class FlowController extends BaseController{
                     List<Flow> startList = new ArrayList<>();
                     startList.add(entity);
                     Flow f = CloneUtils.clone(entity);
-                    f.setFlowId(UUIDUtils.getUUid());
                     String  docUrl = entity.getDocUrl();
                     f.setDocUrl(StringUtils.isNotBlank(docUrl) ? docUrl : "");
                     f.setOperator(null);
                     f.setOperatorCn(null);
                     f.setMsg("");
                     f.setShowTitle("");
-                    f.setLastNode(entity.getFlowId());
                     f.setIsDone(0L);
                     startList.add(f);
 

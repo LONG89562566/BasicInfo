@@ -5,6 +5,7 @@ import com.info.admin.entity.Flow;
 import com.info.admin.service.FlowService;
 import com.info.admin.utils.PageUtil;
 import com.info.admin.vo.FlowVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -301,7 +302,7 @@ public class FlowServiceImpl implements FlowService {
     public void setId(List<Flow> list) {
         String uuid = "";
         for (Flow flow : list) {
-            if (flow.getFlowId() == null) {
+            if (StringUtils.isBlank(flow.getFlowId())) {
                 flow.setLastNode(uuid);
                 uuid = com.info.admin.utils.UUIDUtils.getUUid();
                 flow.setFlowId(uuid);

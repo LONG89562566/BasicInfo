@@ -30,7 +30,10 @@ public class BeamSection implements Serializable {
 	 private String type;
 	 /*****拟架部位*****/
 	 private String frame;
-
+	 /*****梁体名称*****/
+	 private String name;
+	 /*****梁场编号*****/
+	 private String projectId;
 
 	 public String getSectionId() {
 		 return sectionId;
@@ -124,7 +127,22 @@ public class BeamSection implements Serializable {
 		 this.frame = frame;
 	 }
 
-	 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+
 	public BeamSection() {
 		super();
 	}
