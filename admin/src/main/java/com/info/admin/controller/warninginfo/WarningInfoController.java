@@ -1,11 +1,13 @@
 package com.info.admin.controller.warninginfo;
 
 import com.info.admin.controller.base.BaseController;
+import com.info.admin.entity.Flow;
 import com.info.admin.entity.WarningInfo;
 import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.WarningInfoService;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.vo.WarningInfoVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -50,7 +52,7 @@ public class WarningInfoController extends BaseController{
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
-        PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
+        PageUtil paginator = service.pageQueryVo(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("warningInfo", entity);
         return "warninginfo/listWarningInfo";
@@ -90,8 +92,13 @@ public class WarningInfoController extends BaseController{
         try{
             if(null != warningId && StringUtils.isNotBlank(warningId)){
                 //根据id查询系统用户
-                WarningInfo warningInfo = service.getWarningInfoById(warningId);
+                WarningInfoVo warningInfo = service.getWarningInfoVoById(warningId);
                 model.addAttribute("warningInfo", warningInfo);
+                model.addAttribute("userName",warningInfo.getReleaseUserName());
+                model.addAttribute("userId",warningInfo.getReleaseUser());
+            }else {
+                model.addAttribute("userName",getLoginUser(request).getName());
+                model.addAttribute("userId",getLoginUser(request).getId());
             }
             model.addAttribute("warningId", warningId);
             return "warninginfo/addWarningInfo";
@@ -118,6 +125,15 @@ public class WarningInfoController extends BaseController{
             int result;
             if (null == entity) {
                 return new JsonResult(JsonResultCode.FAILURE, "请输入数据", "");
+            }
+
+            String[] releaseUsers = request.getParameterValues("releaseUsers[]");
+            if(releaseUsers != null && releaseUsers.length > 0){
+                entity.setReleaseUser(StringUtils.join(releaseUsers,","));
+            }
+            String[] receiveUsers = request.getParameterValues("receiveUsers[]");
+            if(receiveUsers != null && receiveUsers.length> 0){
+                entity.setReceiveUser(StringUtils.join(receiveUsers,","));
             }
 
             // 通过id来判断是新增还是修改
@@ -206,11 +222,12 @@ public class WarningInfoController extends BaseController{
             // 获取分页的大小
             int pageSize = this.getPageSize(request);
             entity.setDeleteFlag(0L);
-            PageUtil paginator = service.pageQuery(entity , pageNum, pageSize);
+            PageUtil paginator = service.pageQueryVo(entity , pageNum, pageSize);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
         } catch (Exception e) {
             logger.error("[WarningInfoController][pageQuery] exception", e);
             return new JsonResult(JsonResultCode.FAILURE, "系统异常，请稍后再试", "");
         }
-    }	
-}	
+    }
+
+}

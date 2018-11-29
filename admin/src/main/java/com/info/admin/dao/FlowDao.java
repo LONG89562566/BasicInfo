@@ -99,6 +99,18 @@ public interface FlowDao {
      List<Flow> pageDbQuery(@Param("entity") Flow entity, @Param("offset") int offset, @Param("pageSize") int pageSize);
 
      /**
+      * 分页查询预警待办Flow对象
+      * @param entity  对象
+      * @param offset	页数
+      * @param pageSize	大小
+      * @author  ysh
+      * @date  2018-11-14 23:45:41
+      * @updater or other
+      * @return   List<Flow>
+      */
+     List<Flow> pageYjDbQuery(@Param("entity") Flow entity, @Param("offset") int offset, @Param("pageSize") int pageSize);
+
+     /**
       * 分页查询在办Flow对象
       * @param entity  对象
       * @param offset	页数
@@ -151,6 +163,16 @@ public interface FlowDao {
       * @return   int
       */
      int getDbPageCount(@Param("entity") Flow entity);
+
+     /**
+      * 查询预警待办Flow总记录数
+      * @param entity  对象
+      * @author  ysh
+      * @date  2018-11-14 23:45:41
+      * @updater or other
+      * @return   int
+      */
+     int getYjDbPageCount(@Param("entity") Flow entity);
 
      /**
       * 查询待办Flow总记录数

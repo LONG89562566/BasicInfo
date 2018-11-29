@@ -91,10 +91,10 @@
 
 								  <th field="title"  >标题</th>
 								  <th field="content"  >内容</th>
-								  <th field="releaseUser"  >发布人编号</th>
-								  <th field="receiveUser"  >接收人编号</th>
-								  <th field="options"  >对象属性</th>
-								  <th field="true_val"  >值</th>
+								  <th field="releaseUserName"  >发布人</th>
+								  <th field="receiveUserCn"  >接收人</th>
+								  <th field="options" isShow="false" style="display: none">对象属性</th>
+								  <th field="true_val" isShow="false" style="display: none" >值</th>
 								  <th field="checkCondition" method="checkConditionStatus" >条件</th>
 								  <th field="warn_val"  >预警值</th>
 								  <th field="seq"  >排序号</th>
@@ -107,10 +107,10 @@
 								 <td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>
 								 <td>${r.title}</td>
 								 <td>${r.content}</td>
-								 <td>${r.releaseUser}</td>
-								 <td>${r.receiveUser}</td>
-								 <td>${r.options}</td>
-								 <td>${r.true_val}</td>
+								 <td>${r.releaseUserName}</td>
+								 <td>${r.receiveUserCn}</td>
+								 <td style="display: none">${r.options}</td>
+								 <td style="display: none">${r.true_val}</td>
 								 <td>
 									 <c:if test="${r.checkCondition == 1}">大</c:if>
 									 <c:if test="${r.checkCondition == 2}">小</c:if>
@@ -183,16 +183,17 @@
 		var checkConditionStatus = function (checkCondition) {
             if(checkCondition=='1'){
                 return"大";
-			if(checkCondition=='2'){
+            }else if(checkCondition=='2'){
 				return"小";
-			if(checkCondition=='3'){
+            }else if(checkCondition=='3'){
 				return"等";
-			if(checkCondition=='4'){
+            }else  if(checkCondition=='4'){
 				return"不大";
-			if(checkCondition=='5'){
+            }else if(checkCondition=='5'){
 				return"不小";
-			if(checkCondition=='6'){
-				return"不等于";
+            }else if(checkCondition=='6') {
+                return "不等于";
+            }
 		};
 
 	</script>
