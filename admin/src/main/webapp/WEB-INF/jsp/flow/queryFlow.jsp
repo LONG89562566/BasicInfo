@@ -49,7 +49,7 @@
 	      <h1>意见列表</h1>
 	    </section>
 	    <!-- Main content -->
-	    <shiro:hasPermission name="flow:query">
+
 		    <section class="content">
 		      <div class="row">
 		        <div class="col-xs-12">
@@ -108,7 +108,7 @@
 		        </div>
 		      </div>
 		    </section>
-	    </shiro:hasPermission>
+
 	  </div>
 	
 	<script type="text/javascript">
