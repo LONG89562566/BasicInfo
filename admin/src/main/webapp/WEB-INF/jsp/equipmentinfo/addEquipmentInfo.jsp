@@ -11,6 +11,10 @@
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="equipmentId" name="equipmentId" value="${equipmentInfo.equipmentId}"/>
 			<input  type="hidden" id="projectId" name="projectId" value="${equipmentInfo.projectId}"/>
+
+			<jsp:include page="/WEB-INF/jsp/flow/flowPage.jsp">
+				<jsp:param name="docUnid" value="${beamSection.sectionId}" />
+			</jsp:include>
 			<div class='layui-form-item'>
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>

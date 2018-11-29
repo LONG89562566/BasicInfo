@@ -15,6 +15,10 @@
 
 	<script type="text/javascript">
 		$(function () {
+		    var docUnid = "<%=docUnid%>";
+		    if(!docUnid){
+		        $("#flow-btn").hide();
+            }
             loadFlow();
 		});
 
