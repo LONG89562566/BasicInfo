@@ -366,16 +366,16 @@ public class FlowController extends BaseController{
                     startList.add(entity);
                     Flow f = CloneUtils.clone(entity);
                     String  docUrl = entity.getDocUrl();
+                    f.setFlowId(UUIDUtils.getUUid());
                     f.setDocUrl(StringUtils.isNotBlank(docUrl) ? docUrl : "");
                     f.setOperator(null);
                     f.setOperatorCn(null);
                     f.setMsg("");
                     f.setShowTitle("");
+                    f.setLastNode(entity.getFlowId());
                     f.setIsDone(0L);
                     startList.add(f);
 
-                    //处理数据关联
-                    service.setId(startList);
                     result = service.startFlow(startList);
                 }else if (user.length>1){
                     /**

@@ -137,7 +137,8 @@
 						        <td>
 						         <div class="site-demo-button" >
 								   <button id="updateEquipmentInfo" data-method="setAddOrEdit" projectId="${r.projectId}" value="${r.equipmentId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
-								   <button id="delReleaseInfo" data-method="delIfon" value="${r.equipmentId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
+								   <button id="delEquipmentInfo" data-method="delIfon" value="${r.equipmentId}" class="layui-btn layui-btn-danger layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
+								   <button id="repairEquipment" data-method="repairEquipment" value="${r.equipmentId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;维修</span></button>
 								 </div>
 						       </td>
 				             </tr>
@@ -179,7 +180,8 @@
 	    //列表操作按钮
 	    var tableBtn = new Array();
 	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal","projectId");
-        tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-warm");
+        tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-danger");
+        tableBtn = addBtn(tableBtn,"repairEquipment","维修","","","","","","layui-btn-warm");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 
@@ -245,6 +247,11 @@
                     var id = data.val();
                     delData(id);
                 },
+                repairEquipment: function(data){
+                    //获取equipmentId
+                    var id = data.val();
+                    repairEquipment(id);
+                },
 				//启用和禁用数据弹窗
 				offset: function(othis){
 					var type = othis.data('type');
@@ -290,6 +297,32 @@
 		             var iframeWin = window[layero.find('iframe')[0]['name']];
 		             body.find('input[name="equipmentId"]').val(equipmentId);
                      body.find('input[name="projectId"]').val(projectId);
+                     //弹窗表单的取消操作时关闭弹窗
+                     var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
+                         layer.closeAll();
+                         //刷新页面
+                         refreshTheCurrentPage();
+		             });
+		         }
+		     });
+		};
+
+		//维修打开
+		var repairEquipment = function(equipmentId){
+                //多窗口模式，层叠置顶
+		     layer.open({
+		         type: 2,
+		         title: '维修 设备',
+		         area: ['100%', '100%'],
+		         shade: 0.5,
+		         anim: 3,//0-6的动画形式，-1不开启
+		         content: '<%=request.getContextPath()%>/admin/repairInfo/list?equipmentId='+equipmentId,
+		         zIndex: layer.zIndex, //重点1
+		         success: function(layero, index){
+		        	 //layer.setAddOrEdit(layero);
+		        	 var body = layer.getChildFrame('body', index);
+		             var iframeWin = window[layero.find('iframe')[0]['name']];
+		             body.find('input[name="equipmentId"]').val(equipmentId);
                      //弹窗表单的取消操作时关闭弹窗
                      var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
                          layer.closeAll();

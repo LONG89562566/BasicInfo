@@ -38,7 +38,12 @@
 			<if test=" remark != null">
 				remark,
 			</if>
-
+			<if test=" repairUserCn != null">
+				repair_user_cn,
+			</if>
+			<if test=" equipmentId != null and equipmentId!=''">
+				equipment_id,
+			</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="repairId != null ">
@@ -71,7 +76,12 @@
 			<if test="remark != null ">
 		        #{remark},
 		    </if>
-
+			<if test=" repairUserCn != null">
+				#{repairUserCn},
+			</if>
+			<if test=" equipmentId != null  and equipmentId!=''">
+				#{equipmentId},
+			</if>
         </trim>
 	</insert>
 
@@ -107,7 +117,12 @@
 				<if test=" remark != null">
 					remark = #{remark},
 				</if>
-
+				<if test=" repairUserCn != null">
+					repair_user_cn = #{repairUserCn},
+				</if>
+				<if test=" equipmentId != null">
+					equipment_id = #{equipmentId},
+				</if>
             </trim>
         </set>
 		where repair_id = #{repairId}
@@ -134,7 +149,8 @@
 		<result column="repairTime" property="repairTimeStr" />
 		<result column="amount" property="amount" />
 		<result column="remark" property="remark" />
-
+		<result column="repair_user_cn" property="repairUserCn" />
+		<result column="equipment_id" property="equipmentId" />
     </resultMap>
 
     <!-- 分页条件 -->
@@ -170,6 +186,12 @@
 		    <if test=" entity.remark != null">
 			    and remark =  #{entity.remark} 
 		    </if>
+			<if test=" entity.repairUserCn != null">
+				and repair_user_cn =  #{entity.repairUserCn}
+			</if>
+			<if test=" entity.equipmentId != null and entity.equipmentId != ''">
+				and equipment_id =  #{entity.equipmentId}
+			</if>
 
         </trim>
     </sql>
@@ -204,7 +226,7 @@
     </select>
     
     <!-- 根据id 查询 操作人员 -->
-	<select id="getRepairInfoById" parameterType="Long" resultMap="repairInfoMap" >
+	<select id="getRepairInfoById" parameterType="String" resultMap="repairInfoMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

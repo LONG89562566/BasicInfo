@@ -37,6 +37,10 @@ public class RepairInfo implements Serializable {
 	 private BigDecimal amount;
 	 /*****备注*****/
 	 private String remark;
+	 /*****维修人名称*****/
+	 private String repairUserCn;
+	 /*****设备编号*****/
+	 private String equipmentId;
 
 
 	 public String getRepairId() {
@@ -161,7 +165,22 @@ public class RepairInfo implements Serializable {
 		 this.remark = remark;
 	 }
 
-	 
+	public String getRepairUserCn() {
+		return repairUserCn;
+	}
+
+	public void setRepairUserCn(String repairUserCn) {
+		this.repairUserCn = repairUserCn;
+	}
+
+	public String getEquipmentId() {
+		return equipmentId;
+	}
+
+	public void setEquipmentId(String equipmentId) {
+		this.equipmentId = equipmentId;
+	}
+
 	public RepairInfo() {
 		super();
 	}
