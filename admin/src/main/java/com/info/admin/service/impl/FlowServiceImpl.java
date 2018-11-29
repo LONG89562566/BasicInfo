@@ -5,6 +5,7 @@ import com.info.admin.entity.Flow;
 import com.info.admin.service.FlowService;
 import com.info.admin.utils.PageUtil;
 import com.info.admin.vo.FlowVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -175,6 +176,25 @@ public class FlowServiceImpl implements FlowService {
     }
 
     /**
+     * 分页查询预警待办Flow对象
+     *
+     * @param entity   对象
+     * @param pageNum  页数
+     * @param pageSize 大小
+     * @return PageUtil
+     * @author ysh
+     * @date 2018-11-15 22:58:50
+     * @updater or other
+     */
+    @Override
+    public PageUtil pageYjDbQuery(Flow entity, int pageNum, int pageSize) {
+        int size = dao.getYjDbPageCount(entity);
+        int offset = pageNum > 1 ? (pageNum - 1) * pageSize : 0;
+        List<Flow> result = dao.pageYjDbQuery(entity, offset, pageSize);
+        return new PageUtil(pageSize, size, pageNum, result);
+    }
+
+    /**
      * 分页查询在办Flow对象
      *
      * @param entity   对象
@@ -282,7 +302,7 @@ public class FlowServiceImpl implements FlowService {
     public void setId(List<Flow> list) {
         String uuid = "";
         for (Flow flow : list) {
-            if (flow.getFlowId() == null) {
+            if (StringUtils.isBlank(flow.getFlowId())) {
                 flow.setLastNode(uuid);
                 uuid = com.info.admin.utils.UUIDUtils.getUUid();
                 flow.setFlowId(uuid);

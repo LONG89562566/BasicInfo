@@ -110,6 +110,18 @@ public interface FlowService {
     PageUtil pageDbQuery(Flow entity, int pageNum, int pageSize);
 
     /**
+     * 分页查询预警待办Flow对象
+     * @param entity 对象
+     * @param pageNum	页数
+     * @param pageSize	大小
+     * @author  ysh
+     * @date  2018-11-14 23:45:42
+     * @updater or other
+     * @return   PageUtil
+     */
+    PageUtil pageYjDbQuery(Flow entity, int pageNum, int pageSize);
+
+    /**
      * 分页查询在办Flow对象
      * @param entity 对象
      * @param pageNum	页数

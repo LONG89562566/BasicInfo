@@ -167,6 +167,26 @@
 		<result column="warn_val" property="warn_val" />
     </resultMap>
 
+	<!-- 返回 预警设置 对象 -->
+    <resultMap type="com.info.admin.vo.WarningInfoVo" id="warningInfoVoMap">
+		<result column="warning_id" property="warningId" />
+		<result column="create_time" property="createTime" />
+		<result column="create_user" property="createUser" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="update_time" property="updateTime" />
+		<result column="seq" property="seq" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="release_user" property="releaseUser" />
+		<result column="receive_user" property="receiveUser" />
+		<result column="options" property="options" />
+		<result column="true_val" property="true_val" />
+		<result column="check_condition" property="checkCondition" />
+		<result column="warn_val" property="warn_val" />
+		<result column="releaseUserName" property="releaseUserName" />
+		<result column="receiveUserCn" property="receiveUserCn" />
+    </resultMap>
+
     <!-- 分页条件 -->
     <sql id="filterCondition">
         <trim prefix="where " prefixOverrides="and " >
@@ -223,6 +243,7 @@
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
           from warning_info
         <include refid="filterCondition"></include>
+		order by seq,create_time desc
     </select>
     
     <!-- 查询 预警设置 总记录数 -->
@@ -239,6 +260,21 @@
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
          from warning_info
         <include refid="filterCondition"></include>
+		order by seq,create_time desc
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+	<!-- 分页查询 预警设置 对象列表  -->
+    <select id="pageQueryVo" resultMap="warningInfoVoMap">
+        select
+         *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+		,(select su.name from sys_user su where su.id = wi.release_user ) as releaseUserName
+		,(select si.name from staff_info si where si.staff_id = wi.receive_user ) as receiveUserCn
+         from warning_info wi
+        <include refid="filterCondition"></include>
+		order by seq,create_time desc
         LIMIT #{offset},#{pageSize}
     </select>
     
@@ -250,4 +286,17 @@
            ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime 
 		 from warning_info where warning_id= #{warningId}
 	</select>
+
+	<!-- 根据id 查询 预警设置 -->
+	<select id="getWarningInfoVoById" parameterType="String" resultMap="warningInfoVoMap" >
+		select
+		 *
+           ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
+           ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+           ,(select su.name from sys_user su where su.id = wi.release_user ) as releaseUserName
+           ,(select si.name from staff_info si where si.staff_id = wi.receive_user ) as receiveUserCn
+		 from warning_info wi where warning_id= #{warningId}
+	</select>
+
+
 </mapper>	

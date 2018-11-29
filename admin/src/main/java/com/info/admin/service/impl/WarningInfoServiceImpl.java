@@ -4,6 +4,7 @@ import com.info.admin.dao.WarningInfoDao;
 import com.info.admin.entity.WarningInfo;
 import com.info.admin.service.WarningInfoService;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.vo.WarningInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,11 +96,30 @@ public class WarningInfoServiceImpl implements WarningInfoService {
 
         List<WarningInfo> result = dao.pageQuery(entity, offset, pageSize);
 
-        PageUtil paginator = new PageUtil(pageSize, size, pageNum);
+        return new PageUtil(pageSize, size, pageNum, result);
 
-        paginator.setObject(result);
+    }
 
-        return paginator;
+    /**
+     * 分页查询WarningInfo对象
+     * @param entity 对象
+     * @param pageNum	页数
+     * @param pageSize	大小
+     * @author  ysh
+     * @date  2018-11-15 22:58:49
+     * @updater or other
+     * @return   PageUtil
+     */
+    @Override
+    public PageUtil pageQueryVo(WarningInfo entity, int pageNum, int pageSize){
+        int size = dao.getPageCount(entity);
+
+        int offset = pageNum > 1 ? (pageNum - 1) * pageSize : 0;
+
+        List<WarningInfoVo> result = dao.pageQueryVo(entity, offset, pageSize);
+
+        return new PageUtil(pageSize, size, pageNum,result);
+
     }
     
     /**
@@ -113,6 +133,19 @@ public class WarningInfoServiceImpl implements WarningInfoService {
 	 @Override
 	 public WarningInfo getWarningInfoById(String warningId) {
 		 return dao.getWarningInfoById(warningId);
+	 }
+
+	 /**
+	 * 根据 id获取 预警设置
+	 *@author   ysh
+	 *@param warningId 主键id
+	 *@date  2018-11-15 22:58:49
+	 *@updater  or other
+	 *@return   WarningInfo
+	 */
+	 @Override
+	 public WarningInfoVo getWarningInfoVoById(String warningId) {
+		 return dao.getWarningInfoVoById(warningId);
 	 }
 }
 

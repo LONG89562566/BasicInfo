@@ -27,28 +27,35 @@
 				position:relative;
 				left:800px;
 			}
-			table th{
-				background:#ffffff;
-			}
-			table tr:nth-child(odd){
-				background:#F0F0F0;
-			}
 			.col-sm-2 {
 				width: 10%;
 			}
 		</style>
+		<script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
 	  <!-- 梁段信息列表start -->
 	  <div class="content-wrapper">
 	    <!-- Content Header (Page header) --> 
 	    <section class="content-header">
-	      <h1>梁段信息管理</h1>
+	      <h1>复杂工艺管理</h1>
 	    </section>
 	    <!-- Main content -->
 	    <shiro:hasPermission name="beamSection:query">
 		    <section class="content">
 		      <div class="row">
+                  <div style="float: left;width: 18%;height: 500px;background-color: white;margin-right: 1%">
+                      <table id="lcTree" title="所有梁场" style="width:100%;height:500px">
+                          <thead>
+                          <tr>
+                              <th data-options="field:'lcName'" width="220px">梁场名称</th>
+                          </tr>
+                          </thead>
+                      </table>
+                  </div>
+                  <div class="box" style="float: left;width: 80%;height: auto; background-color: white;">
+                      <div class="row">
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
@@ -60,9 +67,26 @@
 			           	  <input type="hidden" name="pageNum" id="pageNum" value="${paginator.currentPage}">
 	                      <input type="hidden" name="pageSize" id="pageSize" value="${paginator.pageRecord}">		           	 
 			              <div class="box-body">
-			                 <div class="form-group">
-
-			                 </div>
+                              <div class="form-group" hidden="hidden">
+                              <label for="projectId" class="col-sm-1 control-label">梁场编号:</label>
+                              <div class="col-sm-3" style="width: 200px">
+                                  <input type="text" name="projectId" id="projectId" value="" class="form-control input-small">
+                              </div>
+                          </div>
+                           <div class="form-group">
+                               <label for="name" class="col-sm-1 control-label">梁体名称:</label>
+                               <div class="col-sm-3" style="width: 200px">
+                                   <input type="text" name="name" id="name" value="" class="form-control input-small" placeholder="请输入梁体名称！">
+                               </div>
+                               <label for="type" class="col-sm-1 control-label">类型:</label>
+                               <div class="col-sm-3" style="width: 200px">
+                                   <input type="text" name="type" id="type" value="" class="form-control input-small" placeholder="请输入类型！">
+                               </div>
+                               <label for="frame" class="col-sm-1 control-label">拟架部位:</label>
+                               <div class="col-sm-3" style="width: 200px">
+                                   <input type="text" name="frame" id="frame" value="" class="form-control input-small" placeholder="请输入拟架部位！">
+                               </div>
+                           </div>
 			                 <div class="box-footer">
 			                 	<button onclick='refreshTheCurrentPage()' class="btn btn-info pull-left">查询</button>
 			                 	<button type="reset" onclick='resetRefreshTheCurrentPage()' id="reset" class="btn btn-info ">重置</button>
@@ -81,11 +105,8 @@
 			               <thead>
 				              <tr>
 				                <th field="sys_xh">序号</th>			              	
-			                    <th field="createTime"  type='date'>创建时间</th>
-			                    <th field="createUser"  >创建人编号</th>
-			                    <th field="deleteFlag"  >删除标记</th>
-			                    <th field="updateTime"  type='date'>修改时间</th>
 			                    <th field="seq"  >排序号</th>
+			                    <th field="name"  >梁体名称</th>
 			                    <th field="type"  >类型</th>
 			                    <th field="frame"  >拟架部位</th>
 
@@ -96,17 +117,19 @@
 			               <c:forEach items="${paginator.object}" var="r" varStatus="st"> 
 				   			 <tr>
 								<td>${(st.index + 1)  + ((paginator.currentPage - 1) * paginator.pageRecord )} </td>			   			 
-				                <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				               <%-- <td><fmt:formatDate value="${r.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					            <td>${r.createUser}</td>
 					            <td>${r.deleteFlag}</td>
-				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				                <td><fmt:formatDate value="${r.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>--%>
 					            <td>${r.seq}</td>
+					            <td>${r.name}</td>
 					            <td>${r.type}</td>
 					            <td>${r.frame}</td>
 
 						        <td>
 						         <div class="site-demo-button" >
-								   <button id="updateBeamSection" data-method="setAddOrEdit" value="${r.sectionId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+                                     <button id="updateBeamSection" data-method="setAddOrEdit" projectId="${r.projectId}" value="${r.sectionId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;修改</span></button>
+                                     <button id="delBeamSection" data-method="delIfon" value="${r.sectionId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;删除</span></button>
 								 </div>
 						       </td>
 				             </tr>
@@ -123,6 +146,8 @@
 		            </div>
 		          </div>
 		        </div>
+                      </div>
+                  </div>
 		      </div>
 		    </section>
 	    </shiro:hasPermission>
@@ -144,14 +169,44 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+        tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal","projectId");
+        tableBtn = addBtn(tableBtn,"delData","删除","","","","","","layui-btn-warm");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
-
+      <script type="text/javascript" charset="utf-8">
+          layui.use(['layer','jquery','form','element'], function(){ })
+          //加载菜单
+          $('#lcTree').treegrid({
+              url:'<%=request.getContextPath()%>/admin/projectSurvey/projectSurveyTree',
+              method:'get',          //请求方式
+              idField:'projectId',           //定义标识树节点的键名字段
+              treeField:'lcName',       //定义树节点的字段
+              fit:true,               //网格自动撑满
+              fitColumns:true,
+              onLoadSuccess:function(node, data){
+                  $(this).treegrid('collapseAll');
+              },
+              onClickRow:function(row){
+                  $('#pageNum').val(1);
+                  $("#projectId").val(row.projectId);
+                  //点击时初始化数据
+                  initPaginator(row.projectId);
+              }
+          });
+      </script>
 
 	<script type="text/javascript">
+        //初始化列表
+        var initPaginator = function (projectId) {
+            if (projectId) {
+                loadSelectPageDat($('#pageNum').val(),$('#pageSize').val());
+            } else {
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
 
+        }
 		var methodStatus = function (val , obj) {
 			var retVal = "";
 			if(val == 1){
@@ -170,10 +225,17 @@
 			//触发事件
 			var active = {
 				setAddOrEdit: function(data){
-					//获取userId
-					var id = data.val();
-					setAddOrEdit(id);
+                    //获取userId
+                    var id = data.val();
+                    var projectId = $("#projectId").val();
+                    projectId = projectId?projectId:data.attr("projectId");
+                    setAddOrEdit(id,projectId);
 				},
+                delIfon: function(data){
+                    //获取@primarykey
+                    var id = data.val();
+                    delData(id);
+                },
 				//启用和禁用数据弹窗
 				offset: function(othis){
 					var type = othis.data('type');
@@ -199,29 +261,41 @@
 
 		
 		//新增、编辑打开
-		var setAddOrEdit = function(sectionId){
-		     //多窗口模式，层叠置顶
-		     layer.open({
-		         type: 2, 
-		         title: '新增/修改 梁段信息',
-		         area: ['70%', '86%'],
-		         shade: 0.5,
-		         anim: 3,//0-6的动画形式，-1不开启
-		         content: '<%=request.getContextPath()%>/admin/beamSection/addOrEdit?sectionId='+sectionId,
-		         zIndex: layer.zIndex, //重点1
-		         success: function(layero, index){
-		        	 //layer.setAddOrEdit(layero);
-		        	 var body = layer.getChildFrame('body', index);
-		             var iframeWin = window[layero.find('iframe')[0]['name']]; 
-		             body.find('input[name="sectionId"]').val(sectionId);
-		             //弹窗表单的取消操作时关闭弹窗
-		             var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
-		            	 layer.closeAll();
-		             });
-		         }
-		     });
-		};
-		
+		var setAddOrEdit = function(sectionId,projectId){
+            if(!projectId){
+                layer.msg('请先选择一个梁场！');
+                return;
+            }
+            var fn = "edit";
+            if(sectionId == "" || sectionId == undefined){
+                fn = "add";
+            }
+            //多窗口模式，层叠置顶
+            layer.open({
+                type: 2,
+                title: '新增/修改 三维交底',
+                area: ['100%', '100%'],
+                shade: 0.5,
+                anim: 3,//0-6的动画形式，-1不开启
+                content: '<%=request.getContextPath()%>/admin/beamSection/addOrEdit?sectionId='+sectionId+"&fn="+fn,
+                zIndex: layer.zIndex, //重点1
+                success: function(layero, index){
+                    //layer.setAddOrEdit(layero);
+                    var body = layer.getChildFrame('body', index);
+
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    body.find('input[name="sectionId"]').val(sectionId);
+                    body.find('input[name="projectId"]').val(projectId);
+                    //弹窗表单的取消操作时关闭弹窗
+                    var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
+                        layer.closeAll();
+                        //刷新页面
+                        refreshTheCurrentPage();
+                    });
+                }
+            });
+        };
+
 		//禁用
 		var enabled = function (id) {
 			//禁用的url

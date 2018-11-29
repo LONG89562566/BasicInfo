@@ -52,7 +52,7 @@
 		        <div class="col-xs-12">
 		          <div class="box">
 		            <div class="box-header">
-		              <h3 class="box-title">预警设置列表 :${sessionScope.login_session_admin.userName}</h3>
+		              <%--<h3 class="box-title">预警设置列表 :${sessionScope.login_session_admin.userName}</h3>--%>
 		            </div>
 			        <div class="box box-info">
 			           <!-- form start -->
@@ -84,8 +84,8 @@
 			                    <th field="seq"  >排序号</th>
 			                    <th field="title"  >标题</th>
 			                    <th field="content"  >内容</th>
-			                    <th field="releaseUser"  >发布人编号</th>
-			                    <th field="receiveUser"  >接收人编号</th>
+			                    <th field="releaseUserName"  >发布人</th>
+			                    <th field="receiveUserCn"  >接收人</th>
 			                    <th field="options"  >对象属性</th>
 			                    <th field="true_val"  >值</th>
 			                    <th field="checkCondition"  >（大/小/等/不大/不小/不等于）</th>
@@ -100,8 +100,8 @@
 					            <td>${r.seq}</td>
 					            <td>${r.title}</td>
 					            <td>${r.content}</td>
-					            <td>${r.releaseUser}</td>
-					            <td>${r.receiveUser}</td>
+								 <td>${r.releaseUserName}</td>
+								 <td>${r.receiveUserCn}</td>
 					            <td>${r.options}</td>
 					            <td>${r.true_val}</td>
 					            <td>${r.checkCondition}</td>

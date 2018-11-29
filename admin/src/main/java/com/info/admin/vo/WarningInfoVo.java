@@ -25,18 +25,22 @@ public class WarningInfoVo implements Serializable {
 	 private String title;
 	 /*****内容*****/ 
 	 private String content;
-	 /*****发布人编号*****/ 
-	 private String releaseUser;
-	 /*****接收人编号*****/ 
-	 private String receiveUser;
-	 /*****对象属性*****/ 
-	 private Long options;
-	 /*****值*****/ 
-	 private String true_val;
-	 /*****（大/小/等/不大/不小/不等于）*****/ 
-	 private Long checkCondition;
-	 /*****预警值*****/ 
-	 private String warn_val;
+	/*****发布人编号*****/
+	private String releaseUser;
+	/*****发布人*****/
+	private String releaseUserName;
+	/*****接收人编号*****/
+	private String receiveUser;
+	/*****接收人*****/
+	private String receiveUserCn;
+	/*****对象属性*****/
+	private Long options;
+	/*****值*****/
+	private String true_val;
+	/*****（1.大/2.小/3.等/4.不大/5.不小/6.不等于）*****/
+	private Long checkCondition;
+	/*****预警值*****/
+	private String warn_val;
 
 
 	 public String getWarningId() {
@@ -150,6 +154,22 @@ public class WarningInfoVo implements Serializable {
 	 public void setWarn_val(String warn_val) {
 		 this.warn_val = warn_val;
 	 }
+
+	public String getReleaseUserName() {
+		return releaseUserName;
+	}
+
+	public void setReleaseUserName(String releaseUserName) {
+		this.releaseUserName = releaseUserName;
+	}
+
+	public String getReceiveUserCn() {
+		return receiveUserCn;
+	}
+
+	public void setReceiveUserCn(String receiveUserCn) {
+		this.receiveUserCn = receiveUserCn;
+	}
 
 	public WarningInfoVo() {
 		super();

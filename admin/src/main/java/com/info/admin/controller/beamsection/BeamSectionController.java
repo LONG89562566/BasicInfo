@@ -6,6 +6,7 @@ import com.info.admin.result.JsonResult;
 import com.info.admin.result.JsonResultCode;
 import com.info.admin.service.BeamSectionService;
 import com.info.admin.utils.PageUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,7 @@ public class BeamSectionController extends BaseController{
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("beamSection", entity);
@@ -69,6 +71,7 @@ public class BeamSectionController extends BaseController{
         int currentPageNum = this.getPageNum(request);
         // 获取分页的大小
         int currentPageSize = this.getPageSize(request);
+        entity.setDeleteFlag(0L);
         PageUtil paginator = service.pageQuery(entity, currentPageNum, currentPageSize);
         model.addAttribute("paginator", paginator);
         model.addAttribute("beamSection", entity);
@@ -83,14 +86,18 @@ public class BeamSectionController extends BaseController{
      *@return   String
      */
     @RequestMapping(value="/addOrEdit",method={RequestMethod.GET,RequestMethod.POST})
-    public String addOrEdit(HttpServletRequest request,String sectionId,Model model){
+    public String addOrEdit(HttpServletRequest request,String sectionId,Model model,String fn){
         try{
-            if(null != sectionId){
+            BeamSection beamSection = null;
+            if(StringUtils.isNotEmpty(sectionId) && "edit".equals(fn)){
                 //根据id查询系统用户
-                BeamSection beamSection = service.getBeamSectionById(sectionId);
-                model.addAttribute("beamSection", beamSection);
+                 beamSection = service.getBeamSectionById(sectionId);
+            }else {
+                model.addAttribute("uuid", com.info.admin.utils.UUIDUtils.getUUid());
             }
+            model.addAttribute("beamSection", beamSection);
             model.addAttribute("sectionId", sectionId);
+            model.addAttribute("fn", fn);
             return "beamsection/addBeamSection";
         }catch(Exception e){
             logger.error("[BeamSectionController][addOrEdit]: sectionId="+sectionId, e);
@@ -109,7 +116,7 @@ public class BeamSectionController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "insertAndUpdate", method = { RequestMethod.GET, RequestMethod.POST })
-    public JsonResult insertAndUpdate(HttpServletRequest request,BeamSection entity) {
+    public JsonResult insertAndUpdate(HttpServletRequest request,BeamSection entity,String fn) {
         logger.info("[BeamSectionController][insertAndUpdate] 新增或者修改BeamSection对象:");
         try {
             int result;
@@ -118,9 +125,10 @@ public class BeamSectionController extends BaseController{
             }
 
             // 通过id来判断是新增还是修改
-            if (null != entity.getSectionId()) {
+            if (StringUtils.isNotEmpty(entity.getSectionId()) && "edit".equals(fn)) {
                 result = service.update(entity);
             } else {
+                entity.setCreateUser(this.getLoginUserId(request));
                 result = service.insert(entity);
             }
             if (result > 0) {
@@ -199,7 +207,7 @@ public class BeamSectionController extends BaseController{
             int pageNum = this.getPageNum(request);
             // 获取分页的大小
             int pageSize = this.getPageSize(request);
-
+            entity.setDeleteFlag(0L);
             PageUtil paginator = service.pageQuery(entity , pageNum, pageSize);
             return new JsonResult(JsonResultCode.SUCCESS, "操作成功", paginator);
         } catch (Exception e) {

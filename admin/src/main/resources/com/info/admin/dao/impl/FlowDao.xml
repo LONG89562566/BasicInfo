@@ -300,6 +300,7 @@
         <result column="operator_cn" property="operatorCn"/>
         <result column="is_submit" property="isSubmit"/>
         <result column="is_end" property="isEnd"/>
+        <result column="day_num" property="dayNum"/>
     </resultMap>
 
     <!-- 返回 流程 对象 -->
@@ -390,7 +391,17 @@
             <if test=" entity.isSubmit != null">
                 and is_submit = #{entity.isSubmit}
             </if>
-            and (org_id = #{entity.orgId} or role_id = #{entity.roleId} or user_id = #{entity.userId})
+            <trim prefix="and (" suffix=")" suffixOverrides="or">
+                <if test="entity.orgId != null">
+                    org_id=#{entity.orgId} or
+                </if>
+                <if test="entity.roleId != null">
+                    role_id=#{entity.roleId} or
+                </if>
+                <if test="entity.userId != null">
+                    user_id=#{entity.userId} or
+                </if>
+            </trim>
             and delete_flag=0
         </trim>
     </sql>
@@ -567,8 +578,10 @@
 
     <!-- 查询 待办流程 总记录数  未完成且包含当前用户或其角色、机构-->
     <select id="getDbPageCount" resultType="int">
-        select count(1) from flow where delete_flag=0 and (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=0
+        select count(1) from flow
+        <include refid="filterConditionDb"></include>
     </select>
+
 
     <!-- 分页查询 待办流程 对象列表  待办流程 总记录数  未完成且包含当前用户或其角色、机构-->
     <select id="pageDbQuery" resultMap="flowMap">
@@ -578,16 +591,56 @@
         ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
         ,concat(doc_url, '&amp;flowId=',flow_id) as docUrl
         from flow
-        where delete_flag=0 and (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=0
+        <include refid="filterConditionDb"></include>
         LIMIT #{offset},#{pageSize}
     </select>
 
+    <!-- 待办流程 统计条件  where delete_flag=0 and (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=0-->
+    <sql id="filterConditionDb">
+        <trim prefix="where " prefixOverrides="and ">
+            delete_flag=0
+            and is_done=0
+            <trim prefix="and (" suffix=")" suffixOverrides="or">
+                <if test="entity.orgId != null">
+                    org_id=#{entity.orgId} or
+                </if>
+                <if test="entity.roleId != null">
+                    role_id=#{entity.roleId} or
+                </if>
+                <if test="entity.userId != null">
+                    user_id=#{entity.userId} or
+                </if>
+            </trim>
+        </trim>
+    </sql>
+
+
     <!-- 查询 在办流程 总记录数  参与过且包含当前用户或其角色、机构且当前待办不属于当前人的用户、角色或其部门-->
     <select id="getZbPageCount" resultType="int">
-        select count(DISTINCT(doc_unid)) from flow where delete_flag=0 and (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=1
+        select count(DISTINCT(doc_unid)) from flow
+        <include refid="filterConditionZbCount"></include>
     </select>
 
-    <!-- 分页查询 在办流程 对象列表   参与过且包含当前用户或其角色、机构且当前待办不属于当前人的用户、角色或其部门-->
+    <!-- 在办流程 统计条件  -->
+    <sql id="filterConditionZbCount">
+        <trim prefix="where " prefixOverrides="and ">
+            delete_flag=0
+            and is_done=1
+            <trim prefix="and (" suffix=")" suffixOverrides="or">
+                <if test="entity.orgId != null">
+                    org_id=#{entity.orgId} or
+                </if>
+                <if test="entity.roleId != null">
+                    role_id=#{entity.roleId} or
+                </if>
+                <if test="entity.userId != null">
+                    user_id=#{entity.userId} or
+                </if>
+            </trim>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 在办流程 对象列表   参与过且包含当前用户或其角色、机构且当前待办不属于当前人的用户、角色或其部门 where delete_flag=0 and doc_unid in (select distinct (doc_unid) from flow where (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=1)  -->
     <select id="pageZbQuery" resultMap="flowMap">
         select
         *
@@ -595,13 +648,36 @@
         ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
         ,concat(doc_url, '&amp;flowId=',flow_id) as docUrl
         from flow
-        where delete_flag=0 and doc_unid in (select distinct (doc_unid) from flow where (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_done=1) group by doc_unid
+        <include refid="filterConditionZb"></include>
+        group by doc_unid
         LIMIT #{offset},#{pageSize}
     </select>
 
+    <!-- 在办流程 分页条件  -->
+    <sql id="filterConditionZb">
+        <trim prefix="where " prefixOverrides="and ">
+            delete_flag=0
+            and doc_unid in (select distinct (doc_unid) from flow
+            where is_done=1
+            <trim prefix="and (" suffix=")" suffixOverrides="or">
+                <if test="entity.orgId != null">
+                    org_id=#{entity.orgId} or
+                </if>
+                <if test="entity.roleId != null">
+                    role_id=#{entity.roleId} or
+                </if>
+                <if test="entity.userId != null">
+                    user_id=#{entity.userId} or
+                </if>
+            </trim>
+            )
+        </trim>
+    </sql>
+
     <!-- 查询 办结流程 总记录数  包含当前用户或其角色、机构且当状态为已办结-->
     <select id="getBjPageCount" resultType="int">
-        select count(1) from flow where delete_flag=0 and (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_end=1
+        select count(1) from flow
+        <include refid="filterConditionBj"></include>
     </select>
 
     <!-- 分页查询 办结流程 对象列表   包含当前用户或其角色、机构且当状态为已办结-->
@@ -612,9 +688,89 @@
         ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
         ,concat(doc_url, '&amp;flowId=',flow_id) as docUrl
         from flow
-        where delete_flag=0 and (org_id=#{entity.orgId} or role_id=#{entity.roleId} or user_id=#{entity.userId})  and is_end=1
+        <include refid="filterConditionBj"></include>
         LIMIT #{offset},#{pageSize}
     </select>
 
+    <!-- 办结流程 分页条件  -->
+    <sql id="filterConditionBj">
+        <trim prefix="where " prefixOverrides="and ">
+            delete_flag=0
+            and is_end=1
+            <trim prefix="and (" suffix=")" suffixOverrides="or">
+                <if test="entity.orgId != null">
+                    org_id=#{entity.orgId} or
+                </if>
+                <if test="entity.roleId != null">
+                    role_id=#{entity.roleId} or
+                </if>
+                <if test="entity.userId != null">
+                    user_id=#{entity.userId} or
+                </if>
+            </trim>
+        </trim>
+    </sql>
 
+    <!-- 查询 预警待办流程 总记录数  未完成且包含当前用户或其角色、机构-->
+    <select id="getYjDbPageCount" resultType="int">
+        select count(1) from flow
+        <include refid="filterConditionYjdb"></include>
+    </select>
+
+    <!-- 分页查询 预警 待办流程 对象列表  待办流程 总记录数  未完成且包含当前用户或其角色、机构-->
+    <select id="pageYjDbQuery" resultMap="flowMap">
+        select
+        *
+        ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime
+        ,date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime
+        ,concat(doc_url, '&amp;flowId=',flow_id) as docUrl
+        <if test="entity.dayNum != null and entity.checkCondition != null">
+            ,(DATEDIFF(NOW() ,create_time) - #{entity.dayNum} )as day_num
+        </if>
+
+        from flow
+        <include refid="filterConditionYjdb"></include>
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+    <!-- 预警待办流程 分页条件  -->
+    <sql id="filterConditionYjdb">
+        <trim prefix="where " prefixOverrides="and ">
+            delete_flag=0
+            and is_done=0
+            <if test="entity.dayNum != null and entity.checkCondition != null">
+                and DATEDIFF(NOW() ,create_time)
+                <if test="entity.checkCondition == 1">
+                    &gt;
+                </if>
+                <if test="entity.checkCondition == 2">
+                    &lt;
+                </if>
+                <if test="entity.checkCondition == 3">
+                    =
+                </if>
+                <if test="entity.checkCondition == 4">
+                    &lt;=
+                </if>
+                <if test="entity.checkCondition == 5">
+                    &gt;=
+                </if>
+                <if test="entity.checkCondition == 6">
+                   &lt;&gt;
+                </if>
+                #{entity.dayNum}
+            </if>
+            <trim prefix="and (" suffix=")" suffixOverrides="or">
+                <if test="entity.orgId != null">
+                    org_id=#{entity.orgId} or
+                </if>
+                <if test="entity.roleId != null">
+                    role_id=#{entity.roleId} or
+                </if>
+                <if test="entity.userId != null">
+                    user_id=#{entity.userId} or
+                </if>
+            </trim>
+        </trim>
+    </sql>
 </mapper>	

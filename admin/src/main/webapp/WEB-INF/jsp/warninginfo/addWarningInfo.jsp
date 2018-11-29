@@ -11,8 +11,16 @@
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="warningId" name="warningId" value="${warningInfo.warningId}"/>
-
+			<input  type="hidden" id="releaseUser" name="releaseUser" value="${userId}"/>
 			<div class='layui-form-item'>
+				<div class="layui-inline">
+					<label class="layui-form-label">标题</label>
+					<div class="layui-input-inline">
+						<input type="text" id="title" name="title" placeholder="请输入标题"  value="${warningInfo.title }" class="layui-input"/>
+						<span style="color: red" id="s-title"></span>
+					</div>
+				</div>
+
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
 		        	<div class="layui-input-inline">
@@ -20,13 +28,7 @@
 		        		<span style="color: red" id="s-seq"></span>
 		     		</div>
      			</div>
-     			<div class="layui-inline">
-		        	<label class="layui-form-label">标题</label>
-		        	<div class="layui-input-inline">
-		        		<input type="text" id="title" name="title" placeholder="请输入标题"  value="${warningInfo.title }" class="layui-input"/>
-		        		<span style="color: red" id="s-title"></span>
-		     		</div>
-     			</div>
+
 			</div>
 			<div class='layui-form-item'>
 		        <label class="layui-form-label">内容</label>
@@ -39,7 +41,7 @@
      			<div class="layui-inline">
 		        	<label class="layui-form-label">发布人编号</label>
 		        	<div class="layui-input-inline">
-		        		<input type="text" id="releaseUser" name="releaseUser" placeholder="请输入发布人编号"  value="${warningInfo.releaseUser }" class="layui-input"/>
+						<input type="text" id="releaseUserName" name="releaseUserName" placeholder="请输入发布人编号"  value="${userName}" class="layui-input" readonly/>
 		        		<span style="color: red" id="s-releaseUser"></span>
 		     		</div>
      			</div>
@@ -51,7 +53,7 @@
 		     		</div>
      			</div>
 			</div>
-			<div class='layui-form-item'>
+			<div class='layui-form-item' style="display: none;">
      			<div class="layui-inline">
 		        	<label class="layui-form-label">对象属性</label>
 		        	<div class="layui-input-inline">
@@ -98,72 +100,72 @@
   		</form>
 	</body>
 
-	<%--<script type="text/javascript">--%>
-        <%--$(function () {--%>
-            <%--$("#releaseUser").combotree({--%>
-                <%--url: '/admin/sysUser/getUserTree',--%>
-                <%--// multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框--%>
-                <%--data : [{},{},{}],//数据省略--%>
-                <%--required: true,--%>
-                <%--checkbox : true,//显示多选框--%>
-                <%--onlyLeafCheck : true,//只在叶子节点显示多选框--%>
-                <%--onBeforeSelect : function(node){--%>
-                    <%--if(!$(this).tree("isLeaf", node.target)){//如果不是叶子节点，不让选择--%>
-                        <%--return false;--%>
-                    <%--}--%>
-                <%--},--%>
-                <%--onBeforeCheck : function(node, checked){//控制只能选一项--%>
-                    <%--if(checked){//当前为选中操作--%>
-                        <%--var nodes = $(this).tree("getChecked");--%>
-                        <%--//控制只能选一项，选中某一项后后面不能再勾选--%>
-                        <%--if(nodes.length == 0){--%>
-                            <%--return true;--%>
-                        <%--}else{--%>
-                            <%--return false;--%>
-                        <%--}--%>
-                    <%--}else{//当前为取消选中操作--%>
-                        <%--return true;--%>
-                    <%--}--%>
-                <%--}--%>
-            <%--});--%>
+	<script type="text/javascript">
 
-            <%--$("#releaseUser").combotree({--%>
-                <%--url: '/admin/sysUser/getUserTree',--%>
-                <%--multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框--%>
-                <%--data : [{},{},{}],//数据省略--%>
-                <%--required: true,--%>
-                <%--checkbox : true,//显示多选框--%>
-                <%--onlyLeafCheck : true,//只在叶子节点显示多选框--%>
-                <%--onBeforeSelect : function(node){--%>
-                    <%--if(!$(this).tree("isLeaf", node.target)){//如果不是叶子节点，不让选择--%>
-                        <%--return false;--%>
-                    <%--}--%>
-                <%--},--%>
-                <%--onBeforeCheck : function(node, checked){//控制只能选一项--%>
-                    <%--if(checked){//当前为选中操作--%>
-                        <%--var nodes = $(this).tree("getChecked");--%>
-                        <%--$("#div-receiveUser").append("<input type='hidden' id='receiveUserCn-"+node.id+"' name='receiveUserCn-"+node.id+"' value='"+node.name+"'/>");--%>
-                        <%--//控制只能选一项，选中某一项后后面不能再勾选--%>
-                        <%--// if(nodes.length == 0){--%>
-                        <%--//     return true;--%>
-                        <%--// }else{--%>
-                        <%--//     return false;--%>
-                        <%--// }--%>
-                    <%--}else{//当前为取消选中操作--%>
-                        <%--$("#receiveUserCn-"+node.id+"").remove();--%>
-                        <%--return true;--%>
-                    <%--}--%>
-                <%--}--%>
-            <%--});--%>
-        <%--});--%>
+        $(function () {
+            /*         $("#releaseUser").combotree({
+                         url: '/admin/staffInfo/staffInfoTree',
+                         // multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框
+                         data : [{},{},{}],//数据省略
+                         required: true,
+                         checkbox : true,//显示多选框
+                         onlyLeafCheck : true,//只在叶子节点显示多选框
+                         onBeforeSelect : function(node){
+                             if(!$(this).tree("isLeaf", node.target)){//如果不是叶子节点，不让选择
+                                 return false;
+                             }
+                         },
+                         onBeforeCheck : function(node, checked){//控制只能选一项
+                             if(checked){//当前为选中操作
+                                 var nodes = $(this).tree("getChecked");
+                                 //控制只能选一项，选中某一项后后面不能再勾选
+                                 if(nodes.length == 0){
+                                     return true;
+                                 }else{
+                                     return false;
+                                 }
+                             }else{//当前为取消选中操作
+                                 return true;
+                             }
+                         }
+                     });*/
 
-	<%--</script>--%>
+            $("#receiveUser").combotree({
+                url: '/admin/staffInfo/staffInfoTree',
+                // multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框
+                idField:'staffId',           //定义标识树节点的键名字段
+                treeField:'name',       //定义树节点的字段
+                data : [{},{},{}],//数据省略
+                required: true,
+                checkbox : true,//显示多选框
+                onlyLeafCheck : true,//只在叶子节点显示多选框
+                onBeforeSelect : function(node){
+                    if(!$(this).tree("isLeaf", node.target)){//如果不是叶子节点，不让选择
+                        return false;
+                    }
+                },
+                onBeforeCheck : function(node, checked){//控制只能选一项
+                    if(checked){//当前为选中操作
+                        var nodes = $(this).tree("getChecked");
+                        //控制只能选一项，选中某一项后后面不能再勾选
+                        if(nodes.length == 0){
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }else{//当前为取消选中操作
+                        $("#receiveUserCn-"+node.id+"").remove();
+                        return true;
+                    }
+                }
+            });
+        });
+
+	</script>
 
 	<script type="text/javascript">
 		var reqUpdateAndAddUrl = "/admin/warningInfo/insertAndUpdate";
 	</script>
-
-
 
 	<script type="text/javascript">
 		//提交表单数据
@@ -184,7 +186,7 @@
 	    var title = $("#title").val();
 	    var content = $("#content").val();
 	    var releaseUser = $("#releaseUser").val();
-	    var receiveUser = $("#receiveUser").val();
+        var receiveUser = $('#receiveUser').combotree('getValues');
 	    var options = $("#options").val();
 	    var true_val = $("#true_val").val();
 	    var checkCondition = $("#checkCondition").val();
@@ -196,7 +198,7 @@
             "title":title,
             "content":content,
             "releaseUser":releaseUser,
-            "receiveUser":receiveUser,
+            "receiveUsers":receiveUser,
             "options":options,
             "true_val":true_val,
             "checkCondition":checkCondition,

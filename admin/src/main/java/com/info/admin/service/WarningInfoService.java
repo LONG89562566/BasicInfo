@@ -2,6 +2,7 @@ package com.info.admin.service;
 
 import com.info.admin.entity.WarningInfo;
 import com.info.admin.utils.PageUtil;
+import com.info.admin.vo.WarningInfoVo;
 
 import java.util.List;
 
@@ -62,6 +63,18 @@ public interface WarningInfoService {
      * @return   PageUtil
      */
     PageUtil pageQuery(WarningInfo entity, int pageNum, int pageSize);
+
+    /**
+     * 分页查询WarningInfo对象
+     * @param entity 对象
+     * @param pageNum	页数
+     * @param pageSize	大小
+     * @author  ysh
+     * @date  2018-11-14 23:45:41
+     * @updater or other
+     * @return   PageUtil
+     */
+    PageUtil pageQueryVo(WarningInfo entity, int pageNum, int pageSize);
     
     /**
 	 * 根据 id获取 预警设置
@@ -71,7 +84,17 @@ public interface WarningInfoService {
 	 * @updater  or other
 	 * @return   WarningInfo
 	 */ 
-	public WarningInfo getWarningInfoById(String warningId);
+	WarningInfo getWarningInfoById(String warningId);
+
+	/**
+	 * 根据 id获取 预警设置
+	 * @author   ysh
+	 * @param warningId 主键id
+	 * @date  2018-11-14 23:45:41
+	 * @updater  or other
+	 * @return   WarningInfo
+	 */
+    WarningInfoVo getWarningInfoVoById(String warningId);
 	
 }
 

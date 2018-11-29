@@ -8,17 +8,40 @@
 
             <div class="layui-input-block" style="margin:30px;" id="flow-btn">
                 <input type="button" id="tj-btn" class="layui-btn" onclick="" style="display: none;" value="提交"/>
-                <input type="button" class="layui-btn" onclick="addFlow()" value="发送"/>
-                <input type="button" class="layui-btn" onclick="endFlow()" value="结束流程"/>
-                <input type="button" class="layui-btn" onclick="queryFlow()" value="查看流程"/>
+                <input type="button" id="fs-btn" class="layui-btn" onclick="addFlow()" value="发送"/>
+                <input type="button" id="js-btn" class="layui-btn" onclick="endFlow()" value="结束流程"/>
+                <input type="button" id="ck-btn" class="layui-btn" onclick="queryFlow()" value="查看流程"/>
             </div>
 
 	<script type="text/javascript">
 		$(function () {
+		    var docUnid = "<%=docUnid%>";
+		    if(!docUnid){
+		        $("#flow-btn").hide();
+            }
             loadFlow();
 		});
 
         function loadFlow() {
+            $.post("/admin/flow/getFlowVoById",{docUnid :'<%=docUnid%>',flowId : '<%=flowId%>'},function (data) {
+                if(data.code == 200 && data.object != null && data.object != undefined){
+                    var isDone = data.object.isDone;
+                    var isEnd = data.object.isEnd;
+                    if(isEnd == 0 ){
+                        if(isDone == 0){
+                            $("#fs-btn").show();
+                            loadSubmitBtn();
+                        }else if(isDone == 1){
+                            $("#fs-btn").hide();
+                        }
+                    }else {
+                        $("#fs-btn").hide();
+                        $("#js-btn").hide();
+                    }
+                }
+            });
+        }
+        function loadSubmitBtn() {
             $.post("/admin/flow/isSubmit",{docUnid :'<%=docUnid%>',flowId : '<%=flowId%>'},function (data) {
                 if(data.code == 200 && data.object > 1){
                     $("#tj-btn").attr("onclick","submitFlow()");
