@@ -30,7 +30,7 @@
 	<link rel="stylesheet" href="/kindeditor/themes/default/default.css" />
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<%--<input  type="hidden" id="materialDetailId" name="materialDetailId" value="${materialDetail.materialDetailId}"/>--%>
- 			<input  type="hidden" id="outId" name="outId" value="${outId}"/>
+
 				<jsp:include page="/WEB-INF/jsp/flow/flowPage.jsp">
 					<jsp:param name="docUnid" value="${materialDetail.outId}" />
 				</jsp:include>
@@ -57,6 +57,7 @@
 					</div>
 				</div>
 				<div class="box">
+					<input  type="hidden" id="outId" name="outId" value="${outId}"/>
 					<div class="box-body">
 				<table id="example1" class="table table-bordered table-striped" style="width: 50%">
 					<thead>
@@ -101,6 +102,7 @@
 
             layer.open({
                 type: 1,
+                content: '<div style="padding: 20px 100px;">确认执行?</div>',
                 btn: ['确定', '取消'],
                 btnAlign: 'c', //按钮居中
                 shade: 0.5 ,//不显示遮罩

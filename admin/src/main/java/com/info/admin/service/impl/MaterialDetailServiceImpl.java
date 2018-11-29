@@ -121,7 +121,7 @@ public class MaterialDetailServiceImpl implements MaterialDetailService {
      *@return   Integer
      */
     @Override
-    public Integer batchMaterialDetail( String projectId, String[] num, String[] materialName,String outName){
+    public Integer batchMaterialDetail( String projectId, String[] num, String[] materialName,String outName,String[] repertoryId){
         if(num == null || materialName == null ){
             return  0;
         }
@@ -137,6 +137,7 @@ public class MaterialDetailServiceImpl implements MaterialDetailService {
             materialDetail.setMaterialName(materialName[i]);
             materialDetail.setOutId(outId);
             materialDetail.setOutName(outName);
+            materialDetail.setRepertoryId(repertoryId[i]);
             materialDetailList.add(materialDetail);
         }
         return dao.batchMaterialDetail(materialDetailList);

@@ -86,7 +86,7 @@ public interface MaterialDetailService {
      *@updater  or other
      *@return   Integer
      */
-    public Integer batchMaterialDetail(String projectId ,String[] num, String[] materialName,String outName);
+    public Integer batchMaterialDetail(String projectId ,String[] num, String[] materialName,String outName,String[] repertoryId);
 
 
     /**

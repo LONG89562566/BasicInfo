@@ -211,18 +211,19 @@
 
 	<!-- 批量添加 -->
 	<insert id="batchMaterialDetail" parameterType="java.util.List">
-		insert into material_detail (material_detail_id,material_type,num,project_id,material_name,out_id,out_name,create_time) values
+		insert into material_detail (material_detail_id,material_type,num,project_id,material_name,out_id,out_name,repertory_id,create_time) values
 		<foreach collection="materialDetailList" item="item" separator=",">
-			(#{item.materialDetailId},#{item.materialType},#{item.num},#{item.projectId},#{item.materialName},#{item.outId},#{item.outName},now())
+			(#{item.materialDetailId},#{item.materialType},#{item.num},#{item.projectId},#{item.materialName},#{item.outId},#{item.outName},#{item.repertoryId},now())
 		</foreach>
 	</insert>
 
 	<!-- 查询 材料出入库 总记录数 -->
 	<select id="getOutPageCount" resultType="int">
-		select count(1) from material_detail
+		SELECT count(1) FROM(	select count(material_detail.out_id)
+		from material_detail
 		<include refid="filterCondition"></include>
-		GROUP BY material_detail.out_id
-		LIMIT 1
+		GROUP BY material_detail.out_id) a
+-- 		LIMIT 1
 	</select>
 
 	<!-- 分页查询 材料出库 对象列表  -->

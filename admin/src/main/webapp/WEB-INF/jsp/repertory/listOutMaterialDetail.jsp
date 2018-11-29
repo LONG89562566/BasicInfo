@@ -116,7 +116,7 @@
 						        <td>
 						         <div class="site-demo-button" >
 								   <button id="updateMaterialDetail" data-method="outAddOrEdit"  value="${r.outId}" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;检验</span></button>
-									 <c:if test="${r.outState == 1 }">
+									 <c:if test="${r.outState == 0 && r.testState == 1}">
 								   <button id="outMaterialDetail" data-method="outMaterialDetail"  value="${r.outId}" class="layui-btn layui-btn-warm layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;出库</span></button>
 									 </c:if>
 								  </div>
@@ -321,7 +321,7 @@
                     //layer.setAddOrEdit(layero);
                     var body = layer.getChildFrame('body', index);
                     var iframeWin = window[layero.find('iframe')[0]['name']];
-                    body.find('input[name=""outId""]').val(outId);
+                    body.find('input[name="outId"]').val(outId);
                     //弹窗表单的取消操作时关闭弹窗
                     var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
                         layer.closeAll();

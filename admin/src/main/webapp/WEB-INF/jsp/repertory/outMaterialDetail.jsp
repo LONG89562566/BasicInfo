@@ -73,7 +73,7 @@
             }
             var html =
                 "<td><input type='hidden' name='repertoryId' id='repertoryId' value='"+id+"'>"
-				+"&nbsp;&nbsp;<span id='"+id+"-name' >"+name+"</span></td>"
+				+"&nbsp;&nbsp;<span id='"+id+"-materialName' >"+name+"</span></td>"
 				+"<td>&nbsp;&nbsp;<span id='"+id+"+material'>"+num+"</span></td>"
                 +"<td> <input class='layui-input' type='number'  value='' min='0' max='"+num+"' name='num' class='form-control' onchange='checkMaterialNum(this)' id='"+id+"-num' placeholder='请输入出库数量')' /></td>"
                 +"<td><div class='site-demo-button' >\n" +
@@ -177,11 +177,13 @@
                 btnAlign: 'c', //按钮居中
                 shade: 0.5 ,//不显示遮罩
                 yes: function(){
-                    var materialName  = getValss("name");
+                    var materialName  = getValss("materialName");
+                    var repertoryId  = getVals("repertoryId");
                     //获取传递的参数
                     var requestData={
                         num : materialNum,
                         materialName :materialName,
+                        repertoryId :repertoryId,
                     };
 
                     $.ajax({

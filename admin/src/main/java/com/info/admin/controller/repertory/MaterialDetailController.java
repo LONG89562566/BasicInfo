@@ -409,9 +409,10 @@ public class MaterialDetailController extends BaseController{
         try {
             String[] num =  request.getParameterValues("num[]");
             String[] materialName =  request.getParameterValues("materialName[]");
+            String[] repertoryId =  request.getParameterValues("repertoryId[]");
             if (StringUtils.isNotEmpty(projectId) || num != null || materialName != null || StringUtils.isNotEmpty(projectId)) {
 
-                service.batchMaterialDetail(projectId,num,materialName,outName);
+                service.batchMaterialDetail(projectId,num,materialName,outName,repertoryId);
                     } else {
                         return new JsonResult(JsonResultCode.FAILURE, "操作失败", "");
                     }
