@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%
+    //业务主键id
+    String docUnid = request.getParameter("docUnid");
+    //流程主键id
+    String flowId = request.getParameter("flowId");
+    flowId = flowId == null || flowId.trim().length() == 0 ? "" : flowId;
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -67,7 +73,16 @@
                     <span style="color: red" id="s-msg"></span>
                 </div>
             </div>
-
+            <div class='layui-form-item' id="file-div-upload">
+                <jsp:include page="/WEB-INF/jsp/decorators/fileLs.jsp">
+                    <jsp:param name="docUnid" value="<%=docUnid%>" />
+                    <jsp:param name="flowId" value="<%=flowId%>" />
+                    <jsp:param name="type" value=''/>
+                    <jsp:param name="fileTitle" value='流程'/>
+                    <jsp:param name="fileLable" value='lcFile'/>
+                    <jsp:param name="fn" value='${fn}'/>
+                </jsp:include>
+            </div>
 	 		<div class="layui-input-block" style="margin-top:2%;margin-left: 30%;margin-bottom: 2%">
 	 			<input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
        			<button class="layui-btn" name="cancleSubmit" >取消</button>
@@ -77,8 +92,10 @@
     <script type="text/javascript">
 
         $(function () {
+
             if("${flow.lastNode }" == '' || "${flow.lastNode }" == undefined){
                 $(".lastNode").hide();
+                $("#file-div-upload").hide();
             }
             // _loadSaffInfo();
             /*         $("#releaseUser").combotree({

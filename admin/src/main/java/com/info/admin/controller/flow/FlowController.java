@@ -149,7 +149,7 @@ public class FlowController extends BaseController{
     }
 
     /**
-     *我的桌面查询流程列表
+     *查询流程意见
      *@author   ysh
      *@date  2018-07-12 10:50:32
      *@updater  or other
@@ -157,8 +157,8 @@ public class FlowController extends BaseController{
      */
     @RequestMapping(value = "/queryFlow", method = { RequestMethod.GET, RequestMethod.POST })
     public String queryFlow(HttpServletRequest request, @ModelAttribute Flow entity, Model model) {
-        logger.info("[FlowController][queryFlow] 我的桌面查询流程列表:");
-        model.addAttribute("paginator", service.queryFlow(entity));
+        logger.info("[FlowController][queryFlow] 查询流程意见:");
+        model.addAttribute("paginator", null);
         model.addAttribute("flow", entity);
         return "flow/queryFlow";
     }
@@ -178,6 +178,9 @@ public class FlowController extends BaseController{
                 //根据id查询系统用户
                 FlowVo flow = service.getFlowByIdVo(flowId);
                 model.addAttribute("flow", flow);
+                model.addAttribute("fn", "edit");
+            }else {
+                model.addAttribute("fn", "add");
             }
             model.addAttribute("flowId", flowId);
             return "flow/addFlow";
@@ -202,6 +205,9 @@ public class FlowController extends BaseController{
                 //根据id查询系统用户
                 FlowVo flow = service.getFlowByIdVo(flowId);
                 model.addAttribute("flow", flow);
+                model.addAttribute("fn", "edit");
+            }else {
+                model.addAttribute("fn", "add");
             }
             model.addAttribute("flowId", flowId);
             return "flow/submitFlow";

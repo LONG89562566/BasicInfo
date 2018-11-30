@@ -58,6 +58,20 @@
 		              <%--<h3 class="box-title">流程列表 :${sessionScope.login_session_admin.userName}</h3>--%>
 		            </div>
 
+					  <div class="box box-info">
+						  <!-- form start -->
+						  <form  id="form_submit" class="form-horizontal" action="/admin/flow/list" method="post">
+							  <input type="hidden" name="pageNum" id="pageNum" value="0">
+							  <input type="hidden" name="pageSize" id="pageSize" value="3000">
+							  <input type="hidden" name="docUnid" id="docUnid" value="${flow.docUnid}">
+							  <div class="box-body">
+								  <div class="form-group">
+
+								  </div>
+							  </div>
+						  </form>
+						  <!-- form end -->
+					  </div>
 					<!-- 表格列表start -->
 		            <div class="box">
 			           <div class="box-body">
@@ -75,6 +89,7 @@
 								<th field="userName"  >当前节点参与人</th>
 			                    <th field="showTitle"  >当前节点业务名称</th>
 			                    <th field="msg"  >当前节点意见</th>
+			                    <th field="docUnid"  method = "loadFile" getIdVal="flowId">文件列表</th>
 
 				                <%--<th field="sys_opt">操作</th>--%>
 				              </tr>
@@ -91,10 +106,10 @@
 								<td>${r.userName}</td>
 					            <td>${r.showTitle}</td>
 					            <td>${r.msg}</td>
+					            <td>${r.docUnid}</td>
 
 						        <%--<td>
 						         <div class="site-demo-button" >
-
 								 </div>
 						       </td>--%>
 				             </tr>
@@ -127,13 +142,16 @@
 	    var showPageNumber = "show-page";
 	    //列表操作按钮
 	    var tableBtn = new Array();
-	    // tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
+	    tableBtn = addBtn(tableBtn,"setAddOrEdit","修改","","","","","","layui-btn-normal");
 		//tableBtn = addBtn(tableBtn,"enabled","禁用","","","status","true","1","layui-btn-danger");
 		//tableBtn = addBtn(tableBtn,"openset","启用","","","status","true","-1","layui-btn-danger");
 	</script>
 
 
 	<script type="text/javascript">
+		$(function () {
+            refreshTheCurrentPage();
+        });
 
 		var methodStatus = function (val , obj) {
 			var retVal = "";
@@ -144,6 +162,28 @@
 			}
 			return retVal;
 		};
+
+		var loadFile = function (docUnid,flowId) {
+            var html = "";
+            var _loadUrl = "/admin/fileAttr/query";
+            $.post(_loadUrl,{docUnid: docUnid,flowId: flowId },function (data) {
+                if(data.code == 200){
+                    var obj = data.object;
+                    $("#docUnid_"+flowId).empty();
+                    if(obj != null  && obj != undefined){
+                        $.each(obj,function (i,item) {
+                            html += "<div onclick='_downFile(\""+item.fileId+"\")'> "+item.name+"</div>";
+                        });
+                        $("#docUnid_"+flowId).append(html);
+                    }
+                }
+            });
+            return html;
+        };
+
+        var _downFile = function (fileId) {
+            window.open("/admin/dowLoadFile?fileId="+fileId);
+        };
 
 	</script>
 	<script>

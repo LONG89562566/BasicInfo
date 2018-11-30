@@ -46,21 +46,22 @@ public class FileAttrServiceImpl implements FileAttrService {
      *@return int
      */
     @Override
-    public int insertBatchFileAttr(FileAttr entity,List<String> pathList){
+    public int insertBatchFileAttr(FileAttr entity,List<String> pathList,List<String> nameList){
         if(pathList == null || pathList.size() == 0  ){
             return 0;
         }
 
         List<FileAttr> fileAttrs = new ArrayList<>();
-        for(String path : pathList){
+        for (int i=0;i<pathList.size();i++){
             FileAttr fileAttr = new FileAttr();
-
             fileAttr.setFileId(UUIDUtils.getUUid());
+            fileAttr.setFlowId(entity.getFlowId());
+            fileAttr.setName(nameList.get(i));
             fileAttr.setDocUnid(entity.getDocUnid());
             fileAttr.setCreateUser(entity.getCreateUser());
             fileAttr.setSeq(entity.getSeq());
             fileAttr.setDeleteFlag(0L);
-            fileAttr.setUrl(path);
+            fileAttr.setUrl(pathList.get(i));
             fileAttrs.add(fileAttr);
         }
         return dao.insertBatchFileAttr(fileAttrs);

@@ -236,7 +236,7 @@
     </select>
     
     <!-- 根据id 查询 文件 -->
-	<select id="getFileAttrById" parameterType="Long" resultMap="fileAttrMap" >
+	<select id="getFileAttrById" parameterType="String" resultMap="fileAttrMap" >
 		select 
 		 * 
            ,date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime 

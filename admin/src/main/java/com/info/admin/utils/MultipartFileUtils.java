@@ -22,7 +22,8 @@ public class MultipartFileUtils {
     // 最大文件大小
     public static long maxSize = 1000000;
 
-    public static List<String> getImgPath(HttpServletRequest request, HttpServletResponse response, MultipartFile[] imgFile) throws Exception {
+    public static List<String> getImgPath(HttpServletRequest request, HttpServletResponse response, MultipartFile[] imgFile,
+                                          List<String> imgPathList,List<String> nameList) throws Exception {
         response.setCharacterEncoding("utf-8");
         // 文件保存本地目录路径
         String savePath = getSavePath(request);
@@ -71,8 +72,7 @@ public class MultipartFileUtils {
         }
         // 保存文件
         int i = 0;
-        //保存图片路径list
-        List<String> imgPathList = new ArrayList<String>();
+
         for (MultipartFile iFile : imgFile) {
             try {
                 //获取文件名称
@@ -95,6 +95,7 @@ public class MultipartFileUtils {
                 i++;
                 // 保存图片路径
                 imgPathList.add(saveUrl + newFileName);
+                nameList.add(fileName);
             } catch (Exception e) {
                 logger.error("[fileupload] " + "第" + i + "张图片上传失败。 exception :", e);
             }
@@ -177,6 +178,7 @@ public class MultipartFileUtils {
                 i++;
 
                 FileAttr fileAttr = new FileAttr();
+                fileAttr.setName(fileName);
                 fileAttr.setFileId(UUIDUtils.getUUid());
                 fileAttr.setDocUnid(entity.getDocUnid());
                 fileAttr.setCreateUser(entity.getCreateUser());
@@ -216,6 +218,7 @@ public class MultipartFileUtils {
         extMap.put("flash", "swf,flv");
         extMap.put("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
         extMap.put("file", "doc,docx,xls,xlsx,ppt,htm,html,xml,txt,zip,rar,gz,bz2");
+        extMap.put("fileAll", "doc,docx,xls,xlsx,ppt,htm,html,xml,txt,zip,rar,gz,bz2,gif,jpg,jpeg,png,bmp,swf,flv,swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
         return extMap;
     }
 

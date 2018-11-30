@@ -61,7 +61,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- 全局异常处理.-->
 	<bean id="exceptionHandler" class="com.info.admin.exception.ExceptionHandler"/>
 

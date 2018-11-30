@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%
+    //业务主键id
+    String docUnid = request.getParameter("docUnid");
+    //流程主键id
+    String flowId = request.getParameter("flowId");
+    flowId = flowId == null || flowId.trim().length() == 0 ? "" : flowId;
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -53,7 +59,7 @@
                     <span style="color: red" id="s-showTitle"></span>
                 </div>
             </div>
-            <div class='layui-form-item'>
+            <div class='layui-form-item' style="display: none;">
                 <label class="layui-form-label">参与人</label>
                 <div class="layui-input-block">
                     <input type="text" style="width: 90%;" id="userId" name="userId" placeholder="请输入参与人"  value="" class="layui-input"/>
@@ -68,6 +74,17 @@
                 </div>
             </div>
 
+            <div class='layui-form-item' style="display:none;" id="file-div-upload">
+                <jsp:include page="/WEB-INF/jsp/decorators/fileLs.jsp">
+                    <jsp:param name="docUnid" value="<%=docUnid%>" />
+                    <jsp:param name="flowId" value="<%=flowId%>" />
+                    <jsp:param name="type" value=''/>
+                    <jsp:param name="fileTitle" value='流程'/>
+                    <jsp:param name="fileLable" value='lcFile'/>
+                    <jsp:param name="fn" value='${fn}'/>
+                </jsp:include>
+            </div>
+
 	 		<div class="layui-input-block" style="margin-top:2%;margin-left: 30%;margin-bottom: 2%">
 	 			<input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
        			<button class="layui-btn" name="cancleSubmit" >取消</button>
@@ -77,6 +94,10 @@
     <script type="text/javascript">
 
         $(function () {
+
+            if("<%=flowId%>" != null && "<%=flowId%>" != ''){
+                $("#file-div-upload").show();
+            }
             // _loadSaffInfo();
             /*         $("#releaseUser").combotree({
                          url: '/admin/staffInfo/staffInfoTree',

@@ -39,6 +39,7 @@
 <script type="text/javascript" src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 
 <script type="text/javascript" src="/js/imagUtil-v1.0.js"></script>
+<script type="text/javascript" src="/js/flieUtil-v1.0.js"></script>
 <script type="text/javascript" src="/js/fromVal-v.1.0.js"></script>
 <script type="text/javascript" src="/js/date-format.js"></script>
 

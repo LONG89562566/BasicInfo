@@ -7,22 +7,26 @@ import com.info.admin.service.FileAttrService;
 import com.info.admin.utils.DateUtil;
 import com.info.admin.utils.ImgTools;
 import com.info.admin.utils.MultipartFileUtils;
+import com.info.admin.utils.UUIDUtils;
 import net.sf.json.JSONObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -49,16 +53,20 @@ public class UploadController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/uploadImgs", method = {RequestMethod.GET, RequestMethod.POST})
     public JsonResult uploadImgs(HttpServletRequest request, HttpServletResponse response,
-                                 @RequestParam("imgFiles") MultipartFile[] imgFiles, @ModelAttribute FileAttr fileAttr) {
+                 @RequestParam("imgFiles") MultipartFile[] imgFiles, @ModelAttribute FileAttr fileAttr) {
         try {
             if (imgFiles == null || imgFiles.length == 0) {
                 return new JsonResult(JsonResultCode.FAILURE, "参数有误", "");
             }
-            List<String> pathList = MultipartFileUtils.getImgPath(request, response, imgFiles);
+            //保存图片路径list
+            List<String> pathList = new ArrayList<String>();
+            //保存文件名称
+            List<String> nameList = new ArrayList<String>();
+            MultipartFileUtils.getImgPath(request, response, imgFiles,pathList,nameList);
             if (CollectionUtils.isNotEmpty(pathList)) {
                 //保存文件到文件表
                 fileAttr.setCreateUser(getLoginUserId(request));
-                fileAttrService.insertBatchFileAttr(fileAttr, pathList);
+                fileAttrService.insertBatchFileAttr(fileAttr, pathList,nameList);
                 // 返回图片的路径
                 return new JsonResult(JsonResultCode.SUCCESS, "上传成功", pathList);
             }
@@ -79,7 +87,7 @@ public class UploadController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/uploadImgsFileAttr", method = {RequestMethod.GET, RequestMethod.POST})
     public JsonResult uploadImgsFileAttr(HttpServletRequest request, HttpServletResponse response,
-                                         @RequestParam("imgFiles") MultipartFile[] imgFiles, @ModelAttribute FileAttr fileAttr) {
+                 @RequestParam("imgFiles") MultipartFile[] imgFiles, @ModelAttribute FileAttr fileAttr) {
         try {
             if (imgFiles == null || imgFiles.length == 0) {
                 return new JsonResult(JsonResultCode.FAILURE, "参数有误", "");
@@ -109,11 +117,15 @@ public class UploadController extends BaseController {
             if (file == null || file.length == 0) {
                 return new LayuiResult(LayuiResultCode.FAILURE, "参数有误", null);
             }
-            List<String> logoPathList = MultipartFileUtils.getImgPath(request, response, file);
+            //保存图片路径list
+            List<String> pathList = new ArrayList<String>();
+            //保存文件名称
+            List<String> nameList = new ArrayList<String>();
+            MultipartFileUtils.getImgPath(request, response, file,pathList,nameList);
             Data data = new Data();
-            data.setSrc(logoPathList.get(0));
+            data.setSrc(pathList.get(0));
             data.setTitle("图片");
-            if (CollectionUtils.isNotEmpty(logoPathList)) {
+            if (CollectionUtils.isNotEmpty(pathList)) {
                 // 返回图片的路径
                 return new LayuiResult(LayuiResultCode.SUCCESS, "上传成功", data);
             }
@@ -130,7 +142,7 @@ public class UploadController extends BaseController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public void fileUpload(HttpServletRequest request, HttpServletResponse response,
-                           @RequestParam("imgFile") MultipartFile[] files, @ModelAttribute FileAttr fileAttr) {
+                   @RequestParam("imgFile") MultipartFile[] files, @ModelAttribute FileAttr entity) {
         try {
             response.setCharacterEncoding("utf-8");
             PrintWriter out = response.getWriter();
@@ -185,7 +197,8 @@ public class UploadController extends BaseController {
             if (!dirFile.exists()) {
                 dirFile.mkdirs();
             }
-            // 保存文件  
+            // 保存文件
+            List<FileAttr> fileAttrs = new ArrayList<>();
             for (MultipartFile iFile : files) {
                 String fileName = iFile.getOriginalFilename();
 
@@ -224,8 +237,143 @@ public class UploadController extends BaseController {
                 out.print(obj.toString());
                 out.close();
 
+                FileAttr fileAttr = new FileAttr();
+                fileAttr.setFileId(UUIDUtils.getUUid());
+                fileAttr.setName(fileName);
+                fileAttr.setDocUnid(entity.getDocUnid());
+                fileAttr.setCreateUser(entity.getCreateUser());
+                fileAttr.setFlowId(entity.getFlowId());
+                fileAttr.setSeq(entity.getSeq());
+                fileAttr.setDeleteFlag(0L);
+                fileAttr.setUrl(saveUrl + newFileName);
+                fileAttrs.add(fileAttr);
+            }
+            //保存文件信息到文件表里面
+            fileAttrService.insertBatchFileAttr(fileAttrs);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }   /**
+     * 文件上传
+     */
+    @RequestMapping(value = "/uploadFileAttr", method = RequestMethod.POST)
+    @ResponseBody
+    public void fileUploadFileAttr(HttpServletRequest request, HttpServletResponse response,
+                @RequestParam("uloadFile") MultipartFile[] files, @ModelAttribute FileAttr entity) {
+        try {
+            response.setCharacterEncoding("utf-8");
+            PrintWriter out = response.getWriter();
+
+            //文件保存目录URL
+            String saveUrl = request.getContextPath() + MultipartFileUtils.PATH;
+            if (!ServletFileUpload.isMultipartContent(request)) {
+                out.print(getError("请选择文件。"));
+                out.close();
+                return;
+            }
+            //文件保存本地目录路径
+            String savePath = MultipartFileUtils.getSavePath(request);
+            //检查目录
+            File uploadDir = new File(savePath);
+            if (!uploadDir.isDirectory()) {
+                uploadDir.mkdirs();
+            }
+            //检查目录写权限
+            if (!uploadDir.canWrite()) {
+                out.print(getError("上传目录没有写权限。"));
+                out.close();
+                return;
             }
 
+            String dirName = request.getParameter("dir");
+            if (dirName == null) {
+                dirName = "image";
+            }
+
+            //定义允许上传的文件扩展名
+            Map<String, String> extMap = MultipartFileUtils.getExtMap();
+
+            if (!extMap.containsKey(dirName)) {
+                out.print(getError("目录名不正确。"));
+                out.close();
+                return;
+            }
+
+            //创建文件夹
+            savePath += dirName + MultipartFileUtils.PATH_LINE;
+            saveUrl += dirName + MultipartFileUtils.PATH_LINE;
+            File saveDirFile = new File(savePath);
+            if (!saveDirFile.exists()) {
+                saveDirFile.mkdirs();
+            }
+
+            String ymd = DateUtil.getCurrentDateTimeStr(DateUtil.FMT_DATE_COMPACT);
+            savePath += ymd + MultipartFileUtils.PATH_LINE;
+            saveUrl += ymd + MultipartFileUtils.PATH_LINE;
+            File dirFile = new File(savePath);
+            if (!dirFile.exists()) {
+                dirFile.mkdirs();
+            }
+
+            // 保存文件
+            List<FileAttr> fileAttrs = new ArrayList<>();
+            for (MultipartFile iFile : files) {
+                String fileName = iFile.getOriginalFilename();
+
+                //检查文件大小
+                if (iFile.getSize() > MultipartFileUtils.maxSize) {
+                    out.print(getError("上传文件大小超过限制。"));
+                    out.close();
+                    return;
+                }
+                //检查扩展名
+                String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+                if (!Arrays.<String>asList(extMap.get(dirName).split(",")).contains(fileExt)) {
+                    out.print(getError("上传文件扩展名是不允许的扩展名。\n只允许" + extMap.get(dirName) + "格式。"));
+                    out.close();
+                    return;
+                }
+
+                String newFileName = DateUtil.getCurrentDateTimeStr(DateUtil.FMT_DATETIME_COMPACT) + "_" + new Random().nextInt(1000) + "." + fileExt;
+                try {
+                    File uploadedFile = new File(savePath, newFileName);
+                    // 写入文件
+                    FileUtils.copyInputStreamToFile(iFile.getInputStream(), uploadedFile);
+                    if (Arrays.<String>asList(extMap.get("image").split(",")).contains(fileExt)) {
+                        if (iFile.getSize() > 120 * 1024) {
+                            ImgTools.zipWidthHeightImageFile(uploadedFile, uploadedFile, 1080, 1920, 1f);
+                        }
+                    }
+
+                } catch (Exception e) {
+                    out.print(getError("上传文件失败。"));
+                    out.close();
+                    return;
+                }
+
+                FileAttr fileAttr = new FileAttr();
+                fileAttr.setFileId(UUIDUtils.getUUid());
+                fileAttr.setName(fileName);
+                fileAttr.setDocUnid(entity.getDocUnid());
+                fileAttr.setFlowId(entity.getFlowId());
+                fileAttr.setCreateUser(entity.getCreateUser());
+                fileAttr.setSeq(entity.getSeq());
+                fileAttr.setDeleteFlag(0L);
+                fileAttr.setUrl(saveUrl + newFileName);
+                fileAttrs.add(fileAttr);
+            }
+            //保存文件信息到文件表里面
+            fileAttrService.insertBatchFileAttr(fileAttrs);
+
+            JSONObject obj = new JSONObject();
+            obj.put("msg", "上传成功。");
+            obj.put("code", JsonResultCode.SUCCESS);
+            obj.put("fileAttrs", fileAttrs);
+
+            out.print(obj.toString());
+            out.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -356,6 +504,71 @@ public class UploadController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /****
+     * 下载文件
+     * @param fileId
+     * @param filePath
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/dowLoadFile")
+    public  void dowLoadFile(String fileId, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        PrintWriter out = response.getWriter();
+        if(StringUtils.isBlank(fileId)){
+            out.println("下载文件不存在。");
+            out.close();
+            return;
+        }
+        FileAttr fileAttr = fileAttrService.getFileAttrById(fileId);
+        if(fileAttr == null){
+            out.println("下载文件不存在。");
+            out.close();
+            return;
+        }
+        String fileName = fileAttr.getName();
+        String filePath = fileAttr.getUrl();
+        //文件保存本地目录路径
+        String savePath = "";
+        String os = System.getProperty("os.name");
+        if (os.toLowerCase().startsWith("win")) {
+            // windows 下路径
+            savePath = request.getSession().getServletContext().getRealPath("/");
+        } else {
+            // linux 下路径
+            savePath = "";
+        }
+
+        //设置响应头和客户端保存文件名
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("multipart/form-data");
+        response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+        //用于记录以完成的下载的数据量，单位是byte
+        long downloadedLength = 0l;
+        try {
+            //打开本地文件流
+            InputStream inputStream = new FileInputStream(savePath+filePath);
+            //激活下载操作
+            OutputStream outputStream = response.getOutputStream();
+
+            //循环写入输出流
+            byte[] b = new byte[2048];
+            int length;
+            while ((length = inputStream.read(b)) > 0) {
+                outputStream.write(b, 0, length);
+                downloadedLength += b.length;
+            }
+
+            // 这里主要关闭。
+            outputStream.close();
+            inputStream.close();
+        } catch (Exception e){
+            throw e;
+        }
+
     }
 
     private class NameComparator implements Comparator<Map<String, Object>> {

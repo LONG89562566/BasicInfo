@@ -29,7 +29,7 @@ public interface FileAttrService {
      *@updater or other
      *@return int
      */
-    int insertBatchFileAttr(FileAttr entity,List<String> pathList);
+    int insertBatchFileAttr(FileAttr entity,List<String> pathList,List<String> nameList);
 
     /**
      *批量添加FileAttr对象

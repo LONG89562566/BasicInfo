@@ -12,16 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.info.admin.entity.ActiveSysUser;
+import com.info.admin.entity.SysUser;
+import com.info.admin.service.SysUserService;
 import org.apache.commons.lang.StringUtils;
 
 import com.info.admin.constants.SysConstant;
 import com.info.admin.entity.ActiveSysUser;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 基本控制层
  * @author administrator
  */
 public class BaseController {
+
+	@Autowired
+	private SysUserService sysUserService;
 
 	/**
 	 * 设置不要缓存数据
@@ -148,8 +154,8 @@ public class BaseController {
 	 * @return
 	 */
 	public String getStaffId(HttpServletRequest request) {
-		ActiveSysUser user = (ActiveSysUser) request.getSession().getAttribute(SysConstant.SESSION_SYS);
-		return user.getStaffId();
+		SysUser sysUser = sysUserService.getUserById(getLoginUserId(request));
+		return sysUser.getStaffId();
 	}
 	
 }

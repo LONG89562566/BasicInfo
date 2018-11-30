@@ -20,7 +20,7 @@
         <span style="color: red" id="s-<%=imageLable%>"></span>
     </div>
 </div>
-<div class="layui-inline" id="div-<%=imageLable%>-img">
+<div class="layui-inline" id="div-<%=imageLable%>-img" style="width:96%;">
     <div id="ul-<%=imageLable%>-img" style="width:96%;margin-left: 2%;min-height: 200px;height: 200px;overflow: scroll;">
 
     </div>

@@ -58,7 +58,7 @@
 				area: ['60%', '90%'],
 				shade: 0.5,
 				anim: 3,//0-6的动画形式，-1不开启
-				content: '<%=request.getContextPath()%>/admin/flow/addOrEdit?flowId=<%=flowId%>',
+				content: '<%=request.getContextPath()%>/admin/flow/addOrEdit?flowId=<%=flowId%>&docUnid=<%=docUnid%>',
 				zIndex: layer.zIndex, //重点1
 				success: function(layero, index){
 					//layer.setAddOrEdit(layero);
@@ -85,7 +85,7 @@
 				area: ['60%', '90%'],
 				shade: 0.5,
 				anim: 3,//0-6的动画形式，-1不开启
-				content: '<%=request.getContextPath()%>/admin/flow/submitPage?flowId=<%=flowId%>',
+				content: '<%=request.getContextPath()%>/admin/flow/submitPage?flowId=<%=flowId%>&docUnid=<%=docUnid%>',
 				zIndex: layer.zIndex, //重点1
 				success: function(layero, index){
 					//layer.setAddOrEdit(layero);

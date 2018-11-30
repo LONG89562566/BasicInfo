@@ -126,7 +126,6 @@ var loadThisPageData = function (currentPage,pageSize,json,parm) {
                         html += "<td>";
                         html += "<div class='site-demo-button' >";
                         $.each(tableBtn,function (index, btn) {
-                            // methodField,isShowMethod,showMethodVal
                             var methodField = "";
                             var showMethodVal = "";
                             if(btn.methodField != "" && btn.methodField != undefined && btn.methodField.length > 0){
@@ -177,13 +176,17 @@ var loadThisPageData = function (currentPage,pageSize,json,parm) {
                        } else {
                            html += "<td";
                            if(f.getIdVal != "" && f.getIdVal != undefined && f.getIdVal.length > 0 ){
-                               html += " id='"+n[f.getIdVal]+"' ";
+                               html += " id='"+f.name+"_"+n[f.getIdVal]+"' ";
                            }
                            html += ">";
                            if(f.method != "" && f.method != undefined && f.method.length > 0){
                                html +=  eval(f.method+'("'+n[f.name]+'","'+n[primarykey]+'")')+"</td>";
                            }else{
-                               html +=  n[f.name]+"</td>";
+                               if(n[f.name] == null || n[f.name] == undefined){
+                                   html +=  "</td>";
+                               }else{
+                                   html +=  n[f.name]+"</td>";
+                               }
                            }
                        }
                     }
