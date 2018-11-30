@@ -31,7 +31,7 @@
 		     		</div>
 					<label class="layui-form-label">排序号</label>
 					<div class="layui-input-inline">
-						<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${proportions.seq }" class="layui-input"/>
+						<input type="number" id="seq" name="seq" placeholder="请输入排序号"  value="${proportions.seq }" class="layui-input"/>
 						<span style="color: red" id="s-seq"></span>
 					</div>
      			</div>

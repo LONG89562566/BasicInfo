@@ -89,6 +89,16 @@ public interface RepertoryService {
     List<Repertory> queryRepertoryRepertoryTree(Repertory entity);
 
     /**
+     *查询Repertory对象预警
+     *@param  staffId 登录人绑定id
+     *@author
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return List<Repertory>
+     */
+   List<Repertory> queryRepertoryYj(String staffId);
+
+    /**
      * 返回人员报表树形结构json数据
      * @param repertoryList 数据，因读大于写
      * @return JSONArray

@@ -85,6 +85,7 @@
             </div>
 	 		<div class="layui-input-block" style="margin-top:2%;margin-left: 30%;margin-bottom: 2%">
 	 			<input type="button" class="layui-btn" onclick="saveData()" value="确定"/>
+       			<%--<button class="layui-btn" name="okSaveData" >确定</button>--%>
        			<button class="layui-btn" name="cancleSubmit" >取消</button>
      		</div>
   		</form>
@@ -181,51 +182,56 @@
 			  });		  
 
 		});
-	
-	function saveData() {
-	    var flowId = $("#flowId").val();
-	    var createTime = $("#createTime").val();
-	    var createUser = $("#createUser").val();
-	    var createUserCn = $("#createUserCn").val();
-	    var deleteFlag = $("#deleteFlag").val();
-	    var updateTime = $("#updateTime").val();
-	    var seq = $("#seq").val();
-	    var name = $("#name").val();
-	    var lastNode = $("#lastNode").val();
-	    var nextNode = $("#nextNode").val();
-	    var orgId = $("#orgId").val();
-	    var roleId = $("#roleId").val();
-	    var user = $('#userId').combotree('getValues');
-	    var userId = "";
-	    var msg = $("#msg").val();
-	    var isDone = $("#isDone").val();
-	    var showTitle = $("#showTitle").val();
-	    var docUrl = $("#docUrl").val();
-	    var docUnid = $("#docUnid").val();
 
-        var requestData={
-            "flowId":flowId,
-            "createTimeStr":createTime,
-            "createUser":createUser,
-            "createUserCn":createUserCn,
-            "deleteFlag":deleteFlag,
-            "updateTimeStr":updateTime,
-            "seq":seq,
-            "name":name,
-            "lastNode":lastNode,
-            "nextNode":nextNode,
-            "orgId":orgId,
-            "roleId":roleId,
-            "userId":userId,
-            "user":user,
-            "msg":msg,
-            "isDone":isDone,
-            "showTitle":showTitle,
-            "docUrl":docUrl,
-            "docUnid":docUnid
+
+		var getData = function () {
+            var flowId = $("#flowId").val();
+            var createTime = $("#createTime").val();
+            var createUser = $("#createUser").val();
+            var createUserCn = $("#createUserCn").val();
+            var deleteFlag = $("#deleteFlag").val();
+            var updateTime = $("#updateTime").val();
+            var seq = $("#seq").val();
+            var name = $("#name").val();
+            var lastNode = $("#lastNode").val();
+            var nextNode = $("#nextNode").val();
+            var orgId = $("#orgId").val();
+            var roleId = $("#roleId").val();
+            var user = $('#userId').combotree('getValues');
+            var userId = "";
+            var msg = $("#msg").val();
+            var isDone = $("#isDone").val();
+            var showTitle = $("#showTitle").val();
+            var docUrl = $("#docUrl").val();
+            var docUnid = $("#docUnid").val();
+
+            var requestData={
+                "flowId":flowId,
+                "createTimeStr":createTime,
+                "createUser":createUser,
+                "createUserCn":createUserCn,
+                "deleteFlag":deleteFlag,
+                "updateTimeStr":updateTime,
+                "seq":seq,
+                "name":name,
+                "lastNode":lastNode,
+                "nextNode":nextNode,
+                "orgId":orgId,
+                "roleId":roleId,
+                "userId":userId,
+                "user":user,
+                "msg":msg,
+                "isDone":isDone,
+                "showTitle":showTitle,
+                "docUrl":docUrl,
+                "docUnid":docUnid
+            };
+            return requestData;
         };
-        updateAndAdd(requestData);
-    }
+
+        function saveData() {
+            updateAndAdd(getData());
+        }
     
 
 	

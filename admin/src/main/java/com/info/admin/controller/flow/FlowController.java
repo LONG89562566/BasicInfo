@@ -703,6 +703,7 @@ public class FlowController extends BaseController{
         entity.setUserId(this.getStaffId(request));
         WarningInfo warningInfo = new WarningInfo();
         warningInfo.setReceiveUser(getStaffId(request));
+        warningInfo.setOptions(1L);
         List<WarningInfo> warningInfos =  warningInfoService.query(warningInfo);
         if(warningInfos != null && warningInfos.size() > 0){
             entity.setDayNum(Integer.parseInt(warningInfos.get(0).getWarn_val()));

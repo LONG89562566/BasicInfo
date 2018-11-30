@@ -45,6 +45,11 @@ public class Repertory implements Serializable {
 	/*****注释*****/
 	private String columnComment;
 
+	/*****预警条件*****/
+	private String checkCondition;
+	/*****预警值*****/
+	private String warnVal;
+
 
 	 public String getRepertoryId() {
 		 return repertoryId;
@@ -185,6 +190,22 @@ public class Repertory implements Serializable {
 
 	public String getProjectName() {
 		return projectName;
+	}
+
+	public String getCheckCondition() {
+		return checkCondition;
+	}
+
+	public void setCheckCondition(String checkCondition) {
+		this.checkCondition = checkCondition;
+	}
+
+	public String getWarnVal() {
+		return warnVal;
+	}
+
+	public void setWarnVal(String warnVal) {
+		this.warnVal = warnVal;
 	}
 
 	public void setProjectName(String projectName) {

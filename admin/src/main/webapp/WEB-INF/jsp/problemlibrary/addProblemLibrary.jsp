@@ -10,6 +10,9 @@
 	<body>
  		<form id="saleForm" class="layui-form" style="margin-top:30px;">
  			<input  type="hidden" id="supplierId" name="supplierId" value="${problemLibrary.supplierId}"/>
+			<jsp:include page="/WEB-INF/jsp/flow/flowPage.jsp">
+				<jsp:param name="docUnid" value="${problemLibrary.supplierId}" />
+			</jsp:include>
 			<div class='layui-form-item'>
 				<label class="layui-form-label">标题</label>
 				<div class="layui-input-block">
@@ -28,7 +31,7 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">排序号</label>
 					<div class="layui-input-inline">
-						<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${problemLibrary.seq }" class="layui-input"/>
+						<input type="number" id="seq" name="seq" placeholder="请输入排序号"  value="${problemLibrary.seq }" class="layui-input"/>
 						<span style="color: red" id="s-seq"></span>
 					</div>
 				</div>

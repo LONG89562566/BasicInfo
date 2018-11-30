@@ -70,8 +70,6 @@
 					//弹窗表单的取消操作时关闭弹窗
 					var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
 						layer.closeAll();
-						//刷新页面
-						refreshTheCurrentPage();
 					});
 				}
 			});
@@ -94,11 +92,38 @@
 					var iframeWin = window[layero.find('iframe')[0]['name']];
 					body.find('input[name="docUnid"]').val('<%=docUnid%>');
 					body.find('input[name="docUrl"]').val(window.location.href);
+
 					//弹窗表单的取消操作时关闭弹窗
 					var canclebtn=body.find('button[name="cancleSubmit"]').click(function cancleSubmit(){
 						layer.closeAll();
-						//刷新页面
-						refreshTheCurrentPage();
+					});
+
+					//弹窗表单的取消操作时关闭弹窗
+					var okSaveBtn =body.find('button[name="okSaveData"]').click(function saveSubmit(){
+					    var data = iframeWin.getData();
+                        $.ajax({
+                            type:"POST",
+                            url: "/admin/flow/sendFlow",
+                            data: requestData,
+                            dataType:"json",
+                            success:function(result){
+                                var code = result.code;
+                                var msg = result.message;
+                                if(code=="200" || code=="201"){
+                                    layer.msg(msg,{icon : 1,time:1200});
+
+                                    //刷新页面
+
+                                    layer.close(index);
+                                }
+                            },
+                            error:function(){
+                                layer.msg("更新数据异常", {icon: 1,time: 1200},function(){
+                                    // var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                                    // parent.layer.close(index);//关闭父页面的弹窗
+                                });
+                            }
+                        });
 					});
 				}
 			});

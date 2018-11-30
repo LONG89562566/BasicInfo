@@ -1,9 +1,13 @@
 package com.info.admin.service.impl;
 
 import com.info.admin.dao.RepertoryDao;
+import com.info.admin.dao.WarningInfoDao;
 import com.info.admin.entity.MaterialDetail;
 import com.info.admin.entity.Repertory;
+import com.info.admin.entity.WarningInfo;
 import com.info.admin.service.RepertoryService;
+import com.info.admin.service.WarningInfoService;
+import com.info.admin.utils.ArrayListUtil;
 import com.info.admin.utils.PageUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -11,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -24,6 +29,8 @@ public class RepertoryServiceImpl implements RepertoryService {
 
     @Autowired
     private RepertoryDao dao;
+    @Autowired
+    private WarningInfoDao warningInfoDao;
 
     /**
      *添加Repertory对象
@@ -131,6 +138,86 @@ public class RepertoryServiceImpl implements RepertoryService {
     @Override
     public  List<Repertory> queryRepertoryRepertoryTree(Repertory entity){
         return dao.queryRepertoryRepertoryTree(entity);
+    }
+
+    /**
+     *查询Repertory对象预警
+     *@param  staffId 登录人id
+     *@author
+     *@date  2018-11-14 23:45:42
+     *@updater or other
+     *@return List<Repertory>
+     */
+    @Override
+    public  List<Repertory> queryRepertoryYj(String staffId){
+        WarningInfo warningInfo = new WarningInfo();
+        warningInfo.setReceiveUser(staffId);
+        warningInfo.setOptions(2L);
+        List<WarningInfo> warningInfos =  warningInfoDao.query(warningInfo);
+        if(warningInfos == null || warningInfos.size() == 0){
+            return new ArrayList<>();
+        }
+        List<Repertory> repertories = dao.query(new Repertory());
+        if(repertories == null || repertories.size() == 0){
+            return new ArrayList<>();
+        }
+        List<Repertory> repertoryList = new ArrayList<>();
+        for (Repertory repertory : repertories){
+            for (WarningInfo warningInfo1 : warningInfos){
+                if(repertory.getRepertoryId().equals(warningInfo1.getTrue_val())){
+                    if(warningInfo1.getCheckCondition()==1){
+                        if(repertory.getNum().doubleValue() > Double.parseDouble(warningInfo1.getWarn_val())){
+                            repertory.setCheckCondition("大于");
+                            repertory.setWarnVal(warningInfo1.getWarn_val());
+                            repertoryList.add(repertory);
+                            break;
+                        }
+//                        return"大";
+                    }else if(warningInfo1.getCheckCondition()==2){
+                        if(repertory.getNum().doubleValue() < Double.parseDouble(warningInfo1.getWarn_val())){
+                            repertory.setCheckCondition("小于");
+                            repertory.setWarnVal(warningInfo1.getWarn_val());
+                            repertoryList.add(repertory);
+                            break;
+                        }
+//                        return"小";
+                    }else if(warningInfo1.getCheckCondition()==3){
+                        if(repertory.getNum().doubleValue() == Double.parseDouble(warningInfo1.getWarn_val())){
+                            repertory.setCheckCondition("等于");
+                            repertory.setWarnVal(warningInfo1.getWarn_val());
+                            repertoryList.add(repertory);
+                            break;
+                        }
+//                        return"等";
+                    }else  if(warningInfo1.getCheckCondition()==4){
+                        if(repertory.getNum().doubleValue() <= Double.parseDouble(warningInfo1.getWarn_val())){
+                            repertory.setCheckCondition("不大于");
+                            repertory.setWarnVal(warningInfo1.getWarn_val());
+                            repertoryList.add(repertory);
+                            break;
+                        }
+//                        return"不大";
+                    }else if(warningInfo1.getCheckCondition()==5){
+                        if(repertory.getNum().doubleValue() >= Double.parseDouble(warningInfo1.getWarn_val())){
+                            repertory.setCheckCondition("不小于");
+                            repertory.setWarnVal(warningInfo1.getWarn_val());
+                            repertoryList.add(repertory);
+                            break;
+                        }
+//                        return"不小";
+                    }else if(warningInfo1.getCheckCondition()==6) {
+                        if(repertory.getNum().doubleValue() != Double.parseDouble(warningInfo1.getWarn_val())){
+                            repertory.setCheckCondition("不等于");
+                            repertory.setWarnVal(warningInfo1.getWarn_val());
+                            repertoryList.add(repertory);
+                            break;
+                        }
+//                        return "不等于";
+                    }
+                }
+            }
+        }
+        return repertoryList;
     }
     /**
      * 返回树形结构json数据

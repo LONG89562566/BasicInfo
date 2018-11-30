@@ -24,7 +24,7 @@
      			<div class="layui-inline">
 		        	<label class="layui-form-label">排序号</label>
 		        	<div class="layui-input-inline">
-		        		<input type="text" id="seq" name="seq" placeholder="请输入排序号"  value="${warningInfo.seq }" class="layui-input"/>
+		        		<input type="number" id="seq" name="seq" placeholder="请输入排序号"  value="${warningInfo.seq }" class="layui-input"/>
 		        		<span style="color: red" id="s-seq"></span>
 		     		</div>
      			</div>
@@ -53,17 +53,20 @@
 		     		</div>
      			</div>
 			</div>
-			<div class='layui-form-item' style="display: none;">
+			<div class='layui-form-item' >
      			<div class="layui-inline">
 		        	<label class="layui-form-label">对象属性</label>
 		        	<div class="layui-input-inline">
-		        		<input type="text" id="options" name="options" placeholder="请输入对象属性"  value="${warningInfo.options }" class="layui-input"/>
+						<select id="options" name="options" lay-filter="option">
+							<option value="1" <c:if test="${warningInfo.options == 1}"> selected </c:if> >流程</option>
+							<option value="2" <c:if test="${warningInfo.options == 2}"> selected </c:if>>材料</option>
+						</select>
 		        		<span style="color: red" id="s-options"></span>
 		     		</div>
      			</div>
-     			<div class="layui-inline">
+     			<div class="layui-inline" id="div-true_val" style="display: none;">
 		        	<label class="layui-form-label">值</label>
-		        	<div class="layui-input-inline">
+		        	<div class="layui-input-inline" id="">
 		        		<input type="text" id="true_val" name="true_val" placeholder="请输入值"  value="${warningInfo.true_val }" class="layui-input"/>
 		        		<span style="color: red" id="s-true_val"></span>
 		     		</div>
@@ -87,7 +90,7 @@
      			<div class="layui-inline">
 		        	<label class="layui-form-label">预警值</label>
 		        	<div class="layui-input-inline">
-		        		<input type="text" id="warn_val" name="warn_val" placeholder="请输入预警值"  value="${warningInfo.warn_val }" class="layui-input"/>
+		        		<input type="text" id="warn_val" name="warn_val" placeholder="请输入预警值"  value="${warningInfo.warn_val }" class="layui-input" onkeyup="javascript:CheckInputIntFloat(this);"/>
 		        		<span style="color: red" id="s-warn_val"></span>
 		     		</div>
      			</div>
@@ -103,32 +106,38 @@
 	<script type="text/javascript">
 
         $(function () {
-            /*         $("#releaseUser").combotree({
-                         url: '/admin/staffInfo/staffInfoTree',
-                         // multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框
-                         data : [{},{},{}],//数据省略
-                         required: true,
-                         checkbox : true,//显示多选框
-                         onlyLeafCheck : true,//只在叶子节点显示多选框
-                         onBeforeSelect : function(node){
-                             if(!$(this).tree("isLeaf", node.target)){//如果不是叶子节点，不让选择
-                                 return false;
-                             }
-                         },
-                         onBeforeCheck : function(node, checked){//控制只能选一项
-                             if(checked){//当前为选中操作
-                                 var nodes = $(this).tree("getChecked");
-                                 //控制只能选一项，选中某一项后后面不能再勾选
-                                 if(nodes.length == 0){
-                                     return true;
-                                 }else{
-                                     return false;
-                                 }
-                             }else{//当前为取消选中操作
-                                 return true;
-                             }
-                         }
-                     });*/
+            if("${warningInfo.options}" == 2){
+                $("#div-true_val").show();
+            }else {
+                $("#div-true_val").hide();
+            }
+
+			$("#true_val").combotree({
+				 url: '/admin/repertory/repertoryTree',
+				 // multiple : true,//设置可以多选，显示多选框，不设置不会出现多选框
+				 data : [{},{},{}],//数据省略
+				 required: true,
+				 checkbox : true,//显示多选框
+				 onlyLeafCheck : true,//只在叶子节点显示多选框
+				 onBeforeSelect : function(node){
+					 if(!$(this).tree("isLeaf", node.target)){//如果不是叶子节点，不让选择
+						 return false;
+					 }
+				 },
+				 onBeforeCheck : function(node, checked){//控制只能选一项
+					 if(checked){//当前为选中操作
+						 var nodes = $(this).tree("getChecked");
+						 //控制只能选一项，选中某一项后后面不能再勾选
+						 if(nodes.length == 0){
+							 return true;
+						 }else{
+							 return false;
+						 }
+					 }else{//当前为取消选中操作
+						 return true;
+					 }
+				 }
+			 });
 
             $("#receiveUser").combotree({
                 url: '/admin/staffInfo/staffInfoTree',
@@ -168,6 +177,12 @@
 	</script>
 
 	<script type="text/javascript">
+        function CheckInputIntFloat(oInput) {
+            if('' != oInput.value.replace(/\d{1,}\.{0,1}\d{0,}/,'')) {
+                oInput.value = oInput.value.match(/\d{1,}\.{0,1}\d{0,}/) == null ? '' :oInput.value.match(/\d{1,}\.{0,1}\d{0,}/);
+            }
+        }
+
 		//提交表单数据
 		layui.use(['form', 'jquery', 'layedit', 'laydate'], function(){
 			  var $ = layui.jquery;
@@ -176,9 +191,22 @@
 			  var layedit = layui.layedit;
 			  var laydate = layui.laydate;
 			  form.verify({
-			  });		  
+			  });
 
+            form.on('select(option)', function(data){
+                if(data.value == 1){
+                    $("#div-true_val").hide();
+
+				}else if(data.value == 2){
+                    $("#div-true_val").show();
+				}else {
+                    $("#div-true_val").hide();
+				}
+                console.log(data);
+                console.log(data.value);
+            });
 		});
+
 	
 	function saveData() {
 	    var warningId = $("#warningId").val();

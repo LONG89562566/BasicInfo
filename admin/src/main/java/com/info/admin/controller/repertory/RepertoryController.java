@@ -58,6 +58,22 @@ public class RepertoryController extends BaseController{
         return "repertory/listRepertory";
     }
 
+    /**
+     *查询仓库列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/yjList", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequiresPermissions("repertory:yjList")
+    public String getRepertoryYjList(HttpServletRequest request, @ModelAttribute Repertory entity, Model model) {
+        logger.info("[RepertoryController][getRepertoryYjList] 查询仓库列表:");
+        model.addAttribute("paginator", service.queryRepertoryYj(getStaffId(request)));
+        model.addAttribute("repertory", entity);
+        return "repertory/yjListRepertory";
+    }
+
      /**
      *我的桌面查询仓库列表
      *@author   ysh
@@ -78,6 +94,22 @@ public class RepertoryController extends BaseController{
         model.addAttribute("paginator", paginator);
         model.addAttribute("repertory", entity);
         return "repertory/listRepertoryDesktop";
+    }
+
+    /**
+     *我的桌面查询仓库列表
+     *@author   ysh
+     *@date  2018-07-12 10:50:32
+     *@updater  or other
+     *@return   String
+     */
+    @RequestMapping(value = "/yjList/desktop", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequiresPermissions("repertory:yjList")
+    public String getRepertoryYjListDesktop(HttpServletRequest request, @ModelAttribute Repertory entity, Model model) {
+        logger.info("[RepertoryController][getRepertoryYjListDesktop] 我的桌面查询仓库列表:");
+        model.addAttribute("paginator", service.queryRepertoryYj(getStaffId(request)));
+        model.addAttribute("repertory", entity);
+        return "repertory/yjListRepertoryDesktop";
     }
 
     /**
@@ -161,6 +193,7 @@ public class RepertoryController extends BaseController{
         }
     }
 
+
     /**
      * 删除Repertory对象
      * @param    entity  对象
@@ -230,4 +263,6 @@ public class RepertoryController extends BaseController{
         CopyOnWriteArrayList<Repertory> cowList = new CopyOnWriteArrayList<>(repertoryList);
         return service.getRepertoryTreeJson(cowList);
     }
+
+
 }	

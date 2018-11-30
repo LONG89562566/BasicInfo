@@ -226,7 +226,7 @@
 		     layer.open({
 		         type: 2, 
 		         title: '新增/修改 问题库',
-		         area: ['70%', '86%'],
+		         area: ['99%', '99%'],
 		         shade: 0.5,
 		         anim: 3,//0-6的动画形式，-1不开启
 		         content: '<%=request.getContextPath()%>/admin/problemLibrary/addOrEdit?supplierId='+supplierId,
