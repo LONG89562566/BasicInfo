@@ -89,9 +89,9 @@
 					<!-- 表格列表start -->
 		            <div class="box">
 			           <div class="box-body">
-			             <div class="site-demo-button" >
-						   <button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>
-						 </div>
+			             <%--<div class="site-demo-button" >--%>
+						   <%--<button data-method="setAddOrEdit" id="addUser" class="layui-btn layui-btn-small"><i class="layui-icon"></i><span>&nbsp;&nbsp;新增</span></button>--%>
+						 <%--</div>--%>
 			             <table id="example1" class="table table-bordered table-striped">
 			               <thead>
 				              <tr>
@@ -174,7 +174,6 @@
 			}
 			return retVal;
 		};
-
 	</script>
 	<script>
         //加载菜单
@@ -207,7 +206,7 @@
                 return;
             }
 
-        }
+        };
 		//新增数据弹窗
 		layui.use('layer', function(){ //独立版的layer无需执行这一句
 			var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
